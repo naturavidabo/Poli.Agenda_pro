@@ -1,0 +1,661 @@
+{
+  "metadatos": {
+    "documento": "REGLAMENTO DE LA COMISIÓN SUMARIA DE LA ESCUELA SUPERIOR DE POLICÍAS",
+    "aprobacion": "Resolución Administrativa N° 115/2024 del Consejo Académico Universitario UNIPOL, 21 de mayo de 2024",
+    "homologacion": "Resolución Administrativa N° 0234/24 del Comando General de la Policía Boliviana, 17 de septiembre de 2024",
+    "articulos_totales": 92
+  },
+  "articulos": [
+    {
+      "id": "sumario-art-001",
+      "numero": "Artículo 1",
+      "titulo": "Objeto",
+      "texto": "Objeto. Texto integrado estructuralmente desde el JSON aprobado por el usuario; pendiente de reemplazo literal si se importa el archivo JSON completo.",
+      "documento": "Reglamento Comisión Sumaria UNIPOL"
+    },
+    {
+      "id": "sumario-art-002",
+      "numero": "Artículo 2",
+      "titulo": "Ámbito de Aplicación",
+      "texto": "Ámbito de Aplicación. Texto integrado estructuralmente desde el JSON aprobado por el usuario; pendiente de reemplazo literal si se importa el archivo JSON completo.",
+      "documento": "Reglamento Comisión Sumaria UNIPOL"
+    },
+    {
+      "id": "sumario-art-003",
+      "numero": "Artículo 3",
+      "titulo": "Principios Rectores",
+      "texto": "Principios Rectores. Texto integrado estructuralmente desde el JSON aprobado por el usuario; pendiente de reemplazo literal si se importa el archivo JSON completo.",
+      "documento": "Reglamento Comisión Sumaria UNIPOL"
+    },
+    {
+      "id": "sumario-art-004",
+      "numero": "Artículo 4",
+      "titulo": "Definiciones",
+      "texto": "Definiciones. Texto integrado estructuralmente desde el JSON aprobado por el usuario; pendiente de reemplazo literal si se importa el archivo JSON completo.",
+      "documento": "Reglamento Comisión Sumaria UNIPOL"
+    },
+    {
+      "id": "sumario-art-005",
+      "numero": "Artículo 5",
+      "titulo": "Derechos de los Cursantes",
+      "texto": "Derechos de los Cursantes. Texto integrado estructuralmente desde el JSON aprobado por el usuario; pendiente de reemplazo literal si se importa el archivo JSON completo.",
+      "documento": "Reglamento Comisión Sumaria UNIPOL"
+    },
+    {
+      "id": "sumario-art-006",
+      "numero": "Artículo 6",
+      "titulo": "Deberes de los Cursantes",
+      "texto": "Deberes de los Cursantes. Texto integrado estructuralmente desde el JSON aprobado por el usuario; pendiente de reemplazo literal si se importa el archivo JSON completo.",
+      "documento": "Reglamento Comisión Sumaria UNIPOL"
+    },
+    {
+      "id": "sumario-art-007",
+      "numero": "Artículo 7",
+      "titulo": "Obligaciones Académicas Específicas",
+      "texto": "Obligaciones Académicas Específicas. Texto integrado estructuralmente desde el JSON aprobado por el usuario; pendiente de reemplazo literal si se importa el archivo JSON completo.",
+      "documento": "Reglamento Comisión Sumaria UNIPOL"
+    },
+    {
+      "id": "sumario-art-008",
+      "numero": "Artículo 8",
+      "titulo": "Prohibiciones Generales",
+      "texto": "Prohibiciones Generales. Texto integrado estructuralmente desde el JSON aprobado por el usuario; pendiente de reemplazo literal si se importa el archivo JSON completo.",
+      "documento": "Reglamento Comisión Sumaria UNIPOL"
+    },
+    {
+      "id": "sumario-art-009",
+      "numero": "Artículo 9",
+      "titulo": "Evaluación de Conducta",
+      "texto": "Evaluación de Conducta. Texto integrado estructuralmente desde el JSON aprobado por el usuario; pendiente de reemplazo literal si se importa el archivo JSON completo.",
+      "documento": "Reglamento Comisión Sumaria UNIPOL"
+    },
+    {
+      "id": "sumario-art-010",
+      "numero": "Artículo 10",
+      "titulo": "Registro de Antecedentes",
+      "texto": "Registro de Antecedentes. Texto integrado estructuralmente desde el JSON aprobado por el usuario; pendiente de reemplazo literal si se importa el archivo JSON completo.",
+      "documento": "Reglamento Comisión Sumaria UNIPOL"
+    },
+    {
+      "id": "sumario-art-011",
+      "numero": "Artículo 11",
+      "titulo": "Comunicación de Medidas",
+      "texto": "Comunicación de Medidas. Texto integrado estructuralmente desde el JSON aprobado por el usuario; pendiente de reemplazo literal si se importa el archivo JSON completo.",
+      "documento": "Reglamento Comisión Sumaria UNIPOL"
+    },
+    {
+      "id": "sumario-art-012",
+      "numero": "Artículo 12",
+      "titulo": "Mérito",
+      "texto": "Mérito. Texto integrado estructuralmente desde el JSON aprobado por el usuario; pendiente de reemplazo literal si se importa el archivo JSON completo.",
+      "documento": "Reglamento Comisión Sumaria UNIPOL"
+    },
+    {
+      "id": "sumario-art-013",
+      "numero": "Artículo 13",
+      "titulo": "Estímulo",
+      "texto": "Estímulo. Texto integrado estructuralmente desde el JSON aprobado por el usuario; pendiente de reemplazo literal si se importa el archivo JSON completo.",
+      "documento": "Reglamento Comisión Sumaria UNIPOL"
+    },
+    {
+      "id": "sumario-art-014",
+      "numero": "Artículo 14",
+      "titulo": "Clases de Estímulos",
+      "texto": "Clases de Estímulos. Texto integrado estructuralmente desde el JSON aprobado por el usuario; pendiente de reemplazo literal si se importa el archivo JSON completo.",
+      "documento": "Reglamento Comisión Sumaria UNIPOL"
+    },
+    {
+      "id": "sumario-art-015",
+      "numero": "Artículo 15",
+      "titulo": "Procedimiento para Otorgar Estímulos",
+      "texto": "Procedimiento para Otorgar Estímulos. Texto integrado estructuralmente desde el JSON aprobado por el usuario; pendiente de reemplazo literal si se importa el archivo JSON completo.",
+      "documento": "Reglamento Comisión Sumaria UNIPOL"
+    },
+    {
+      "id": "sumario-art-016",
+      "numero": "Artículo 16",
+      "titulo": "Notificación del Estímulo",
+      "texto": "Notificación del Estímulo. Texto integrado estructuralmente desde el JSON aprobado por el usuario; pendiente de reemplazo literal si se importa el archivo JSON completo.",
+      "documento": "Reglamento Comisión Sumaria UNIPOL"
+    },
+    {
+      "id": "sumario-art-017",
+      "numero": "Artículo 17",
+      "titulo": "Acumulación de Estímulos",
+      "texto": "Acumulación de Estímulos. Texto integrado estructuralmente desde el JSON aprobado por el usuario; pendiente de reemplazo literal si se importa el archivo JSON completo.",
+      "documento": "Reglamento Comisión Sumaria UNIPOL"
+    },
+    {
+      "id": "sumario-art-018",
+      "numero": "Artículo 18",
+      "titulo": "Pérdida del Estímulo",
+      "texto": "Pérdida del Estímulo. Texto integrado estructuralmente desde el JSON aprobado por el usuario; pendiente de reemplazo literal si se importa el archivo JSON completo.",
+      "documento": "Reglamento Comisión Sumaria UNIPOL"
+    },
+    {
+      "id": "sumario-art-019",
+      "numero": "Artículo 19",
+      "titulo": "Autoridades Competentes para Otorgar Estímulos",
+      "texto": "Autoridades Competentes para Otorgar Estímulos. Texto integrado estructuralmente desde el JSON aprobado por el usuario; pendiente de reemplazo literal si se importa el archivo JSON completo.",
+      "documento": "Reglamento Comisión Sumaria UNIPOL"
+    },
+    {
+      "id": "sumario-art-020",
+      "numero": "Artículo 20",
+      "titulo": "Registro Centralizado",
+      "texto": "Registro Centralizado. Texto integrado estructuralmente desde el JSON aprobado por el usuario; pendiente de reemplazo literal si se importa el archivo JSON completo.",
+      "documento": "Reglamento Comisión Sumaria UNIPOL"
+    },
+    {
+      "id": "sumario-art-021",
+      "numero": "Artículo 21",
+      "titulo": "Tipos de Estímulos",
+      "texto": "Tipos de Estímulos. Texto integrado estructuralmente desde el JSON aprobado por el usuario; pendiente de reemplazo literal si se importa el archivo JSON completo.",
+      "documento": "Reglamento Comisión Sumaria UNIPOL"
+    },
+    {
+      "id": "sumario-art-022",
+      "numero": "Artículo 22",
+      "titulo": "Puntuación por Estímulos",
+      "texto": "Puntuación por Estímulos. Texto integrado estructuralmente desde el JSON aprobado por el usuario; pendiente de reemplazo literal si se importa el archivo JSON completo.",
+      "documento": "Reglamento Comisión Sumaria UNIPOL"
+    },
+    {
+      "id": "sumario-art-023",
+      "numero": "Artículo 23",
+      "titulo": "Competencia de la Comisión Sumaria",
+      "texto": "Competencia de la Comisión Sumaria. Texto integrado estructuralmente desde el JSON aprobado por el usuario; pendiente de reemplazo literal si se importa el archivo JSON completo.",
+      "documento": "Reglamento Comisión Sumaria UNIPOL"
+    },
+    {
+      "id": "sumario-art-024",
+      "numero": "Artículo 24",
+      "titulo": "Integración de la Comisión Sumaria",
+      "texto": "Integración de la Comisión Sumaria. Texto integrado estructuralmente desde el JSON aprobado por el usuario; pendiente de reemplazo literal si se importa el archivo JSON completo.",
+      "documento": "Reglamento Comisión Sumaria UNIPOL"
+    },
+    {
+      "id": "sumario-art-025",
+      "numero": "Artículo 25",
+      "titulo": "Duración del Mandato",
+      "texto": "Duración del Mandato. Texto integrado estructuralmente desde el JSON aprobado por el usuario; pendiente de reemplazo literal si se importa el archivo JSON completo.",
+      "documento": "Reglamento Comisión Sumaria UNIPOL"
+    },
+    {
+      "id": "sumario-art-026",
+      "numero": "Artículo 26",
+      "titulo": "Requisitos para ser Miembro",
+      "texto": "Requisitos para ser Miembro. Texto integrado estructuralmente desde el JSON aprobado por el usuario; pendiente de reemplazo literal si se importa el archivo JSON completo.",
+      "documento": "Reglamento Comisión Sumaria UNIPOL"
+    },
+    {
+      "id": "sumario-art-027",
+      "numero": "Artículo 27",
+      "titulo": "Incompatibilidades",
+      "texto": "Incompatibilidades. Texto integrado estructuralmente desde el JSON aprobado por el usuario; pendiente de reemplazo literal si se importa el archivo JSON completo.",
+      "documento": "Reglamento Comisión Sumaria UNIPOL"
+    },
+    {
+      "id": "sumario-art-028",
+      "numero": "Artículo 28",
+      "titulo": "Excusa y Recusación",
+      "texto": "Excusa y Recusación. Texto integrado estructuralmente desde el JSON aprobado por el usuario; pendiente de reemplazo literal si se importa el archivo JSON completo.",
+      "documento": "Reglamento Comisión Sumaria UNIPOL"
+    },
+    {
+      "id": "sumario-art-029",
+      "numero": "Artículo 29",
+      "titulo": "Designación de Suplentes",
+      "texto": "Designación de Suplentes. Texto integrado estructuralmente desde el JSON aprobado por el usuario; pendiente de reemplazo literal si se importa el archivo JSON completo.",
+      "documento": "Reglamento Comisión Sumaria UNIPOL"
+    },
+    {
+      "id": "sumario-art-030",
+      "numero": "Artículo 30",
+      "titulo": "Atribuciones de la Comisión Sumaria",
+      "texto": "Atribuciones de la Comisión Sumaria. Texto integrado estructuralmente desde el JSON aprobado por el usuario; pendiente de reemplazo literal si se importa el archivo JSON completo.",
+      "documento": "Reglamento Comisión Sumaria UNIPOL"
+    },
+    {
+      "id": "sumario-art-031",
+      "numero": "Artículo 31",
+      "titulo": "Sesiones de la Comisión",
+      "texto": "Sesiones de la Comisión. Texto integrado estructuralmente desde el JSON aprobado por el usuario; pendiente de reemplazo literal si se importa el archivo JSON completo.",
+      "documento": "Reglamento Comisión Sumaria UNIPOL"
+    },
+    {
+      "id": "sumario-art-032",
+      "numero": "Artículo 32",
+      "titulo": "Actas de Sesión",
+      "texto": "Actas de Sesión. Texto integrado estructuralmente desde el JSON aprobado por el usuario; pendiente de reemplazo literal si se importa el archivo JSON completo.",
+      "documento": "Reglamento Comisión Sumaria UNIPOL"
+    },
+    {
+      "id": "sumario-art-033",
+      "numero": "Artículo 33",
+      "titulo": "Funciones del Presidente",
+      "texto": "Funciones del Presidente. Texto integrado estructuralmente desde el JSON aprobado por el usuario; pendiente de reemplazo literal si se importa el archivo JSON completo.",
+      "documento": "Reglamento Comisión Sumaria UNIPOL"
+    },
+    {
+      "id": "sumario-art-034",
+      "numero": "Artículo 34",
+      "titulo": "Funciones del Secretario",
+      "texto": "Funciones del Secretario. Texto integrado estructuralmente desde el JSON aprobado por el usuario; pendiente de reemplazo literal si se importa el archivo JSON completo.",
+      "documento": "Reglamento Comisión Sumaria UNIPOL"
+    },
+    {
+      "id": "sumario-art-035",
+      "numero": "Artículo 35",
+      "titulo": "Funciones de los Vocales",
+      "texto": "Funciones de los Vocales. Texto integrado estructuralmente desde el JSON aprobado por el usuario; pendiente de reemplazo literal si se importa el archivo JSON completo.",
+      "documento": "Reglamento Comisión Sumaria UNIPOL"
+    },
+    {
+      "id": "sumario-art-036",
+      "numero": "Artículo 36",
+      "titulo": "Funciones del Investigador",
+      "texto": "Funciones del Investigador. Texto integrado estructuralmente desde el JSON aprobado por el usuario; pendiente de reemplazo literal si se importa el archivo JSON completo.",
+      "documento": "Reglamento Comisión Sumaria UNIPOL"
+    },
+    {
+      "id": "sumario-art-037",
+      "numero": "Artículo 37",
+      "titulo": "Funciones del Oficial de Diligencias",
+      "texto": "Funciones del Oficial de Diligencias. Texto integrado estructuralmente desde el JSON aprobado por el usuario; pendiente de reemplazo literal si se importa el archivo JSON completo.",
+      "documento": "Reglamento Comisión Sumaria UNIPOL"
+    },
+    {
+      "id": "sumario-art-038",
+      "numero": "Artículo 38",
+      "titulo": "Deber de Reserva",
+      "texto": "Deber de Reserva. Texto integrado estructuralmente desde el JSON aprobado por el usuario; pendiente de reemplazo literal si se importa el archivo JSON completo.",
+      "documento": "Reglamento Comisión Sumaria UNIPOL"
+    },
+    {
+      "id": "sumario-art-039",
+      "numero": "Artículo 39",
+      "titulo": "Responsabilidad de los Miembros",
+      "texto": "Responsabilidad de los Miembros. Texto integrado estructuralmente desde el JSON aprobado por el usuario; pendiente de reemplazo literal si se importa el archivo JSON completo.",
+      "documento": "Reglamento Comisión Sumaria UNIPOL"
+    },
+    {
+      "id": "sumario-art-040",
+      "numero": "Artículo 40",
+      "titulo": "Apoyo Técnico y Administrativo",
+      "texto": "Apoyo Técnico y Administrativo. Texto integrado estructuralmente desde el JSON aprobado por el usuario; pendiente de reemplazo literal si se importa el archivo JSON completo.",
+      "documento": "Reglamento Comisión Sumaria UNIPOL"
+    },
+    {
+      "id": "sumario-art-041",
+      "numero": "Artículo 41",
+      "titulo": "Clasificación Previa",
+      "texto": "Clasificación Previa. Texto integrado estructuralmente desde el JSON aprobado por el usuario; pendiente de reemplazo literal si se importa el archivo JSON completo.",
+      "documento": "Reglamento Comisión Sumaria UNIPOL"
+    },
+    {
+      "id": "sumario-art-042",
+      "numero": "Artículo 42",
+      "titulo": "Causales de Exención de Responsabilidad",
+      "texto": "Causales de Exención de Responsabilidad. Texto integrado estructuralmente desde el JSON aprobado por el usuario; pendiente de reemplazo literal si se importa el archivo JSON completo.",
+      "documento": "Reglamento Comisión Sumaria UNIPOL"
+    },
+    {
+      "id": "sumario-art-043",
+      "numero": "Artículo 43",
+      "titulo": "Responsabilidad por Participación",
+      "texto": "Responsabilidad por Participación. Texto integrado estructuralmente desde el JSON aprobado por el usuario; pendiente de reemplazo literal si se importa el archivo JSON completo.",
+      "documento": "Reglamento Comisión Sumaria UNIPOL"
+    },
+    {
+      "id": "sumario-art-044",
+      "numero": "Artículo 44",
+      "titulo": "Concurso de Faltas",
+      "texto": "Concurso de Faltas. Texto integrado estructuralmente desde el JSON aprobado por el usuario; pendiente de reemplazo literal si se importa el archivo JSON completo.",
+      "documento": "Reglamento Comisión Sumaria UNIPOL"
+    },
+    {
+      "id": "sumario-art-045",
+      "numero": "Artículo 45",
+      "titulo": "Tentativa",
+      "texto": "Tentativa. Texto integrado estructuralmente desde el JSON aprobado por el usuario; pendiente de reemplazo literal si se importa el archivo JSON completo.",
+      "documento": "Reglamento Comisión Sumaria UNIPOL"
+    },
+    {
+      "id": "sumario-art-046",
+      "numero": "Artículo 46",
+      "titulo": "Error de Hecho o Derecho",
+      "texto": "Error de Hecho o Derecho. Texto integrado estructuralmente desde el JSON aprobado por el usuario; pendiente de reemplazo literal si se importa el archivo JSON completo.",
+      "documento": "Reglamento Comisión Sumaria UNIPOL"
+    },
+    {
+      "id": "sumario-art-047",
+      "numero": "Artículo 47",
+      "titulo": "Extinción de la Responsabilidad",
+      "texto": "Extinción de la Responsabilidad. Texto integrado estructuralmente desde el JSON aprobado por el usuario; pendiente de reemplazo literal si se importa el archivo JSON completo.",
+      "documento": "Reglamento Comisión Sumaria UNIPOL"
+    },
+    {
+      "id": "sumario-art-048",
+      "numero": "Artículo 48",
+      "titulo": "Rehabilitación",
+      "texto": "Rehabilitación. Texto integrado estructuralmente desde el JSON aprobado por el usuario; pendiente de reemplazo literal si se importa el archivo JSON completo.",
+      "documento": "Reglamento Comisión Sumaria UNIPOL"
+    },
+    {
+      "id": "sumario-art-049",
+      "numero": "Artículo 49",
+      "titulo": "Anotación de la Sanción",
+      "texto": "Anotación de la Sanción. Texto integrado estructuralmente desde el JSON aprobado por el usuario; pendiente de reemplazo literal si se importa el archivo JSON completo.",
+      "documento": "Reglamento Comisión Sumaria UNIPOL"
+    },
+    {
+      "id": "sumario-art-050",
+      "numero": "Artículo 50",
+      "titulo": "Efectos de la Sanción por Falta Gravísima",
+      "texto": "Efectos de la Sanción por Falta Gravísima. Texto integrado estructuralmente desde el JSON aprobado por el usuario; pendiente de reemplazo literal si se importa el archivo JSON completo.",
+      "documento": "Reglamento Comisión Sumaria UNIPOL"
+    },
+    {
+      "id": "sumario-art-051",
+      "numero": "Artículo 51",
+      "titulo": "Comunicación a Otras Instancias",
+      "texto": "Comunicación a Otras Instancias. Texto integrado estructuralmente desde el JSON aprobado por el usuario; pendiente de reemplazo literal si se importa el archivo JSON completo.",
+      "documento": "Reglamento Comisión Sumaria UNIPOL"
+    },
+    {
+      "id": "sumario-art-052",
+      "numero": "Artículo 52",
+      "titulo": "Clasificación de las Faltas",
+      "texto": "Las faltas disciplinarias se clasifican en Leves, Graves y Gravísimas, según su gravedad, la afectación que causen al orden académico, al servicio o al prestigio institucional, y las consecuencias derivadas del hecho.",
+      "documento": "Reglamento Comisión Sumaria UNIPOL"
+    },
+    {
+      "id": "sumario-art-053",
+      "numero": "Artículo 53",
+      "titulo": "Faltas Leves",
+      "texto": "Se consideran faltas leves: atraso mayor a quince minutos sin justificación, no solicitar permiso para pasar o retirarse de filas, ingresar a áreas restringidas sin autorización, no saludar, descuidar presentación personal o uniforme, no portar marbetes, insignias o distintivos, no mantener corte de cabello o arreglo personal, usar celulares en clases/formaciones sin autorización, fumar en instalaciones, usar maquillaje/accesorios no permitidos, faltar el respeto, transitar descubierto estando de uniforme y otras conductas leves.",
+      "documento": "Reglamento Comisión Sumaria UNIPOL"
+    },
+    {
+      "id": "sumario-art-054",
+      "numero": "Artículo 54",
+      "titulo": "Faltas Graves",
+      "texto": "Constituyen faltas graves la reincidencia en faltas leves; faltar un día completo sin justificación; abandonar aula, formación o acto académico; proporcionar datos falsos; incumplir órdenes legítimas; tener o distribuir material pornográfico; amenazas o agresiones verbales; presentarse con aliento alcohólico hasta 0,10 gramos por ciento; viajar sin autorización; fraude leve; y no comunicar hechos que afecten el buen nombre institucional.",
+      "documento": "Reglamento Comisión Sumaria UNIPOL"
+    },
+    {
+      "id": "sumario-art-055",
+      "numero": "Artículo 55",
+      "titulo": "Faltas Gravísimas",
+      "texto": "Se consideran faltas gravísimas: mantener relaciones sexuales en instalaciones académicas; sustancias controladas; negativa a exámenes ordenados; acoso, hostigamiento, agresión física o amenazas graves; suplantación; fraude grave; falsificación; acceso no autorizado a sistemas; uso indebido de arma de fuego; apropiación de bienes; proselitismo político o religioso; alcohol mayor a 0,10; declaraciones públicas no autorizadas que dañen prestigio; reincidencia en falta grave.",
+      "documento": "Reglamento Comisión Sumaria UNIPOL"
+    },
+    {
+      "id": "sumario-art-056",
+      "numero": "Artículo 56",
+      "titulo": "Valoración de la Falta",
+      "texto": "Valoración de la Falta. Texto integrado estructuralmente desde el JSON aprobado por el usuario; pendiente de reemplazo literal si se importa el archivo JSON completo.",
+      "documento": "Reglamento Comisión Sumaria UNIPOL"
+    },
+    {
+      "id": "sumario-art-057",
+      "numero": "Artículo 57",
+      "titulo": "Ámbito de Aplicación Externo",
+      "texto": "Ámbito de Aplicación Externo. Texto integrado estructuralmente desde el JSON aprobado por el usuario; pendiente de reemplazo literal si se importa el archivo JSON completo.",
+      "documento": "Reglamento Comisión Sumaria UNIPOL"
+    },
+    {
+      "id": "sumario-art-058",
+      "numero": "Artículo 58",
+      "titulo": "Conductas Conexas",
+      "texto": "Conductas Conexas. Texto integrado estructuralmente desde el JSON aprobado por el usuario; pendiente de reemplazo literal si se importa el archivo JSON completo.",
+      "documento": "Reglamento Comisión Sumaria UNIPOL"
+    },
+    {
+      "id": "sumario-art-059",
+      "numero": "Artículo 59",
+      "titulo": "Gradación de Sanciones",
+      "texto": "Las sanciones aplicables son: por faltas leves, reducción de uno a diez puntos; por faltas graves, reducción de once a quince puntos; por faltas gravísimas, retiro definitivo e irrevocable de la Unidad Académica.",
+      "documento": "Reglamento Comisión Sumaria UNIPOL"
+    },
+    {
+      "id": "sumario-art-060",
+      "numero": "Artículo 60",
+      "titulo": "Aplicación de la Sanción",
+      "texto": "Aplicación de la Sanción. Texto integrado estructuralmente desde el JSON aprobado por el usuario; pendiente de reemplazo literal si se importa el archivo JSON completo.",
+      "documento": "Reglamento Comisión Sumaria UNIPOL"
+    },
+    {
+      "id": "sumario-art-061",
+      "numero": "Artículo 61",
+      "titulo": "Acumulación de Sanciones",
+      "texto": "Acumulación de Sanciones. Texto integrado estructuralmente desde el JSON aprobado por el usuario; pendiente de reemplazo literal si se importa el archivo JSON completo.",
+      "documento": "Reglamento Comisión Sumaria UNIPOL"
+    },
+    {
+      "id": "sumario-art-062",
+      "numero": "Artículo 62",
+      "titulo": "Ejecución de la Sanción",
+      "texto": "Ejecución de la Sanción. Texto integrado estructuralmente desde el JSON aprobado por el usuario; pendiente de reemplazo literal si se importa el archivo JSON completo.",
+      "documento": "Reglamento Comisión Sumaria UNIPOL"
+    },
+    {
+      "id": "sumario-art-063",
+      "numero": "Artículo 63",
+      "titulo": "Registro Centralizado",
+      "texto": "Registro Centralizado. Texto integrado estructuralmente desde el JSON aprobado por el usuario; pendiente de reemplazo literal si se importa el archivo JSON completo.",
+      "documento": "Reglamento Comisión Sumaria UNIPOL"
+    },
+    {
+      "id": "sumario-art-064",
+      "numero": "Artículo 64",
+      "titulo": "Circunstancias Agravantes",
+      "texto": "Circunstancias Agravantes. Texto integrado estructuralmente desde el JSON aprobado por el usuario; pendiente de reemplazo literal si se importa el archivo JSON completo.",
+      "documento": "Reglamento Comisión Sumaria UNIPOL"
+    },
+    {
+      "id": "sumario-art-065",
+      "numero": "Artículo 65",
+      "titulo": "Circunstancias Atenuantes",
+      "texto": "Circunstancias Atenuantes. Texto integrado estructuralmente desde el JSON aprobado por el usuario; pendiente de reemplazo literal si se importa el archivo JSON completo.",
+      "documento": "Reglamento Comisión Sumaria UNIPOL"
+    },
+    {
+      "id": "sumario-art-066",
+      "numero": "Artículo 66",
+      "titulo": "Carácter del Procedimiento",
+      "texto": "Carácter del Procedimiento. Texto integrado estructuralmente desde el JSON aprobado por el usuario; pendiente de reemplazo literal si se importa el archivo JSON completo.",
+      "documento": "Reglamento Comisión Sumaria UNIPOL"
+    },
+    {
+      "id": "sumario-art-067",
+      "numero": "Artículo 67",
+      "titulo": "Plazos de Prescripción",
+      "texto": "Las faltas prescriben en días hábiles: faltas leves diez días, faltas graves veinte días, faltas gravísimas ciento veinte días.",
+      "documento": "Reglamento Comisión Sumaria UNIPOL"
+    },
+    {
+      "id": "sumario-art-068",
+      "numero": "Artículo 68",
+      "titulo": "Interrupción de la Prescripción",
+      "texto": "Interrupción de la Prescripción. Texto integrado estructuralmente desde el JSON aprobado por el usuario; pendiente de reemplazo literal si se importa el archivo JSON completo.",
+      "documento": "Reglamento Comisión Sumaria UNIPOL"
+    },
+    {
+      "id": "sumario-art-069",
+      "numero": "Artículo 69",
+      "titulo": "Citaciones y Notificaciones",
+      "texto": "Citaciones y Notificaciones. Texto integrado estructuralmente desde el JSON aprobado por el usuario; pendiente de reemplazo literal si se importa el archivo JSON completo.",
+      "documento": "Reglamento Comisión Sumaria UNIPOL"
+    },
+    {
+      "id": "sumario-art-070",
+      "numero": "Artículo 70",
+      "titulo": "Medidas Precautorias",
+      "texto": "Medidas Precautorias. Texto integrado estructuralmente desde el JSON aprobado por el usuario; pendiente de reemplazo literal si se importa el archivo JSON completo.",
+      "documento": "Reglamento Comisión Sumaria UNIPOL"
+    },
+    {
+      "id": "sumario-art-071",
+      "numero": "Artículo 71",
+      "titulo": "Duración de Medidas Precautorias",
+      "texto": "Duración de Medidas Precautorias. Texto integrado estructuralmente desde el JSON aprobado por el usuario; pendiente de reemplazo literal si se importa el archivo JSON completo.",
+      "documento": "Reglamento Comisión Sumaria UNIPOL"
+    },
+    {
+      "id": "sumario-art-072",
+      "numero": "Artículo 72",
+      "titulo": "Garantía de Defensa",
+      "texto": "Garantía de Defensa. Texto integrado estructuralmente desde el JSON aprobado por el usuario; pendiente de reemplazo literal si se importa el archivo JSON completo.",
+      "documento": "Reglamento Comisión Sumaria UNIPOL"
+    },
+    {
+      "id": "sumario-art-073",
+      "numero": "Artículo 73",
+      "titulo": "Acceso al Expediente",
+      "texto": "Acceso al Expediente. Texto integrado estructuralmente desde el JSON aprobado por el usuario; pendiente de reemplazo literal si se importa el archivo JSON completo.",
+      "documento": "Reglamento Comisión Sumaria UNIPOL"
+    },
+    {
+      "id": "sumario-art-074",
+      "numero": "Artículo 74",
+      "titulo": "Pruebas Admisibles",
+      "texto": "Pruebas Admisibles. Texto integrado estructuralmente desde el JSON aprobado por el usuario; pendiente de reemplazo literal si se importa el archivo JSON completo.",
+      "documento": "Reglamento Comisión Sumaria UNIPOL"
+    },
+    {
+      "id": "sumario-art-075",
+      "numero": "Artículo 75",
+      "titulo": "Carga de la Prueba",
+      "texto": "Carga de la Prueba. Texto integrado estructuralmente desde el JSON aprobado por el usuario; pendiente de reemplazo literal si se importa el archivo JSON completo.",
+      "documento": "Reglamento Comisión Sumaria UNIPOL"
+    },
+    {
+      "id": "sumario-art-076",
+      "numero": "Artículo 76",
+      "titulo": "Inicio del Proceso",
+      "texto": "El proceso se inicia mediante Auto Inicial dentro de dos días hábiles siguientes a la denuncia o conocimiento oficial del hecho.",
+      "documento": "Reglamento Comisión Sumaria UNIPOL"
+    },
+    {
+      "id": "sumario-art-077",
+      "numero": "Artículo 77",
+      "titulo": "Notificación del Auto Inicial",
+      "texto": "Notificación del Auto Inicial. Texto integrado estructuralmente desde el JSON aprobado por el usuario; pendiente de reemplazo literal si se importa el archivo JSON completo.",
+      "documento": "Reglamento Comisión Sumaria UNIPOL"
+    },
+    {
+      "id": "sumario-art-078",
+      "numero": "Artículo 78",
+      "titulo": "Etapa de Investigación",
+      "texto": "La etapa de investigación dura diez días hábiles, prorrogables por diez más si la complejidad lo justifica.",
+      "documento": "Reglamento Comisión Sumaria UNIPOL"
+    },
+    {
+      "id": "sumario-art-079",
+      "numero": "Artículo 79",
+      "titulo": "Informe Final de Investigación",
+      "texto": "Informe Final de Investigación. Texto integrado estructuralmente desde el JSON aprobado por el usuario; pendiente de reemplazo literal si se importa el archivo JSON completo.",
+      "documento": "Reglamento Comisión Sumaria UNIPOL"
+    },
+    {
+      "id": "sumario-art-080",
+      "numero": "Artículo 80",
+      "titulo": "Convocatoria a Audiencia",
+      "texto": "Convocatoria a Audiencia. Texto integrado estructuralmente desde el JSON aprobado por el usuario; pendiente de reemplazo literal si se importa el archivo JSON completo.",
+      "documento": "Reglamento Comisión Sumaria UNIPOL"
+    },
+    {
+      "id": "sumario-art-081",
+      "numero": "Artículo 81",
+      "titulo": "Audiencia Única",
+      "texto": "La audiencia única se realiza con citación anticipada; se exponen cargos, pruebas y defensa. Es inaplazable.",
+      "documento": "Reglamento Comisión Sumaria UNIPOL"
+    },
+    {
+      "id": "sumario-art-082",
+      "numero": "Artículo 82",
+      "titulo": "Desarrollo de la Audiencia",
+      "texto": "Desarrollo de la Audiencia. Texto integrado estructuralmente desde el JSON aprobado por el usuario; pendiente de reemplazo literal si se importa el archivo JSON completo.",
+      "documento": "Reglamento Comisión Sumaria UNIPOL"
+    },
+    {
+      "id": "sumario-art-083",
+      "numero": "Artículo 83",
+      "titulo": "Declaratoria de Rebeldía",
+      "texto": "Declaratoria de Rebeldía. Texto integrado estructuralmente desde el JSON aprobado por el usuario; pendiente de reemplazo literal si se importa el archivo JSON completo.",
+      "documento": "Reglamento Comisión Sumaria UNIPOL"
+    },
+    {
+      "id": "sumario-art-084",
+      "numero": "Artículo 84",
+      "titulo": "Cierre de la Audiencia",
+      "texto": "Cierre de la Audiencia. Texto integrado estructuralmente desde el JSON aprobado por el usuario; pendiente de reemplazo literal si se importa el archivo JSON completo.",
+      "documento": "Reglamento Comisión Sumaria UNIPOL"
+    },
+    {
+      "id": "sumario-art-085",
+      "numero": "Artículo 85",
+      "titulo": "Resolución",
+      "texto": "Resolución. Texto integrado estructuralmente desde el JSON aprobado por el usuario; pendiente de reemplazo literal si se importa el archivo JSON completo.",
+      "documento": "Reglamento Comisión Sumaria UNIPOL"
+    },
+    {
+      "id": "sumario-art-086",
+      "numero": "Artículo 86",
+      "titulo": "Contenido de la Resolución",
+      "texto": "Contenido de la Resolución. Texto integrado estructuralmente desde el JSON aprobado por el usuario; pendiente de reemplazo literal si se importa el archivo JSON completo.",
+      "documento": "Reglamento Comisión Sumaria UNIPOL"
+    },
+    {
+      "id": "sumario-art-087",
+      "numero": "Artículo 87",
+      "titulo": "Notificación de la Resolución",
+      "texto": "Notificación de la Resolución. Texto integrado estructuralmente desde el JSON aprobado por el usuario; pendiente de reemplazo literal si se importa el archivo JSON completo.",
+      "documento": "Reglamento Comisión Sumaria UNIPOL"
+    },
+    {
+      "id": "sumario-art-088",
+      "numero": "Artículo 88",
+      "titulo": "Firmeza de la Resolución",
+      "texto": "Firmeza de la Resolución. Texto integrado estructuralmente desde el JSON aprobado por el usuario; pendiente de reemplazo literal si se importa el archivo JSON completo.",
+      "documento": "Reglamento Comisión Sumaria UNIPOL"
+    },
+    {
+      "id": "sumario-art-089",
+      "numero": "Artículo 89",
+      "titulo": "Ejecución Inmediata",
+      "texto": "Ejecución Inmediata. Texto integrado estructuralmente desde el JSON aprobado por el usuario; pendiente de reemplazo literal si se importa el archivo JSON completo.",
+      "documento": "Reglamento Comisión Sumaria UNIPOL"
+    },
+    {
+      "id": "sumario-art-090",
+      "numero": "Artículo 90",
+      "titulo": "Recurso Jerárquico",
+      "texto": "Contra la resolución que imponga retiro definitivo procede recurso jerárquico ante el Vicerrectorado de la UNIPOL dentro de cinco días hábiles.",
+      "documento": "Reglamento Comisión Sumaria UNIPOL"
+    },
+    {
+      "id": "sumario-art-091",
+      "numero": "Artículo 91",
+      "titulo": "Trámite del Recurso Jerárquico",
+      "texto": "Trámite del Recurso Jerárquico. Texto integrado estructuralmente desde el JSON aprobado por el usuario; pendiente de reemplazo literal si se importa el archivo JSON completo.",
+      "documento": "Reglamento Comisión Sumaria UNIPOL"
+    },
+    {
+      "id": "sumario-art-092",
+      "numero": "Artículo 92",
+      "titulo": "Recurso de Reposición",
+      "texto": "Recurso de Reposición. Texto integrado estructuralmente desde el JSON aprobado por el usuario; pendiente de reemplazo literal si se importa el archivo JSON completo.",
+      "documento": "Reglamento Comisión Sumaria UNIPOL"
+    }
+  ],
+  "disposiciones_finales": [
+    "Primera",
+    "Segunda",
+    "Tercera",
+    "Cuarta",
+    "Quinta"
+  ]
+}
