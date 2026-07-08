@@ -3,659 +3,860 @@
     "documento": "REGLAMENTO DE LA COMISIÓN SUMARIA DE LA ESCUELA SUPERIOR DE POLICÍAS",
     "aprobacion": "Resolución Administrativa N° 115/2024 del Consejo Académico Universitario UNIPOL, 21 de mayo de 2024",
     "homologacion": "Resolución Administrativa N° 0234/24 del Comando General de la Policía Boliviana, 17 de septiembre de 2024",
-    "articulos_totales": 92
+    "articulos_totales": 92,
+    "estado": "Transcripción completa proporcionada y confirmada por el usuario",
+    "ambito_aplicacion": "Cursantes de posgrado, autoridades, docentes y personal administrativo de la Escuela Superior de Policías y Sub Sedes Académicas"
   },
   "articulos": [
     {
       "id": "sumario-art-001",
       "numero": "Artículo 1",
       "titulo": "Objeto",
-      "texto": "Objeto. Texto integrado estructuralmente desde el JSON aprobado por el usuario; pendiente de reemplazo literal si se importa el archivo JSON completo.",
-      "documento": "Reglamento Comisión Sumaria UNIPOL"
+      "texto": "El presente Reglamento tiene por objeto regular la organización, integración, atribuciones, funcionamiento y procedimiento de la Comisión Sumaria de la Escuela Superior de Policías y sus Sub Sedes Académicas, así como establecer las faltas disciplinarias, sanciones y garantías procesales aplicables a las y los cursantes de posgrado de la Unidad Académica.",
+      "documento": "Reglamento Comisión Sumaria UNIPOL",
+      "palabras_clave": [],
+      "categoria": "general"
     },
     {
       "id": "sumario-art-002",
       "numero": "Artículo 2",
       "titulo": "Ámbito de Aplicación",
-      "texto": "Ámbito de Aplicación. Texto integrado estructuralmente desde el JSON aprobado por el usuario; pendiente de reemplazo literal si se importa el archivo JSON completo.",
-      "documento": "Reglamento Comisión Sumaria UNIPOL"
+      "texto": "Las disposiciones del presente Reglamento son de aplicación obligatoria para todas y todos los cursantes de posgrado de la Escuela Superior de Policías, autoridades, personal docente, administrativo y demás personas que intervengan en los procesos sumarios internos.",
+      "documento": "Reglamento Comisión Sumaria UNIPOL",
+      "palabras_clave": [],
+      "categoria": "general"
     },
     {
       "id": "sumario-art-003",
       "numero": "Artículo 3",
       "titulo": "Principios Rectores",
-      "texto": "Principios Rectores. Texto integrado estructuralmente desde el JSON aprobado por el usuario; pendiente de reemplazo literal si se importa el archivo JSON completo.",
-      "documento": "Reglamento Comisión Sumaria UNIPOL"
+      "texto": "El proceso sumario interno se rige por los principios de: 1. Legalidad: Toda acción o sanción debe responder a una norma expresa, vigente y anterior al hecho. 2. Imparcialidad: Se garantiza el tratamiento igualitario sin condicionamientos, preferencias ni influencias externas. 3. Proporcionalidad: La sanción guardará relación directa con la gravedad de la falta y las circunstancias del hecho. 4. Libre Valoración de la Prueba: Las pruebas se apreciarán conforme a la sana crítica, la lógica y la experiencia. 5. Presunción de Inocencia: El procesado se considera inocente mientras no se declare su responsabilidad mediante resolución firme. 6. Tipicidad: Solo se sancionan conductas descritas expresamente y previamente como falta disciplinaria. 7. Debido Proceso: Se garantiza el derecho a la defensa, acceso a las pruebas, notificación de las actuaciones y motivación de las resoluciones. 8. Jerarquía Normativa: En caso de contradicción, prevalecerán las normas de mayor jerarquía. 9. Celeridad y Economía Procesal: El trámite se desarrollará sin dilaciones innecesarias, evitando formalidades que no afecten la validez del procedimiento.",
+      "documento": "Reglamento Comisión Sumaria UNIPOL",
+      "palabras_clave": [],
+      "categoria": "general"
     },
     {
       "id": "sumario-art-004",
       "numero": "Artículo 4",
       "titulo": "Definiciones",
-      "texto": "Definiciones. Texto integrado estructuralmente desde el JSON aprobado por el usuario; pendiente de reemplazo literal si se importa el archivo JSON completo.",
-      "documento": "Reglamento Comisión Sumaria UNIPOL"
+      "texto": "Para efectos del presente Reglamento se entiende por: - Escuela Superior de Policías: Unidad Académica de Posgrado de la Universidad Policial \"Mariscal Antonio José de Sucre\", con Sub Sedes Académicas en el interior del país. - Cursante o Posgraduante: Servidora o servidor público policial admitido y matriculado en programas de posgrado de la Unidad Académica. - Comisión Sumaria: Instancia colegiada competente para conocer, sustanciar y resolver procesos por faltas gravísimas. - Falta Disciplinaria: Toda acción u omisión contraria al ordenamiento jurídico, normativa institucional y deberes académicos. - Proceso Sumario Interno: Trámite administrativo disciplinario simplificado y expedito. - Medidas Precautorias: Disposiciones provisionales adoptadas para garantizar el desarrollo del proceso y la eficacia de la resolución. - Prescripción: Extinción de la potestad sancionadora por transcurso del plazo establecido en la norma.",
+      "documento": "Reglamento Comisión Sumaria UNIPOL",
+      "palabras_clave": [],
+      "categoria": "general"
     },
     {
       "id": "sumario-art-005",
       "numero": "Artículo 5",
       "titulo": "Derechos de los Cursantes",
-      "texto": "Derechos de los Cursantes. Texto integrado estructuralmente desde el JSON aprobado por el usuario; pendiente de reemplazo literal si se importa el archivo JSON completo.",
-      "documento": "Reglamento Comisión Sumaria UNIPOL"
+      "texto": "Son derechos de los cursantes: 1. Recibir formación académica y profesional de calidad. 2. Ser tratado con respeto y dignidad. 3. Conocer el presente Reglamento y demás normativa aplicable. 4. Defenderse y ser asistido en el proceso disciplinario. 5. Recibir estímulos y reconocimientos por méritos demostrados. 6. Recurrir las resoluciones que le causen perjuicio.",
+      "documento": "Reglamento Comisión Sumaria UNIPOL",
+      "palabras_clave": [],
+      "categoria": "general"
     },
     {
       "id": "sumario-art-006",
       "numero": "Artículo 6",
       "titulo": "Deberes de los Cursantes",
-      "texto": "Deberes de los Cursantes. Texto integrado estructuralmente desde el JSON aprobado por el usuario; pendiente de reemplazo literal si se importa el archivo JSON completo.",
-      "documento": "Reglamento Comisión Sumaria UNIPOL"
+      "texto": "Son deberes de los cursantes: 1. Cumplir la Constitución Política del Estado, leyes, reglamentos y disposiciones institucionales. 2. Observar conducta acorde a la dignidad de la función policial y académica. 3. Respetar la jerarquía, autoridades, docentes, personal administrativo y compañeros. 4. Cuidar los bienes e instalaciones de la Unidad Académica. 5. Someterse al proceso disciplinario cuando corresponda.",
+      "documento": "Reglamento Comisión Sumaria UNIPOL",
+      "palabras_clave": [],
+      "categoria": "general"
     },
     {
       "id": "sumario-art-007",
       "numero": "Artículo 7",
       "titulo": "Obligaciones Académicas Específicas",
-      "texto": "Obligaciones Académicas Específicas. Texto integrado estructuralmente desde el JSON aprobado por el usuario; pendiente de reemplazo literal si se importa el archivo JSON completo.",
-      "documento": "Reglamento Comisión Sumaria UNIPOL"
+      "texto": "Además de los deberes generales, los cursantes deben: 1. Cumplir con el plan de estudios, asistencia, trabajos prácticos y evaluaciones establecidas. 2. Respetar el régimen de horarios y actividades programadas. 3. Mantener el orden y la disciplina durante el desarrollo de todas las actividades académicas.",
+      "documento": "Reglamento Comisión Sumaria UNIPOL",
+      "palabras_clave": [],
+      "categoria": "general"
     },
     {
       "id": "sumario-art-008",
       "numero": "Artículo 8",
       "titulo": "Prohibiciones Generales",
-      "texto": "Prohibiciones Generales. Texto integrado estructuralmente desde el JSON aprobado por el usuario; pendiente de reemplazo literal si se importa el archivo JSON completo.",
-      "documento": "Reglamento Comisión Sumaria UNIPOL"
+      "texto": "Se prohíbe a los cursantes: 1. Realizar actividades que interfieran con el normal desarrollo de las labores académicas o administrativas. 2. Utilizar el nombre, emblemas o bienes de la Unidad Académica para fines particulares o no autorizados. 3. Retener o sustraer documentos, correspondencia o bienes pertenecientes a la institución o a terceros.",
+      "documento": "Reglamento Comisión Sumaria UNIPOL",
+      "palabras_clave": [],
+      "categoria": "general"
     },
     {
       "id": "sumario-art-009",
       "numero": "Artículo 9",
       "titulo": "Evaluación de Conducta",
-      "texto": "Evaluación de Conducta. Texto integrado estructuralmente desde el JSON aprobado por el usuario; pendiente de reemplazo literal si se importa el archivo JSON completo.",
-      "documento": "Reglamento Comisión Sumaria UNIPOL"
+      "texto": "La conducta y el cumplimiento de deberes se evaluarán de forma permanente, formando parte del promedio final del cursante según los criterios establecidos en el reglamento académico vigente.",
+      "documento": "Reglamento Comisión Sumaria UNIPOL",
+      "palabras_clave": [],
+      "categoria": "general"
     },
     {
       "id": "sumario-art-010",
       "numero": "Artículo 10",
       "titulo": "Registro de Antecedentes",
-      "texto": "Registro de Antecedentes. Texto integrado estructuralmente desde el JSON aprobado por el usuario; pendiente de reemplazo literal si se importa el archivo JSON completo.",
-      "documento": "Reglamento Comisión Sumaria UNIPOL"
+      "texto": "Toda sanción o estímulo se registrará en la hoja de conducta del cursante y se adjuntará a su expediente académico individual.",
+      "documento": "Reglamento Comisión Sumaria UNIPOL",
+      "palabras_clave": [],
+      "categoria": "general"
     },
     {
       "id": "sumario-art-011",
       "numero": "Artículo 11",
       "titulo": "Comunicación de Medidas",
-      "texto": "Comunicación de Medidas. Texto integrado estructuralmente desde el JSON aprobado por el usuario; pendiente de reemplazo literal si se importa el archivo JSON completo.",
-      "documento": "Reglamento Comisión Sumaria UNIPOL"
+      "texto": "Las medidas adoptadas, sanciones o estímulos serán comunicados oficialmente a la unidad de origen del cursante y a la Dirección de Personal correspondiente.",
+      "documento": "Reglamento Comisión Sumaria UNIPOL",
+      "palabras_clave": [],
+      "categoria": "general"
     },
     {
       "id": "sumario-art-012",
       "numero": "Artículo 12",
       "titulo": "Mérito",
-      "texto": "Mérito. Texto integrado estructuralmente desde el JSON aprobado por el usuario; pendiente de reemplazo literal si se importa el archivo JSON completo.",
-      "documento": "Reglamento Comisión Sumaria UNIPOL"
+      "texto": "Se entiende por mérito toda acción positiva, relevante y destacada realizada por el cursante dentro o fuera de la Unidad Académica, que contribuya al prestigio institucional o al desarrollo académico.",
+      "documento": "Reglamento Comisión Sumaria UNIPOL",
+      "palabras_clave": [],
+      "categoria": "estimulos"
     },
     {
       "id": "sumario-art-013",
       "numero": "Artículo 13",
       "titulo": "Estímulo",
-      "texto": "Estímulo. Texto integrado estructuralmente desde el JSON aprobado por el usuario; pendiente de reemplazo literal si se importa el archivo JSON completo.",
-      "documento": "Reglamento Comisión Sumaria UNIPOL"
+      "texto": "Es el reconocimiento institucional otorgado al cursante por su mérito, conducta ejemplar o aporte significativo.",
+      "documento": "Reglamento Comisión Sumaria UNIPOL",
+      "palabras_clave": [],
+      "categoria": "estimulos"
     },
     {
       "id": "sumario-art-014",
       "numero": "Artículo 14",
       "titulo": "Clases de Estímulos",
-      "texto": "Clases de Estímulos. Texto integrado estructuralmente desde el JSON aprobado por el usuario; pendiente de reemplazo literal si se importa el archivo JSON completo.",
-      "documento": "Reglamento Comisión Sumaria UNIPOL"
+      "texto": "Se reconocerán estímulos por: 1. Acciones de cooperación y ayuda a la comunidad. 2. Aportes al mejoramiento institucional. 3. Participación destacada en actividades culturales, artísticas o deportivas. 4. Resultados sobresalientes en investigación y formación académica. 5. Demostración de valores éticos, morales y profesionales en situaciones relevantes.",
+      "documento": "Reglamento Comisión Sumaria UNIPOL",
+      "palabras_clave": [],
+      "categoria": "estimulos"
     },
     {
       "id": "sumario-art-015",
       "numero": "Artículo 15",
       "titulo": "Procedimiento para Otorgar Estímulos",
-      "texto": "Procedimiento para Otorgar Estímulos. Texto integrado estructuralmente desde el JSON aprobado por el usuario; pendiente de reemplazo literal si se importa el archivo JSON completo.",
-      "documento": "Reglamento Comisión Sumaria UNIPOL"
+      "texto": "El reconocimiento se iniciará mediante solicitud o informe fundamentado presentado por cualquier autoridad, docente o compañero, que será evaluado por la autoridad competente para su aprobación.",
+      "documento": "Reglamento Comisión Sumaria UNIPOL",
+      "palabras_clave": [],
+      "categoria": "estimulos"
     },
     {
       "id": "sumario-art-016",
       "numero": "Artículo 16",
       "titulo": "Notificación del Estímulo",
-      "texto": "Notificación del Estímulo. Texto integrado estructuralmente desde el JSON aprobado por el usuario; pendiente de reemplazo literal si se importa el archivo JSON completo.",
-      "documento": "Reglamento Comisión Sumaria UNIPOL"
+      "texto": "El estímulo se comunicará por escrito al cursante, se leerá en formación general y se registrará en su expediente académico.",
+      "documento": "Reglamento Comisión Sumaria UNIPOL",
+      "palabras_clave": [],
+      "categoria": "estimulos"
     },
     {
       "id": "sumario-art-017",
       "numero": "Artículo 17",
       "titulo": "Acumulación de Estímulos",
-      "texto": "Acumulación de Estímulos. Texto integrado estructuralmente desde el JSON aprobado por el usuario; pendiente de reemplazo literal si se importa el archivo JSON completo.",
-      "documento": "Reglamento Comisión Sumaria UNIPOL"
+      "texto": "Los estímulos son acumulables y se tendrán en cuenta al momento de la calificación final y para la designación de delegaciones o representaciones institucionales.",
+      "documento": "Reglamento Comisión Sumaria UNIPOL",
+      "palabras_clave": [],
+      "categoria": "estimulos"
     },
     {
       "id": "sumario-art-018",
       "numero": "Artículo 18",
       "titulo": "Pérdida del Estímulo",
-      "texto": "Pérdida del Estímulo. Texto integrado estructuralmente desde el JSON aprobado por el usuario; pendiente de reemplazo literal si se importa el archivo JSON completo.",
-      "documento": "Reglamento Comisión Sumaria UNIPOL"
+      "texto": "El estímulo podrá ser revocado si se comprueba que se obtuvo mediante información falsa o conducta contraria a los principios institucionales.",
+      "documento": "Reglamento Comisión Sumaria UNIPOL",
+      "palabras_clave": [],
+      "categoria": "estimulos"
     },
     {
       "id": "sumario-art-019",
       "numero": "Artículo 19",
       "titulo": "Autoridades Competentes para Otorgar Estímulos",
-      "texto": "Autoridades Competentes para Otorgar Estímulos. Texto integrado estructuralmente desde el JSON aprobado por el usuario; pendiente de reemplazo literal si se importa el archivo JSON completo.",
-      "documento": "Reglamento Comisión Sumaria UNIPOL"
+      "texto": "Están facultados para otorgar estímulos: 1. El Director Nacional de la Escuela Superior de Policías. 2. El Sub Director Nacional y Jefe de Estudios. 3. Los Directores o Coordinadores de las Sub Sedes Académicas.",
+      "documento": "Reglamento Comisión Sumaria UNIPOL",
+      "palabras_clave": [],
+      "categoria": "estimulos"
     },
     {
       "id": "sumario-art-020",
       "numero": "Artículo 20",
       "titulo": "Registro Centralizado",
-      "texto": "Registro Centralizado. Texto integrado estructuralmente desde el JSON aprobado por el usuario; pendiente de reemplazo literal si se importa el archivo JSON completo.",
-      "documento": "Reglamento Comisión Sumaria UNIPOL"
+      "texto": "La Secretaría Académica llevará un registro actualizado de todos los estímulos otorgados en la Unidad Académica y sus Sub Sedes.",
+      "documento": "Reglamento Comisión Sumaria UNIPOL",
+      "palabras_clave": [],
+      "categoria": "estimulos"
     },
     {
       "id": "sumario-art-021",
       "numero": "Artículo 21",
       "titulo": "Tipos de Estímulos",
-      "texto": "Tipos de Estímulos. Texto integrado estructuralmente desde el JSON aprobado por el usuario; pendiente de reemplazo literal si se importa el archivo JSON completo.",
-      "documento": "Reglamento Comisión Sumaria UNIPOL"
+      "texto": "Se aplicarán los siguientes estímulos: a. Memorándum de felicitación personal. b. Asignación de puntaje adicional en el área afectiva o conducta.",
+      "documento": "Reglamento Comisión Sumaria UNIPOL",
+      "palabras_clave": [],
+      "categoria": "estimulos"
     },
     {
       "id": "sumario-art-022",
       "numero": "Artículo 22",
       "titulo": "Puntuación por Estímulos",
-      "texto": "Puntuación por Estímulos. Texto integrado estructuralmente desde el JSON aprobado por el usuario; pendiente de reemplazo literal si se importa el archivo JSON completo.",
-      "documento": "Reglamento Comisión Sumaria UNIPOL"
+      "texto": "El puntaje adicional que se podrá asignar es: - Director Nacional: de 1 a 15 puntos. - Sub Director Nacional y Jefe de Estudios: de 1 a 10 puntos. - Directores o Coordinadores de Sub Sedes: de 1 a 10 puntos.",
+      "documento": "Reglamento Comisión Sumaria UNIPOL",
+      "palabras_clave": [],
+      "categoria": "estimulos"
     },
     {
       "id": "sumario-art-023",
       "numero": "Artículo 23",
       "titulo": "Competencia de la Comisión Sumaria",
-      "texto": "Competencia de la Comisión Sumaria. Texto integrado estructuralmente desde el JSON aprobado por el usuario; pendiente de reemplazo literal si se importa el archivo JSON completo.",
-      "documento": "Reglamento Comisión Sumaria UNIPOL"
+      "texto": "La Comisión Sumaria es la única instancia competente para conocer, sustanciar y resolver los procesos disciplinarios por la comisión de faltas gravísimas cometidas por cursantes de posgrado.",
+      "documento": "Reglamento Comisión Sumaria UNIPOL",
+      "palabras_clave": [],
+      "categoria": "comision"
     },
     {
       "id": "sumario-art-024",
       "numero": "Artículo 24",
       "titulo": "Integración de la Comisión Sumaria",
-      "texto": "Integración de la Comisión Sumaria. Texto integrado estructuralmente desde el JSON aprobado por el usuario; pendiente de reemplazo literal si se importa el archivo JSON completo.",
-      "documento": "Reglamento Comisión Sumaria UNIPOL"
+      "texto": "La Comisión Sumaria se integra de la siguiente manera: 1. Presidente: El Sub Director Nacional y Jefe de Estudios de la Escuela Superior de Policías; en las Sub Sedes Académicas, el Jefe Académico o quien haga sus veces. 2. Secretario: El Asesor Jurídico de la Unidad Académica; en las Sub Sedes, un docente con título de Abogado. 3. Primer Vocal: El Jefe de Departamento Académico correspondiente. 4. Segundo Vocal: Un docente titular de la Unidad Académica. 5. Investigador: Personal designado expresamente para la indagación de los hechos. 6. Oficial de Diligencias: Encargado de las citaciones, notificaciones y custodia del expediente.",
+      "documento": "Reglamento Comisión Sumaria UNIPOL",
+      "palabras_clave": [],
+      "categoria": "comision"
     },
     {
       "id": "sumario-art-025",
       "numero": "Artículo 25",
       "titulo": "Duración del Mandato",
-      "texto": "Duración del Mandato. Texto integrado estructuralmente desde el JSON aprobado por el usuario; pendiente de reemplazo literal si se importa el archivo JSON completo.",
-      "documento": "Reglamento Comisión Sumaria UNIPOL"
+      "texto": "Los miembros de la Comisión Sumaria ejercerán sus funciones por el periodo académico correspondiente, pudiendo ser reasignados cuando cambien sus cargos o condiciones de servicio.",
+      "documento": "Reglamento Comisión Sumaria UNIPOL",
+      "palabras_clave": [],
+      "categoria": "comision"
     },
     {
       "id": "sumario-art-026",
       "numero": "Artículo 26",
       "titulo": "Requisitos para ser Miembro",
-      "texto": "Requisitos para ser Miembro. Texto integrado estructuralmente desde el JSON aprobado por el usuario; pendiente de reemplazo literal si se importa el archivo JSON completo.",
-      "documento": "Reglamento Comisión Sumaria UNIPOL"
+      "texto": "Para integrar la Comisión Sumaria se requiere: 1. Estar en servicio activo en la Unidad Académica. 2. No tener sanciones disciplinarias ejecutoriadas en los últimos dos años. 3. No tener parentesco hasta el cuarto grado de consanguinidad o segundo de afinidad con el procesado.",
+      "documento": "Reglamento Comisión Sumaria UNIPOL",
+      "palabras_clave": [],
+      "categoria": "comision"
     },
     {
       "id": "sumario-art-027",
       "numero": "Artículo 27",
       "titulo": "Incompatibilidades",
-      "texto": "Incompatibilidades. Texto integrado estructuralmente desde el JSON aprobado por el usuario; pendiente de reemplazo literal si se importa el archivo JSON completo.",
-      "documento": "Reglamento Comisión Sumaria UNIPOL"
+      "texto": "No podrán formar parte de la Comisión quienes hayan intervenido directamente en los hechos objeto del proceso o tengan interés personal en el resultado del mismo.",
+      "documento": "Reglamento Comisión Sumaria UNIPOL",
+      "palabras_clave": [],
+      "categoria": "comision"
     },
     {
       "id": "sumario-art-028",
       "numero": "Artículo 28",
       "titulo": "Excusa y Recusación",
-      "texto": "Excusa y Recusación. Texto integrado estructuralmente desde el JSON aprobado por el usuario; pendiente de reemplazo literal si se importa el archivo JSON completo.",
-      "documento": "Reglamento Comisión Sumaria UNIPOL"
+      "texto": "Los miembros de la Comisión deberán excusarse de conocer el proceso cuando concurran los motivos señalados en el artículo anterior; asimismo, el procesado podrá recusarlos dentro de los tres días hábiles siguientes a su notificación.",
+      "documento": "Reglamento Comisión Sumaria UNIPOL",
+      "palabras_clave": [],
+      "categoria": "comision"
     },
     {
       "id": "sumario-art-029",
       "numero": "Artículo 29",
       "titulo": "Designación de Suplentes",
-      "texto": "Designación de Suplentes. Texto integrado estructuralmente desde el JSON aprobado por el usuario; pendiente de reemplazo literal si se importa el archivo JSON completo.",
-      "documento": "Reglamento Comisión Sumaria UNIPOL"
+      "texto": "En caso de excusa, recusación o impedimento temporal de un miembro, se designará un suplente que cumpla con los mismos requisitos.",
+      "documento": "Reglamento Comisión Sumaria UNIPOL",
+      "palabras_clave": [],
+      "categoria": "comision"
     },
     {
       "id": "sumario-art-030",
       "numero": "Artículo 30",
       "titulo": "Atribuciones de la Comisión Sumaria",
-      "texto": "Atribuciones de la Comisión Sumaria. Texto integrado estructuralmente desde el JSON aprobado por el usuario; pendiente de reemplazo literal si se importa el archivo JSON completo.",
-      "documento": "Reglamento Comisión Sumaria UNIPOL"
+      "texto": "Son atribuciones de la Comisión Sumaria: 1. Instaurar de oficio o por denuncia el proceso sumario interno. 2. Designar al investigador y demás personal que intervenga. 3. Adoptar medidas precautorias cuando corresponda. 4. Recibir y valorar todas las pruebas de cargo y descargo. 5. Dictar la resolución que corresponda. 6. Declarar la rebeldía cuando proceda. 7. Designar defensor de oficio si el procesado no cuenta con uno.",
+      "documento": "Reglamento Comisión Sumaria UNIPOL",
+      "palabras_clave": [],
+      "categoria": "comision"
     },
     {
       "id": "sumario-art-031",
       "numero": "Artículo 31",
       "titulo": "Sesiones de la Comisión",
-      "texto": "Sesiones de la Comisión. Texto integrado estructuralmente desde el JSON aprobado por el usuario; pendiente de reemplazo literal si se importa el archivo JSON completo.",
-      "documento": "Reglamento Comisión Sumaria UNIPOL"
+      "texto": "La Comisión sesionará de forma ordinaria o extraordinaria cuando sea convocada por su Presidente; sus decisiones se adoptarán por mayoría simple de votos, y en caso de empate el Presidente tendrá voto dirimente.",
+      "documento": "Reglamento Comisión Sumaria UNIPOL",
+      "palabras_clave": [],
+      "categoria": "comision"
     },
     {
       "id": "sumario-art-032",
       "numero": "Artículo 32",
       "titulo": "Actas de Sesión",
-      "texto": "Actas de Sesión. Texto integrado estructuralmente desde el JSON aprobado por el usuario; pendiente de reemplazo literal si se importa el archivo JSON completo.",
-      "documento": "Reglamento Comisión Sumaria UNIPOL"
+      "texto": "De cada sesión se levantará un acta firmada por todos los miembros asistentes, que quedará archivada junto al expediente respectivo.",
+      "documento": "Reglamento Comisión Sumaria UNIPOL",
+      "palabras_clave": [],
+      "categoria": "comision"
     },
     {
       "id": "sumario-art-033",
       "numero": "Artículo 33",
       "titulo": "Funciones del Presidente",
-      "texto": "Funciones del Presidente. Texto integrado estructuralmente desde el JSON aprobado por el usuario; pendiente de reemplazo literal si se importa el archivo JSON completo.",
-      "documento": "Reglamento Comisión Sumaria UNIPOL"
+      "texto": "Corresponde al Presidente: 1. Representar a la Comisión. 2. Convocar, presidir y dirigir las sesiones. 3. Garantizar el cumplimiento de los principios del debido proceso. 4. Suscribir las resoluciones y comunicaciones oficiales.",
+      "documento": "Reglamento Comisión Sumaria UNIPOL",
+      "palabras_clave": [],
+      "categoria": "comision"
     },
     {
       "id": "sumario-art-034",
       "numero": "Artículo 34",
       "titulo": "Funciones del Secretario",
-      "texto": "Funciones del Secretario. Texto integrado estructuralmente desde el JSON aprobado por el usuario; pendiente de reemplazo literal si se importa el archivo JSON completo.",
-      "documento": "Reglamento Comisión Sumaria UNIPOL"
+      "texto": "Corresponde al Secretario: 1. Elaborar las actas de sesión. 2. Custodiar la documentación y el expediente del proceso. 3. Verificar el cumplimiento de los plazos procesales. 4. Notificar las actuaciones y resoluciones.",
+      "documento": "Reglamento Comisión Sumaria UNIPOL",
+      "palabras_clave": [],
+      "categoria": "comision"
     },
     {
       "id": "sumario-art-035",
       "numero": "Artículo 35",
       "titulo": "Funciones de los Vocales",
-      "texto": "Funciones de los Vocales. Texto integrado estructuralmente desde el JSON aprobado por el usuario; pendiente de reemplazo literal si se importa el archivo JSON completo.",
-      "documento": "Reglamento Comisión Sumaria UNIPOL"
+      "texto": "Corresponde a los Vocales: 1. Estudiar el expediente y analizar las pruebas. 2. Participar en la deliberación y votación de la resolución. 3. Emitir voto fundado si discrepan con la mayoría.",
+      "documento": "Reglamento Comisión Sumaria UNIPOL",
+      "palabras_clave": [],
+      "categoria": "comision"
     },
     {
       "id": "sumario-art-036",
       "numero": "Artículo 36",
       "titulo": "Funciones del Investigador",
-      "texto": "Funciones del Investigador. Texto integrado estructuralmente desde el JSON aprobado por el usuario; pendiente de reemplazo literal si se importa el archivo JSON completo.",
-      "documento": "Reglamento Comisión Sumaria UNIPOL"
+      "texto": "Corresponde al Investigador: 1. Practicar todas las diligencias necesarias para el esclarecimiento de los hechos. 2. Recabar pruebas, declaraciones y antecedentes relacionados con el caso. 3. Entrevistar a testigos, al denunciante y al procesado cuando corresponda. 4. Solicitar informes, documentos y peritajes a las instancias respectivas. 5. Elaborar el informe final de investigación con conclusiones fundadas y recomendaciones claras.",
+      "documento": "Reglamento Comisión Sumaria UNIPOL",
+      "palabras_clave": [],
+      "categoria": "comision"
     },
     {
       "id": "sumario-art-037",
       "numero": "Artículo 37",
       "titulo": "Funciones del Oficial de Diligencias",
-      "texto": "Funciones del Oficial de Diligencias. Texto integrado estructuralmente desde el JSON aprobado por el usuario; pendiente de reemplazo literal si se importa el archivo JSON completo.",
-      "documento": "Reglamento Comisión Sumaria UNIPOL"
+      "texto": "Corresponde al Oficial de Diligencias: 1. Realizar las citaciones y notificaciones en los plazos establecidos, dejando constancia escrita. 2. Entregar la documentación y copias del expediente al procesado y a su defensor. 3. Custodiar los bienes, elementos o evidencias relacionados con el proceso. 4. Auxiliar a la Comisión y al Investigador en las actuaciones que se le soliciten.",
+      "documento": "Reglamento Comisión Sumaria UNIPOL",
+      "palabras_clave": [],
+      "categoria": "comision"
     },
     {
       "id": "sumario-art-038",
       "numero": "Artículo 38",
       "titulo": "Deber de Reserva",
-      "texto": "Deber de Reserva. Texto integrado estructuralmente desde el JSON aprobado por el usuario; pendiente de reemplazo literal si se importa el archivo JSON completo.",
-      "documento": "Reglamento Comisión Sumaria UNIPOL"
+      "texto": "Todos los miembros y personal que intervenga en el proceso guardarán reserva absoluta sobre las actuaciones, documentos y deliberaciones hasta que la resolución quede firme y definitiva.",
+      "documento": "Reglamento Comisión Sumaria UNIPOL",
+      "palabras_clave": [],
+      "categoria": "comision"
     },
     {
       "id": "sumario-art-039",
       "numero": "Artículo 39",
       "titulo": "Responsabilidad de los Miembros",
-      "texto": "Responsabilidad de los Miembros. Texto integrado estructuralmente desde el JSON aprobado por el usuario; pendiente de reemplazo literal si se importa el archivo JSON completo.",
-      "documento": "Reglamento Comisión Sumaria UNIPOL"
+      "texto": "Los miembros de la Comisión responden personalmente por las infracciones, omisiones o irregularidades que cometan en el ejercicio de sus funciones, conforme a la normativa vigente de la Policía Boliviana y la UNIPOL.",
+      "documento": "Reglamento Comisión Sumaria UNIPOL",
+      "palabras_clave": [],
+      "categoria": "comision"
     },
     {
       "id": "sumario-art-040",
       "numero": "Artículo 40",
       "titulo": "Apoyo Técnico y Administrativo",
-      "texto": "Apoyo Técnico y Administrativo. Texto integrado estructuralmente desde el JSON aprobado por el usuario; pendiente de reemplazo literal si se importa el archivo JSON completo.",
-      "documento": "Reglamento Comisión Sumaria UNIPOL"
+      "texto": "La Dirección Nacional de la Escuela Superior de Policías proporcionará el apoyo logístico, técnico, de personal y recursos necesarios para el correcto funcionamiento de la Comisión Sumaria en todas sus Sub Sedes.",
+      "documento": "Reglamento Comisión Sumaria UNIPOL",
+      "palabras_clave": [],
+      "categoria": "comision"
     },
     {
       "id": "sumario-art-041",
       "numero": "Artículo 41",
       "titulo": "Clasificación Previa",
-      "texto": "Clasificación Previa. Texto integrado estructuralmente desde el JSON aprobado por el usuario; pendiente de reemplazo literal si se importa el archivo JSON completo.",
-      "documento": "Reglamento Comisión Sumaria UNIPOL"
+      "texto": "Las conductas que no estén expresamente calificadas en este reglamento como falta disciplinaria no podrán ser sancionadas, sin perjuicio de la aplicación directa de normas de mayor jerarquía que así lo establezcan.",
+      "documento": "Reglamento Comisión Sumaria UNIPOL",
+      "palabras_clave": [],
+      "categoria": "general"
     },
     {
       "id": "sumario-art-042",
       "numero": "Artículo 42",
       "titulo": "Causales de Exención de Responsabilidad",
-      "texto": "Causales de Exención de Responsabilidad. Texto integrado estructuralmente desde el JSON aprobado por el usuario; pendiente de reemplazo literal si se importa el archivo JSON completo.",
-      "documento": "Reglamento Comisión Sumaria UNIPOL"
+      "texto": "No habrá responsabilidad disciplinaria cuando: 1. La acción u omisión se realice en cumplimiento de una orden legítima de autoridad competente. 2. Se obre en legítima defensa o en estado de necesidad para evitar un daño mayor. 3. Exista fuerza mayor o caso fortuito que haga inevitable la conducta.",
+      "documento": "Reglamento Comisión Sumaria UNIPOL",
+      "palabras_clave": [],
+      "categoria": "general"
     },
     {
       "id": "sumario-art-043",
       "numero": "Artículo 43",
       "titulo": "Responsabilidad por Participación",
-      "texto": "Responsabilidad por Participación. Texto integrado estructuralmente desde el JSON aprobado por el usuario; pendiente de reemplazo literal si se importa el archivo JSON completo.",
-      "documento": "Reglamento Comisión Sumaria UNIPOL"
+      "texto": "Son responsables los autores, cómplices y encubridores de la falta, conforme al grado de intervención que hayan tenido en la realización del hecho.",
+      "documento": "Reglamento Comisión Sumaria UNIPOL",
+      "palabras_clave": [],
+      "categoria": "general"
     },
     {
       "id": "sumario-art-044",
       "numero": "Artículo 44",
       "titulo": "Concurso de Faltas",
-      "texto": "Concurso de Faltas. Texto integrado estructuralmente desde el JSON aprobado por el usuario; pendiente de reemplazo literal si se importa el archivo JSON completo.",
-      "documento": "Reglamento Comisión Sumaria UNIPOL"
+      "texto": "Cuando se cometan varias faltas en un solo acto o en actos conexos, se aplicará la sanción correspondiente a la falta más grave, pudiendo incrementarse hasta en un tercio según las circunstancias.",
+      "documento": "Reglamento Comisión Sumaria UNIPOL",
+      "palabras_clave": [],
+      "categoria": "general"
     },
     {
       "id": "sumario-art-045",
       "numero": "Artículo 45",
       "titulo": "Tentativa",
-      "texto": "Tentativa. Texto integrado estructuralmente desde el JSON aprobado por el usuario; pendiente de reemplazo literal si se importa el archivo JSON completo.",
-      "documento": "Reglamento Comisión Sumaria UNIPOL"
+      "texto": "La tentativa de falta se sancionará con la sanción correspondiente reducida en hasta la mitad, siempre que se demuestre la intención manifiesta de consumar el hecho y que existan actos externos inequívocos al respecto.",
+      "documento": "Reglamento Comisión Sumaria UNIPOL",
+      "palabras_clave": [],
+      "categoria": "general"
     },
     {
       "id": "sumario-art-046",
       "numero": "Artículo 46",
       "titulo": "Error de Hecho o Derecho",
-      "texto": "Error de Hecho o Derecho. Texto integrado estructuralmente desde el JSON aprobado por el usuario; pendiente de reemplazo literal si se importa el archivo JSON completo.",
-      "documento": "Reglamento Comisión Sumaria UNIPOL"
+      "texto": "El error de hecho excluye la responsabilidad si fue inevitable y no imputable al procesado; el error de derecho no exime de responsabilidad salvo que se demuestre la imposibilidad absoluta de conocer la norma vigente.",
+      "documento": "Reglamento Comisión Sumaria UNIPOL",
+      "palabras_clave": [],
+      "categoria": "general"
     },
     {
       "id": "sumario-art-047",
       "numero": "Artículo 47",
       "titulo": "Extinción de la Responsabilidad",
-      "texto": "Extinción de la Responsabilidad. Texto integrado estructuralmente desde el JSON aprobado por el usuario; pendiente de reemplazo literal si se importa el archivo JSON completo.",
-      "documento": "Reglamento Comisión Sumaria UNIPOL"
+      "texto": "La responsabilidad disciplinaria se extingue por: 1. Cumplimiento total de la sanción impuesta. 2. Prescripción del proceso o de la potestad sancionadora. 3. Indulto o amnistía otorgado conforme a la ley. 4. Fallecimiento del procesado.",
+      "documento": "Reglamento Comisión Sumaria UNIPOL",
+      "palabras_clave": [],
+      "categoria": "general"
     },
     {
       "id": "sumario-art-048",
       "numero": "Artículo 48",
       "titulo": "Rehabilitación",
-      "texto": "Rehabilitación. Texto integrado estructuralmente desde el JSON aprobado por el usuario; pendiente de reemplazo literal si se importa el archivo JSON completo.",
-      "documento": "Reglamento Comisión Sumaria UNIPOL"
+      "texto": "El cursante sancionado podrá solicitar la rehabilitación en su hoja de conducta después de cumplidos dos años contados desde que la sanción quedó firme, siempre que no haya incurrido en nuevas faltas.",
+      "documento": "Reglamento Comisión Sumaria UNIPOL",
+      "palabras_clave": [],
+      "categoria": "general"
     },
     {
       "id": "sumario-art-049",
       "numero": "Artículo 49",
       "titulo": "Anotación de la Sanción",
-      "texto": "Anotación de la Sanción. Texto integrado estructuralmente desde el JSON aprobado por el usuario; pendiente de reemplazo literal si se importa el archivo JSON completo.",
-      "documento": "Reglamento Comisión Sumaria UNIPOL"
+      "texto": "Las sanciones se anotarán en la hoja de conducta del cursante y se comunicarán oficialmente a la Dirección Nacional de Personal de la Policía Boliviana y a la unidad de origen del efectivo.",
+      "documento": "Reglamento Comisión Sumaria UNIPOL",
+      "palabras_clave": [],
+      "categoria": "general"
     },
     {
       "id": "sumario-art-050",
       "numero": "Artículo 50",
       "titulo": "Efectos de la Sanción por Falta Gravísima",
-      "texto": "Efectos de la Sanción por Falta Gravísima. Texto integrado estructuralmente desde el JSON aprobado por el usuario; pendiente de reemplazo literal si se importa el archivo JSON completo.",
-      "documento": "Reglamento Comisión Sumaria UNIPOL"
+      "texto": "La sanción por falta gravísima implica la pérdida definitiva de la calidad de cursante y la imposibilidad de reinscribirse en cualquier programa de posgrado de la UNIPOL por un periodo no menor a tres años, contados desde la ejecución de la sanción.",
+      "documento": "Reglamento Comisión Sumaria UNIPOL",
+      "palabras_clave": [],
+      "categoria": "general"
     },
     {
       "id": "sumario-art-051",
       "numero": "Artículo 51",
       "titulo": "Comunicación a Otras Instancias",
-      "texto": "Comunicación a Otras Instancias. Texto integrado estructuralmente desde el JSON aprobado por el usuario; pendiente de reemplazo literal si se importa el archivo JSON completo.",
-      "documento": "Reglamento Comisión Sumaria UNIPOL"
+      "texto": "Si la falta pudiera constituir presuntamente delito, la Comisión remitirá copia certificada del expediente completo al Ministerio Público o autoridad judicial competente, sin perjuicio de continuar y resolver el trámite disciplinario interno.",
+      "documento": "Reglamento Comisión Sumaria UNIPOL",
+      "palabras_clave": [],
+      "categoria": "general"
     },
     {
       "id": "sumario-art-052",
       "numero": "Artículo 52",
       "titulo": "Clasificación de las Faltas",
       "texto": "Las faltas disciplinarias se clasifican en Leves, Graves y Gravísimas, según su gravedad, la afectación que causen al orden académico, al servicio o al prestigio institucional, y las consecuencias derivadas del hecho.",
-      "documento": "Reglamento Comisión Sumaria UNIPOL"
+      "documento": "Reglamento Comisión Sumaria UNIPOL",
+      "palabras_clave": [],
+      "categoria": "faltas"
     },
     {
       "id": "sumario-art-053",
       "numero": "Artículo 53",
       "titulo": "Faltas Leves",
-      "texto": "Se consideran faltas leves: atraso mayor a quince minutos sin justificación, no solicitar permiso para pasar o retirarse de filas, ingresar a áreas restringidas sin autorización, no saludar, descuidar presentación personal o uniforme, no portar marbetes, insignias o distintivos, no mantener corte de cabello o arreglo personal, usar celulares en clases/formaciones sin autorización, fumar en instalaciones, usar maquillaje/accesorios no permitidos, faltar el respeto, transitar descubierto estando de uniforme y otras conductas leves.",
-      "documento": "Reglamento Comisión Sumaria UNIPOL"
+      "texto": "Se consideran faltas leves: 1. No observar el horario establecido llegando con atraso mayor a quince minutos sin justificación válida. 2. No solicitar el permiso correspondiente para pasar a filas o retirarse de ellas. 3. Ingresar a áreas restringidas o no autorizadas de la Unidad Académica sin autorización escrita. 4. No adoptar la posición reglamentaria ni realizar el saludo correspondiente ante la presencia de un superior. 5. Descuidar la presentación personal, el aseo o el uso correcto del uniforme, dejándolo sucio, arrugado o alterado. 6. No portar marbetes, insignias o distintivos obligatorios, o hacerlo incorrectamente. 7. No mantener el corte de cabello, afeitado o arreglo personal reglamentario según normativa vigente. 8. Utilizar teléfonos celulares, dispositivos electrónicos o tecnológicos durante el desarrollo de clases, actos oficiales o formaciones sin autorización. 9. Fumar en las instalaciones de la Unidad Académica, aulas, patios o ambientes cerrados. 10. Usar maquillaje, accesorios, peinados o adornos que no estén permitidos por el reglamento de uniformes. 11. Tratar con falta de respeto, realizar bromas ofensivas o asignar apodos indebidos a compañeros, docentes o personal administrativo. 12. Transitar descubierto sin cubrir la cabeza estando de uniforme en la vía pública o instalaciones institucionales. 13. Demorar innecesariamente en presentarse ante un superior que lo requiera oficialmente. 14. Cualquier otra conducta que implique descuido leve, falta de respeto o incumplimiento menor de los deberes académicos o institucionales.",
+      "documento": "Reglamento Comisión Sumaria UNIPOL",
+      "palabras_clave": [],
+      "categoria": "faltas"
     },
     {
       "id": "sumario-art-054",
       "numero": "Artículo 54",
       "titulo": "Faltas Graves",
-      "texto": "Constituyen faltas graves la reincidencia en faltas leves; faltar un día completo sin justificación; abandonar aula, formación o acto académico; proporcionar datos falsos; incumplir órdenes legítimas; tener o distribuir material pornográfico; amenazas o agresiones verbales; presentarse con aliento alcohólico hasta 0,10 gramos por ciento; viajar sin autorización; fraude leve; y no comunicar hechos que afecten el buen nombre institucional.",
-      "documento": "Reglamento Comisión Sumaria UNIPOL"
+      "texto": "Constituyen faltas graves la reincidencia en cualquiera de las faltas leves, además de las siguientes: 1. Faltar un día completo a las actividades académicas sin causa justificada documentada. 2. Abandonar el aula, formación o acto académico sin el permiso previo de la autoridad correspondiente. 3. Proporcionar informes, datos o declaraciones falsas a las autoridades superiores. 4. Incumplir manifiestamente las órdenes o instrucciones legítimas emitidas por autoridad competente. 5. Tener en su poder, exhibir o distribuir material pornográfico en las instalaciones de la Unidad Académica. 6. Amenazar, proferir insultos o realizar agresiones verbales contra compañeros, docentes o personal administrativo. 7. Presentarse o permanecer en la Unidad Académica con aliento alcohólico, con un grado de alcohol en sangre menor o igual a 0,10 gramos por ciento. 8. Viajar fuera de su jurisdicción o distrito sin la autorización o pasaporte correspondiente. 9. Realizar acciones que impliquen fraude leve, copia o suplantación en trabajos prácticos o actividades académicas. 10. No poner en conocimiento de las autoridades las faltas o hechos que puedan afectar el buen nombre de la institución.",
+      "documento": "Reglamento Comisión Sumaria UNIPOL",
+      "palabras_clave": [],
+      "categoria": "faltas"
     },
     {
       "id": "sumario-art-055",
       "numero": "Artículo 55",
       "titulo": "Faltas Gravísimas",
-      "texto": "Se consideran faltas gravísimas: mantener relaciones sexuales en instalaciones académicas; sustancias controladas; negativa a exámenes ordenados; acoso, hostigamiento, agresión física o amenazas graves; suplantación; fraude grave; falsificación; acceso no autorizado a sistemas; uso indebido de arma de fuego; apropiación de bienes; proselitismo político o religioso; alcohol mayor a 0,10; declaraciones públicas no autorizadas que dañen prestigio; reincidencia en falta grave.",
-      "documento": "Reglamento Comisión Sumaria UNIPOL"
+      "texto": "Se consideran faltas gravísimas: 1. Mantener relaciones sexuales en las instalaciones de la Unidad Académica o lugares donde se desarrollen actividades académicas o oficiales. 2. Internar, consumir, distribuir, poseer o encontrarse bajo los efectos de sustancias controladas, estupefacientes o psicotrópicos en el ámbito académico o dentro de instalaciones institucionales. 3. Negarse injustificadamente a la realización de exámenes médicos, de laboratorio o muestras que hubiere aceptado previamente o que sean ordenados por autoridad competente. 4. Realizar actos de acoso, hostigamiento, agresión física o amenazas graves contra cualquier miembro de la comunidad académica. 5. Suplantar la identidad de otra persona o permitir ser suplantado en exámenes, actos académicos o administrativos. 6. Cometer fraude grave en exámenes, pruebas o trabajos finales, incluyendo el uso de medios ilícitos, apuntes no autorizados o ayuda externa prohibida. 7. Falsificar, alterar o utilizar documentos falsos, certificaciones o firmas en trámites académicos o administrativos. 8. Acceder sin autorización a sistemas informáticos, bases de datos o archivos de la Unidad Académica para alterar, borrar o sustraer información. 9. Utilizar indebidamente el arma de fuego, en circunstancias no autorizadas o sin observar estrictamente las normas de seguridad vigentes. 10. Apropiarse indebidamente de bienes, equipos o pertenencias de la institución o de terceros que se encuentren en instalaciones académicas. 11. Realizar proselitismo político o religioso dentro de las instalaciones de la Unidad Académica. 12. Presentarse o permanecer en la Unidad Académica con un grado de alcohol en sangre mayor a 0,10 gramos por ciento. 13. Realizar declaraciones públicas no autorizadas que dañen gravemente el prestigio de la institución, la UNIPOL o la Policía Boliviana. 14. Reincidir en una falta grave previamente sancionada con resolución firme.",
+      "documento": "Reglamento Comisión Sumaria UNIPOL",
+      "palabras_clave": [],
+      "categoria": "faltas"
     },
     {
       "id": "sumario-art-056",
       "numero": "Artículo 56",
       "titulo": "Valoración de la Falta",
-      "texto": "Valoración de la Falta. Texto integrado estructuralmente desde el JSON aprobado por el usuario; pendiente de reemplazo literal si se importa el archivo JSON completo.",
-      "documento": "Reglamento Comisión Sumaria UNIPOL"
+      "texto": "Para determinar la gravedad de la falta se tomará en cuenta el daño causado, el grado de afectación al servicio o al prestigio institucional, las circunstancias del hecho y los antecedentes del responsable.",
+      "documento": "Reglamento Comisión Sumaria UNIPOL",
+      "palabras_clave": [],
+      "categoria": "general"
     },
     {
       "id": "sumario-art-057",
       "numero": "Artículo 57",
       "titulo": "Ámbito de Aplicación Externo",
-      "texto": "Ámbito de Aplicación Externo. Texto integrado estructuralmente desde el JSON aprobado por el usuario; pendiente de reemplazo literal si se importa el archivo JSON completo.",
-      "documento": "Reglamento Comisión Sumaria UNIPOL"
+      "texto": "Las conductas que se realicen fuera de la Unidad Académica también podrán ser objeto de sanción cuando afecten directamente la dignidad del cargo policial o el prestigio institucional de manera manifiesta.",
+      "documento": "Reglamento Comisión Sumaria UNIPOL",
+      "palabras_clave": [],
+      "categoria": "general"
     },
     {
       "id": "sumario-art-058",
       "numero": "Artículo 58",
       "titulo": "Conductas Conexas",
-      "texto": "Conductas Conexas. Texto integrado estructuralmente desde el JSON aprobado por el usuario; pendiente de reemplazo literal si se importa el archivo JSON completo.",
-      "documento": "Reglamento Comisión Sumaria UNIPOL"
+      "texto": "Las acciones preparatorias que manifiesten inequívocamente la intención de cometer una falta y que pongan en riesgo el orden institucional se sancionarán de forma proporcional a la falta intentada.",
+      "documento": "Reglamento Comisión Sumaria UNIPOL",
+      "palabras_clave": [],
+      "categoria": "general"
     },
     {
       "id": "sumario-art-059",
       "numero": "Artículo 59",
       "titulo": "Gradación de Sanciones",
-      "texto": "Las sanciones aplicables son: por faltas leves, reducción de uno a diez puntos; por faltas graves, reducción de once a quince puntos; por faltas gravísimas, retiro definitivo e irrevocable de la Unidad Académica.",
-      "documento": "Reglamento Comisión Sumaria UNIPOL"
+      "texto": "Las sanciones aplicables son: a. Por Faltas Leves: Reducción de uno a diez puntos en el área afectiva o conducta. b. Por Faltas Graves: Reducción de once a quince puntos en el área afectiva o conducta. c. Por Faltas Gravísimas: Retiro definitivo e irrevocable de la Unidad Académica.",
+      "documento": "Reglamento Comisión Sumaria UNIPOL",
+      "palabras_clave": [],
+      "categoria": "sanciones"
     },
     {
       "id": "sumario-art-060",
       "numero": "Artículo 60",
       "titulo": "Aplicación de la Sanción",
-      "texto": "Aplicación de la Sanción. Texto integrado estructuralmente desde el JSON aprobado por el usuario; pendiente de reemplazo literal si se importa el archivo JSON completo.",
-      "documento": "Reglamento Comisión Sumaria UNIPOL"
+      "texto": "La sanción se impondrá atendiendo estrictamente a la gravedad de la falta, las circunstancias agravantes o atenuantes concurrentes y los antecedentes disciplinarios y académicos del cursante.",
+      "documento": "Reglamento Comisión Sumaria UNIPOL",
+      "palabras_clave": [],
+      "categoria": "sanciones"
     },
     {
       "id": "sumario-art-061",
       "numero": "Artículo 61",
       "titulo": "Acumulación de Sanciones",
-      "texto": "Acumulación de Sanciones. Texto integrado estructuralmente desde el JSON aprobado por el usuario; pendiente de reemplazo literal si se importa el archivo JSON completo.",
-      "documento": "Reglamento Comisión Sumaria UNIPOL"
+      "texto": "Las reducciones de puntos son acumulables hasta completar el máximo establecido para cada tipo; si se supera el límite máximo en faltas leves o graves, se calificará y tramitará como falta del grado inmediato superior.",
+      "documento": "Reglamento Comisión Sumaria UNIPOL",
+      "palabras_clave": [],
+      "categoria": "sanciones"
     },
     {
       "id": "sumario-art-062",
       "numero": "Artículo 62",
       "titulo": "Ejecución de la Sanción",
-      "texto": "Ejecución de la Sanción. Texto integrado estructuralmente desde el JSON aprobado por el usuario; pendiente de reemplazo literal si se importa el archivo JSON completo.",
-      "documento": "Reglamento Comisión Sumaria UNIPOL"
+      "texto": "La sanción se ejecutará desde el momento en que la resolución quede firme, sin perjuicio de la interposición de los recursos que correspondan, salvo suspensión ordenada por autoridad superior.",
+      "documento": "Reglamento Comisión Sumaria UNIPOL",
+      "palabras_clave": [],
+      "categoria": "sanciones"
     },
     {
       "id": "sumario-art-063",
       "numero": "Artículo 63",
       "titulo": "Registro Centralizado",
-      "texto": "Registro Centralizado. Texto integrado estructuralmente desde el JSON aprobado por el usuario; pendiente de reemplazo literal si se importa el archivo JSON completo.",
-      "documento": "Reglamento Comisión Sumaria UNIPOL"
+      "texto": "Toda sanción se registrará en el sistema de información académica de la UNIPOL y en la hoja de vida institucional del cursante.",
+      "documento": "Reglamento Comisión Sumaria UNIPOL",
+      "palabras_clave": [],
+      "categoria": "sanciones"
     },
     {
       "id": "sumario-art-064",
       "numero": "Artículo 64",
       "titulo": "Circunstancias Agravantes",
-      "texto": "Circunstancias Agravantes. Texto integrado estructuralmente desde el JSON aprobado por el usuario; pendiente de reemplazo literal si se importa el archivo JSON completo.",
-      "documento": "Reglamento Comisión Sumaria UNIPOL"
+      "texto": "Se consideran circunstancias agravantes: 1. Incurrir en dos o más faltas al mismo tiempo. 2. Reincidencia en la misma falta o en faltas del mismo grado. 3. Actuar con premeditación, alevosía o aprovechamiento de ventaja sobre la víctima. 4. Dar falso testimonio o mentir deliberadamente para eludir responsabilidad. 5. Inducir, influir o presionar a otros para cometer la falta. 6. Amenazar o coaccionar a testigos, denunciantes o miembros de la Comisión.",
+      "documento": "Reglamento Comisión Sumaria UNIPOL",
+      "palabras_clave": [],
+      "categoria": "sanciones"
     },
     {
       "id": "sumario-art-065",
       "numero": "Artículo 65",
       "titulo": "Circunstancias Atenuantes",
-      "texto": "Circunstancias Atenuantes. Texto integrado estructuralmente desde el JSON aprobado por el usuario; pendiente de reemplazo literal si se importa el archivo JSON completo.",
-      "documento": "Reglamento Comisión Sumaria UNIPOL"
+      "texto": "Se consideran circunstancias atenuantes: 1. No tener sanciones disciplinarias ejecutoriadas en los últimos dos años. 2. Confesar espontáneamente la falta antes de ser descubierto o notificado. 3. Resarcir voluntariamente el daño causado o restituir los bienes afectados. 4. Actuar bajo amenaza o miedo insuperable. 5. Ser la primera falta que comete el cursante.",
+      "documento": "Reglamento Comisión Sumaria UNIPOL",
+      "palabras_clave": [],
+      "categoria": "sanciones"
     },
     {
       "id": "sumario-art-066",
       "numero": "Artículo 66",
       "titulo": "Carácter del Procedimiento",
-      "texto": "Carácter del Procedimiento. Texto integrado estructuralmente desde el JSON aprobado por el usuario; pendiente de reemplazo literal si se importa el archivo JSON completo.",
-      "documento": "Reglamento Comisión Sumaria UNIPOL"
+      "texto": "El proceso sumario interno es oral, inmediato, simplificado, gratuito y garantiza plenamente el derecho a la defensa. Solo se admiten como excepciones previas las de prescripción y cosa juzgada.",
+      "documento": "Reglamento Comisión Sumaria UNIPOL",
+      "palabras_clave": [],
+      "categoria": "procedimiento"
     },
     {
       "id": "sumario-art-067",
       "numero": "Artículo 67",
       "titulo": "Plazos de Prescripción",
-      "texto": "Las faltas prescriben en días hábiles: faltas leves diez días, faltas graves veinte días, faltas gravísimas ciento veinte días.",
-      "documento": "Reglamento Comisión Sumaria UNIPOL"
+      "texto": "Las faltas prescriben en los siguientes plazos contados en días hábiles: 1. Faltas Leves: diez días hábiles desde su comisión. 2. Faltas Graves: veinte días hábiles desde su comisión. 3. Faltas Gravísimas: ciento veinte días hábiles desde su comisión.",
+      "documento": "Reglamento Comisión Sumaria UNIPOL",
+      "palabras_clave": [],
+      "categoria": "procedimiento"
     },
     {
       "id": "sumario-art-068",
       "numero": "Artículo 68",
       "titulo": "Interrupción de la Prescripción",
-      "texto": "Interrupción de la Prescripción. Texto integrado estructuralmente desde el JSON aprobado por el usuario; pendiente de reemplazo literal si se importa el archivo JSON completo.",
-      "documento": "Reglamento Comisión Sumaria UNIPOL"
+      "texto": "El plazo de prescripción se interrumpe con la notificación del Auto Inicial, la declaratoria de rebeldía o la realización formal de cualquier diligencia de investigación.",
+      "documento": "Reglamento Comisión Sumaria UNIPOL",
+      "palabras_clave": [],
+      "categoria": "procedimiento"
     },
     {
       "id": "sumario-art-069",
       "numero": "Artículo 69",
       "titulo": "Citaciones y Notificaciones",
-      "texto": "Citaciones y Notificaciones. Texto integrado estructuralmente desde el JSON aprobado por el usuario; pendiente de reemplazo literal si se importa el archivo JSON completo.",
-      "documento": "Reglamento Comisión Sumaria UNIPOL"
+      "texto": "Se practicarán conforme a este orden: 1. Personalmente en el domicilio procesal señalado en el compromiso académico. 2. Por cedulón fijado en el tablero oficial de la Unidad Académica por diez días hábiles consecutivos. 3. Por medios electrónicos registrados, con acuse de recibo fehaciente.",
+      "documento": "Reglamento Comisión Sumaria UNIPOL",
+      "palabras_clave": [],
+      "categoria": "procedimiento"
     },
     {
       "id": "sumario-art-070",
       "numero": "Artículo 70",
       "titulo": "Medidas Precautorias",
-      "texto": "Medidas Precautorias. Texto integrado estructuralmente desde el JSON aprobado por el usuario; pendiente de reemplazo literal si se importa el archivo JSON completo.",
-      "documento": "Reglamento Comisión Sumaria UNIPOL"
+      "texto": "Al iniciarse el proceso o en cualquier etapa, se podrá disponer: 1. Separación provisional de las actividades académicas. 2. Prohibición temporal de comunicarse con personas involucradas en el hecho. 3. Suspensión temporal de la condición de cursante. 4. Cualquier otra medida necesaria para garantizar el desarrollo del proceso y evitar daños mayores.",
+      "documento": "Reglamento Comisión Sumaria UNIPOL",
+      "palabras_clave": [],
+      "categoria": "procedimiento"
     },
     {
       "id": "sumario-art-071",
       "numero": "Artículo 71",
       "titulo": "Duración de Medidas Precautorias",
-      "texto": "Duración de Medidas Precautorias. Texto integrado estructuralmente desde el JSON aprobado por el usuario; pendiente de reemplazo literal si se importa el archivo JSON completo.",
-      "documento": "Reglamento Comisión Sumaria UNIPOL"
+      "texto": "Las medidas precautorias tendrán una duración máxima de treinta días hábiles, pudiendo prorrogarse por causas justificadas hasta por quince días hábiles adicionales.",
+      "documento": "Reglamento Comisión Sumaria UNIPOL",
+      "palabras_clave": [],
+      "categoria": "procedimiento"
     },
     {
       "id": "sumario-art-072",
       "numero": "Artículo 72",
       "titulo": "Garantía de Defensa",
-      "texto": "Garantía de Defensa. Texto integrado estructuralmente desde el JSON aprobado por el usuario; pendiente de reemplazo literal si se importa el archivo JSON completo.",
-      "documento": "Reglamento Comisión Sumaria UNIPOL"
+      "texto": "El procesado podrá actuar personalmente o asistido por un abogado de su confianza; si no designa defensor en el plazo de tres días hábiles, se le asignará uno de oficio de forma inmediata.",
+      "documento": "Reglamento Comisión Sumaria UNIPOL",
+      "palabras_clave": [],
+      "categoria": "procedimiento"
     },
     {
       "id": "sumario-art-073",
       "numero": "Artículo 73",
       "titulo": "Acceso al Expediente",
-      "texto": "Acceso al Expediente. Texto integrado estructuralmente desde el JSON aprobado por el usuario; pendiente de reemplazo literal si se importa el archivo JSON completo.",
-      "documento": "Reglamento Comisión Sumaria UNIPOL"
+      "texto": "El procesado y su defensor tendrán derecho irrestricto a conocer, consultar y obtener copias de todo el expediente desde la notificación del Auto Inicial.",
+      "documento": "Reglamento Comisión Sumaria UNIPOL",
+      "palabras_clave": [],
+      "categoria": "procedimiento"
     },
     {
       "id": "sumario-art-074",
       "numero": "Artículo 74",
       "titulo": "Pruebas Admisibles",
-      "texto": "Pruebas Admisibles. Texto integrado estructuralmente desde el JSON aprobado por el usuario; pendiente de reemplazo literal si se importa el archivo JSON completo.",
-      "documento": "Reglamento Comisión Sumaria UNIPOL"
+      "texto": "Se admiten todos los medios de prueba lícitos: declaraciones de testigos, documentos públicos o privados, peritajes, inspecciones oculares, grabaciones de audio y video, y cualquier otro elemento que sirva para esclarecer la verdad de los hechos.",
+      "documento": "Reglamento Comisión Sumaria UNIPOL",
+      "palabras_clave": [],
+      "categoria": "procedimiento"
     },
     {
       "id": "sumario-art-075",
       "numero": "Artículo 75",
       "titulo": "Carga de la Prueba",
-      "texto": "Carga de la Prueba. Texto integrado estructuralmente desde el JSON aprobado por el usuario; pendiente de reemplazo literal si se importa el archivo JSON completo.",
-      "documento": "Reglamento Comisión Sumaria UNIPOL"
+      "texto": "Corresponde a la autoridad que inicia el proceso probar la existencia de la falta y la responsabilidad del procesado; este último podrá aportar todas las pruebas de descargo que considere convenientes.",
+      "documento": "Reglamento Comisión Sumaria UNIPOL",
+      "palabras_clave": [],
+      "categoria": "procedimiento"
     },
     {
       "id": "sumario-art-076",
       "numero": "Artículo 76",
       "titulo": "Inicio del Proceso",
-      "texto": "El proceso se inicia mediante Auto Inicial dentro de dos días hábiles siguientes a la denuncia o conocimiento oficial del hecho.",
-      "documento": "Reglamento Comisión Sumaria UNIPOL"
+      "texto": "El proceso se inicia mediante Auto Inicial dictado dentro de los dos días hábiles siguientes a la denuncia o al conocimiento oficial del hecho por la autoridad competente. El Auto contendrá: identificación completa del procesado, descripción detallada del hecho, norma infringida y designación del investigador responsable.",
+      "documento": "Reglamento Comisión Sumaria UNIPOL",
+      "palabras_clave": [],
+      "categoria": "procedimiento"
     },
     {
       "id": "sumario-art-077",
       "numero": "Artículo 77",
       "titulo": "Notificación del Auto Inicial",
-      "texto": "Notificación del Auto Inicial. Texto integrado estructuralmente desde el JSON aprobado por el usuario; pendiente de reemplazo literal si se importa el archivo JSON completo.",
-      "documento": "Reglamento Comisión Sumaria UNIPOL"
+      "texto": "El Auto Inicial se notificará al procesado dentro de las veinticuatro horas siguientes a su emisión, junto con la copia de la denuncia y las pruebas que obren en el expediente hasta ese momento.",
+      "documento": "Reglamento Comisión Sumaria UNIPOL",
+      "palabras_clave": [],
+      "categoria": "procedimiento"
     },
     {
       "id": "sumario-art-078",
       "numero": "Artículo 78",
       "titulo": "Etapa de Investigación",
-      "texto": "La etapa de investigación dura diez días hábiles, prorrogables por diez más si la complejidad lo justifica.",
-      "documento": "Reglamento Comisión Sumaria UNIPOL"
+      "texto": "Tiene una duración de diez días hábiles, prorrogables por diez más si la complejidad del caso lo justifica. El investigador recabará todas las pruebas, entrevistará a las personas involucradas y elaborará el informe final.",
+      "documento": "Reglamento Comisión Sumaria UNIPOL",
+      "palabras_clave": [],
+      "categoria": "procedimiento"
     },
     {
       "id": "sumario-art-079",
       "numero": "Artículo 79",
       "titulo": "Informe Final de Investigación",
-      "texto": "Informe Final de Investigación. Texto integrado estructuralmente desde el JSON aprobado por el usuario; pendiente de reemplazo literal si se importa el archivo JSON completo.",
-      "documento": "Reglamento Comisión Sumaria UNIPOL"
+      "texto": "El informe señalará los hechos probados, la calificación provisional de la falta, las circunstancias concurrentes, las recomendaciones y la propuesta de resolución; se notificará al procesado para que presente sus descargos en tres días hábiles.",
+      "documento": "Reglamento Comisión Sumaria UNIPOL",
+      "palabras_clave": [],
+      "categoria": "procedimiento"
     },
     {
       "id": "sumario-art-080",
       "numero": "Artículo 80",
       "titulo": "Convocatoria a Audiencia",
-      "texto": "Convocatoria a Audiencia. Texto integrado estructuralmente desde el JSON aprobado por el usuario; pendiente de reemplazo literal si se importa el archivo JSON completo.",
-      "documento": "Reglamento Comisión Sumaria UNIPOL"
+      "texto": "Recibidos los descargos o vencido el plazo sin que se hayan presentado, se citará a la audiencia única con anticipación no menor a veinticuatro horas hábiles.",
+      "documento": "Reglamento Comisión Sumaria UNIPOL",
+      "palabras_clave": [],
+      "categoria": "procedimiento"
     },
     {
       "id": "sumario-art-081",
       "numero": "Artículo 81",
       "titulo": "Audiencia Única",
-      "texto": "La audiencia única se realiza con citación anticipada; se exponen cargos, pruebas y defensa. Es inaplazable.",
-      "documento": "Reglamento Comisión Sumaria UNIPOL"
+      "texto": "Concluida la etapa de investigación, se citará al procesado con veinticuatro horas de anticipación a la audiencia. En ella se expondrán los cargos, se presentarán todas las pruebas de cargo y descargo, y se escuchará la defensa. Esta audiencia es inaplazable.",
+      "documento": "Reglamento Comisión Sumaria UNIPOL",
+      "palabras_clave": [],
+      "categoria": "procedimiento"
     },
     {
       "id": "sumario-art-082",
       "numero": "Artículo 82",
       "titulo": "Desarrollo de la Audiencia",
-      "texto": "Desarrollo de la Audiencia. Texto integrado estructuralmente desde el JSON aprobado por el usuario; pendiente de reemplazo literal si se importa el archivo JSON completo.",
-      "documento": "Reglamento Comisión Sumaria UNIPOL"
+      "texto": "La audiencia es pública salvo que la Comisión decida lo contrario por motivos de orden público, respeto o seguridad; se inicia con la lectura de los cargos, se practican las pruebas admitidas y se conceden los tiempos de alegato correspondientes.",
+      "documento": "Reglamento Comisión Sumaria UNIPOL",
+      "palabras_clave": [],
+      "categoria": "procedimiento"
     },
     {
       "id": "sumario-art-083",
       "numero": "Artículo 83",
       "titulo": "Declaratoria de Rebeldía",
-      "texto": "Declaratoria de Rebeldía. Texto integrado estructuralmente desde el JSON aprobado por el usuario; pendiente de reemplazo literal si se importa el archivo JSON completo.",
-      "documento": "Reglamento Comisión Sumaria UNIPOL"
+      "texto": "Si el procesado no asiste sin justificación válida a la audiencia debidamente notificada, se declara en rebeldía y el proceso continúa sin su presencia, designándose defensor de oficio para que ejerza su defensa.",
+      "documento": "Reglamento Comisión Sumaria UNIPOL",
+      "palabras_clave": [],
+      "categoria": "procedimiento"
     },
     {
       "id": "sumario-art-084",
       "numero": "Artículo 84",
       "titulo": "Cierre de la Audiencia",
-      "texto": "Cierre de la Audiencia. Texto integrado estructuralmente desde el JSON aprobado por el usuario; pendiente de reemplazo literal si se importa el archivo JSON completo.",
-      "documento": "Reglamento Comisión Sumaria UNIPOL"
+      "texto": "Concluida la exposición de pruebas y los alegatos, se declara cerrado el debate y la Comisión pasa a deliberación en sesión privada.",
+      "documento": "Reglamento Comisión Sumaria UNIPOL",
+      "palabras_clave": [],
+      "categoria": "procedimiento"
     },
     {
       "id": "sumario-art-085",
       "numero": "Artículo 85",
       "titulo": "Resolución",
-      "texto": "Resolución. Texto integrado estructuralmente desde el JSON aprobado por el usuario; pendiente de reemplazo literal si se importa el archivo JSON completo.",
-      "documento": "Reglamento Comisión Sumaria UNIPOL"
+      "texto": "La Comisión Sumaria dictará resolución motivada dentro de los cinco días hábiles siguientes a la finalización de la audiencia. La resolución podrá absolver al procesado o imponer la sanción que corresponda conforme a derecho.",
+      "documento": "Reglamento Comisión Sumaria UNIPOL",
+      "palabras_clave": [],
+      "categoria": "procedimiento"
     },
     {
       "id": "sumario-art-086",
       "numero": "Artículo 86",
       "titulo": "Contenido de la Resolución",
-      "texto": "Contenido de la Resolución. Texto integrado estructuralmente desde el JSON aprobado por el usuario; pendiente de reemplazo literal si se importa el archivo JSON completo.",
-      "documento": "Reglamento Comisión Sumaria UNIPOL"
+      "texto": "La resolución contendrá obligatoriamente: antecedentes del proceso, hechos probados, fundamentos jurídicos, decisión final y la indicación de los recursos que proceden contra la misma.",
+      "documento": "Reglamento Comisión Sumaria UNIPOL",
+      "palabras_clave": [],
+      "categoria": "procedimiento"
     },
     {
       "id": "sumario-art-087",
       "numero": "Artículo 87",
       "titulo": "Notificación de la Resolución",
-      "texto": "Notificación de la Resolución. Texto integrado estructuralmente desde el JSON aprobado por el usuario; pendiente de reemplazo literal si se importa el archivo JSON completo.",
-      "documento": "Reglamento Comisión Sumaria UNIPOL"
+      "texto": "La resolución se notificará personalmente al procesado y a su defensor dentro de las veinticuatro horas siguientes a su emisión.",
+      "documento": "Reglamento Comisión Sumaria UNIPOL",
+      "palabras_clave": [],
+      "categoria": "procedimiento"
     },
     {
       "id": "sumario-art-088",
       "numero": "Artículo 88",
       "titulo": "Firmeza de la Resolución",
-      "texto": "Firmeza de la Resolución. Texto integrado estructuralmente desde el JSON aprobado por el usuario; pendiente de reemplazo literal si se importa el archivo JSON completo.",
-      "documento": "Reglamento Comisión Sumaria UNIPOL"
+      "texto": "La resolución queda firme y definitiva si no se interpone recurso en el plazo establecido, o cuando la instancia superior competente confirma la decisión en última instancia.",
+      "documento": "Reglamento Comisión Sumaria UNIPOL",
+      "palabras_clave": [],
+      "categoria": "procedimiento"
     },
     {
       "id": "sumario-art-089",
       "numero": "Artículo 89",
       "titulo": "Ejecución Inmediata",
-      "texto": "Ejecución Inmediata. Texto integrado estructuralmente desde el JSON aprobado por el usuario; pendiente de reemplazo literal si se importa el archivo JSON completo.",
-      "documento": "Reglamento Comisión Sumaria UNIPOL"
+      "texto": "La resolución que imponga sanción se ejecutará de inmediato, sin perjuicio de la interposición del recurso jerárquico, salvo orden expresa de suspensión por parte del Vicerrectorado de la UNIPOL.",
+      "documento": "Reglamento Comisión Sumaria UNIPOL",
+      "palabras_clave": [],
+      "categoria": "procedimiento"
     },
     {
       "id": "sumario-art-090",
       "numero": "Artículo 90",
       "titulo": "Recurso Jerárquico",
-      "texto": "Contra la resolución que imponga retiro definitivo procede recurso jerárquico ante el Vicerrectorado de la UNIPOL dentro de cinco días hábiles.",
-      "documento": "Reglamento Comisión Sumaria UNIPOL"
+      "texto": "Contra la resolución que imponga la sanción de retiro definitivo procede recurso jerárquico ante el Vicerrectorado de la UNIPOL, que deberá interponerse por escrito dentro de los cinco días hábiles siguientes a su notificación. La interposición de este recurso no suspende la ejecución de la sanción impuesta.",
+      "documento": "Reglamento Comisión Sumaria UNIPOL",
+      "palabras_clave": [],
+      "categoria": "procedimiento"
     },
     {
       "id": "sumario-art-091",
       "numero": "Artículo 91",
       "titulo": "Trámite del Recurso Jerárquico",
-      "texto": "Trámite del Recurso Jerárquico. Texto integrado estructuralmente desde el JSON aprobado por el usuario; pendiente de reemplazo literal si se importa el archivo JSON completo.",
-      "documento": "Reglamento Comisión Sumaria UNIPOL"
+      "texto": "El recurso se presenta ante la misma Comisión Sumaria que dictó la resolución, la cual remitirá el expediente completo y debidamente foliado al Vicerrectorado en el plazo de dos días hábiles; la autoridad superior resolverá el recurso en un plazo máximo de quince días hábiles.",
+      "documento": "Reglamento Comisión Sumaria UNIPOL",
+      "palabras_clave": [],
+      "categoria": "procedimiento"
     },
     {
       "id": "sumario-art-092",
       "numero": "Artículo 92",
       "titulo": "Recurso de Reposición",
-      "texto": "Recurso de Reposición. Texto integrado estructuralmente desde el JSON aprobado por el usuario; pendiente de reemplazo literal si se importa el archivo JSON completo.",
-      "documento": "Reglamento Comisión Sumaria UNIPOL"
+      "texto": "Contra resoluciones que impongan sanciones de reducción de puntos no procede recurso jerárquico, solo recurso de reposición ante la misma Comisión Sumaria, el cual deberá interponerse en el plazo de tres días hábiles siguientes a la notificación.",
+      "documento": "Reglamento Comisión Sumaria UNIPOL",
+      "palabras_clave": [],
+      "categoria": "procedimiento"
     }
   ],
   "disposiciones_finales": [
-    "Primera",
-    "Segunda",
-    "Tercera",
-    "Cuarta",
-    "Quinta"
+    {
+      "titulo": "Primera",
+      "texto": "El presente Reglamento entrará en vigencia de forma inmediata a partir de la fecha de su homologación oficial por el Comando General de la Policía Boliviana."
+    },
+    {
+      "titulo": "Segunda",
+      "texto": "Quedan derogadas todas las disposiciones internas, circulares y reglamentaciones anteriores de la Escuela Superior de Policías que se opongan expresamente al contenido del presente Reglamento."
+    },
+    {
+      "titulo": "Tercera",
+      "texto": "La Unidad de Posgrado de la Escuela Superior de Policías queda encargada de la custodia, difusión, capacitación y estricto cumplimiento del presente Reglamento en todas sus Sub Sedes Académicas."
+    },
+    {
+      "titulo": "Cuarta",
+      "texto": "Los procesos sumarios internos que se encuentren en trámite a la fecha de entrada en vigencia de este Reglamento se sustanciarán y resolverán conforme a la normativa con la que se iniciaron."
+    },
+    {
+      "titulo": "Quinta",
+      "texto": "Los casos no previstos expresamente en el presente Reglamento serán resueltos por la Comisión Sumaria con sujeción a los principios generales del derecho, la normativa de la UNIPOL y la legislación vigente de la Policía Boliviana."
+    }
   ]
 }

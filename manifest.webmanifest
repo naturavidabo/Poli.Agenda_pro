@@ -1,1 +1,24 @@
-{"name":"PoliAgenda Pro","short_name":"PoliAgenda","start_url":"./index.html","display":"standalone","background_color":"#f4f6f4","theme_color":"#0c4b2e","icons":[]}
+{
+  "id": "./",
+  "name": "PoliAgenda Pro",
+  "short_name": "PoliAgenda",
+  "description": "Biblioteca normativa, agenda académica y ayuda memoria policial offline.",
+  "lang": "es-BO",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "display_override": ["standalone", "minimal-ui"],
+  "orientation": "portrait-primary",
+  "background_color": "#f3f6f4",
+  "theme_color": "#0b4a2e",
+  "categories": ["productivity", "education", "utilities"],
+  "icons": [
+    {"src":"./icons/icon-192.png","sizes":"192x192","type":"image/png","purpose":"any"},
+    {"src":"./icons/icon-512.png","sizes":"512x512","type":"image/png","purpose":"any"},
+    {"src":"./icons/icon-maskable-512.png","sizes":"512x512","type":"image/png","purpose":"maskable"}
+  ],
+  "shortcuts": [
+    {"name":"Biblioteca","short_name":"Biblioteca","url":"./?view=library","icons":[{"src":"./icons/icon-192.png","sizes":"192x192"}]},
+    {"name":"Recordatorios","short_name":"Recordatorios","url":"./?view=reminders","icons":[{"src":"./icons/icon-192.png","sizes":"192x192"}]}
+  ]
+}
