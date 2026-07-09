@@ -928,7 +928,21 @@
         "3-A",
         "3A",
         "Uniforme 3A",
-        "Uniforme N° 3A"
+        "Uniforme N° 3A",
+        "3A estándar",
+        "3-A estándar",
+        "3A manga larga"
+      ],
+      "codigo": "3-A",
+      "variante": "Estándar",
+      "manga": "Larga",
+      "imagen_principal": "assets/uniformes/uniforme-3a-estandar.webp",
+      "visual_fuente_pdf": 81,
+      "visual_validado": true,
+      "alias_extra": [
+        "3A estándar",
+        "3-A estándar",
+        "3A manga larga"
       ]
     },
     {
@@ -955,11 +969,20 @@
       ],
       "documento": "Reglamento de Uniformes",
       "alias_busqueda": [
-        "3 A",
-        "3-A",
-        "3A",
-        "Uniforme 3A",
-        "Uniforme N° 3A"
+        "3A tropical",
+        "3-A tropical",
+        "3A manga corta"
+      ],
+      "codigo": "3-A",
+      "variante": "Tropical",
+      "manga": "Corta",
+      "imagen_principal": "assets/uniformes/uniforme-3a-tropical.webp",
+      "visual_fuente_pdf": 89,
+      "visual_validado": true,
+      "alias_extra": [
+        "3A tropical",
+        "3-A tropical",
+        "3A manga corta"
       ]
     },
     {
@@ -991,7 +1014,21 @@
         "3-B",
         "3B",
         "Uniforme 3B",
-        "Uniforme N° 3B"
+        "Uniforme N° 3B",
+        "3B estándar",
+        "3-B estándar",
+        "3B manga larga"
+      ],
+      "codigo": "3-B",
+      "variante": "Estándar",
+      "manga": "Larga",
+      "imagen_principal": "assets/uniformes/uniforme-3b-estandar.webp",
+      "visual_fuente_pdf": 91,
+      "visual_validado": true,
+      "alias_extra": [
+        "3B estándar",
+        "3-B estándar",
+        "3B manga larga"
       ]
     },
     {
@@ -1019,11 +1056,22 @@
       ],
       "documento": "Reglamento de Uniformes",
       "alias_busqueda": [
-        "3 B",
-        "3-B",
-        "3B",
-        "Uniforme 3B",
-        "Uniforme N° 3B"
+        "3B tropical",
+        "3-B tropical",
+        "03 B tropical",
+        "3B manga corta"
+      ],
+      "codigo": "3-B",
+      "variante": "Tropical",
+      "manga": "Corta",
+      "imagen_principal": "assets/uniformes/uniforme-3b-tropical.webp",
+      "visual_fuente_pdf": 93,
+      "visual_validado": true,
+      "alias_extra": [
+        "3B tropical",
+        "3-B tropical",
+        "03 B tropical",
+        "3B manga corta"
       ]
     },
     {
@@ -1048,7 +1096,19 @@
       "alias_busqueda": [
         "4",
         "Uniforme 4",
-        "Uniforme N° 4"
+        "Uniforme N° 4",
+        "Uniforme 4 estándar",
+        "Uniforme 4 manga larga"
+      ],
+      "codigo": "4",
+      "variante": "Estándar",
+      "manga": "Larga",
+      "imagen_principal": "assets/uniformes/uniforme-4-estandar.webp",
+      "visual_fuente_pdf": 95,
+      "visual_validado": true,
+      "alias_extra": [
+        "Uniforme 4 estándar",
+        "Uniforme 4 manga larga"
       ]
     },
     {
@@ -1072,9 +1132,18 @@
       ],
       "documento": "Reglamento de Uniformes",
       "alias_busqueda": [
-        "4",
-        "Uniforme 4",
-        "Uniforme N° 4"
+        "Uniforme 4 tropical",
+        "Uniforme 4 manga corta"
+      ],
+      "codigo": "4",
+      "variante": "Tropical",
+      "manga": "Corta",
+      "imagen_principal": "assets/uniformes/uniforme-4-tropical.webp",
+      "visual_fuente_pdf": 97,
+      "visual_validado": true,
+      "alias_extra": [
+        "Uniforme 4 tropical",
+        "Uniforme 4 manga corta"
       ]
     },
     {

@@ -1,50 +1,60 @@
-# Auditoría técnica — PoliAgenda Pro v2.0.1
+# Auditoría técnica – PoliAgenda Pro v2.1.0
 
-## Diagnóstico de la versión publicada anterior
+Fecha de revisión: 8 de julio de 2026
 
-- Diseño de dos columnas forzado también en pantallas pequeñas.
-- Navegación horizontal con controles desiguales y contenido desbordado.
-- Manifiesto sin iconos, por lo que no cumplía correctamente los requisitos de instalación PWA.
-- Caché `poliagenda-pro-v1` sin limpieza al actualizar.
-- Reglamento de Uniformes con solo 12 artículos detectados.
-- Reglamento Sumario con 92 posiciones, pero gran parte del texto era provisional.
-- Búsqueda literal que no trataba `3B`, `3-B`, `3 B` y `N.º 3-B` como equivalentes.
-- Agenda, analizador, pendientes, portafolio y respaldo mezclados en la misma estructura visual.
+## Resultado general
 
-## Correcciones implementadas
+- Auditoría estática: **58/58 verificaciones aprobadas**.
+- Prueba funcional automatizada en navegador móvil: **aprobada**.
+- Pruebas de lógica del analizador de mensajes: **aprobadas**.
+- Desbordamiento horizontal en 390 px: **no detectado**.
 
-- Reconstrucción completa de interfaz móvil.
-- Páginas separadas y barra inferior fija.
-- PWA con iconos válidos, manifiesto completo y Service Worker versionado.
-- Eliminación automática del caché antiguo.
-- 52 artículos de Uniformes y 92 artículos del Sumario.
-- Filtros directos de faltas, sanciones y prescripción.
-- Horario base con 58 bloques extraídos de la fotografía.
-- Migración no destructiva de datos antiguos de IndexedDB.
-- Guardado y restauración en JSON.
-- Descarga opcional del contenido visual para no bloquear la instalación inicial.
+## Pruebas funcionales aprobadas
 
-## Pruebas automáticas superadas
+1. Pantalla inicial de activación visible.
+2. Rechazo de código incorrecto.
+3. Activación con código 271261.
+4. Selección de modo Académico.
+5. Orden correcto de navegación inferior.
+6. Apertura de Formaciones/Actividades.
+7. Creación de pendiente.
+8. Marcado como resuelto y archivado automático.
+9. Consulta posterior en la sección Anteriores.
+10. Búsqueda `03 B Tropical`.
+11. Priorización correcta del artículo 44 Tropical.
+12. Apertura de vista validada de manga corta.
+13. Apertura de Configuración.
+14. Manifest con iconos PWA.
+15. Ausencia de desplazamiento horizontal a 390 px.
+16. Creación de formación con varias horas.
+17. Tres propuestas de título para comunicado de colegiatura.
+18. Cambio de modo Académico a Profesional.
 
-- `node --check app.js`.
-- `node --check sw.js`.
-- 52 artículos de Uniformes en secuencia 1–52.
-- 92 artículos del Sumario en secuencia 1–92.
-- Cero textos provisionales detectados en el Sumario.
-- 58 bloques del horario académico.
-- Iconos de 192×192 y 512×512 válidos.
-- Manifiesto con `start_url`, `scope`, modo `standalone` e icono maskable.
-- Búsqueda normalizada: `3B`, `3-B`, `3 B` y `N.º 3-B` → `3b`.
-- Analizador: fecha, hora, arribo, lugar, uniforme, urgencia y rectificación.
-- Rutas locales principales respondieron correctamente en servidor de prueba.
-- CSS móvil: tarjetas y formularios en una columna; navegación en cinco columnas iguales.
+## Integridad documental
 
-## Validación pendiente después del despliegue
+- Reglamento de Uniformes: artículos 1–52 secuenciales.
+- Reglamento Comisión Sumaria: artículos 1–92 secuenciales.
+- Horario base: más de 50 bloques editables.
 
-- Instalación real desde Chrome/Brave bajo la URL HTTPS de GitHub Pages.
-- Apertura desde el icono instalado.
-- Cierre/reapertura conservando IndexedDB.
-- Prueba offline real en el teléfono.
-- Revisión visual en el modelo concreto del dispositivo.
+## Validación visual de uniformes
 
-Estas últimas pruebas dependen de que los archivos corregidos estén publicados en GitHub Pages.
+Se crearon recortes específicos que corrigen el problema de títulos situados debajo de la imagen. La correlación se hizo según la secuencia real del PDF:
+
+- Art. 41: 3-A Estándar – manga larga.
+- Art. 42: 3-A Tropical – manga corta; imagen tomada de la parte superior de la página PDF 89.
+- Art. 43: 3-B Estándar – manga larga; imagen tomada de la parte superior de la página PDF 91.
+- Art. 44: 3-B Tropical – manga corta; imagen tomada de la parte superior de la página PDF 93.
+- Art. 45: Uniforme 4 Estándar – manga larga; imagen tomada de la parte superior de la página PDF 95.
+- Art. 46: Uniforme 4 Tropical – manga corta; imagen tomada de la página PDF 97.
+
+## PWA y archivos
+
+- Cache principal: `poliagenda-core-v2.1.0`.
+- Manifest `standalone` con iconos 192, 512 y maskable.
+- Archivo `version.json` para comprobación de actualizaciones.
+- Paquete: 24 archivos, sin superar 100 archivos.
+- Archivo más grande: PDF oficial, aproximadamente 10 MB; ninguno supera 100 MB.
+
+## Limitación pendiente de validación después de publicar
+
+La instalación real desde Chrome, la actualización del Service Worker desde GitHub Pages y el funcionamiento offline con el dominio definitivo deben comprobarse después de subir esta versión al repositorio HTTPS. Estas funciones no pueden certificarse completamente antes de que GitHub Pages publique los archivos.

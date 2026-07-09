@@ -1,10 +1,11 @@
 'use strict';
-const CORE_CACHE='poliagenda-core-v2.0.1';
+const CORE_CACHE='poliagenda-core-v2.1.0';
 const MEDIA_CACHE='poliagenda-media-v1';
 const CORE=[
   './','./index.html','./styles.css','./app.js','./manifest.webmanifest',
   './icons/icon-192.png','./icons/icon-512.png','./icons/icon-maskable-512.png',
-  './assets/escudo-policia.png','./assets/horario-referencia.webp',
+  './assets/escudo-policia.png','./assets/horario-referencia.webp','./version.json',
+  './assets/uniformes/uniforme-3a-estandar.webp','./assets/uniformes/uniforme-3a-tropical.webp','./assets/uniformes/uniforme-3b-estandar.webp','./assets/uniformes/uniforme-3b-tropical.webp','./assets/uniformes/uniforme-4-estandar.webp','./assets/uniformes/uniforme-4-tropical.webp',
   './data/reglamento-uniformes.json','./data/reglamento-sumario-unipol.json','./data/horario-base.json'
 ];
 self.addEventListener('install',event=>{

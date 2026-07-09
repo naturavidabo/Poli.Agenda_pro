@@ -1,63 +1,54 @@
-# PoliAgenda Pro v2.0.1 — corrección integral
+# PoliAgenda Pro v2.1.0
 
-PWA offline-first para biblioteca normativa, agenda académica/profesional y recordatorios.
+Actualización estructural para la aplicación publicada en:
+
+`https://naturavidabo.github.io/Poli.Agenda_pro/`
+
+## Importante antes de subir
+
+Este paquete contiene menos de 100 archivos para facilitar la actualización desde GitHub. **No elimines la carpeta existente `assets/pages/` del repositorio**, porque contiene las 121 páginas visuales del Reglamento de Uniformes.
+
+Puedes reemplazar los demás archivos y carpetas con los de este ZIP. La carpeta `assets/pages/` debe permanecer tal como está.
 
 ## Cambios principales
 
-- Interfaz reconstruida con enfoque **mobile-first** y una sola columna en celulares.
-- Navegación inferior estable: **Inicio, Biblioteca, Académico/Profesional, Recordatorios y Más**.
-- Modo académico activable/desactivable sin borrar la información.
-- Formación del día: uniforme, arribo, formación, parte, lugar, enlace y observaciones.
-- Horario de la ESP Sub Sede Sucre precargado con **58 bloques**, totalmente editable y con historial por parcial.
-- Reglamento de Uniformes: **52 artículos**, búsqueda normalizada y referencias a las páginas visuales existentes.
-- Reglamento Comisión Sumaria: **92 artículos completos**, sin textos provisionales.
-- Accesos directos a faltas leves, graves, gravísimas, sanciones y prescripción.
-- Búsqueda equivalente para `3B`, `3 B`, `3-B` y `N.º 3-B`.
-- Recordatorios en fichas: guardar mensaje literal u organizarlo localmente; marcar cumplido, archivar y eliminar.
-- Detección de rectificaciones, cambios de hora, lugar, suspensión y postergación.
-- PWA instalable con iconos 192, 512 y maskable.
-- Service Worker nuevo que elimina el caché defectuoso `poliagenda-pro-v1`.
-- Respaldo/restauración JSON, conservando también los datos antiguos de portafolio y PIN aunque todavía no se muestren en esta fase.
-- Compatibilidad con la base IndexedDB anterior `poliagenda-db`; se agregan identificadores a registros antiguos sin borrarlos.
+- Activación local/offline con el código `271261`.
+- El código se solicita solo en la primera instalación o después de borrar los datos del sitio.
+- Selección inicial entre modo Académico y Profesional.
+- Navegación: Inicio, Académica/Profesional, Formaciones, Biblioteca y Pendientes.
+- Botón flotante para crear notas, pendientes, actividades o pegar mensajes.
+- Actividades con varias horas: arribo, formación, parte, inicio o final.
+- Calendario vinculado con actividades y pendientes.
+- Notas activas/resueltas; al resolver se archivan y pueden consultarse en Anteriores.
+- Pendientes vencidos resaltados sin borrarse.
+- Mensaje WhatsApp inteligente con tres títulos sugeridos.
+- Horario semanal con actividad en curso, próxima y finalizadas.
+- Perfil voluntario sin protección adicional.
+- Recordatorio de respaldo cada 7 días.
+- Comprobación automática de actualización y botón manual.
+- Vistas recortadas y validadas para 3-A, 3-A Tropical, 3-B, 3-B Tropical, 4 y 4 Tropical.
 
-## Publicar en el repositorio actual
+## Cómo actualizar el repositorio
 
-Repositorio de destino: `Poli.Agenda_pro`.
+1. Descarga y descomprime el ZIP.
+2. Abre el repositorio `Poli.Agenda_pro`.
+3. Sube el contenido descomprimido a la raíz del repositorio.
+4. Acepta el reemplazo de archivos con el mismo nombre.
+5. Conserva la carpeta existente `assets/pages/`.
+6. Confirma el cambio con **Commit changes**.
+7. Espera entre 2 y 10 minutos para que GitHub Pages publique la actualización.
+8. Abre la aplicación y pulsa **Configuración → Buscar actualización** si el navegador conserva la versión anterior.
 
-1. Descarga y descomprime este ZIP en la computadora.
-2. **No borres la carpeta existente `assets/pages/` del repositorio.** Contiene las 121 imágenes del reglamento y no viene duplicada en este paquete.
-3. Reemplaza en la raíz del repositorio:
-   - `index.html`
-   - `styles.css`
-   - `app.js`
-   - `manifest.webmanifest`
-   - `sw.js`
-   - `README.md`
-   - `.nojekyll`
-4. Sube o reemplaza las carpetas:
-   - `data/`
-   - `icons/`
-   - Los archivos nuevos de `assets/`: `escudo-policia.png`, `horario-referencia.webp` y `reglamento-uniformes-2021.pdf`.
-5. Confirma el cambio con un commit y espera a que GitHub Pages termine de publicar.
+## Primera apertura
 
-El paquete tiene pocos archivos. No es necesario volver a subir las 121 imágenes de `assets/pages/`, por lo que no aparece el problema de “más de 100 archivos”.
+1. Ingresa el código `271261`.
+2. Selecciona modo Académico o Profesional.
+3. El horario académico de referencia se carga automáticamente si eliges el modo Académico.
 
-## Después de publicar
+## Datos locales
 
-1. Abre la web con `?v=201`, por ejemplo: `.../Poli.Agenda_pro/?v=201`.
-2. Espera unos segundos y recarga una vez.
-3. Si Chrome todavía muestra el diseño anterior:
-   - abre la información del sitio;
-   - entra en **Configuración del sitio**;
-   - pulsa **Borrar y restablecer**;
-   - vuelve a abrir la página.
-4. En la app entra en **Más** y pulsa **Instalar aplicación**.
-5. La instalación inicial guarda la app y los textos. Para tener también las 121 imágenes y el PDF sin conexión, usa **Más → Imágenes y PDF sin conexión**.
+Los datos se guardan en IndexedDB. Una actualización normal de GitHub no debe borrarlos. Borrar los datos del sitio, desinstalar limpiando almacenamiento o usar herramientas de limpieza del navegador puede eliminarlos. Por eso la aplicación recuerda realizar un respaldo cada 7 días.
 
-## Seguridad de datos
+## Nota sobre instalación PWA
 
-Los horarios, formaciones, recordatorios y preferencias se guardan en IndexedDB. Actualizar los archivos del repositorio no debe borrar esos datos. Antes de cambios importantes usa **Más → Respaldo y restauración → Exportar**.
-
-## Alcance de las pruebas
-
-Se verificaron sintaxis JavaScript, integridad de JSON, secuencia de artículos, rutas locales, iconos, manifiesto, caché, normalización de búsqueda y análisis de comunicados. La instalación real en Chrome requiere publicar primero esta versión bajo HTTPS y realizar la validación final desde el teléfono.
+La instalación completa debe validarse después de publicar bajo HTTPS en GitHub Pages. El paquete incluye manifest, tres iconos y Service Worker. Si Chrome conserva un Service Worker anterior, usa el botón **Buscar actualización** y luego **Actualizar y reiniciar**.

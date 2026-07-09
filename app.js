@@ -1,9 +1,9 @@
 'use strict';
 
-const APP_VERSION = '2.0.1';
+const APP_VERSION = '2.1.0';
 const MEDIA_CACHE = 'poliagenda-media-v1';
 const DB_NAME = 'poliagenda-db';
-const DB_VERSION = 2;
+const DB_VERSION = 3;
 const STORE = 'kv';
 const DAYS = ['Domingo','Lunes','Martes','Miércoles','Jueves','Viernes','Sábado'];
 const WEEK_DAYS = ['Lunes','Martes','Miércoles','Jueves','Viernes'];
@@ -770,4 +770,366 @@ async function init(){
   }
 }
 if (typeof window !== 'undefined') window.PoliAgendaTest={normalize,compact,parseInstruction,parseDateFromText,extractTitle,findNextClass,formatDate};
+
+/* =========================
+   POLIAGENDA PRO v2.1
+   Reorganización funcional y visual
+   ========================= */
+const ACTIVATION_HASH_V21='77fdb82a65f1267b496683a0f44ffde77144060f1dac8989f3b687fde132fe4a';
+state.activityTab=state.activityTab||'upcoming';
+state.reminderTab=['active','history','calendar'].includes(state.reminderTab)?state.reminderTab:'active';
+state.calendarCursor=state.calendarCursor||todayISO().slice(0,7);
+state.homeTimer=null;
+state.remoteVersion=null;
+
+async function hashTextV21(value){
+  const bytes=new TextEncoder().encode(String(value));
+  const digest=await crypto.subtle.digest('SHA-256',bytes);
+  return [...new Uint8Array(digest)].map(x=>x.toString(16).padStart(2,'0')).join('');
+}
+function versionPartsV21(v='0.0.0'){return String(v).split('.').map(n=>Number(n)||0);}
+function isVersionNewerV21(remote,local){
+  const a=versionPartsV21(remote),b=versionPartsV21(local);
+  for(let i=0;i<Math.max(a.length,b.length);i++){if((a[i]||0)!==(b[i]||0))return (a[i]||0)>(b[i]||0);}return false;
+}
+function timeMinutesV21(value=''){const m=String(value).match(/^(\d{1,2}):(\d{2})/);return m?Number(m[1])*60+Number(m[2]):null;}
+function nowMinutesV21(){const d=new Date();return d.getHours()*60+d.getMinutes();}
+function dateTimeValueV21(date,time){if(!date||!time)return null;const d=new Date(`${date}T${time}:00`);return Number.isNaN(d.getTime())?null:d;}
+function activityStartV21(x){
+  if(Array.isArray(x.times)&&x.times.length){const t=x.times.find(i=>i.time)?.time; if(t)return t;}
+  return x.hora||x.time||x.formacion||x.inicio||'';
+}
+function activityEndV21(x){
+  if(Array.isArray(x.times)&&x.times.length){const list=x.times.filter(i=>i.time);if(list.length>1)return list[list.length-1].time;}
+  return x.fin||x.end||'';
+}
+function activityTitleV21(x){return x.titulo||x.title||x.materia||(/^formacion/i.test(normalize(x.tipo||''))?'Formación':'Actividad');}
+function activityStagesV21(x){
+  if(Array.isArray(x.times)&&x.times.length)return x.times;
+  const out=[];
+  if(x.arribo)out.push({label:'Arribo',time:x.arribo});
+  if(x.hora||x.formacion)out.push({label:'Formación',time:x.hora||x.formacion});
+  if(x.parte)out.push({label:'Parte',time:x.parte});
+  if(!out.length&&x.time)out.push({label:'Inicio',time:x.time});
+  return out;
+}
+function timelineStatusV21(start,end,now=nowMinutesV21()){
+  const s=timeMinutesV21(start);if(s===null)return 'undated';
+  let e=timeMinutesV21(end);if(e===null)e=s+60;
+  if(now<s)return 'upcoming';if(now>=e)return 'completed';return 'current';
+}
+function remainingLabelV21(start,end){
+  const now=nowMinutesV21(),s=timeMinutesV21(start),e=timeMinutesV21(end);
+  if(s===null)return '';
+  if(now<s){const diff=s-now;return diff>=60?`Comienza en ${Math.floor(diff/60)} h ${diff%60} min`:`Comienza en ${diff} min`;}
+  if(e!==null&&now<e){const diff=e-now;return diff>=60?`En curso · faltan ${Math.floor(diff/60)} h ${diff%60} min`:`En curso · faltan ${diff} min`;}
+  return 'Finalizada';
+}
+function isOverdueV21(r){return !r.done&&!r.archived&&r.date&&r.date<todayISO();}
+function optionsMenuV21(items=[]){
+  return `<details class="options-menu"><summary aria-label="Opciones">${icon('more')}<span>Opciones</span></summary><div class="options-popover">${items.join('')}</div></details>`;
+}
+function optionButtonV21(label,attrs='',danger=false,ico='edit'){return `<button type="button" class="option-item ${danger?'danger':''}" ${attrs}>${icon(ico)}<span>${escapeHtml(label)}</span></button>`;}
+
+headerTemplate=function(){
+  const date=new Intl.DateTimeFormat('es-BO',{day:'numeric',month:'short',year:'numeric'}).format(new Date()).replace('.','').toUpperCase();
+  const mode=state.settings.academicMode?'Académico':'Profesional';
+  return `<header class="app-header">
+    <div class="header-top">
+      <div class="brand-mark"><img src="./assets/escudo-policia.png" alt="Emblema de la Policía Boliviana"></div>
+      <div class="brand-copy"><h1>PoliAgenda Pro</h1><p>${mode} · agenda y ayuda memoria policial</p></div>
+      <button type="button" class="header-icon-btn" data-open-settings aria-label="Configuración">${icon('settings')}</button>
+    </div>
+    <div class="header-meta"><span class="date-chip">${escapeHtml(date)}</span><span class="connection-chip ${navigator.onLine?'online':'offline'}"><span></span>${navigator.onLine?'En línea':'Sin conexión'}</span></div>
+    <div class="header-search"><label class="search-box" aria-label="Buscar en la biblioteca">${icon('search')}<input id="globalSearch" type="search" placeholder="Buscar: 3B tropical, artículo 55, marbete…" autocomplete="off" value="${attr(state.libraryQuery)}"></label></div>
+  </header>`;
+};
+
+bottomNavTemplate=function(){
+  const modeView=state.settings.academicMode?'academic':'professional';
+  const items=[
+    ['home','home','Inicio'],
+    [modeView,state.settings.academicMode?'academic':'briefcase',state.settings.academicMode?'Académica':'Profesional'],
+    ['activities','calendar','Formaciones'],
+    ['library','book','Biblioteca'],
+    ['reminders','bell','Pendientes'],
+  ];
+  return `<nav class="bottom-nav" aria-label="Navegación principal">${items.map(([view,ico,label])=>`<button type="button" class="nav-btn ${state.view===view?'active':''}" data-nav="${view}">${icon(ico)}<span>${label}</span></button>`).join('')}</nav>`;
+};
+function floatingActionTemplateV21(){return `<button type="button" class="fab" id="quickAddBtn" aria-label="Agregar rápidamente">${icon('plus')}<span>Agregar</span></button>`;}
+
+render=async function(){
+  clearTimeout(state.homeTimer);
+  let content='';
+  try{
+    if(state.view==='home')content=await renderHome();
+    else if(state.view==='library')content=await renderLibrary();
+    else if(state.view==='academic')content=await renderAcademic();
+    else if(state.view==='professional')content=await renderProfessional();
+    else if(state.view==='activities')content=await renderActivitiesV21();
+    else if(state.view==='reminders')content=await renderReminders();
+    else if(state.view==='settings')content=await renderSettingsV21();
+    else content=await renderHome();
+  }catch(e){console.error(e);content=`<div class="card danger"><h3>No se pudo cargar esta sección</h3><p>${escapeHtml(e.message||String(e))}</p><div class="actions"><button class="btn primary" data-nav="home">Volver al inicio</button></div></div>`;}
+  app.innerHTML=`<div class="app-shell">${headerTemplate()}<main class="main">${content}</main>${floatingActionTemplateV21()}${bottomNavTemplate()}</div>`;
+  bindCommonEventsV21();bindPageEventsV21();
+  if(state.view==='home')state.homeTimer=setTimeout(()=>render(),60000);
+};
+function bindCommonEventsV21(){
+  document.querySelectorAll('[data-nav]').forEach(btn=>btn.addEventListener('click',()=>navigate(btn.dataset.nav)));
+  document.querySelector('[data-open-settings]')?.addEventListener('click',()=>navigate('settings'));
+  document.getElementById('quickAddBtn')?.addEventListener('click',openQuickCreateV21);
+  const search=document.getElementById('globalSearch');
+  if(search){search.addEventListener('keydown',e=>{if(e.key==='Enter'){state.libraryQuery=search.value.trim();state.libraryDoc=null;state.libraryFilter='';navigate('library');}});search.addEventListener('search',()=>{if(!search.value){state.libraryQuery='';if(state.view==='library')render();}});}
+}
+navigate=function(view){
+  state.view=view;
+  if(view==='academic'&&!state.settings.academicMode)state.view='professional';
+  if(view==='professional'&&state.settings.academicMode)state.view='academic';
+  history.replaceState(null,'',`${location.pathname}${state.view!=='home'?`?view=${state.view}`:''}`);
+  window.scrollTo({top:0,behavior:'smooth'});render();
+};
+
+function buildTodayTimelineV21(schedule,agenda){
+  const day=DAYS[new Date().getDay()];
+  const academic=schedule.filter(x=>x.dia===day).map(x=>({
+    id:x.id,source:'schedule',tipo:x.tipo||'clase',titulo:x.materia||'Actividad académica',fecha:todayISO(),inicio:x.inicio||'',fin:x.fin||'',lugar:x.lugar||'',uniforme:x.uniforme||'',docente:x.docente||'',obs:x.observacion||''
+  }));
+  const dated=agenda.filter(x=>x.fecha===todayISO()).map(x=>({...x,source:'agenda',titulo:activityTitleV21(x),inicio:activityStartV21(x),fin:activityEndV21(x)}));
+  return [...academic,...dated].sort((a,b)=>(a.inicio||'99:99').localeCompare(b.inicio||'99:99'));
+}
+function timelineCardV21(x,status){
+  const label=remainingLabelV21(x.inicio,x.fin);
+  return `<article class="card timeline-card ${status}"><div class="timeline-kicker">${status==='current'?'EN CURSO':status==='upcoming'?'PRÓXIMA ACTIVIDAD':'FINALIZADA'}</div><div class="card-head"><div class="icon-tile ${status==='current'?'gold':''}">${icon(normalize(x.tipo).includes('formacion')?'location':'clock')}</div><div class="card-main"><h3>${escapeHtml(x.titulo||'Actividad')}</h3><div class="card-meta"><span class="badge">${escapeHtml(x.inicio||'Sin hora')}${x.fin?`–${escapeHtml(x.fin)}`:''}</span>${label?`<span class="badge ${status==='current'?'gold':''}">${escapeHtml(label)}</span>`:''}</div>${x.docente?`<p>${escapeHtml(x.docente)}</p>`:''}${x.lugar?`<p>${icon('location')} ${escapeHtml(x.lugar)}</p>`:''}${x.uniforme?`<p><strong>Uniforme:</strong> ${escapeHtml(x.uniforme)}</p>`:''}</div></div></article>`;
+}
+renderHome=async function(){
+  const agenda=await dbGet('agenda',[]),reminders=await dbGet('pendientes',[]),schedule=await dbGet('horarioSemanal',[]);
+  const timeline=buildTodayTimelineV21(schedule,agenda);
+  const current=timeline.find(x=>timelineStatusV21(x.inicio,x.fin)==='current');
+  const next=timeline.find(x=>timelineStatusV21(x.inicio,x.fin)==='upcoming');
+  const completed=timeline.filter(x=>timelineStatusV21(x.inicio,x.fin)==='completed');
+  const active=reminders.filter(x=>!x.archived&&!x.done).sort(sortReminders);
+  const overdue=active.filter(isOverdueV21);
+  const lastBackup=await dbGet('lastBackup',null);
+  const backupDue=!lastBackup||Date.now()-new Date(lastBackup).getTime()>7*86400000;
+  return `<div class="page-title"><div><h2>Hoy</h2><p>${escapeHtml(formatDate(todayISO(),true))}</p></div></div>
+    <div class="stack">
+      ${current?timelineCardV21(current,'current'):next?`<div class="card info compact"><strong>No hay una actividad en curso.</strong><p>La siguiente comienza a las ${escapeHtml(next.inicio)}.</p></div>`:`<div class="card empty">${icon('calendar')}<p>No hay actividades registradas para este momento.</p></div>`}
+      ${next?timelineCardV21(next,'upcoming'):''}
+      <div class="summary-grid"><button class="summary-card" data-nav="reminders"><b>${active.length}</b><span>Pendientes activos</span><small>${overdue.length?`${overdue.length} vencido(s)`:'Todo al día'}</small></button><button class="summary-card" data-nav="activities"><b>${timeline.length}</b><span>Actividades de hoy</span><small>${completed.length} finalizada(s)</small></button></div>
+      ${backupDue?`<article class="card warn compact"><div class="card-head"><div class="icon-tile">${icon('download')}</div><div class="card-main"><h3>Respaldo recomendado</h3><p>${lastBackup?'Han pasado más de 7 días desde el último respaldo.':'Todavía no realizaste un respaldo.'}</p><div class="actions"><button class="btn secondary small" data-action="export-backup">Crear respaldo</button></div></div></div></article>`:''}
+      <article class="card"><div class="section-title" style="margin-top:0"><h3>Pendientes prioritarios</h3><button class="btn ghost small" data-nav="reminders">Ver todos</button></div>${active.length?active.slice(0,4).map(r=>`<button type="button" class="mini-reminder ${isOverdueV21(r)?'overdue':''}" data-view-reminder="${attr(r.id)}"><span>${r.recordType==='note'?'📝':'☐'}</span><div><strong>${escapeHtml(r.title)}</strong><small>${r.date?escapeHtml(formatDate(r.date)):'Sin fecha'}${isOverdueV21(r)?' · Vencido':''}</small></div></button>`).join(''):`<div class="empty compact"><p>No tienes pendientes activos.</p></div>`}</article>
+      ${completed.length?`<details class="completed-list"><summary>Ver actividades anteriores de hoy (${completed.length})</summary><div class="stack">${completed.map(x=>timelineCardV21(x,'completed')).join('')}</div></details>`:''}
+    </div>`;
+};
+
+renderAcademic=async function(){
+  if(!state.settings.academicMode)return renderProfessional();
+  if(state.academicSub==='schedule')return renderSchedulePage();
+  if(state.academicSub==='history')return renderScheduleHistoryPage();
+  const schedule=await dbGet('horarioSemanal',[]),histories=await dbGet('historialHorarios',[]);
+  const todayItems=schedule.filter(x=>x.dia===DAYS[new Date().getDay()]).sort((a,b)=>(a.inicio||'').localeCompare(b.inicio||''));
+  const current=todayItems.find(x=>timelineStatusV21(x.inicio,x.fin)==='current');
+  const next=todayItems.find(x=>timelineStatusV21(x.inicio,x.fin)==='upcoming');
+  return `<div class="page-title"><div><h2>Académica</h2><p>Horario, materias, docentes e historial del curso.</p></div></div><div class="stack">
+    ${current?timelineCardV21({...current,titulo:current.materia},'current'):next?timelineCardV21({...next,titulo:next.materia},'upcoming'):`<div class="card empty">${icon('academic')}<p>No hay clases en curso ni próximas hoy.</p></div>`}
+    <article class="card"><div class="card-head"><div class="icon-tile">${icon('calendar')}</div><div class="card-main"><h3>Horario semanal</h3><p>${schedule.length} bloques vigentes. Las clases finalizadas se muestran en gris y la actual se resalta.</p><div class="actions"><button class="btn primary small" data-academic-sub="schedule">Abrir horario</button><button class="btn secondary small" data-academic-sub="history">Historial (${histories.length})</button></div></div></div></article>
+    <article class="card"><div class="section-title" style="margin-top:0"><h3>Clases de hoy</h3></div>${todayItems.length?todayItems.map(x=>scheduleRow(x)).join(''):`<div class="empty"><p>No hay clases registradas para hoy.</p></div>`}</article>
+  </div>`;
+};
+renderProfessional=async function(){
+  const agenda=await dbGet('agenda',[]),reminders=await dbGet('pendientes',[]);
+  const upcoming=agenda.filter(x=>x.fecha>=todayISO()).sort((a,b)=>(a.fecha||'').localeCompare(b.fecha||'')||(activityStartV21(a)||'').localeCompare(activityStartV21(b)||''));
+  const active=reminders.filter(x=>!x.archived&&!x.done);
+  return `<div class="page-title"><div><h2>Profesional</h2><p>Servicios, operativos, reuniones y pendientes institucionales.</p></div></div><div class="stack">
+    <article class="card accent"><div class="card-head"><div class="icon-tile gold">${icon('briefcase')}</div><div class="card-main"><h3>Próxima actividad profesional</h3>${upcoming[0]?`<p><strong>${escapeHtml(activityTitleV21(upcoming[0]))}</strong></p><div class="card-meta"><span class="badge">${escapeHtml(formatDate(upcoming[0].fecha))}</span><span class="badge gold">${escapeHtml(activityStartV21(upcoming[0])||'Sin hora')}</span></div>`:'<p>No hay actividades futuras registradas.</p>'}<div class="actions"><button class="btn primary small" data-nav="activities">Abrir actividades</button></div></div></div></article>
+    <div class="summary-grid"><button class="summary-card" data-nav="activities"><b>${upcoming.length}</b><span>Actividades futuras</span><small>Servicios y reuniones</small></button><button class="summary-card" data-nav="reminders"><b>${active.length}</b><span>Pendientes activos</span><small>Notas e instrucciones</small></button></div>
+  </div>`;
+};
+
+function scheduleRow(x,readOnly=false){
+  const isBreak=x.tipo==='descanso'||normalize(x.materia).includes('descanso');
+  const status=x.dia===DAYS[new Date().getDay()]?timelineStatusV21(x.inicio,x.fin):'future';
+  const actions=readOnly?'':optionsMenuV21([
+    optionButtonV21('Editar',`data-edit-schedule="${attr(x.id)}"`,false,'edit'),
+    optionButtonV21('Eliminar',`data-delete-schedule="${attr(x.id)}"`,true,'trash')
+  ]);
+  return `<div class="schedule-row ${isBreak?'break':''} ${status}"><div class="schedule-time">${escapeHtml(x.inicio||'')}<br>${x.fin?`<span>${escapeHtml(x.fin)}</span>`:''}</div><div class="schedule-body"><strong>${escapeHtml(x.materia||'Actividad')}</strong>${x.docente?`<span>${escapeHtml(x.docente)}</span>`:''}${x.lugar?`<span>${icon('location')} ${escapeHtml(x.lugar)}</span>`:''}${x.uniforme?`<span>Uniforme: ${escapeHtml(x.uniforme)}</span>`:''}${status==='current'?`<small class="status-label">En curso</small>`:status==='completed'?`<small class="status-label">Finalizada</small>`:''}</div>${actions}</div>`;
+};
+
+async function renderActivitiesV21(){
+  const agenda=await dbGet('agenda',[]);
+  const items=[...agenda].sort((a,b)=>(a.fecha||'').localeCompare(b.fecha||'')||(activityStartV21(a)||'').localeCompare(activityStartV21(b)||''));
+  let body='';
+  if(state.activityTab==='calendar')body=await renderCalendarV21();
+  else{
+    const list=items.filter(x=>{
+      const dt=dateTimeValueV21(x.fecha,activityEndV21(x)||activityStartV21(x)||'23:59');
+      const past=dt?dt.getTime()<Date.now():x.fecha<todayISO();
+      return state.activityTab==='past'?past:!past;
+    });
+    body=`<div class="stack">${list.length?list.map(activityCardV21).join(''):`<div class="card empty">${icon('calendar')}<p>No hay actividades en esta sección.</p><button class="btn primary small" data-action="new-activity">Crear actividad</button></div>`}</div>`;
+  }
+  return `<div class="page-title"><div><h2>Formaciones / Actividades</h2><p>Formaciones, servicios, reuniones, actos y actividades extraordinarias.</p></div></div>
+    <div class="screen-guide">${icon('info')} Registra una actividad manualmente o créala desde un mensaje de WhatsApp.</div>
+    <div class="tabs"><button class="tab ${state.activityTab==='upcoming'?'active':''}" data-activity-tab="upcoming">Próximas</button><button class="tab ${state.activityTab==='calendar'?'active':''}" data-activity-tab="calendar">Calendario</button><button class="tab ${state.activityTab==='past'?'active':''}" data-activity-tab="past">Anteriores</button></div>${body}`;
+}
+function activityCardV21(x){
+  const stages=activityStagesV21(x);
+  const status=x.fecha===todayISO()?timelineStatusV21(activityStartV21(x),activityEndV21(x)):x.fecha<todayISO()?'completed':'upcoming';
+  return `<article class="card activity-card ${status}"><div class="card-head"><div class="icon-tile ${normalize(x.tipo).includes('formacion')?'gold':''}">${icon(normalize(x.tipo).includes('formacion')?'location':'calendar')}</div><div class="card-main"><div class="activity-title-row"><div><h3>${escapeHtml(activityTitleV21(x))}</h3><div class="card-meta"><span class="badge">${escapeHtml(formatDate(x.fecha)||'Sin fecha')}</span><span class="badge blue">${escapeHtml(x.tipo||'Actividad')}</span></div></div>${optionsMenuV21([optionButtonV21('Editar',`data-edit-activity="${attr(x.id)}"`,false,'edit'),optionButtonV21('Duplicar',`data-duplicate-activity="${attr(x.id)}"`,false,'plus'),optionButtonV21('Eliminar',`data-delete-activity="${attr(x.id)}"`,true,'trash')])}</div>${stages.length?`<div class="stage-list">${stages.map(s=>`<span><b>${escapeHtml(s.time)}</b>${escapeHtml(s.label||'Hora')}</span>`).join('')}</div>`:''}${x.lugar?`<p>${icon('location')} ${escapeHtml(x.lugar)}</p>`:''}${x.uniforme?`<p><strong>Uniforme:</strong> ${escapeHtml(x.uniforme)}</p>`:''}${x.obs?`<p>${escapeHtml(excerpt(x.obs,180))}</p>`:''}</div></div></article>`;
+}
+function openActivityFormV21(item={}){
+  const stages=activityStagesV21(item);if(!stages.length)stages.push({label:'Inicio',time:item.hora||''});
+  modal(`<div class="modal-header"><div><h3>${item.id?'Editar actividad':'Nueva actividad'}</h3><p class="muted">Agrega las horas que necesites: arribo, formación, inicio, parte o final.</p></div><button class="modal-close" data-close-modal>${icon('close')}</button></div>
+    <form id="activityForm"><input type="hidden" id="activityId" value="${attr(item.id||'')}"><div class="field"><label>Tipo</label><select id="activityType">${['Formación','Servicio','Reunión','Actividad académica','Acto institucional','Operativo','Otro'].map(t=>`<option ${normalize(t)===normalize(item.tipo||'')?'selected':''}>${t}</option>`).join('')}</select></div><div class="field"><label>Título</label><input class="input" id="activityTitle" value="${attr(activityTitleV21(item)==='Actividad'?'':activityTitleV21(item))}" placeholder="Ej.: Formación general, servicio de seguridad" required></div><div class="field"><label>Fecha</label><input class="input" id="activityDate" type="date" value="${attr(item.fecha||todayISO())}" required></div><div class="field"><label>Horas de la actividad</label><div id="activityTimes" class="stage-editor">${stages.map((s,i)=>stageRowEditorV21(s,i)).join('')}</div><button type="button" class="btn ghost small" id="addActivityTime">${icon('plus')} Agregar hora</button></div><div class="field"><label>Lugar</label><input class="input" id="activityPlace" value="${attr(item.lugar||'')}"></div><div class="field"><label>Enlace de ubicación</label><input class="input" id="activityLink" type="url" value="${attr(item.link||'')}"></div><div class="field"><label>Uniforme / prendas</label><input class="input" id="activityUniform" value="${attr(item.uniforme||'')}"></div><div class="field"><label>Observaciones</label><textarea id="activityNotes">${escapeHtml(item.obs||'')}</textarea></div><button class="btn primary full" type="submit">Guardar actividad</button></form>`,()=>{
+      document.querySelector('[data-close-modal]').onclick=closeModal;document.getElementById('addActivityTime').onclick=()=>{const wrap=document.getElementById('activityTimes');wrap.insertAdjacentHTML('beforeend',stageRowEditorV21({label:'',time:''},wrap.children.length));bindStageRemoveV21();};bindStageRemoveV21();document.getElementById('activityForm').onsubmit=saveActivityFormV21;
+    });
+}
+function stageRowEditorV21(s,i){return `<div class="stage-editor-row"><input class="input stage-label" placeholder="Ej.: Arribo" value="${attr(s.label||'')}"><input class="input stage-time" type="time" value="${attr(s.time||'')}"><button type="button" class="icon-btn danger remove-stage" aria-label="Quitar hora">${icon('close')}</button></div>`;}
+function bindStageRemoveV21(){document.querySelectorAll('.remove-stage').forEach(b=>b.onclick=()=>{if(document.querySelectorAll('.stage-editor-row').length>1)b.closest('.stage-editor-row').remove();});}
+async function saveActivityFormV21(e){
+  e.preventDefault();let agenda=await dbGet('agenda',[]);const id=document.getElementById('activityId').value||uid('activity');const times=[...document.querySelectorAll('.stage-editor-row')].map(r=>({label:r.querySelector('.stage-label').value.trim()||'Hora',time:r.querySelector('.stage-time').value})).filter(x=>x.time);
+  const item={id,tipo:document.getElementById('activityType').value,titulo:document.getElementById('activityTitle').value.trim(),fecha:document.getElementById('activityDate').value,times,lugar:document.getElementById('activityPlace').value.trim(),link:document.getElementById('activityLink').value.trim(),uniforme:document.getElementById('activityUniform').value.trim(),obs:document.getElementById('activityNotes').value.trim(),created:agenda.find(x=>x.id===id)?.created||nowISO(),updated:nowISO()};
+  if(normalize(item.tipo).includes('formacion')){item.arribo=times.find(x=>normalize(x.label).includes('arribo'))?.time||'';item.hora=times.find(x=>normalize(x.label).includes('formacion'))?.time||times[0]?.time||'';item.parte=times.find(x=>normalize(x.label).includes('parte'))?.time||'';}
+  const i=agenda.findIndex(x=>x.id===id);if(i>=0)agenda[i]=item;else agenda.push(item);await dbSet('agenda',agenda);closeModal();toast('Actividad guardada');state.view='activities';state.activityTab='upcoming';render();
+}
+async function editActivityV21(id){const a=await dbGet('agenda',[]);const x=a.find(i=>i.id===id);if(x)openActivityFormV21(x);}
+async function duplicateActivityV21(id){const a=await dbGet('agenda',[]);const x=a.find(i=>i.id===id);if(x)openActivityFormV21({...x,id:'',titulo:`${activityTitleV21(x)} (copia)`});}
+async function deleteActivityV21(id){if(!confirm('¿Eliminar esta actividad?'))return;let a=await dbGet('agenda',[]);a=a.filter(x=>x.id!==id);await dbSet('agenda',a);toast('Actividad eliminada');render();}
+
+async function renderCalendarV21(){
+  const agenda=await dbGet('agenda',[]),rem=await dbGet('pendientes',[]);const [y,m]=state.calendarCursor.split('-').map(Number);const first=new Date(y,m-1,1),days=new Date(y,m,0).getDate(),start=(first.getDay()+6)%7;const cells=[];for(let i=0;i<start;i++)cells.push('<div class="calendar-cell empty-cell"></div>');
+  for(let d=1;d<=days;d++){const date=`${y}-${String(m).padStart(2,'0')}-${String(d).padStart(2,'0')}`;const ev=agenda.filter(x=>x.fecha===date),pd=rem.filter(x=>x.date===date&&!x.archived);cells.push(`<button type="button" class="calendar-cell ${date===todayISO()?'today':''}" data-calendar-date="${date}"><b>${d}</b><span>${ev.slice(0,3).map(()=>'<i class="dot event"></i>').join('')}${pd.slice(0,3).map(()=>'<i class="dot pending"></i>').join('')}</span></button>`);}
+  const title=new Intl.DateTimeFormat('es-BO',{month:'long',year:'numeric'}).format(first);
+  return `<article class="card calendar-card"><div class="calendar-head"><button class="icon-btn" data-calendar-move="-1">‹</button><h3>${escapeHtml(title)}</h3><button class="icon-btn" data-calendar-move="1">›</button></div><div class="calendar-week"><span>L</span><span>M</span><span>M</span><span>J</span><span>V</span><span>S</span><span>D</span></div><div class="calendar-grid">${cells.join('')}</div><div class="calendar-legend"><span><i class="dot event"></i>Actividades</span><span><i class="dot pending"></i>Pendientes</span></div></article>`;
+}
+async function openCalendarDayV21(date){const a=(await dbGet('agenda',[])).filter(x=>x.fecha===date),r=(await dbGet('pendientes',[])).filter(x=>x.date===date&&!x.archived);modal(`<div class="modal-header"><div><h3>${escapeHtml(formatDate(date,true))}</h3><p class="muted">Actividades y pendientes de la fecha.</p></div><button class="modal-close" data-close-modal>${icon('close')}</button></div><div class="stack">${a.map(activityCardV21).join('')}${r.map(reminderCard).join('')||(!a.length?'<div class="empty"><p>No hay registros.</p></div>':'')}</div>`,()=>document.querySelector('[data-close-modal]').onclick=closeModal);}
+
+renderReminders=async function(){
+  const reminders=await dbGet('pendientes',[]);let body='';
+  if(state.reminderTab==='calendar')body=await renderCalendarV21();
+  else{const filtered=reminders.filter(x=>state.reminderTab==='history'?x.archived:!x.archived&&!x.done).sort(sortReminders);body=`<div class="stack">${filtered.length?filtered.map(reminderCard).join(''):`<div class="card empty">${icon('bell')}<p>${state.reminderTab==='history'?'No hay elementos archivados.':'No hay pendientes ni notas activas.'}</p></div>`}</div>`;}
+  return `<div class="page-title"><div><h2>Pendientes y Notificaciones</h2><p>Notas rápidas, tareas, instrucciones y mensajes organizados.</p></div></div><div class="screen-guide">${icon('info')} Una nota no necesita fecha. Un pendiente puede vencer. Un mensaje de WhatsApp puede convertirse en actividad.</div><div class="tabs"><button class="tab ${state.reminderTab==='active'?'active':''}" data-reminder-tab="active">Activos</button><button class="tab ${state.reminderTab==='history'?'active':''}" data-reminder-tab="history">Anteriores</button><button class="tab ${state.reminderTab==='calendar'?'active':''}" data-reminder-tab="calendar">Calendario</button></div>${body}`;
+};
+reminderCard=function(r){
+  const overdue=isOverdueV21(r);const type=r.recordType||(/nota/i.test(r.tipo||'')?'note':'pending');
+  return `<article class="card compact reminder-card ${overdue?'overdue':''}"><div class="check-line"><button class="check-btn" data-toggle-reminder="${attr(r.id||'')}" aria-label="Marcar resuelto"></button><div class="card-main"><div class="activity-title-row"><div><h4>${escapeHtml(r.title||'Sin título')}</h4><div class="card-meta"><span class="badge blue">${type==='note'?'Nota':type==='notification'?'Notificación':'Pendiente'}</span>${r.prio?`<span class="badge ${r.prio==='Urgente'?'red':r.prio==='Importante'?'gold':''}">${escapeHtml(r.prio)}</span>`:''}${r.date?`<span class="badge ${overdue?'red':''}">${escapeHtml(formatDate(r.date))}${overdue?' · Vencido':''}</span>`:''}</div></div>${optionsMenuV21([optionButtonV21('Ver detalle',`data-view-reminder="${attr(r.id)}"`,false,'info'),optionButtonV21('Archivar',`data-archive-reminder="${attr(r.id)}"`,false,'archive'),optionButtonV21('Eliminar',`data-delete-reminder="${attr(r.id)}"`,true,'trash')])}</div>${r.obs||r.raw?`<p>${escapeHtml(excerpt(r.obs||r.raw,220))}</p>`:''}</div></div></article>`;
+};
+toggleReminder=async function(id){let list=await dbGet('pendientes',[]);const i=list.findIndex(x=>x.id===id);if(i>=0){list[i].done=true;list[i].archived=true;list[i].resolvedAt=nowISO();list[i].updated=nowISO();await dbSet('pendientes',list);toast('Marcado como resuelto y archivado');render();}};
+
+function openQuickCreateV21(){modal(`<div class="modal-header"><div><h3>Agregar rápidamente</h3><p class="muted">Elige qué deseas registrar.</p></div><button class="modal-close" data-close-modal>${icon('close')}</button></div><div class="quick-create-grid"><button data-quick-kind="note">📝<strong>Nota rápida</strong><span>Idea o información sin fecha obligatoria</span></button><button data-quick-kind="pending">☐<strong>Pendiente</strong><span>Tarea con fecha o prioridad</span></button><button data-quick-kind="activity">📅<strong>Formación / actividad</strong><span>Servicio, reunión o evento</span></button><button data-quick-kind="whatsapp">💬<strong>Mensaje WhatsApp</strong><span>Guardar u organizar un comunicado</span></button></div>`,()=>{document.querySelector('[data-close-modal]').onclick=closeModal;document.querySelectorAll('[data-quick-kind]').forEach(b=>b.onclick=()=>{const k=b.dataset.quickKind;closeModal();if(k==='activity')openActivityFormV21();else if(k==='whatsapp')openInstructionModal();else openSimpleReminderFormV21(k);});});}
+function openSimpleReminderFormV21(kind='note'){
+  const isNote=kind==='note';modal(`<div class="modal-header"><div><h3>${isNote?'Nueva nota rápida':'Nuevo pendiente'}</h3><p class="muted">${isNote?'La fecha es opcional.':'Registra lo necesario sin llenar campos innecesarios.'}</p></div><button class="modal-close" data-close-modal>${icon('close')}</button></div><form id="simpleReminderForm"><input type="hidden" id="simpleKind" value="${kind}"><div class="field"><label>Título</label><input class="input" id="simpleTitle" required placeholder="${isNote?'Ej.: Consultar al docente':'Ej.: Presentar fotocopia de CI'}"></div><div class="field"><label>Detalle</label><textarea id="simpleText"></textarea></div><div class="form-grid"><div class="field"><label>Fecha ${isNote?'(opcional)':''}</label><input class="input" id="simpleDate" type="date"></div><div class="field"><label>Hora (opcional)</label><input class="input" id="simpleTime" type="time"></div></div><div class="field"><label>Prioridad</label><select id="simplePriority"><option>Normal</option><option>Importante</option><option>Urgente</option></select></div><button class="btn primary full" type="submit">Guardar</button></form>`,()=>{document.querySelector('[data-close-modal]').onclick=closeModal;document.getElementById('simpleReminderForm').onsubmit=saveSimpleReminderV21;});
+}
+async function saveSimpleReminderV21(e){e.preventDefault();let l=await dbGet('pendientes',[]);const kind=document.getElementById('simpleKind').value;l.unshift({id:uid('reminder'),title:document.getElementById('simpleTitle').value.trim(),obs:document.getElementById('simpleText').value.trim(),date:document.getElementById('simpleDate').value,time:document.getElementById('simpleTime').value,prio:document.getElementById('simplePriority').value,recordType:kind,tipo:kind==='note'?'Nota':'Pendiente',done:false,archived:false,created:nowISO()});await dbSet('pendientes',l);closeModal();state.view='reminders';state.reminderTab='active';toast(kind==='note'?'Nota guardada':'Pendiente guardado');render();}
+
+function generateTitleSuggestionsV21(raw){
+  const low=normalize(raw),parsed=parseInstruction(raw,'');const out=[];
+  const add=x=>{x=String(x||'').replace(/\s+/g,' ').trim().replace(/[.:;,-]+$/,'');if(x&&x.length<=80&&!out.some(y=>normalize(y)===normalize(x)))out.push(x);};
+  if(/boleta|deposito|colegiatura/.test(low)){add('Presentar boleta de depósito');add('Realizar pago de colegiatura');add('Entrega de boleta de colegiatura');}
+  if(/formacion/.test(low)){add(parsed.rectification?'Cambio de hora de formación':'Formación general');add(parsed.place?`Formación en ${parsed.place}`:'Instrucción de formación');add('Uniforme y horario de formación');}
+  if(/orden de guarnicion|servicio|operativo/.test(low)){const m=raw.match(/(?:ORDEN DE GUARNICI[ÓO]N[^\n]*\n+)?([^\n]{12,120})/i);add(m?.[1]);add('Servicio u orden institucional');add('Actividad operativa programada');}
+  if(/fotocopia/.test(low)){add('Presentar fotocopia requerida');add('Preparar documentación solicitada');}
+  const lines=raw.split(/\n+/).map(x=>x.replace(/[\*🚨📢⚠️❗🏦📅📍🦺]/g,'').trim()).filter(x=>x.length>5&&x.length<100&&!/^(se comunica|señores|buenas|con el permiso)/i.test(x));lines.slice(0,4).forEach(add);
+  add(extractTitle(raw));add(parsed.tipo==='Requisito'?'Cumplir requisito pendiente':parsed.tipo==='Servicio'?'Servicio institucional':parsed.tipo==='Formación'?'Formación programada':'Nueva instrucción');
+  return out.slice(0,3);
+}
+function detectActionsV21(raw){
+  const lines=raw.split(/\n|\.|;/).map(x=>x.trim()).filter(Boolean);const verbs=/(llevar|presentar|entregar|consultar|preguntar|pagar|depositar|asistir|llegar|comprar|enviar|firmar|imprimir|fotocopiar)/i;return lines.filter(x=>verbs.test(x)).map(x=>x.replace(/^.*?(?=(llevar|presentar|entregar|consultar|preguntar|pagar|depositar|asistir|llegar|comprar|enviar|firmar|imprimir|fotocopiar))/i,'').trim()).slice(0,6);
+}
+openInstructionModal=function(){
+  modal(`<div class="modal-header"><div><h3>Mensaje WhatsApp inteligente</h3><p class="muted">Pega el mensaje. Puedes conservarlo tal cual o convertirlo en una ficha organizada.</p></div><button class="modal-close" data-close-modal>${icon('close')}</button></div><div class="field"><label>Mensaje</label><textarea id="instructionRaw" placeholder="Pega aquí el comunicado o una instrucción informal…"></textarea></div><div id="instructionSuggestions"></div><div class="actions"><button class="btn secondary" id="saveRawInstruction">Guardar como nota</button><button class="btn primary" id="organizeInstruction">Organizar mensaje</button></div>`,()=>{document.querySelector('[data-close-modal]').onclick=closeModal;const raw=document.getElementById('instructionRaw');raw.addEventListener('input',()=>{const s=generateTitleSuggestionsV21(raw.value);document.getElementById('instructionSuggestions').innerHTML=s.length?`<div class="field"><label>Elige un título sugerido</label><div class="suggestion-chips">${s.map((x,i)=>`<button type="button" class="suggestion-chip ${i===0?'selected':''}" data-title-choice="${attr(x)}">${escapeHtml(x)}</button>`).join('')}</div></div>`:'';document.querySelectorAll('[data-title-choice]').forEach(b=>b.onclick=()=>{document.querySelectorAll('[data-title-choice]').forEach(x=>x.classList.remove('selected'));b.classList.add('selected');});});document.getElementById('saveRawInstruction').onclick=saveRawInstructionV21;document.getElementById('organizeInstruction').onclick=organizeInstructionV21;});
+};
+function selectedSuggestedTitleV21(){return document.querySelector('[data-title-choice].selected')?.dataset.titleChoice||'';}
+async function saveRawInstructionV21(){const raw=document.getElementById('instructionRaw').value.trim();if(!raw)return toast('Pega o escribe un mensaje');const title=selectedSuggestedTitleV21()||generateTitleSuggestionsV21(raw)[0]||'Nota recibida';let l=await dbGet('pendientes',[]);l.unshift({id:uid('note'),title,raw,obs:raw,recordType:'note',tipo:'Nota',prio:/urgente|obligatori|impostergable/i.test(raw)?'Urgente':'Normal',done:false,archived:false,created:nowISO()});await dbSet('pendientes',l);closeModal();state.view='reminders';state.reminderTab='active';toast('Mensaje guardado como nota');render();}
+async function organizeInstructionV21(){
+  const raw=document.getElementById('instructionRaw').value.trim();if(!raw)return toast('Pega o escribe un mensaje');const suggestions=generateTitleSuggestionsV21(raw),chosen=selectedSuggestedTitleV21()||suggestions[0]||'';const actions=detectActionsV21(raw);
+  if(actions.length>1){modal(`<div class="modal-header"><div><h3>Se detectaron varias acciones</h3><p class="muted">Elige cómo deseas guardar el mensaje.</p></div><button class="modal-close" data-close-modal>${icon('close')}</button></div><div class="card compact">${actions.map(x=>`<p>☐ ${escapeHtml(x)}</p>`).join('')}</div><div class="actions"><button class="btn secondary" id="keepOneNote">Guardar como una nota</button><button class="btn primary" id="splitPendings">Crear ${actions.length} pendientes</button></div>`,()=>{document.querySelector('[data-close-modal]').onclick=closeModal;document.getElementById('keepOneNote').onclick=()=>{closeModal();openInstructionReviewV21(raw,chosen,suggestions);};document.getElementById('splitPendings').onclick=()=>splitActionsV21(actions,raw);});return;
+  }
+  openInstructionReviewV21(raw,chosen,suggestions);
+}
+function openInstructionReviewV21(raw,chosen,suggestions){
+  const parsed=parseInstruction(raw,chosen);findPossibleUpdates(parsed).then(existing=>modal(`<div class="modal-header"><div><h3>Revisar información detectada</h3><p class="muted">Nada se guarda hasta que confirmes.</p></div><button class="modal-close" data-close-modal>${icon('close')}</button></div>${parsed.rectification?`<div class="card warn compact"><strong>Posible modificación detectada</strong><p>Este mensaje puede reemplazar o actualizar una instrucción anterior.</p></div>`:''}<form id="parsedForm"><div class="field"><label>Título</label><div class="suggestion-chips">${suggestions.map((x,i)=>`<button type="button" class="suggestion-chip ${x===chosen||(!chosen&&i===0)?'selected':''}" data-review-title="${attr(x)}">${escapeHtml(x)}</button>`).join('')}</div><input class="input" id="parsedTitle" value="${attr(chosen||parsed.title)}" required></div><div class="form-grid"><div class="field"><label>Tipo</label><select id="parsedType">${['Nota','Pendiente','Formación','Servicio','Reunión','Requisito'].map(x=>`<option ${x===parsed.tipo?'selected':''}>${x}</option>`).join('')}</select></div><div class="field"><label>Prioridad</label><select id="parsedPriority"><option ${parsed.priority==='Normal'?'selected':''}>Normal</option><option>Importante</option><option ${parsed.priority==='Urgente'?'selected':''}>Urgente</option></select></div><div class="field"><label>Fecha</label><input class="input" id="parsedDate" type="date" value="${attr(parsed.date)}"></div><div class="field"><label>Hora principal</label><input class="input" id="parsedTime" type="time" value="${attr(parsed.time)}"></div><div class="field"><label>Hora de arribo</label><input class="input" id="parsedArrival" type="time" value="${attr(parsed.arrival)}"></div><div class="field"><label>Hora del parte</label><input class="input" id="parsedPart" type="time" value="${attr(parsed.part)}"></div><div class="field full"><label>Lugar</label><input class="input" id="parsedPlace" value="${attr(parsed.place)}" placeholder="Pendiente de confirmar"></div><div class="field full"><label>Enlace de ubicación</label><input class="input" id="parsedLink" type="url" value="${attr(parsed.link)}"></div><div class="field full"><label>Uniforme / prendas</label><input class="input" id="parsedUniform" value="${attr(parsed.uniform)}"></div>${parsed.rectification&&existing.length?`<div class="field full"><label>Relacionar con registro anterior</label><select id="parsedReplace"><option value="">Guardar como nueva versión</option>${existing.map(x=>`<option value="${attr(x.id)}">Actualizar: ${escapeHtml(x.title)}</option>`).join('')}</select></div>`:''}<div class="field full"><label>Mensaje original</label><textarea id="parsedRaw">${escapeHtml(raw)}</textarea></div></div><button class="btn primary full" type="submit">Guardar ficha</button></form>`,()=>{document.querySelector('[data-close-modal]').onclick=closeModal;document.querySelectorAll('[data-review-title]').forEach(b=>b.onclick=()=>{document.querySelectorAll('[data-review-title]').forEach(x=>x.classList.remove('selected'));b.classList.add('selected');document.getElementById('parsedTitle').value=b.dataset.reviewTitle;});document.getElementById('parsedForm').onsubmit=saveParsedInstructionV21;}));
+}
+async function splitActionsV21(actions,raw){let l=await dbGet('pendientes',[]);actions.forEach(x=>l.unshift({id:uid('pending'),title:x.slice(0,80),obs:raw,raw,recordType:'pending',tipo:'Pendiente',prio:'Normal',done:false,archived:false,created:nowISO()}));await dbSet('pendientes',l);closeModal();state.view='reminders';state.reminderTab='active';toast(`${actions.length} pendientes creados`);render();}
+async function saveParsedInstructionV21(e){e.preventDefault();const type=document.getElementById('parsedType').value;const replace=document.getElementById('parsedReplace')?.value||'';const raw=document.getElementById('parsedRaw').value.trim();const item={id:replace||uid('record'),title:document.getElementById('parsedTitle').value.trim(),tipo:type,recordType:type==='Nota'?'note':type==='Pendiente'||type==='Requisito'?'pending':'notification',prio:document.getElementById('parsedPriority').value,date:document.getElementById('parsedDate').value,time:document.getElementById('parsedTime').value,arrival:document.getElementById('parsedArrival').value,part:document.getElementById('parsedPart').value,lugar:document.getElementById('parsedPlace').value.trim(),link:document.getElementById('parsedLink').value.trim(),uniforme:document.getElementById('parsedUniform').value.trim(),obs:raw,raw,done:false,archived:false,created:nowISO(),updated:nowISO()};let l=await dbGet('pendientes',[]);if(replace){const i=l.findIndex(x=>x.id===replace);if(i>=0){item.created=l[i].created;item.versions=[...(l[i].versions||[]),{...l[i],versionSaved:nowISO()}];l[i]=item;}else l.unshift(item);}else l.unshift(item);await dbSet('pendientes',l);if(['Formación','Servicio','Reunión'].includes(type)){let a=await dbGet('agenda',[]);a.push({id:uid('activity'),tipo:type,titulo:item.title,fecha:item.date,times:[{label:'Arribo',time:item.arrival},{label:type==='Formación'?'Formación':'Inicio',time:item.time},{label:'Parte',time:item.part}].filter(x=>x.time),lugar:item.lugar,link:item.link,uniforme:item.uniforme,obs:item.raw,sourceReminderId:item.id,created:nowISO()});await dbSet('agenda',a);}closeModal();state.view=['Formación','Servicio','Reunión'].includes(type)?'activities':'reminders';toast(replace?'Registro actualizado':'Ficha guardada');render();}
+
+renderLibraryResults=function(term){
+  const q=normalize(term),qc=compact(term);const tropical=q.includes('tropical')||q.includes('manga corta'),standard=q.includes('estandar')||q.includes('manga larga');const docs=[...state.uniformes.articulos.map(a=>({...a,_doc:'uniformes'})),...state.sumario.articulos.map(a=>({...a,_doc:'sumario'}))];
+  const results=docs.map(a=>{const aliases=[...(a.alias_busqueda||[]),a.codigo,a.variante,a.manga].filter(Boolean);const hay=[a.numero,a.titulo,a.texto,...aliases,...(a.palabras_clave||[])].join(' '),n=normalize(hay),c=compact(hay);let score=0;if(normalize(a.numero)===q)score+=100;if(normalize(a.titulo)===q)score+=90;if(aliases.some(x=>normalize(x)===q||compact(x)===qc))score+=85;if(normalize(a.titulo).includes(q))score+=40;if(n.includes(q))score+=20;if(qc.length>=2&&c.includes(qc))score+=25;if(tropical&&a.variante==='Tropical')score+=120;if(tropical&&a.variante==='Estándar')score-=80;if(standard&&a.variante==='Estándar')score+=100;if(standard&&a.variante==='Tropical')score-=60;for(const token of q.split(' '))if(token&&n.includes(token))score+=3;return{a,score};}).filter(x=>x.score>0).sort((a,b)=>b.score-a.score).slice(0,100);
+  return `<div class="section-title"><h3>Resultados</h3><small>${results.length} coincidencias</small></div><div class="search-results">${results.length?results.map(({a})=>articleCard(a)).join(''):`<div class="card empty">${icon('search')}<p>No se encontraron coincidencias para “${escapeHtml(term)}”.</p></div>`}</div>`;
+};
+openArticle=function(doc,id){
+  const source=doc==='uniformes'?state.uniformes:state.sumario;const a=source.articulos.find(x=>x.id===id);if(!a)return;const favKey=`${doc}:${id}`;dbGet('favorites',[]).then(favs=>{const isFav=favs.includes(favKey);const images=[a.imagen_principal,...(a.imagenes_asociadas||[])].filter(Boolean).filter((x,i,l)=>l.indexOf(x)===i);modal(`<div class="modal-header"><div><div class="article-number">${escapeHtml(a.numero)}</div><h3>${escapeHtml(a.titulo)}</h3></div><button class="modal-close" data-close-modal aria-label="Cerrar">${icon('close')}</button></div><div class="card-meta"><span class="badge">${doc==='uniformes'?'Reglamento de Uniformes':'Comisión Sumaria UNIPOL'}</span>${a.variante?`<span class="badge gold">${escapeHtml(a.variante)} · Manga ${escapeHtml(a.manga||'')}</span>`:''}${a.visual_validado?`<span class="badge blue">Visual verificado</span>`:''}${a.pagina_inicio?`<span class="badge">Artículo: páginas ${a.pagina_inicio}-${a.pagina_fin}</span>`:''}</div>${a.imagen_principal?`<div class="validated-visual"><img id="articleMainImage" src="./${attr(a.imagen_principal)}" alt="${escapeHtml(a.titulo)} ${escapeHtml(a.variante||'')}"><p>Imagen recortada y vinculada por la secuencia real del documento. Fuente visual: página PDF ${a.visual_fuente_pdf}.</p></div>`:''}<div class="article-body">${escapeHtml(a.texto)}</div>${images.length>1?`<div class="section-title"><h3>Páginas originales relacionadas</h3></div><div class="image-strip">${images.slice(a.imagen_principal?1:0).map(img=>`<button data-image-src="./${attr(img)}"><img src="./${attr(img)}" alt="Página original" loading="lazy"></button>`).join('')}</div>`:''}<div class="actions"><button class="btn ${isFav?'gold':'secondary'}" id="favoriteBtn" data-fav-key="${attr(favKey)}">${isFav?'★ Favorito':'☆ Agregar a favoritos'}</button>${doc==='uniformes'&&a.pagina_inicio?`<a class="btn ghost" href="./assets/reglamento-uniformes-2021.pdf#page=${a.pagina_inicio}" target="_blank" rel="noopener">Abrir PDF</a>`:''}</div>`,()=>bindArticleModal());});
+};
+
+async function renderSettingsV21(){
+  const profile=await dbGet('profile',{custom:[]}),lastBackup=await dbGet('lastBackup',null),media=await dbGet('mediaOffline',null),lastCheck=await dbGet('lastUpdateCheck',null);
+  return `<div class="actions" style="margin:0 0 12px"><button class="btn secondary small" data-nav="home">${icon('back')} Volver</button></div><div class="page-title"><div><h2>Configuración</h2><p>Modo de uso, perfil voluntario, actualización y respaldo.</p></div></div><div class="stack"><article class="card"><div class="switch-row"><div><h3>Modo académico</h3><p>Al desactivarlo, se ocultan el horario y las materias. Formaciones, servicios, biblioteca y pendientes siguen disponibles.</p></div><label class="switch"><input id="academicModeSwitch" type="checkbox" ${state.settings.academicMode?'checked':''}><span class="slider"></span></label></div></article><article class="card"><div class="card-head"><div class="icon-tile">${icon('info')}</div><div class="card-main"><h3>Perfil voluntario</h3><p>${profile.name?`${escapeHtml(profile.grade||'')} ${escapeHtml(profile.name)}`:'Guarda datos que necesites consultar o copiar con frecuencia.'}</p><div class="actions"><button class="btn secondary small" data-action="edit-profile">Editar perfil</button></div></div></div></article><article class="card"><div class="card-head"><div class="icon-tile gold">${icon('download')}</div><div class="card-main"><h3>Actualizaciones</h3><p>La aplicación comprueba automáticamente GitHub cuando hay internet. Nunca interrumpe un registro.</p><div class="card-meta"><span class="badge">Versión instalada: ${APP_VERSION}</span><span class="badge">Última revisión: ${lastCheck?escapeHtml(new Date(lastCheck).toLocaleString('es-BO')):'Nunca'}</span></div><div class="actions"><button class="btn secondary small" data-action="check-update">Buscar actualización</button></div></div></div></article><article class="card"><div class="card-head"><div class="icon-tile">${icon('download')}</div><div class="card-main"><h3>Respaldo</h3><p>Se recomienda cada 7 días. Incluye agenda, horarios, notas, pendientes, perfil y configuración.</p><div class="card-meta"><span class="badge">Último: ${lastBackup?escapeHtml(new Date(lastBackup).toLocaleString('es-BO')):'Nunca'}</span></div><div class="actions"><button class="btn primary small" data-action="export-backup">Exportar</button><label class="btn secondary small" for="backupInput">Importar</label><input class="file-input" id="backupInput" type="file" accept="application/json,.json"></div></div></div></article><article class="card"><div class="card-head"><div class="icon-tile">${icon('install')}</div><div class="card-main"><h3>${isStandalone()?'Aplicación instalada':'Instalar aplicación'}</h3><p>${isStandalone()?'Se abre en modo independiente.':'Instálala desde Chrome para usarla como aplicación.'}</p>${!isStandalone()?`<div class="actions"><button class="btn secondary small" id="installAppBtn">Instalar</button></div>`:''}</div></div></article><article class="card"><div class="card-head"><div class="icon-tile">${icon('image')}</div><div class="card-main"><h3>Material visual offline</h3><p>Descarga opcionalmente el PDF y las páginas de uniformes.</p><div class="card-meta"><span class="badge" id="mediaOfflineStatus">${media?.completed?'Descargado':'Opcional'}</span></div><div class="actions"><button class="btn secondary small" id="downloadOfflineBtn">Descargar material</button></div></div></div></article><article class="card danger"><h3>Eliminar datos académicos</h3><p>Elimina horario e historial, pero no formaciones, servicios ni recordatorios.</p><div class="actions"><button class="btn danger small" data-action="clear-academic">Eliminar</button></div></article></div>`;
+}
+function openProfileV21(){dbGet('profile',{custom:[]}).then(p=>modal(`<div class="modal-header"><div><h3>Perfil voluntario</h3><p class="muted">Ningún dato es obligatorio.</p></div><button class="modal-close" data-close-modal>${icon('close')}</button></div><form id="profileForm"><div class="field"><label>Nombre completo</label><input class="input" id="profileName" value="${attr(p.name||'')}"></div><div class="field"><label>Grado</label><input class="input" id="profileGrade" value="${attr(p.grade||'')}"></div><div class="field"><label>Número de escalafón</label><input class="input" id="profileScale" value="${attr(p.scale||'')}"></div><div class="field"><label>Otros datos</label><div id="profileCustom">${(p.custom||[]).map(profileCustomRowV21).join('')}</div><button type="button" class="btn ghost small" id="addProfileField">${icon('plus')} Agregar dato</button></div><button class="btn primary full" type="submit">Guardar perfil</button></form>`,()=>{document.querySelector('[data-close-modal]').onclick=closeModal;document.getElementById('addProfileField').onclick=()=>document.getElementById('profileCustom').insertAdjacentHTML('beforeend',profileCustomRowV21({}));document.getElementById('profileForm').onsubmit=saveProfileV21;}));}
+function profileCustomRowV21(x={}){return `<div class="profile-custom-row"><input class="input custom-label" placeholder="Nombre del dato" value="${attr(x.label||'')}"><input class="input custom-value" placeholder="Valor" value="${attr(x.value||'')}"></div>`;}
+async function saveProfileV21(e){e.preventDefault();const custom=[...document.querySelectorAll('.profile-custom-row')].map(r=>({label:r.querySelector('.custom-label').value.trim(),value:r.querySelector('.custom-value').value.trim()})).filter(x=>x.label||x.value);await dbSet('profile',{name:document.getElementById('profileName').value.trim(),grade:document.getElementById('profileGrade').value.trim(),scale:document.getElementById('profileScale').value.trim(),custom});closeModal();toast('Perfil guardado');render();}
+async function checkForUpdateV21(manual=false){
+  if(!navigator.onLine){if(manual)toast('Sin conexión para comprobar actualizaciones');return;}
+  try{const r=await fetch(`./version.json?ts=${Date.now()}`,{cache:'no-store'});if(!r.ok)throw new Error('version');const v=await r.json();await dbSet('lastUpdateCheck',nowISO());if(isVersionNewerV21(v.version,APP_VERSION)){state.remoteVersion=v;updateBanner.classList.remove('hidden');updateBanner.querySelector('span').textContent=`Nueva versión ${v.version} disponible.`;applyUpdateBtn.textContent='Actualizar y reiniciar';applyUpdateBtn.onclick=async()=>{try{const reg=await navigator.serviceWorker.getRegistration();await reg?.update();if(reg?.waiting)reg.waiting.postMessage({type:'SKIP_WAITING'});else location.reload();}catch(_){location.reload();}};if(manual)toast(`Nueva versión ${v.version} disponible`);}else if(manual)toast('Ya tienes la versión más reciente');}catch(e){console.warn(e);if(manual)toast('No se pudo comprobar la actualización');}
+}
+
+async function renderActivationV21(){
+  app.innerHTML=`<main class="activation-shell"><section class="activation-card"><div class="activation-emblem"><img src="./assets/escudo-policia.png" alt="Emblema de la Policía Boliviana"></div><p class="eyebrow">ACCESO AUTORIZADO</p><h1>PoliAgenda Pro</h1><p>Ingresa el código de activación para habilitar la aplicación en este dispositivo.</p><form id="activationForm"><label for="activationCode">Código de activación</label><input id="activationCode" class="activation-input" inputmode="numeric" pattern="[0-9]*" maxlength="6" autocomplete="one-time-code" placeholder="••••••" required><button class="btn primary full" type="submit">Activar aplicación</button><p id="activationError" class="activation-error hidden">Código incorrecto.</p></form><small>La activación se conserva hasta que se borren los datos o se reinstale la aplicación.</small></section></main>`;
+  document.getElementById('activationForm').onsubmit=async e=>{e.preventDefault();const value=document.getElementById('activationCode').value.trim();if(await hashTextV21(value)!==ACTIVATION_HASH_V21){document.getElementById('activationError').classList.remove('hidden');return;}await dbSet('activation',{active:true,activatedAt:nowISO()});await loadData();await migrateAndSeed();renderModeChoiceV21();};
+}
+function renderModeChoiceV21(){app.innerHTML=`<main class="activation-shell"><section class="activation-card mode-choice"><p class="eyebrow">CONFIGURACIÓN INICIAL</p><h1>¿Cómo usarás la aplicación?</h1><p>Podrás cambiar esta opción más adelante sin perder información.</p><div class="mode-choice-grid"><button type="button" data-mode-choice="academic">${icon('academic')}<strong>Académico</strong><span>Horario, clases y formación, además de servicios y pendientes.</span></button><button type="button" data-mode-choice="professional">${icon('briefcase')}<strong>Profesional</strong><span>Servicios, reuniones, formaciones y agenda institucional.</span></button></div></section></main>`;document.querySelectorAll('[data-mode-choice]').forEach(b=>b.onclick=async()=>{state.settings.academicMode=b.dataset.modeChoice==='academic';state.settings.initialModeChosen=true;await dbSet('settings',state.settings);await registerServiceWorker();await render();setTimeout(()=>checkForUpdateV21(false),1200);});}
+
+async function exportBackupV21(){const keys=['agenda','horarioSemanal','historialHorarios','pendientes','favorites','settings','scheduleMeta','profile'];const data={app:'PoliAgenda Pro',version:APP_VERSION,exportedAt:nowISO(),data:{}};for(const key of keys)data.data[key]=await dbGet(key,key==='settings'?{}:[]);const blob=new Blob([JSON.stringify(data,null,2)],{type:'application/json'}),url=URL.createObjectURL(blob),a=document.createElement('a');a.href=url;a.download=`respaldo-poliagenda-${todayISO()}.json`;document.body.appendChild(a);a.click();a.remove();URL.revokeObjectURL(url);await dbSet('lastBackup',nowISO());toast('Respaldo exportado');render();}
+exportBackup=exportBackupV21;
+
+function bindPageEventsV21(){
+  document.querySelectorAll('[data-doc]').forEach(b=>b.onclick=()=>{state.libraryDoc=b.dataset.doc;state.libraryQuery='';state.libraryFilter='';render();});
+  document.querySelectorAll('[data-filter]').forEach(b=>b.onclick=()=>{state.libraryFilter=b.dataset.filter;state.libraryQuery='';render();});
+  document.querySelectorAll('[data-article-id]').forEach(b=>b.onclick=()=>openArticle(b.dataset.articleDoc,b.dataset.articleId));
+  document.querySelector('[data-action="library-back"]')?.addEventListener('click',()=>{state.libraryDoc=null;state.libraryFilter='';state.libraryQuery='';render();});
+  document.querySelectorAll('[data-academic-sub]').forEach(b=>b.onclick=()=>{state.academicSub=b.dataset.academicSub;render();});
+  document.querySelectorAll('[data-schedule-day]').forEach(b=>b.onclick=()=>{state.scheduleDay=b.dataset.scheduleDay;render();});
+  document.querySelector('[data-action="add-schedule"]')?.addEventListener('click',()=>openScheduleForm());
+  document.querySelectorAll('[data-edit-schedule]').forEach(b=>b.onclick=()=>editSchedule(b.dataset.editSchedule));document.querySelectorAll('[data-delete-schedule]').forEach(b=>b.onclick=()=>deleteSchedule(b.dataset.deleteSchedule));
+  document.querySelector('[data-action="save-schedule-history"]')?.addEventListener('click',saveScheduleHistory);document.querySelector('[data-action="show-reference-image"]')?.addEventListener('click',showReferenceImage);document.querySelectorAll('[data-view-history]').forEach(b=>b.onclick=()=>viewHistory(b.dataset.viewHistory));document.querySelectorAll('[data-delete-history]').forEach(b=>b.onclick=()=>deleteHistory(b.dataset.deleteHistory));
+  document.querySelectorAll('[data-activity-tab]').forEach(b=>b.onclick=()=>{state.activityTab=b.dataset.activityTab;render();});document.querySelectorAll('[data-action="new-activity"]').forEach(b=>b.onclick=()=>openActivityFormV21());document.querySelectorAll('[data-edit-activity]').forEach(b=>b.onclick=()=>editActivityV21(b.dataset.editActivity));document.querySelectorAll('[data-duplicate-activity]').forEach(b=>b.onclick=()=>duplicateActivityV21(b.dataset.duplicateActivity));document.querySelectorAll('[data-delete-activity]').forEach(b=>b.onclick=()=>deleteActivityV21(b.dataset.deleteActivity));
+  document.querySelectorAll('[data-calendar-move]').forEach(b=>b.onclick=()=>{const [y,m]=state.calendarCursor.split('-').map(Number),d=new Date(y,m-1+Number(b.dataset.calendarMove),1);state.calendarCursor=`${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}`;render();});document.querySelectorAll('[data-calendar-date]').forEach(b=>b.onclick=()=>openCalendarDayV21(b.dataset.calendarDate));
+  document.querySelectorAll('[data-reminder-tab]').forEach(b=>b.onclick=()=>{state.reminderTab=b.dataset.reminderTab;render();});document.querySelectorAll('[data-toggle-reminder]').forEach(b=>b.onclick=()=>toggleReminder(b.dataset.toggleReminder));document.querySelectorAll('[data-archive-reminder]').forEach(b=>b.onclick=()=>archiveReminder(b.dataset.archiveReminder,true));document.querySelectorAll('[data-unarchive-reminder]').forEach(b=>b.onclick=()=>archiveReminder(b.dataset.unarchiveReminder,false));document.querySelectorAll('[data-delete-reminder]').forEach(b=>b.onclick=()=>deleteReminder(b.dataset.deleteReminder));document.querySelectorAll('[data-view-reminder]').forEach(b=>b.onclick=()=>viewReminder(b.dataset.viewReminder));
+  document.getElementById('academicModeSwitch')?.addEventListener('change',e=>toggleAcademicMode(e.target.checked));document.querySelector('[data-action="edit-profile"]')?.addEventListener('click',openProfileV21);document.querySelector('[data-action="check-update"]')?.addEventListener('click',()=>checkForUpdateV21(true));document.getElementById('installAppBtn')?.addEventListener('click',installApp);document.getElementById('downloadOfflineBtn')?.addEventListener('click',downloadOfflineVisuals);document.querySelectorAll('[data-action="export-backup"]').forEach(b=>b.onclick=exportBackupV21);document.getElementById('backupInput')?.addEventListener('change',e=>importBackup(e.target.files[0]));document.querySelector('[data-action="clear-academic"]')?.addEventListener('click',clearAcademicData);
+}
+
+toggleAcademicMode=async function(checked){state.settings.academicMode=checked;await dbSet('settings',state.settings);toast(checked?'Modo académico activado':'Modo profesional activado');if(state.view==='academic'||state.view==='professional')state.view=checked?'academic':'professional';render();};
+
+init=async function(){
+  try{
+    const activation=await dbGet('activation',null);if(!activation?.active){await renderActivationV21();return;}
+    await loadData();await migrateAndSeed();state.settings=await dbGet('settings',{academicMode:true,scheduleInitialized:true,initialModeChosen:false});
+    if(!state.settings.initialModeChosen){renderModeChoiceV21();return;}
+    await registerServiceWorker();await render();setTimeout(()=>checkForUpdateV21(false),1200);
+  }catch(e){console.error(e);app.innerHTML=`<main class="main"><div class="card danger"><h3>No se pudo iniciar PoliAgenda Pro</h3><p>Verifica que todos los archivos se hayan subido al repositorio y recarga la página.</p><p>${escapeHtml(e.message||String(e))}</p></div></main>`;}
+};
+
+
+
+/* v2.1 post-fixes */
+clearAcademicData=async function(){
+  if(!confirm('Se borrarán el horario vigente y el historial académico. Las formaciones, servicios y recordatorios se conservarán. ¿Continuar?'))return;
+  const word=prompt('Escribe ELIMINAR para confirmar');if(word!=='ELIMINAR')return toast('Operación cancelada');
+  await dbSet('horarioSemanal',[]);await dbSet('historialHorarios',[]);state.settings.scheduleInitialized=true;await dbSet('settings',state.settings);toast('Datos académicos eliminados');render();
+};
+importBackup=async function(file){
+  if(!file)return;
+  try{const parsed=JSON.parse(await file.text());if(parsed.app&&parsed.app!=='PoliAgenda Pro')throw new Error('Aplicación no compatible');const data=parsed.data||parsed;if(!data||typeof data!=='object')throw new Error('Estructura inválida');if(!confirm('La importación reemplazará los datos actuales de agenda, horario, notas y pendientes. ¿Continuar?'))return;const keys=['agenda','horarioSemanal','historialHorarios','pendientes','favorites','settings','scheduleMeta','profile'];for(const key of keys)if(Object.prototype.hasOwnProperty.call(data,key))await dbSet(key,data[key]);state.settings=await dbGet('settings',{academicMode:true,scheduleInitialized:true,initialModeChosen:true});state.settings.scheduleInitialized=true;state.settings.initialModeChosen=true;await dbSet('settings',state.settings);toast('Respaldo restaurado correctamente');render();}catch(e){console.error(e);toast('El archivo no es un respaldo válido');}
+};
+articleCard=function(a){
+  return `<article class="article-card"><button type="button" data-article-doc="${a._doc}" data-article-id="${attr(a.id)}">${a.imagen_principal?`<img class="article-thumb" src="./${attr(a.imagen_principal)}" alt="${escapeHtml(a.titulo)}" loading="lazy">`:''}<div class="article-number">${escapeHtml(a.numero)} · ${a._doc==='uniformes'?'Uniformes':'Comisión Sumaria'}</div><h4>${escapeHtml(a.titulo)}</h4>${a.variante?`<div class="card-meta"><span class="badge gold">${escapeHtml(a.variante)}</span><span class="badge">Manga ${escapeHtml(a.manga||'')}</span></div>`:''}<p>${escapeHtml(excerpt(a.texto))}</p>${a.pagina_inicio?`<div class="card-meta"><span class="badge">Página ${a.pagina_inicio}${a.pagina_fin>a.pagina_inicio?`-${a.pagina_fin}`:''}</span></div>`:''}</button></article>`;
+};
+openArticle=function(doc,id){
+  const source=doc==='uniformes'?state.uniformes:state.sumario;const a=source.articulos.find(x=>x.id===id);if(!a)return;const favKey=`${doc}:${id}`;dbGet('favorites',[]).then(favs=>{const isFav=favs.includes(favKey);const pages=(a.imagenes_asociadas||[]).filter(Boolean);const primary=a.imagen_principal||pages[0]||'';modal(`<div class="modal-header"><div><div class="article-number">${escapeHtml(a.numero)}</div><h3>${escapeHtml(a.titulo)}</h3></div><button class="modal-close" data-close-modal aria-label="Cerrar">${icon('close')}</button></div><div class="card-meta"><span class="badge">${doc==='uniformes'?'Reglamento de Uniformes':'Comisión Sumaria UNIPOL'}</span>${a.variante?`<span class="badge gold">${escapeHtml(a.variante)} · Manga ${escapeHtml(a.manga||'')}</span>`:''}${a.visual_validado?`<span class="badge blue">Visual verificado</span>`:''}${a.pagina_inicio?`<span class="badge">Artículo: páginas ${a.pagina_inicio}-${a.pagina_fin}</span>`:''}</div>${primary?`<div class="${a.imagen_principal?'validated-visual':'article-image'}"><img id="articleMainImage" src="./${attr(primary)}" alt="${escapeHtml(a.titulo)} ${escapeHtml(a.variante||'')}">${a.imagen_principal?`<p>Imagen recortada y vinculada por la secuencia real del documento. Fuente visual: página PDF ${a.visual_fuente_pdf}.</p>`:''}</div>`:''}<div class="article-body">${escapeHtml(a.texto)}</div>${pages.length?`<div class="section-title"><h3>Páginas originales relacionadas</h3></div><div class="image-strip">${pages.map((img,i)=>`<button class="${img===primary?'active':''}" data-image-src="./${attr(img)}"><img src="./${attr(img)}" alt="Página ${a.pagina_inicio+i}" loading="lazy"></button>`).join('')}</div>`:''}<div class="actions"><button class="btn ${isFav?'gold':'secondary'}" id="favoriteBtn" data-fav-key="${attr(favKey)}">${isFav?'★ Favorito':'☆ Agregar a favoritos'}</button>${doc==='uniformes'&&a.pagina_inicio?`<a class="btn ghost" href="./assets/reglamento-uniformes-2021.pdf#page=${a.pagina_inicio}" target="_blank" rel="noopener">Abrir PDF</a>`:''}</div>`,()=>bindArticleModal());});
+};
+
+
 if (typeof window !== 'undefined' && !window.__POLI_TEST__) init();
