@@ -1,0 +1,699 @@
+{
+  "metadatos": {
+    "id": "ley1178",
+    "titulo": "Ley N.º 1178 de Administración y Control Gubernamentales",
+    "abreviatura": "Ley SAFCO",
+    "categoria": "Administración y responsabilidad pública",
+    "articulos_totales": 55,
+    "fuente": "Contraloría General del Estado",
+    "fuente_url": "https://www.contraloria.gob.bo/wp-content/uploads/2022/06/20121129_275.pdf",
+    "pdf": "assets/ley-1178-ds-23215.pdf",
+    "fecha_integracion": "2026-07-09"
+  },
+  "articulos": [
+    {
+      "id": "ley1178-art-1",
+      "numero": "Artículo 1",
+      "titulo": "Ley N.º 1178",
+      "texto": "La presente ley regula los sistemas de Administración y\nde Control de los recursos del Estado y su relación con los sistemas\nnacionales de Planificación e Inversión Pública, con el objeto de:\n\na) Programar, organizar, ejecutar y controlar la captación y el uso eficaz\ny eficiente de los recursos públicos para el cumplimiento y ajuste\noportuno de las políticas, los programas, la prestación de servicios\ny los proyectos del Sector Público;\n\nb) Disponer de información útil, oportuna y confiable asegurando la\nrazonabilidad de los informes y estados financieros;\n\nc) Lograr que todo servidor público, sin distinción de jerarquía, asuma\nplena responsabilidad por sus actos rindiendo cuenta no sólo de los\n\nobjetivos a que se destinaron los recursos públicos que le fueron\nconfiados, sino también de la forma y resultado de su aplicación;\n\nd) Desarrollar la capacidad administrativa para impedir o identificar y\ncomprobar el manejo incorrecto de los recursos del Estado.",
+      "estructura": [],
+      "fuente_pdf": "assets/ley-1178-ds-23215.pdf"
+    },
+    {
+      "id": "ley1178-art-2",
+      "numero": "Artículo 2",
+      "titulo": "Ley N.º 1178",
+      "texto": "Los sistemas que se regulan son:\n\na) Para programar y organizar las actividades:\n\n- Programación de Operaciones.\n- Organización Administrativa.\n- Presupuesto.\n\nb) Para ejecutar las actividades programadas:\n\n- Administración de Personal.\n- Administración de Bienes y Servicios.\n- Tesorería y Crédito Público.\n- Contabilidad Integrada.\n\nc) Para controlar la gestión del Sector Público:\n\n- Control Gubernamental, integrado por el Control Interno y el\nControl Externo Posterior.",
+      "estructura": [],
+      "fuente_pdf": "assets/ley-1178-ds-23215.pdf"
+    },
+    {
+      "id": "ley1178-art-3",
+      "numero": "Artículo 3",
+      "titulo": "Ley N.º 1178",
+      "texto": "Los sistemas de Administración y de Control se aplicarán en\ntodas las entidades del Sector Público, sin excepción, entendiéndose por\ntales la Presidencia y Vicepresidencia de la República, los ministerios, las\nunidades administrativas de la Contraloría General de la República y de\nlas Cortes Electorales; el Banco Central de Bolivia, las Superintendencias\nde Bancos y de Seguros, las Corporaciones de Desarrollo y las entidades\nestatales de intermediación financiera; las Fuerzas Armadas y de la\n\nPolicía Nacional; los gobiernos departamentales, las universidades y\nlas municipalidades; las instituciones, organismos y empresas de los\ngobiernos nacional, departamental y local, y toda otra persona jurídica\ndonde el Estado tenga la mayoría del patrimonio.",
+      "estructura": [],
+      "fuente_pdf": "assets/ley-1178-ds-23215.pdf"
+    },
+    {
+      "id": "ley1178-art-4",
+      "numero": "Artículo 4",
+      "titulo": "Ley N.º 1178",
+      "texto": "Los Poderes Legislativo y Judicial aplicarán a sus unidades\nadministrativas las mismas normas contempladas en la presente Ley,\nconforme a sus propios objetivos, planes y políticas, en el marco de la\nindependencia y coordinación de poderes.",
+      "estructura": [],
+      "fuente_pdf": "assets/ley-1178-ds-23215.pdf"
+    },
+    {
+      "id": "ley1178-art-5",
+      "numero": "Artículo 5",
+      "titulo": "Ley N.º 1178",
+      "texto": "Toda persona no comprendida en los artículos 3 y 4,\ncualquiera sea su naturaleza jurídica, que reciba recursos del Estado para\nsu inversión o funcionamiento, se beneficie de subsidios, subvenciones,\nventajas o exenciones, o preste servicios públicos no sujetos a la libre\ncompetencia, según la reglamentación y con las excepciones por cuantía\nque la misma señale, informará a la entidad pública competente sobre\nel destino, forma y resultados del manejo de los recursos y privilegios\npúblicos y le presentará estados financieros debidamente auditados.\nTambién podrá exigirse opinión calificada e independiente sobre la\nefectividad de algunos o todos los sistemas de administración y control\nque utiliza.\n\nCapítulo II\nSistemas de Administración y de Control",
+      "estructura": [],
+      "fuente_pdf": "assets/ley-1178-ds-23215.pdf"
+    },
+    {
+      "id": "ley1178-art-6",
+      "numero": "Artículo 6",
+      "titulo": "Ley N.º 1178",
+      "texto": "El Sistema de Programación de Operaciones traducirá los\nobjetivos y planes estratégicos de cada entidad, concordantes con los\nplanes y políticas generados por el Sistema Nacional de Planificación,\nen resultados concretos a alcanzar en el corto y mediano plazo; en\ntareas específicas a ejecutar; en procedimientos a emplear y en medios\ny recursos a utilizar, todo ello en función del tiempo y del espacio. Esta\nprogramación será de carácter integral, incluyendo tanto las operaciones\nde funcionamiento como las de ejecución de preinversión e inversión.\nEl proceso de programación de inversiones deberá corresponder a\nproyectos compatibilizados con las políticas sectoriales y regionales, de\nacuerdo con las normas del Sistema Nacional de Inversión Pública.\nNormas Básicas del Sistema de Programación de Operaciones, aprobadas por Resolución\nSuprema N° 225557 del 1° de diciembre de 2005.",
+      "estructura": [
+        "Capítulo II"
+      ],
+      "fuente_pdf": "assets/ley-1178-ds-23215.pdf"
+    },
+    {
+      "id": "ley1178-art-7",
+      "numero": "Artículo 7",
+      "titulo": "Ley N.º 1178",
+      "texto": "El Sistema de Organización Administrativa se definirá y ajustará\nen función de la Programación de Operaciones. Evitará la duplicidad de\nobjetivos y atribuciones mediante la adecuación, fusión o supresión de\nlas entidades, en seguimiento de los siguientes preceptos:\n\na) Se centralizará en la entidad cabeza de sector de los diferentes\nniveles de gobierno, las funciones de adoptar políticas, emitir\nnormas y vigilar su ejecución y cumplimiento; y se desconcentrará\no descentralizará la ejecución de las políticas y el manejo de los\nsistemas de administración.\n\nb) Toda entidad pública organizará internamente, en función de sus\nobjetivos y la naturaleza de sus actividades, los sistemas de\nadministración y control interno de que trata esta ley.\nNormas Básicas del Sistema de Organización Administrativa, aprobadas por Resolución Suprema\nN° 217055 del 20 de mayo de 1997.",
+      "estructura": [
+        "Capítulo II"
+      ],
+      "fuente_pdf": "assets/ley-1178-ds-23215.pdf"
+    },
+    {
+      "id": "ley1178-art-8",
+      "numero": "Artículo 8",
+      "titulo": "Ley N.º 1178",
+      "texto": "El Sistema de Presupuesto preverá, en función de las\nprioridades de la política gubernamental, los montos y fuentes de los\nrecursos financieros para cada gestión anual y su asignación a los\nrequerimientos monetarios de la Programación de Operaciones y de\nla Organización Administrativa adoptada. Se sujetará a los siguientes\npreceptos generales:\n\na) Las entidades gubernamentales que cuenten con recursos\nprovenientes de tributación, aportes a la seguridad social y otros\naportes, regalías o transferencias de los tesoros del Estado,\nsujetarán sus gastos totales a la disponibilidad de sus recursos, a\nlas condiciones del financiamiento debidamente contraído y a los\nlímites legales presupuestarios, no pudiendo transferir gastos de\ninversión a funcionamiento.\n\nb) Las entidades con autonomía de gestión y de patrimonio cuyos\ningresos provengan exclusivamente por venta de bienes o por\nprestación de servicios, financiarán con tales ingresos sus costos\nde funcionamiento, el aporte propio del financiamiento para sus\ninversiones y el servicio de su deuda. Sus presupuestos de gastos\nson indicativos de sus operaciones de funcionamiento e inversión.\n\nc) Los presupuestos de gastos del Banco Central y de las entidades\npúblicas de intermediación financiera sometidas al programa\nmonetario del Gobierno y a la vigilancia de la Superintendencia de\nBancos, son indicativos de sus operaciones de funcionamiento y de\ninversión no financiera.\n\nd) La ejecución de los presupuestos de gastos de las entidades\nseñaladas en los incisos b) y c) de este artículo, está sujeta,\nsegún reglamentación, al cumplimiento de las políticas y normas\ngubernamentales relacionadas con la naturaleza de sus actividades,\nincluyendo las referidas a las modificaciones, traspasos y\ntransferencias dentro de sus presupuestos, así como a la disponibili\ndad de sus ingresos efectivos después de atender y proveer el\n\ncumplimiento de sus obligaciones, reservas, aumentos de capital,\nrédito sobre patrimonio neto y otras contribuciones obligatorias. No\nse permitirá la transferencia de gastos de inversión o excedentes\nde ingresos presupuestados a gastos de funcionamiento.\nNormas Básicas del Sistema de Presupuesto, aprobadas por Resolución Suprema N° 225558\ndel 1° de diciembre de 2005.",
+      "estructura": [
+        "Capítulo II"
+      ],
+      "fuente_pdf": "assets/ley-1178-ds-23215.pdf"
+    },
+    {
+      "id": "ley1178-art-9",
+      "numero": "Artículo 9",
+      "titulo": "Ley N.º 1178",
+      "texto": "El Sistema de Administración de Personal, en procura\nde la eficiencia en la función pública, determinará los puestos de\ntrabajo efectivamente necesarios, los requisitos y mecanismos para\nproveerlos, implantará regímenes de evaluación y retribución del trabajo,\ndesarrollará las capacidades y aptitudes de los servidores y establecerá\nlos procedimientos para el retiro de los mismos.\nNormas Básicas del Sistema de Administración de Personal, aprobadas por Decreto Supremo\nN° 26115 del 16 de marzo de 2001.",
+      "estructura": [
+        "Capítulo II"
+      ],
+      "fuente_pdf": "assets/ley-1178-ds-23215.pdf"
+    },
+    {
+      "id": "ley1178-art-10",
+      "numero": "Artículo 10",
+      "titulo": "Ley N.º 1178",
+      "texto": "El Sistema de Administración de Bienes y Servicios\nestablecerá la forma de contratación, manejo y disposición de bienes y\nservicios. Se sujetará a los siguientes preceptos:\n\na) Previamente exigirá la disponibilidad de los fondos que compromete\no definirá las condiciones de financiamiento requeridas; diferenciará\nlas atribuciones de solicitar, autorizar el inicio y llevar a cabo el\nproceso de contratación; simplificará los trámites e identificará a\nlos responsables de la decisión de contratación con relación a la\ncalidad, oportunidad y competitividad del precio del suministro,\nincluyendo los efectos de los términos de pago.\n\nb) Las entidades emplearán los bienes y los servicios que contraten, en\nlos fines previstos en la Programación de Operaciones y realizarán\nel mantenimiento preventivo y la salvaguardia de los activos,\nidentificando a los responsables de su manejo.\n\nc) La reglamentación establecerá mecanismos para la baja o venta\noportuna de los bienes tomando en cuenta las necesidades\nespecíficas de las entidades propietarias. La venta de acciones\nde sociedades de economía mixta y la transferencia o liquidación\nde empresas del Estado, se realizará previa autorización legal\nespecífica o genérica, con la debida publicidad previa, durante y\nposterior a estas operaciones.\nNormas Básicas del Sistema de Administración de Bienes y Servicios, aprobadas por Decreto\nSupremo N° 0181 del 28 de junio de 2009.",
+      "estructura": [
+        "Capítulo II"
+      ],
+      "fuente_pdf": "assets/ley-1178-ds-23215.pdf"
+    },
+    {
+      "id": "ley1178-art-11",
+      "numero": "Artículo 11",
+      "titulo": "Ley N.º 1178",
+      "texto": "El Sistema de Tesorería y Crédito Público manejará\nlos ingresos, el financiamiento o crédito público y programará los\ncompromisos, obligaciones y pagos para ejecutar el presupuesto de\ngastos. Aplicará los siguientes preceptos generales:\n\na) Toda deuda pública interna o externa con plazo igual o mayor a\nun año será contraída por la máxima autoridad del Sistema de\nTesorería del Estado, por cuenta del Tesoro Nacional o de la entidad\nbeneficiaria que asume la responsabilidad del servicio de la deuda\nrespectiva.\n\nEste inciso fue modificado por la Ley 1834 del 31 de marzo de\n1998 (Ley del Mercado de valores), la que en su artículo 125 añade\na la redacción del inciso a) de la Ley 1178 lo siguiente:\n\nInciso a) Segundo Párrafo.- “Las disposiciones del párrafo anterior\nno serán aplicables a las entidades públicas que de acuerdo a\nReglamento, contraigan obligaciones a través del mercado de\nvalores nacional o extranjero, siendo dichas instituciones las únicas\nresponsables del cumplimiento de las obligaciones contraídas. Las\nobligaciones así adquiridas deberán estar consignadas en sus\nrespectivos presupuestos aprobados mediante Ley del Presupuesto\nGeneral de la Nación”\n\nb) Las deudas públicas con plazo inferior al año serán contraídas por\ncada entidad con sujeción a la programación financiera fijada por la\nmáxima autoridad del Sistema de Tesorería del Estado.\n\nc) Serán de cumplimiento obligatorio por las entidades del Sector\nPúblico, las políticas y normas establecidas por la máxima autoridad\ndel Sistema de Tesorería del Estado para el manejo de fondos,\nvalores y endeudamiento.\nNormas Básicas del Sistema de Tesorería del Estado, aprobadas por Resolución Suprema\nN° 218056 del 30 de julio de 1997.\nNormas Básicas del Sistema de Crédito Público, aprobadas por Resolución Suprema N° 218041\ndel 29 de julio de 1997.",
+      "estructura": [
+        "Capítulo II"
+      ],
+      "fuente_pdf": "assets/ley-1178-ds-23215.pdf"
+    },
+    {
+      "id": "ley1178-art-12",
+      "numero": "Artículo 12",
+      "titulo": "Ley N.º 1178",
+      "texto": "El Sistema de Contabilidad Integrada incorporará las\ntransacciones presupuestarias, financieras y patrimoniales en un\nsistema común, oportuno y confiable, destino y fuente de los datos\nexpresados en términos monetarios. Con base en los datos financieros\ny no financieros generará información relevante y útil para la toma de\ndecisión por las autoridades que regulan la marcha del Estado y de cada\nuna de sus entidades, asegurando que:\n\na) El sistema contable específico para cada entidad o conjunto de\nentidades similares, responda a la naturaleza de las mismas y a sus\nrequerimientos operativos y gerenciales respetando los principios y\nnormas de aplicación general;\n\nb) La Contabilidad Integrada identifique, cuando sea relevante, el costo\nde las acciones del Estado y mida los resultados obtenidos.\nNormas Básicas del Sistema de Contabilidad Integrada, aprobadas por Resolución Suprema\nN° 222957 del 4 de marzo de 2005.",
+      "estructura": [
+        "Capítulo II"
+      ],
+      "fuente_pdf": "assets/ley-1178-ds-23215.pdf"
+    },
+    {
+      "id": "ley1178-art-13",
+      "numero": "Artículo 13",
+      "titulo": "Ley N.º 1178",
+      "texto": "El Control Gubernamental tendrá por objetivo mejorar\nla eficiencia en la captación y uso de los recursos públicos y en las\noperaciones del Estado; la confiabilidad de la información que se\ngenere sobre los mismos; los procedimientos para que toda autoridad\ny ejecutivo rinda cuenta oportuna de los resultados de su gestión; y\nla capacidad administrativa para impedir o identificar y comprobar el\nmanejo inadecuado de los recursos del Estado.\n\nEl Control Gubernamental se aplicará sobre el funcionamiento de los\nsistemas de administración de los recursos públicos y estará integrado\npor:\n\na) El Sistema de Control Interno que comprenderá los instrumentos de\ncontrol previo y posterior incorporados en el plan de organización y\nen los reglamentos y manuales de procedimientos de cada entidad,\ny la auditoría interna; y\n\nb) El Sistema de Control Externo Posterior que se aplicará por medio\nde la auditoría externa de las operaciones ya ejecutadas.",
+      "estructura": [
+        "Capítulo II"
+      ],
+      "fuente_pdf": "assets/ley-1178-ds-23215.pdf"
+    },
+    {
+      "id": "ley1178-art-14",
+      "numero": "Artículo 14",
+      "titulo": "Ley N.º 1178",
+      "texto": "Los procedimientos de control interno previo se aplicarán\npor todas las unidades de la entidad antes de la ejecución de sus\noperaciones y actividades o de que sus actos causen efecto. Comprende\nla verificación del cumplimiento de las normas que los regulan y los\nhechos que los respaldan, así como de su conveniencia y oportunidad\nen función de los fines y programas de la entidad. Se prohíbe el ejercicio\nde controles previos por los responsables de la auditoría interna y por\nparte de personas, de unidades o de entidades diferentes o externas a la\nunidad ejecutora de las operaciones. Tampoco podrá crearse una unidad\nespecial que asuma la dirección o centralización del ejercicio de controles\nprevios.\n\nEl control interno posterior será practicado:\n\na) Por los responsables superiores, respecto de los resultados\nalcanzados por las operaciones y actividades bajo su directa\ncompetencia; y\n\nb) Por la unidad de auditoría interna.\nPrincipios, Normas Generales y Básicas de Control Interno Gubernamental, aprobadas por\nResolución N° CGR-1/070/2000 del 21 de septiembre de 2000.",
+      "estructura": [
+        "Capítulo II"
+      ],
+      "fuente_pdf": "assets/ley-1178-ds-23215.pdf"
+    },
+    {
+      "id": "ley1178-art-15",
+      "numero": "Artículo 15",
+      "titulo": "Ley N.º 1178",
+      "texto": "La auditoría interna se practicará por una unidad especializada\nde la propia entidad, que realizará las siguientes actividades en forma\nseparada, combinada o integral: evaluar el grado de cumplimiento y\neficacia de los sistemas de administración y de los instrumentos de\ncontrol interno incorporados a ellos; determinar la confiabilidad de los\nregistros y estados financieros; y analizar los resultados y la eficiencia\nde las operaciones. La Unidad de auditoría interna no participará en\nninguna otra operación ni actividad administrativa y dependerá de la\nmáxima autoridad ejecutiva de la entidad, sea ésta colegiada o no,\nformulando y ejecutando con total independencia el programa de sus\nactividades.\n\nTodos sus informes serán remitidos inmediatamente después de\nconcluidos a la máxima autoridad colegiada, si la hubiera; a la máxima\nautoridad del ente que ejerce tuición sobre la entidad auditada; y a la\nContraloría General de la República.",
+      "estructura": [
+        "Capítulo II",
+        "parte de personas, de unidades o de entidades diferentes o externas a la"
+      ],
+      "fuente_pdf": "assets/ley-1178-ds-23215.pdf"
+    },
+    {
+      "id": "ley1178-art-16",
+      "numero": "Artículo 16",
+      "titulo": "Ley N.º 1178",
+      "texto": "La auditoría externa será independiente e imparcial, y en\ncualquier momento podrá examinar las operaciones o actividades ya\nrealizadas por la entidad, a fin de calificar la eficacia de los sistemas\n\nde administración y control interno; opinar sobre la confiabilidad de los\nregistros contables y operativos; dictaminar sobre la razonabilidad de los\nestados financieros; y evaluar los resultados de eficiencia y economía\nde las operaciones. Estas actividades de auditoría externa posterior\npodrán ser ejecutadas en forma separada, combinada o integral, y sus\nrecomendaciones, discutidas y aceptadas por la entidad auditada, son\nde obligatorio cumplimiento.\n\nCapítulo III\nRelación con los Sistemas Nacionales de Planificación e\nInversión Pública",
+      "estructura": [
+        "Capítulo II",
+        "parte de personas, de unidades o de entidades diferentes o externas a la"
+      ],
+      "fuente_pdf": "assets/ley-1178-ds-23215.pdf"
+    },
+    {
+      "id": "ley1178-art-17",
+      "numero": "Artículo 17",
+      "titulo": "Ley N.º 1178",
+      "texto": "Los sistemas nacionales de Planificación e Inversión\nPública definirán las estrategias y políticas gubernamentales que serán\nejecutadas mediante los sistemas de Administración y Control que\nregula la presente ley.\nNormas Básicas del Sistema Nacional de Planificación, aprobadas por Resolución Suprema\nN° 216779 del 26 de julio de 1996.\nNormas Básicas del Sistema Nacional de Inversión Pública, aprobadas por Resolución Suprema\nN° 216768 del 18 de junio de 1996.",
+      "estructura": [
+        "Capítulo II",
+        "parte de personas, de unidades o de entidades diferentes o externas a la",
+        "Capítulo III"
+      ],
+      "fuente_pdf": "assets/ley-1178-ds-23215.pdf"
+    },
+    {
+      "id": "ley1178-art-18",
+      "numero": "Artículo 18",
+      "titulo": "Ley N.º 1178",
+      "texto": "Para el funcionamiento anual de los sistemas de\nProgramación de Operaciones, Organización Administrativa, Presupuesto\ny Tesorería y Crédito Público, los sistemas nacionales de Planificación\ne Inversión Pública compatibilizarán e integrarán los objetivos y planes\nestratégicos de cada entidad y los proyectos de inversión pública que\ndeberán ejecutar, con los planes de mediano y largo plazo, la política\nmonetaria, los ingresos alcanzados y el financiamiento disponible,\nmanteniéndose el carácter unitario e integral de la formulación del\npresupuesto, de la tesorería y del crédito público.",
+      "estructura": [
+        "Capítulo II",
+        "parte de personas, de unidades o de entidades diferentes o externas a la",
+        "Capítulo III"
+      ],
+      "fuente_pdf": "assets/ley-1178-ds-23215.pdf"
+    },
+    {
+      "id": "ley1178-art-19",
+      "numero": "Artículo 19",
+      "titulo": "Ley N.º 1178",
+      "texto": "Los sistemas de Control Interno y de Control Externo\nPosterior, además de procurar la eficiencia de los sistemas de\nadministración, evaluarán el resultado de la gestión tomando en cuenta,\nentre otros criterios, las políticas gubernamentales definidas por los\nsistemas nacionales de Planificación e Inversión Pública.\n\nCapítulo IV\nAtribuciones Institucionales",
+      "estructura": [
+        "Capítulo II",
+        "parte de personas, de unidades o de entidades diferentes o externas a la",
+        "Capítulo III"
+      ],
+      "fuente_pdf": "assets/ley-1178-ds-23215.pdf"
+    },
+    {
+      "id": "ley1178-art-20",
+      "numero": "Artículo 20",
+      "titulo": "Ley N.º 1178",
+      "texto": "Todos los sistemas de que trata la presente Ley serán\nregidos por órganos rectores, cuyas atribuciones básicas son:\n\na) Emitir las normas y reglamentos básicos para cada sistema;\n\nb) Fijar los plazos y condiciones para elaborar las normas secundarias\no especializadas y la implantación progresiva de los sistemas;\n\nc) Compatibilizar o evaluar, según corresponda, las disposiciones\nespecíficas que elaborará cada entidad o grupo de entidades que\nrealizan actividades similares, en función de su naturaleza y la\nnormatividad básica; y\n\nd) Vigilar el funcionamiento adecuado de los sistemas específicos\ndesconcentrados o descentralizados e integrar la información\ngenerada por los mismos.",
+      "estructura": [
+        "Capítulo II",
+        "parte de personas, de unidades o de entidades diferentes o externas a la",
+        "Capítulo III",
+        "Capítulo IV"
+      ],
+      "fuente_pdf": "assets/ley-1178-ds-23215.pdf"
+    },
+    {
+      "id": "ley1178-art-21",
+      "numero": "Artículo 21",
+      "titulo": "Ley N.º 1178",
+      "texto": "Derogado por el artículo 27 inciso b) de la Ley 1788 de 16\nde septiembre de 1997, “Ley de Organización del Poder Ejecutivo”",
+      "estructura": [
+        "Capítulo II",
+        "parte de personas, de unidades o de entidades diferentes o externas a la",
+        "Capítulo III",
+        "Capítulo IV"
+      ],
+      "fuente_pdf": "assets/ley-1178-ds-23215.pdf"
+    },
+    {
+      "id": "ley1178-art-22",
+      "numero": "Artículo 22",
+      "titulo": "Ley N.º 1178",
+      "texto": "Derogado por el artículo 27 inciso b) de la Ley 1788 de 16\nde septiembre de 1997, Ley de Organización del Poder Ejecutivo.\n\nEl artículo 24 de la Ley 1788 sustituye su texto por el siguiente:\n\nEl Ministerio de Hacienda es la autoridad fiscal y órgano rector de los\nSistemas de Programación de Operaciones, Organización Administrativa,\nPresupuesto, Administración de Personal, Administración de Bienes y\n\nServicios, Tesorería y Crédito Público, Contabilidad Integrada, así como\ndel Sistema de Inversión Pública y Financiamiento Externo.",
+      "estructura": [
+        "Capítulo II",
+        "parte de personas, de unidades o de entidades diferentes o externas a la",
+        "Capítulo III",
+        "Capítulo IV"
+      ],
+      "fuente_pdf": "assets/ley-1178-ds-23215.pdf"
+    },
+    {
+      "id": "ley1178-art-23",
+      "numero": "Artículo 23",
+      "titulo": "Ley N.º 1178",
+      "texto": "La Contraloría General de la República es el órgano rector\ndel sistema de Control Gubernamental, el cual se implantará bajo su\ndirección y supervisión. La Contraloría General de la República emitirá\nlas normas básicas de control interno y externo; evaluará la eficacia\nde los sistemas de control interno; realizará y supervisará el control\nexterno y ejercerá la supervigilancia normativa de los sistemas contables\ndel Sector Público a cargo de la Contaduría General del Estado del\nMinisterio de Finanzas. En igual forma promoverá el establecimiento de\nlos sistemas de contabilidad y control interno y conducirá los programas\nde capacitación y especialización de servidores públicos en el manejo\nde los sistemas de que trata esta Ley.\nC.P.E. Arts. 213 y 217.",
+      "estructura": [
+        "Capítulo II",
+        "parte de personas, de unidades o de entidades diferentes o externas a la",
+        "Capítulo III",
+        "Capítulo IV"
+      ],
+      "fuente_pdf": "assets/ley-1178-ds-23215.pdf"
+    },
+    {
+      "id": "ley1178-art-24",
+      "numero": "Artículo 24",
+      "titulo": "Ley N.º 1178",
+      "texto": "Derogado por el artículo 90 punto 1 de la Ley 1670 de 31\nde octubre de 1995, “Ley del Banco Central de Bolivia”.",
+      "estructura": [
+        "Capítulo II",
+        "parte de personas, de unidades o de entidades diferentes o externas a la",
+        "Capítulo III",
+        "Capítulo IV"
+      ],
+      "fuente_pdf": "assets/ley-1178-ds-23215.pdf"
+    },
+    {
+      "id": "ley1178-art-25",
+      "numero": "Artículo 25",
+      "titulo": "Ley N.º 1178",
+      "texto": "Derogado por el artículo 169 de la Ley 1488 de 14 de abril\nde 1993, “Ley de Bancos y Entidades Financieras”.",
+      "estructura": [
+        "Capítulo II",
+        "parte de personas, de unidades o de entidades diferentes o externas a la",
+        "Capítulo III",
+        "Capítulo IV"
+      ],
+      "fuente_pdf": "assets/ley-1178-ds-23215.pdf"
+    },
+    {
+      "id": "ley1178-art-26",
+      "numero": "Artículo 26",
+      "titulo": "Ley N.º 1178",
+      "texto": "Modificado por el artículo 90 punto 5 de la Ley 1670 de 31\nde octubre de 1995, “Ley del Banco Central de Bolivia”, en los siguientes\ntérminos:\n\n“Se aclara que la Ley 1178 de 20 de julio de 1990, en su artículo 26,\nen lo relativo a la facultad conferida a la Superintendencia de Bancos\nde opinar sobre la eficacia de las normas y reglamentos dictados por el\nB.C.B. no es vinculante para éste”.\n\nLa Superintendencia de Bancos es el órgano rector del sistema de\ncontrol de toda captación de recursos del público y de intermediación\nfinanciera del país, incluyendo el Banco Central de Bolivia. A este efecto\nnormará el control interno y externo de estas actividades y, sin perjuicio\nde las facultades de la Contraloría General de la República, ejercerá o\nsupervisará el control externo, determinando, y en su caso exigiendo,\nel cumplimiento de las disposiciones legales, normas técnicas y\nreglamentarias por todas las entidades públicas, privadas y mixtas que\nrealicen en el territorio de la República intermediación en la oferta y\ndemanda de recursos financieros así como sobre las personas naturales\no jurídicas que ejecuten actividades auxiliares del sistema financiero. En\nbase a ello deberá opinar sobre la eficacia de las normas y reglamentos\ndictados por el Banco Central para el funcionamiento de los sistemas\nde captación e intermediación financiera y, en su caso elevará al Banco\nCentral recomendaciones concretas al respecto.\n\nLa Superintendencia de Bancos, de acuerdo con el Banco Central de\nBolivia, podrá incorporar al ámbito de su competencia a otras personas o\nentidades que realicen operaciones financieras, existentes o por crearse,\ncuando lo justifiquen razones de política monetaria y crediticia.",
+      "estructura": [
+        "Capítulo II",
+        "parte de personas, de unidades o de entidades diferentes o externas a la",
+        "Capítulo III",
+        "Capítulo IV"
+      ],
+      "fuente_pdf": "assets/ley-1178-ds-23215.pdf"
+    },
+    {
+      "id": "ley1178-art-27",
+      "numero": "Artículo 27",
+      "titulo": "Ley N.º 1178",
+      "texto": "Cada entidad del Sector Público elaborará en el marco de\nlas normas básicas dictadas por los órganos rectores, los reglamentos\nespecíficos para el funcionamiento de los sistemas de Administración\ny Control Interno regulados por la presente Ley y los sistemas de\nPlanificación e Inversión Pública. Corresponde a la máxima autoridad de\nla entidad la responsabilidad de su implantación. Al efecto:\n\na) Cualquier tuición que corresponda ejercer a una entidad pública\nrespecto de otra, comprenderá la promoción y vigilancia de la\nimplantación y funcionamiento de los sistemas de Planificación\ne Inversión, Administración y Control Interno. En el caso de la\nProgramación de Operaciones de inversión pública, el ejercicio de la\n\ncompetencia sectorial o tuición sobre otra entidad comprenderá la\nevaluación de los correspondientes proyectos, previa a su inclusión\nen el Programa de Inversiones Públicas.\n\nb) La tuición incluye la facultad de ejercer el control externo posterior,\nsin perjuicio de la atribución de la Contraloría, así como la\nobligación de efectuar oportunamente el control externo posterior\nde las entidades cuyo reducido número de operaciones y monto\nde recursos administrados no justifican el funcionamiento de una\nunidad de auditoría interna propia.\n\nc) Toda entidad, funcionario o persona que recaude, reciba, pague o\ncustodie fondos, valores o bienes del Estado, tiene la obligación\nde rendir cuenta de la administración a su cargo por intermedio del\nsistema contable especificando la documentación sustentatoria y\nlas condiciones de su archivo.\n\nd) Con fines de control externo posterior, las entidades sujetas al\nControl Gubernamental deberán enviar a la Contraloría copia de\nsus contratos y de la documentación sustentatoria correspondiente\ndentro de los cinco días de haber sido perfeccionados.\n\ne) Dentro de los tres meses de concluido el ejercicio fiscal, cada\nentidad con patrimonio propio y autonomía financiera entregará\nobligatoriamente a la entidad que ejerce tuición sobre ella y a\nla Contaduría General de Estado, y pondrá a disposición de la\n\nContraloría General de la República, los estados financieros de\nla gestión anterior, junto con las notas que correspondieren y el\ninforme del auditor interno.\n\nf) La máxima autoridad colegiada, si la hubiera, y el ejecutivo\nsuperior de cada entidad responderán ante la Contraloría General\nde la República por el respeto a la independencia de la unidad de\nauditoría interna, y ésta por la imparcialidad y calidad profesional de\nsu trabajo.\n\ng) Las unidades jurídicas de las entidades del Sector Público son\nresponsables de la efectividad en el cumplimiento de las obligaciones\nrelativas a la defensa de los intereses del Estado. Deberán elevar\ninformes periódicos a la Contraloría sobre el estado de los procesos\nadministrativos, requerimientos de pago y las acciones judiciales a\nsu cargo, de conformidad con las disposiciones de la presente Ley.\n\nCapítulo V\nResponsabilidad por la Función Pública",
+      "estructura": [
+        "Capítulo II",
+        "parte de personas, de unidades o de entidades diferentes o externas a la",
+        "Capítulo III",
+        "Capítulo IV"
+      ],
+      "fuente_pdf": "assets/ley-1178-ds-23215.pdf"
+    },
+    {
+      "id": "ley1178-art-28",
+      "numero": "Artículo 28",
+      "titulo": "Ley N.º 1178",
+      "texto": "Todo servidor público responderá de los resultados\nemergentes del desempeño de las funciones, deberes y atribuciones\nasignados a su cargo. A este efecto:\n\na) La responsabilidad administrativa, ejecutiva, civil y penal se\ndeterminará tomando en cuenta los resultados de la acción u\nomisión.\n\nb) Se presume la licitud de las operaciones y actividades realizadas\npor todo servidor público, mientras no se demuestre lo contrario.\n\nc) El término “servidor público” utilizado en la presente Ley, se refiere\na los dignatarios, funcionarios y toda otra persona que preste\nservicios en relación de dependencia con autoridades estatales,\ncualquiera sea la fuente de su remuneración.\n\nd) Los términos “autoridad” y “ejecutivo” se utilizan en la presente\nLey como sinónimos y se refieren a los servidores públicos que\npor su jerarquía y funciones son los principales responsables de la\nadministración de las entidades de las que formen parte.",
+      "estructura": [
+        "Capítulo II",
+        "parte de personas, de unidades o de entidades diferentes o externas a la",
+        "Capítulo III",
+        "Capítulo IV",
+        "Capítulo V"
+      ],
+      "fuente_pdf": "assets/ley-1178-ds-23215.pdf"
+    },
+    {
+      "id": "ley1178-art-29",
+      "numero": "Artículo 29",
+      "titulo": "Ley N.º 1178",
+      "texto": "La responsabilidad es administrativa cuando la acción\nu omisión contraviene el ordenamiento jurídico-administrativo y las\nnormas que regulan la conducta funcionaria del servidor público. Se\ndeterminará por proceso interno de cada entidad que tomará en cuenta\n\nlos resultados de la auditoría si la hubiere. La autoridad competente\naplicará, según la gravedad de la falta, las sanciones de: multa hasta\nun veinte por ciento de la remuneración mensual: suspensión hasta un\nmáximo de treinta días; o destitución.",
+      "estructura": [
+        "Capítulo II",
+        "parte de personas, de unidades o de entidades diferentes o externas a la",
+        "Capítulo III",
+        "Capítulo IV",
+        "Capítulo V"
+      ],
+      "fuente_pdf": "assets/ley-1178-ds-23215.pdf"
+    },
+    {
+      "id": "ley1178-art-30",
+      "numero": "Artículo 30",
+      "titulo": "Ley N.º 1178",
+      "texto": "La responsabilidad es ejecutiva cuando la autoridad o\nejecutivo no rinda las cuentas a que se refiere el inciso c) del artículo\n1 y el artículo 28 de la presente Ley; cuando incumpla lo previsto en\nel primer párrafo y los incisos d), e) o f) del artículo 27 de la presente\nLey; o cuando se encuentre que las deficiencias o negligencia de la\ngestión ejecutiva son de tal magnitud que no permiten lograr, dentro\nde las circunstancias existentes, resultados razonables en términos de\neficacia, eficiencia y economía. En estos casos, se aplicará la sanción\nprevista en el inciso g) del artículo 42 de la presente Ley.",
+      "estructura": [
+        "Capítulo II",
+        "parte de personas, de unidades o de entidades diferentes o externas a la",
+        "Capítulo III",
+        "Capítulo IV",
+        "Capítulo V"
+      ],
+      "fuente_pdf": "assets/ley-1178-ds-23215.pdf"
+    },
+    {
+      "id": "ley1178-art-31",
+      "numero": "Artículo 31",
+      "titulo": "Ley N.º 1178",
+      "texto": "La responsabilidad es civil cuando la acción u omisión del\nservidor público o de las personas naturales o jurídicas privadas cause\ndaño al Estado valuable en dinero. Su determinación se sujetará a los\nsiguientes preceptos:\n\na) Será civilmente corresponsable el superior jerárquico que hubiere\nautorizado el uso indebido de bienes, servicios y recursos del\nEstado o cuando dicho uso fuere posibilitado por las deficiencias\nde los sistemas de administración y control interno factibles de ser\nimplantados en la entidad.\n\nb) Incurrirán en responsabilidad civil las personas naturales o jurídicas\nque no siendo servidores públicos, se beneficiaren indebidamente\n\ncon recursos públicos o fueren causantes de daño al patrimonio del\nEstado y de sus entidades.\n\nc) Cuando varias personas resultaren responsables del mismo acto\no del mismo hecho que hubiese causado daño al Estado, serán\nsolidariamente responsables.\nN° 021/2007 de 10/05/2007).\nN° 021/2007 de 10/05/2007), 56, 59, 64, 65 y 67.",
+      "estructura": [
+        "Capítulo II",
+        "parte de personas, de unidades o de entidades diferentes o externas a la",
+        "Capítulo III",
+        "Capítulo IV",
+        "Capítulo V"
+      ],
+      "fuente_pdf": "assets/ley-1178-ds-23215.pdf"
+    },
+    {
+      "id": "ley1178-art-32",
+      "numero": "Artículo 32",
+      "titulo": "Ley N.º 1178",
+      "texto": "La entidad estatal condenada judicialmente al pago de\ndaños y perjuicios en favor de entidades públicas o de terceros, repetirá\nel pago contra la autoridad que resultare responsable de los actos o\nhechos que motivaron la sanción.",
+      "estructura": [
+        "Capítulo II",
+        "parte de personas, de unidades o de entidades diferentes o externas a la",
+        "Capítulo III",
+        "Capítulo IV",
+        "Capítulo V"
+      ],
+      "fuente_pdf": "assets/ley-1178-ds-23215.pdf"
+    },
+    {
+      "id": "ley1178-art-33",
+      "numero": "Artículo 33",
+      "titulo": "Ley N.º 1178",
+      "texto": "No existirá responsabilidad administrativa, ejecutiva ni\ncivil cuando se pruebe que la decisión hubiese sido tomada en procura\nde mayor beneficio y en resguardo de los bienes de la entidad, dentro\nde los riesgos propios de operación y las circunstancias imperantes al\nmomento de la decisión, o cuando situaciones de fuerza mayor originaron\nla decisión o incidieron en el resultado final de la operación.",
+      "estructura": [
+        "Capítulo II",
+        "parte de personas, de unidades o de entidades diferentes o externas a la",
+        "Capítulo III",
+        "Capítulo IV",
+        "Capítulo V"
+      ],
+      "fuente_pdf": "assets/ley-1178-ds-23215.pdf"
+    },
+    {
+      "id": "ley1178-art-34",
+      "numero": "Artículo 34",
+      "titulo": "Ley N.º 1178",
+      "texto": "La responsabilidad es penal cuando la acción u omisión\ndel servidor público y de los particulares, se encuentra tipificada en el\nCódigo Penal.",
+      "estructura": [
+        "Capítulo II",
+        "parte de personas, de unidades o de entidades diferentes o externas a la",
+        "Capítulo III",
+        "Capítulo IV",
+        "Capítulo V"
+      ],
+      "fuente_pdf": "assets/ley-1178-ds-23215.pdf"
+    },
+    {
+      "id": "ley1178-art-35",
+      "numero": "Artículo 35",
+      "titulo": "Ley N.º 1178",
+      "texto": "Cuando los actos o hechos examinados presenten\nindicios de responsabilidad civil o penal, el servidor público o auditor\nlos trasladará a conocimiento de la unidad legal pertinente y ésta\nmediante la autoridad legal competente solicitará directamente al juez\nque corresponda, las medidas precautorias y preparatorias de demanda\na que hubiere lugar o denunciará los hechos ante el Ministerio Público.\nC.P.P. Art. 286 numeral 1).",
+      "estructura": [
+        "Capítulo II",
+        "parte de personas, de unidades o de entidades diferentes o externas a la",
+        "Capítulo III",
+        "Capítulo IV",
+        "Capítulo V"
+      ],
+      "fuente_pdf": "assets/ley-1178-ds-23215.pdf"
+    },
+    {
+      "id": "ley1178-art-36",
+      "numero": "Artículo 36",
+      "titulo": "Ley N.º 1178",
+      "texto": "Todo servidor público o ex-servidor público de las entidades\ndel Estado y personas privadas con relaciones contractuales con el\nEstado cuyas cuentas y contratos estén sujetos al control posterior,\nauditoría interna o externa, quedan obligados a exhibir la documentación\no información necesarias para el examen y facilitar las copias requeridas,\ncon las limitaciones contenidas en los artículos 51, 52 y 56 del Código\nde Comercio.\n\nCódigo de Comercio",
+      "estructura": [
+        "Capítulo II",
+        "parte de personas, de unidades o de entidades diferentes o externas a la",
+        "Capítulo III",
+        "Capítulo IV",
+        "Capítulo V"
+      ],
+      "fuente_pdf": "assets/ley-1178-ds-23215.pdf"
+    },
+    {
+      "id": "ley1178-art-37",
+      "numero": "Artículo 37",
+      "titulo": "Ley N.º 1178",
+      "texto": "El Control Posterior Interno o Externo no modificará los\nactos administrativos que hubieren puesto término a los reclamos de\nlos particulares y se concretará a determinar la responsabilidad de la\nautoridad que los autorizó expresamente o por omisión, si la hubiere.",
+      "estructura": [
+        "Capítulo II",
+        "parte de personas, de unidades o de entidades diferentes o externas a la",
+        "Capítulo III",
+        "Capítulo IV",
+        "Capítulo V"
+      ],
+      "fuente_pdf": "assets/ley-1178-ds-23215.pdf"
+    },
+    {
+      "id": "ley1178-art-38",
+      "numero": "Artículo 38",
+      "titulo": "Ley N.º 1178",
+      "texto": "Los profesionales y demás servidores públicos son\nresponsables por los informes y documentos que suscriban. También\nserán responsables los abogados por el patrocinio legal del Sector\nPúblico cuando la tramitación de la causa la realicen con vicios\nprocedimentales o cuando los recursos se declaren improcedentes por\naspectos formales.",
+      "estructura": [
+        "Capítulo II",
+        "parte de personas, de unidades o de entidades diferentes o externas a la",
+        "Capítulo III",
+        "Capítulo IV",
+        "Capítulo V"
+      ],
+      "fuente_pdf": "assets/ley-1178-ds-23215.pdf"
+    },
+    {
+      "id": "ley1178-art-39",
+      "numero": "Artículo 39",
+      "titulo": "Ley N.º 1178",
+      "texto": "El Juez o tribunal que conozca la causa al momento del\npago del daño civil actualizará el monto de la deuda considerando, para\nel efecto, los parámetros que el Banco Central de Bolivia aplica en el\nmantenimiento de valor de los activos financieros en moneda nacional.\nLos procesos administrativos y judiciales previstos en esta Ley, en\nninguno de sus grados e instancias darán lugar a condena de costas\ny honorarios profesionales, corriendo éstos a cargo de las respectivas\npartes del proceso.",
+      "estructura": [
+        "Capítulo II",
+        "parte de personas, de unidades o de entidades diferentes o externas a la",
+        "Capítulo III",
+        "Capítulo IV",
+        "Capítulo V"
+      ],
+      "fuente_pdf": "assets/ley-1178-ds-23215.pdf"
+    },
+    {
+      "id": "ley1178-art-40",
+      "numero": "Artículo 40",
+      "titulo": "Ley N.º 1178",
+      "texto": "Las acciones judiciales y obligaciones emergentes de la\nresponsabilidad civil establecida en la presente Ley, prescribirán en\ndiez años computables a partir del día del hecho que da lugar a la\nacción o desde la última actuación procesal. El plazo de la prescripción\nse suspenderá o se interrumpirá de acuerdo con las causas y en las\nformas establecidas en el Código Civil. Para la iniciación de acciones\npor hechos o actos ocurridos antes de la vigencia de la presente ley,\neste término de prescripción se computará a partir de la fecha de dicha\nvigencia.\n\nEste artículo fue modificado por el artículo 112 de la Constitución\nPolítica del Estado, que señala: “Los delitos cometidos por servidores\npúblicos que atenten contra el patrimonio del Estado y causen grave daño\neconómico, son imprescriptibles y no admiten régimen de inmunidad”.\n\nAsimismo, el artículo 29 de la Ley N° 004 de 31 de marzo de 2010,\nprevé: “De conformidad con el Artículo 112 de la Constitución Política del\nEstado, los delitos cometidos por servidoras o servidores públicos que\natenten contra el patrimonio del Estado y causen grave daño económico,\nson imprescriptibles y no admiten régimen de inmunidad”.\n\nCódigo Civil",
+      "estructura": [
+        "Capítulo II",
+        "parte de personas, de unidades o de entidades diferentes o externas a la",
+        "Capítulo III",
+        "Capítulo IV",
+        "Capítulo V"
+      ],
+      "fuente_pdf": "assets/ley-1178-ds-23215.pdf"
+    },
+    {
+      "id": "ley1178-art-41",
+      "numero": "Artículo 41",
+      "titulo": "Ley N.º 1178",
+      "texto": "La Contraloría General de la República ejercerá el Control\nExterno Posterior con autonomía operativa, técnica y administrativa.\nA fin de asegurar su independencia e imparcialidad respecto a la\nadministración del Estado, el presupuesto de la Contraloría, elaborado por\nésta y sustentado en su programación de operaciones, será incorporado\nsin modificación por el Ministerio de Finanzas al proyecto de Presupuesto\nGeneral de la Nación, para su consideración por el Congreso Nacional.\nUna vez aprobado, el Ministerio de Finanzas efectuará los desembolsos\nque requiera la Contraloría de conformidad con los programas de caja\nelaborados por la misma.\nC.P.E. Arts. 213 y 217.",
+      "estructura": [
+        "parte de personas, de unidades o de entidades diferentes o externas a la",
+        "Capítulo III",
+        "Capítulo IV",
+        "Capítulo V",
+        "Capítulo VI"
+      ],
+      "fuente_pdf": "assets/ley-1178-ds-23215.pdf"
+    },
+    {
+      "id": "ley1178-art-42",
+      "numero": "Artículo 42",
+      "titulo": "Ley N.º 1178",
+      "texto": "Para el ejercicio del Control Externo Posterior se establecen\nlas siguientes facultades:\n\na) La Contraloría podrá contratar los servicios de firmas o profesionales\ncalificados e independientes u ordenar a las entidades del Sector\nPúblico y a las personas comprendidas en el artículo 5 de la presente\nLey, la contratación de dichos servicios, señalando los alcances del\ntrabajo, cuando requiera asesoría o auditoría externa especializada\no falten los recursos profesionales necesarios para ejecutar los\ntrabajos requeridos. En todos los casos la contratación se sujetará\nal reglamento que al efecto expida la Contraloría General.\n\nb) Todo informe de auditoría interna o externa será enviado a la\nContraloría inmediatamente de ser concluido, en la forma y con la\ndocumentación que señale la reglamentación.\n\nc) La Contraloría podrá conocer los programas, las labores y papeles\nde trabajo de las auditorías que realicen las entidades públicas y las\nfirmas o profesionales independientes, sin afectar la responsabilidad\nde los mismos.\n\nd) La Contraloría podrá examinar en cualquier momento los registros\ny operaciones realizadas por las entidades sujetas al Control\nGubernamental.\n\ne) En caso de incumplimiento de los plazos y condiciones para la\nimplantación progresiva de los sistemas en alguna de las entidades,\nel Contralor General de la República podrá ordenar:\n\n- Congelamiento de cuentas corrientes bancarias de la entidad;\n\n- Suspensión de entrega de fondos por los tesoros del Estado o\npor cualquier organismo financiador.\n\nf) En caso de incumplimiento de la presente Ley por el servidor\npúblico, el Contralor General de la República de oficio o a petición\nfundamentada de los Órganos Rectores o de las autoridades que\nejercen tuición, podrá recomendar al máximo ejecutivo de la entidad\no a la autoridad superior, imponga la sanción que corresponda según\n\nel artículo 29 de la presente Ley, sin perjuicio de la responsabilidad\nejecutiva, civil y penal a que hubiere lugar.\n\ng) En caso de responsabilidad ejecutiva determinada por el Contralor\nGeneral de la República, éste podrá recomendar a la máxima\ndirección colegiada, siempre que no estuviere involucrada en las\ndeficiencias observadas, y a la autoridad superior que ejerce tuición\nsobre la entidad, la suspensión o destitución del principal ejecutivo\ny, si fuere el caso, de la dirección colegiada, sin perjuicio de la\nresponsabilidad civil o penal a que hubiere lugar, informando a las\nrespectivas comisiones del H. Congreso Nacional.\n\nh) Para el caso previsto en la última parte del artículo 36 de la presente\nLey, dentro de las veinticuatro horas de la solicitud del Contralor\nacompañada de copia de la advertencia previa, el Fiscal del Distrito\nen lo Penal expedirá mandamiento de apremio de acuerdo al Código\nPenal y su Procedimiento.",
+      "estructura": [
+        "parte de personas, de unidades o de entidades diferentes o externas a la",
+        "Capítulo III",
+        "Capítulo IV",
+        "Capítulo V",
+        "Capítulo VI"
+      ],
+      "fuente_pdf": "assets/ley-1178-ds-23215.pdf"
+    },
+    {
+      "id": "ley1178-art-43",
+      "numero": "Artículo 43",
+      "titulo": "Ley N.º 1178",
+      "texto": "Sin perjuicio de las acciones judiciales que seguirán\noportunamente las entidades públicas contra quienes incumplan las\nobligaciones contraídas, a pedido de la entidad o de oficio la Contraloría\nGeneral de la República con fundamento en los informes de auditoría\npodrán emitir dictamen sobre las responsabilidades, de acuerdo con los\nsiguientes preceptos:\n\na) El dictamen del Contralor General de la República y los informes y\ndocumentos que lo sustentan, constituirán prueba preconstituida\npara la acción administrativa, ejecutiva y civil a que hubiere lugar.\n\nb) Con el dictamen de responsabilidad se notificará a los presuntos\nresponsables y se remitirá a la entidad, de oficio, un ejemplar\nde todo lo actuado, para que cumpla lo dictaminado y, si fuera el\ncaso, requiera el pago de la obligación determinada concediendo al\ndeudor diez días para efectuarlo, bajo conminatoria de iniciarse en\nsu contra la acción legal que corresponda.\n\nc) En caso de que la entidad pertinente no hubiese iniciado el proceso\nadministrativo o la acción judicial dentro de los veinte días de\nrecibido el dictamen, el Contralor General de la República o quien\nrepresente a la Contraloría en cada capital de departamento en su\ncaso, instruirá a quien corresponda la destitución del ejecutivo y del\nasesor legal principal iniciándose contra ellos la acción judicial a que\nhubiere lugar, subsistiendo la obligación de las nuevas autoridades\npor los procesos que originaron la destitución de sus antecesores,\nbajo apercibimiento de iguales sanciones.",
+      "estructura": [
+        "parte de personas, de unidades o de entidades diferentes o externas a la",
+        "Capítulo III",
+        "Capítulo IV",
+        "Capítulo V",
+        "Capítulo VI"
+      ],
+      "fuente_pdf": "assets/ley-1178-ds-23215.pdf"
+    },
+    {
+      "id": "ley1178-art-44",
+      "numero": "Artículo 44",
+      "titulo": "Ley N.º 1178",
+      "texto": "La Contraloría General de la República podrá demandar y\nactuar en procesos administrativos, coactivos fiscales, civiles y penales\nrelacionados con daños económicos al Estado. Su representación\nserá ejercida por el Contralor General de la República o por quienes\nrepresenten a la Contraloría en cada capital de departamento, los que\ntendrán poder para delegar estas facultades.",
+      "estructura": [
+        "parte de personas, de unidades o de entidades diferentes o externas a la",
+        "Capítulo III",
+        "Capítulo IV",
+        "Capítulo V",
+        "Capítulo VI"
+      ],
+      "fuente_pdf": "assets/ley-1178-ds-23215.pdf"
+    },
+    {
+      "id": "ley1178-art-45",
+      "numero": "Artículo 45",
+      "titulo": "Ley N.º 1178",
+      "texto": "La Contraloría General de la República propondrá al Poder\nEjecutivo, para su vigencia mediante Decreto Supremo, la reglamentación\nconcerniente al Capítulo V “Responsabilidad por la Función Pública” y al\nejercicio de las atribuciones que le han sido asignadas en esta Ley.",
+      "estructura": [
+        "parte de personas, de unidades o de entidades diferentes o externas a la",
+        "Capítulo III",
+        "Capítulo IV",
+        "Capítulo V",
+        "Capítulo VI"
+      ],
+      "fuente_pdf": "assets/ley-1178-ds-23215.pdf"
+    },
+    {
+      "id": "ley1178-art-46",
+      "numero": "Artículo 46",
+      "titulo": "Ley N.º 1178",
+      "texto": "La Contraloría General de la República sólo ejercerá las\nfunciones que corresponden a su naturaleza de Órgano Superior de\nControl Gubernamental Externo Posterior conforme se establece en la\npresente Ley. Al efecto, coordinará con el Poder Ejecutivo la eliminación\no transferencia de cualquier otra competencia o actividad que haya\nvenido ejerciendo.\n\nCapítulo VII\nDe la Jurisdicción Coactiva Fiscal",
+      "estructura": [
+        "parte de personas, de unidades o de entidades diferentes o externas a la",
+        "Capítulo III",
+        "Capítulo IV",
+        "Capítulo V",
+        "Capítulo VI"
+      ],
+      "fuente_pdf": "assets/ley-1178-ds-23215.pdf"
+    },
+    {
+      "id": "ley1178-art-47",
+      "numero": "Artículo 47",
+      "titulo": "Ley N.º 1178",
+      "texto": "Créase la jurisdicción coactiva fiscal para el conocimiento\nde todas las demandas que se interpongan con ocasión de los actos\nde los servidores públicos, de los distintos entes de derecho público\no de las personas naturales o jurídicas privadas que hayan suscrito\ncontratos administrativos con el Estado, por los cuales se determinen\nresponsabilidades civiles definidas en el artículo 31 de la presente Ley.\nSon contratos administrativos aquellos que se refieren a contratación\nde obras, provisión de materiales, bienes y servicios y otros de similar\nnaturaleza.\nL.S.C.F. Art. 77.\nL.P.C.F. Art. 3.",
+      "estructura": [
+        "Capítulo III",
+        "Capítulo IV",
+        "Capítulo V",
+        "Capítulo VI",
+        "Capítulo VII"
+      ],
+      "fuente_pdf": "assets/ley-1178-ds-23215.pdf"
+    },
+    {
+      "id": "ley1178-art-48",
+      "numero": "Artículo 48",
+      "titulo": "Ley N.º 1178",
+      "texto": "No corresponden a la jurisdicción coactiva fiscal las\ncuestiones de índole civil no contempladas en el artículo 47 ni las de\ncarácter penal, comercial o tributario atribuidas a la jurisdicción ordinaria\ny tributaria y aquellas otras que, aunque relacionadas con actos de la\nadministración pública, se atribuyen por Ley a otras jurisdicciones.\nL.P.C.F. Art. 1.",
+      "estructura": [
+        "Capítulo III",
+        "Capítulo IV",
+        "Capítulo V",
+        "Capítulo VI",
+        "Capítulo VII"
+      ],
+      "fuente_pdf": "assets/ley-1178-ds-23215.pdf"
+    },
+    {
+      "id": "ley1178-art-49",
+      "numero": "Artículo 49",
+      "titulo": "Ley N.º 1178",
+      "texto": "Ningún proyecto de ley será votado por el Congreso, que\nderogue un proyecto de ley que afecta las rentas incluidas en las\nleyes de presupuesto de los servicios nacional o departamentales del\naño fiscal corriente o siguiente, a no ser que el Congreso provea, al\nmismo tiempo, nuevas rentas que reemplacen las que deban cesar\ndebido a la abrogación de la misma, o si las estipulaciones de dicha\nabrogación no han de surtir sus efectos, hasta después de la clausura\nde los años fiscales incluidos en las leyes presupuestarias vigentes.",
+      "estructura": [
+        "Capítulo IV",
+        "Capítulo V",
+        "Capítulo VI",
+        "Capítulo VII",
+        "Capítulo VIII"
+      ],
+      "fuente_pdf": "assets/ley-1178-ds-23215.pdf"
+    },
+    {
+      "id": "ley1178-art-50",
+      "numero": "Artículo 50",
+      "titulo": "Ley N.º 1178",
+      "texto": "La Ley de presupuesto general y las de los presupuestos\ndepartamentales serán aprobadas por el Congreso dentro de los\nnoventa días hábiles transcurridos desde la apertura de las sesiones\nordinarias del mismo. Si no hubiesen sido aprobadas por el Congreso\ndentro de este término, las leyes de presupuesto del año fiscal corriente,\ncon las modificaciones que se les haya hecho por ley, continuarán\nrigiendo el año fiscal siguiente. Se provee que si el Congreso deja de\naprobar un presupuesto durante dos años seguidos, la última ley de\npresupuesto presentada por el Poder Ejecutivo y que no fue aprobada\npor el Congreso, regirá durante el año fiscal siguiente en la forma que\nhubiera sido presentada al Congreso con todo el vigor de la ley.",
+      "estructura": [
+        "Capítulo IV",
+        "Capítulo V",
+        "Capítulo VI",
+        "Capítulo VII",
+        "Capítulo VIII"
+      ],
+      "fuente_pdf": "assets/ley-1178-ds-23215.pdf"
+    },
+    {
+      "id": "ley1178-art-51",
+      "numero": "Artículo 51",
+      "titulo": "Ley N.º 1178",
+      "texto": "El Congreso no aumentará ninguna partida de egresos\ncontenida en los proyectos de presupuesto, ni incluirá en los mismos\nninguna partida nueva de egresos a menos que el equilibrio entre los\n\ningresos y egresos calculados no sean perturbados como consecuencia\nde tal aumento o adición. El Congreso puede reformar el proyecto\nde presupuesto general aumentado o disminuyendo las partidas de\negresos que se refieran a la Cámara de Diputados y al Senado, si tal\naumento no perturba el equilibrio del presupuesto. Cualquier partida\nde egresos que hubiese sido propuesta por el Poder Ejecutivo puede,\nsin embargo, ser reducida o descartada por el Congreso dentro de las\nrestricciones previstas en el artículo siete de esta ley.\n\n- Ley Orgánica de la Contraloría General de la República con excepción\nde los artículos 3, 4 sin el inciso b) y 5; asimismo la Ley del Sistema\nde Control Fiscal, con excepción del artículo 77, correspondientes\nal D.L. 14933 de 29 de septiembre de 1977.\n\nLey del Sistema de Control Fiscal",
+      "estructura": [
+        "Capítulo IV",
+        "Capítulo V",
+        "Capítulo VI",
+        "Capítulo VII",
+        "Capítulo VIII"
+      ],
+      "fuente_pdf": "assets/ley-1178-ds-23215.pdf"
+    },
+    {
+      "id": "ley1178-art-52",
+      "numero": "Artículo 52",
+      "titulo": "Conservación de libros y papeles de comercio",
+      "texto": "Los libros\ny papeles a que se refiere el artículo anterior, deberán conservarse\ncuando menos por cinco años, contados desde el cierre de aquellos\no desde la fecha del último asiento, documento o comprobante, salvo\nque disposiciones especiales establezcan otro período para cierto\ntipo de documentos. Transcurrido este lapso podrán ser destruidos,\nprevio el cumplimiento de las normas legales.",
+      "estructura": [
+        "Capítulo II",
+        "parte de personas, de unidades o de entidades diferentes o externas a la",
+        "Capítulo III",
+        "Capítulo IV",
+        "Capítulo V"
+      ],
+      "fuente_pdf": "assets/ley-1178-ds-23215.pdf"
+    },
+    {
+      "id": "ley1178-art-53",
+      "numero": "Artículo 53",
+      "titulo": "Ley N.º 1178",
+      "texto": "Se abrogan las siguientes disposiciones:\n\n- Ley Orgánica de la Contraloría General de la República de 5 de mayo\nde 1928.\n\n- Ley de Presupuesto, Contabilidad y Tesoro, D.S. 08321 de 9 de abril\nde 1968.\n\n- Sistema Financiero Nacional, D.L. 09428 de 28 de octubre de\n1970.\n\n- Principios y Normas de Contabilidad Fiscal, D.S. 12329 de 1ro de\nabril de 1975.\n\n- Control Previo Externo, Ley 493 de 29 de diciembre de 1979 y D.L.\nl8953 de l9 de mayo de l982.",
+      "estructura": [
+        "Capítulo IV",
+        "Capítulo V",
+        "Capítulo VI",
+        "Capítulo VII",
+        "Capítulo VIII"
+      ],
+      "fuente_pdf": "assets/ley-1178-ds-23215.pdf"
+    },
+    {
+      "id": "ley1178-art-54",
+      "numero": "Artículo 54",
+      "titulo": "Ley N.º 1178",
+      "texto": "Se derogan las siguientes disposiciones:\n\n- Ley Orgánica de Presupuesto de 27 de abril de 1928, excepto los\nartículos 7, 47, 48, 49, 50 y 51.",
+      "estructura": [
+        "Capítulo IV",
+        "Capítulo V",
+        "Capítulo VI",
+        "Capítulo VII",
+        "Capítulo VIII"
+      ],
+      "fuente_pdf": "assets/ley-1178-ds-23215.pdf"
+    },
+    {
+      "id": "ley1178-art-55",
+      "numero": "Artículo 55",
+      "titulo": "Ley N.º 1178",
+      "texto": "Se derogan las disposiciones contrarias a la presente Ley\ncontenidas en las que se indican y en toda otra norma legal:\n\n- Organización del Instituto Superior de Administración Pública, D.S.\n06991 de 10 de diciembre de 1964.\n\n- Ley de Organización Administrativa del Poder Ejecutivo, D.L. 10460\nde 15 de septiembre de 1972.\n\n- Ley Orgánica del Ministerio de Planeamiento, D.L. 11847 de 3 de\noctubre de 1974.\n\n- Ley del Sistema de Personal y de Carrera Administrativa, D.L. 11049\nde 24 de agosto de 1973 y las modificaciones introducidas por el\n\n- Ley del Sistema Nacional de Planeamiento, D.S. 11848 de 3 de\noctubre de 1974.\n\n- Ley del Sistema Nacional de Proyectos, D.L. 11849 de 3 de octubre\nde 1974.\n\n- Ley Orgánica del Banco Central de Bolivia, D.L. 14791 de 1º de\nagosto de 1977.\n\n- Imprescriptibilidad de las deudas al Estado, D.L. 16390 de 30 de\nabril de 1979.\n\n- Dolarización de acreencias del Estado, D.S. 20928 de 18 de julio de\n1985.\n\n- Decreto Supremo 22106 de 29 de diciembre de 1988.\n\n- Decreto Supremo 22165 de 5 de abril de 1989.\n\nPase al Poder Ejecutivo para fines constitucionales.\n\nEs dada en la Sala de Sesiones del Honorable Congreso Nacional, a los\nnueve días del mes de julio de mil novecientos noventa años.\n\nFdo. Gonzalo Valda Cárdenas, Fernando Kieffer Guzmán, José Luis\nCarvajal Palma, Leopoldo Fernández Ferreira, Enrique Toro Tejada, Luis\nMorgan López Baspineiro.\n\nPor tanto, la promulgo para que se tenga y cumpla como Ley de la\nRepública.\n\nPalacio de Gobierno de la ciudad de La Paz, a los veinte días del mes de\njulio de mil novecientos noventa años.\n\nFDO. JAIME PAZ ZAMORA, David Blanco Zabala.",
+      "estructura": [
+        "Capítulo IV",
+        "Capítulo V",
+        "Capítulo VI",
+        "Capítulo VII",
+        "Capítulo VIII"
+      ],
+      "fuente_pdf": "assets/ley-1178-ds-23215.pdf"
+    }
+  ]
+}

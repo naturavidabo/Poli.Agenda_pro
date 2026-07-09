@@ -1,0 +1,107 @@
+{
+  "metadatos": {
+    "version": "2.2.0",
+    "fecha_integracion": "2026-07-09",
+    "documentos_totales": 11
+  },
+  "documentos": [
+    {
+      "id": "uniformes",
+      "titulo": "Reglamento de Uniformes de la Policía Boliviana",
+      "abreviatura": "Uniformes",
+      "categoria": "Policial e institucional",
+      "archivo": "data/reglamento-uniformes.json",
+      "pdf": "assets/reglamento-uniformes-2021.pdf",
+      "icono": "uniform"
+    },
+    {
+      "id": "sumario",
+      "titulo": "Reglamento de la Comisión Sumaria ESP–UNIPOL",
+      "abreviatura": "Comisión Sumaria",
+      "categoria": "Académica y disciplinaria",
+      "archivo": "data/reglamento-sumario-unipol.json",
+      "icono": "scale"
+    },
+    {
+      "id": "cpe",
+      "titulo": "Constitución Política del Estado",
+      "abreviatura": "CPE",
+      "categoria": "Constitucional",
+      "archivo": "data/cpe.json",
+      "pdf": "assets/cpe.pdf",
+      "icono": "shield"
+    },
+    {
+      "id": "ley1178",
+      "titulo": "Ley N.º 1178 de Administración y Control Gubernamentales",
+      "abreviatura": "Ley SAFCO",
+      "categoria": "Administración y responsabilidad pública",
+      "archivo": "data/ley-1178.json",
+      "pdf": "assets/ley-1178-ds-23215.pdf",
+      "icono": "briefcase"
+    },
+    {
+      "id": "ds23215",
+      "titulo": "D.S. N.º 23215",
+      "abreviatura": "D.S. 23215",
+      "categoria": "Administración y responsabilidad pública",
+      "archivo": "data/ds-23215.json",
+      "pdf": "assets/ley-1178-ds-23215.pdf",
+      "icono": "scale"
+    },
+    {
+      "id": "ds23318a",
+      "titulo": "D.S. N.º 23318-A",
+      "abreviatura": "D.S. 23318-A",
+      "categoria": "Administración y responsabilidad pública",
+      "archivo": "data/ds-23318-a.json",
+      "pdf": "assets/ds-23318-a.pdf",
+      "icono": "alert"
+    },
+    {
+      "id": "ds26237",
+      "titulo": "D.S. N.º 26237",
+      "abreviatura": "D.S. 26237",
+      "categoria": "Normas modificatorias SAFCO",
+      "archivo": "data/ds-26237.json",
+      "pdf": "assets/ds-26237.pdf",
+      "icono": "history"
+    },
+    {
+      "id": "ds29820",
+      "titulo": "D.S. N.º 29820",
+      "abreviatura": "D.S. 29820",
+      "categoria": "Normas modificatorias SAFCO",
+      "archivo": "data/ds-29820.json",
+      "pdf": "assets/ds-29820.pdf",
+      "icono": "history"
+    },
+    {
+      "id": "ds29536",
+      "titulo": "D.S. N.º 29536",
+      "abreviatura": "D.S. 29536",
+      "categoria": "Normas modificatorias SAFCO",
+      "archivo": "data/ds-29536.json",
+      "pdf": "assets/ds-29536.pdf",
+      "icono": "history"
+    },
+    {
+      "id": "codigoPenal",
+      "titulo": "Código Penal",
+      "abreviatura": "CP",
+      "categoria": "Penal",
+      "archivo": "data/codigo-penal.json",
+      "pdf": "assets/codigo-penal-procedimiento-penal.pdf",
+      "icono": "shield"
+    },
+    {
+      "id": "codigoProcedimientoPenal",
+      "titulo": "Código de Procedimiento Penal",
+      "abreviatura": "CPP",
+      "categoria": "Penal",
+      "archivo": "data/codigo-procedimiento-penal.json",
+      "pdf": "assets/codigo-penal-procedimiento-penal.pdf",
+      "icono": "scale"
+    }
+  ]
+}

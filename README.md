@@ -1,54 +1,87 @@
-# PoliAgenda Pro v2.1.0
+# PoliAgenda Pro v2.2.0
 
-Actualización estructural para la aplicación publicada en:
+Aplicación PWA académica y profesional para consulta normativa, organización de horarios, formaciones, actividades, tareas, notas y consignas.
 
-`https://naturavidabo.github.io/Poli.Agenda_pro/`
+## Publicación en el repositorio actual
 
-## Importante antes de subir
+Repositorio previsto: `naturavidabo/Poli.Agenda_pro`
 
-Este paquete contiene menos de 100 archivos para facilitar la actualización desde GitHub. **No elimines la carpeta existente `assets/pages/` del repositorio**, porque contiene las 121 páginas visuales del Reglamento de Uniformes.
+1. Descomprime el ZIP.
+2. En el repositorio actual, reemplaza los archivos anteriores por el contenido de esta carpeta.
+3. No subas el ZIP: sube sus archivos y carpetas.
+4. Confirma que GitHub Pages use la rama `main` y la carpeta `/root`.
+5. Espera a que finalice el flujo de Pages y abre:
+   `https://naturavidabo.github.io/Poli.Agenda_pro/`
+6. En la primera apertura usa el código local de activación `271261`.
 
-Puedes reemplazar los demás archivos y carpetas con los de este ZIP. La carpeta `assets/pages/` debe permanecer tal como está.
+El paquete contiene 54 archivos y cada archivo individual está por debajo del límite de 100 MB de GitHub.
 
 ## Cambios principales
 
-- Activación local/offline con el código `271261`.
-- El código se solicita solo en la primera instalación o después de borrar los datos del sitio.
-- Selección inicial entre modo Académico y Profesional.
-- Navegación: Inicio, Académica/Profesional, Formaciones, Biblioteca y Pendientes.
-- Botón flotante para crear notas, pendientes, actividades o pegar mensajes.
-- Actividades con varias horas: arribo, formación, parte, inicio o final.
-- Calendario vinculado con actividades y pendientes.
-- Notas activas/resueltas; al resolver se archivan y pueden consultarse en Anteriores.
-- Pendientes vencidos resaltados sin borrarse.
-- Mensaje WhatsApp inteligente con tres títulos sugeridos.
-- Horario semanal con actividad en curso, próxima y finalizadas.
-- Perfil voluntario sin protección adicional.
-- Recordatorio de respaldo cada 7 días.
-- Comprobación automática de actualización y botón manual.
-- Vistas recortadas y validadas para 3-A, 3-A Tropical, 3-B, 3-B Tropical, 4 y 4 Tropical.
+- Biblioteca ampliada a 11 documentos normativos.
+- Activación local y offline.
+- Modos Académico y Profesional sin borrar información al alternar.
+- Tareas con subtareas compactas y marcado real.
+- Notas libres editables.
+- Consignas permanentes en sección propia.
+- Notificaciones y mensajes originales conservados.
+- Ficha Kardex voluntaria, vacía por defecto, con importación desde texto.
+- Fotografía de horario reemplazable, giratoria y eliminable.
+- Reconocimiento del horario con revisión obligatoria antes de guardar.
+- Opción de reemplazar el horario vigente o crear un nuevo horario/parcial.
+- Imagen principal antes del texto en las fichas de uniformes.
+- Respaldo integral, autoguardado y actualización desde GitHub.
 
-## Cómo actualizar el repositorio
+## Biblioteca normativa
 
-1. Descarga y descomprime el ZIP.
-2. Abre el repositorio `Poli.Agenda_pro`.
-3. Sube el contenido descomprimido a la raíz del repositorio.
-4. Acepta el reemplazo de archivos con el mismo nombre.
-5. Conserva la carpeta existente `assets/pages/`.
-6. Confirma el cambio con **Commit changes**.
-7. Espera entre 2 y 10 minutos para que GitHub Pages publique la actualización.
-8. Abre la aplicación y pulsa **Configuración → Buscar actualización** si el navegador conserva la versión anterior.
+Incluye:
 
-## Primera apertura
+1. Reglamento de Uniformes de la Policía Boliviana.
+2. Reglamento de la Comisión Sumaria ESP–UNIPOL.
+3. Constitución Política del Estado.
+4. Ley N.º 1178 SAFCO.
+5. D.S. N.º 23215.
+6. D.S. N.º 23318-A.
+7. D.S. N.º 26237.
+8. D.S. N.º 29820.
+9. D.S. N.º 29536.
+10. Código Penal.
+11. Código de Procedimiento Penal.
 
-1. Ingresa el código `271261`.
-2. Selecciona modo Académico o Profesional.
-3. El horario académico de referencia se carga automáticamente si eliges el modo Académico.
+Los PDF institucionales quedan disponibles como respaldo documental. El Código Penal y el Código de Procedimiento Penal se identifican dentro de la app como compilaciones institucionales base y muestran una advertencia para verificar modificaciones posteriores antes de utilizarlos en una actuación formal.
 
-## Datos locales
+## Reconocimiento de horario desde fotografía
 
-Los datos se guardan en IndexedDB. Una actualización normal de GitHub no debe borrarlos. Borrar los datos del sitio, desinstalar limpiando almacenamiento o usar herramientas de limpieza del navegador puede eliminarlos. Por eso la aplicación recuerda realizar un respaldo cada 7 días.
+La app ofrece tres caminos:
 
-## Nota sobre instalación PWA
+1. `TextDetector` del dispositivo, cuando el navegador lo admita.
+2. Tesseract.js, descargado en línea al iniciar el reconocimiento en navegadores compatibles.
+3. Pegar o corregir manualmente el texto reconocido.
 
-La instalación completa debe validarse después de publicar bajo HTTPS en GitHub Pages. El paquete incluye manifest, tres iconos y Service Worker. Si Chrome conserva un Service Worker anterior, usa el botón **Buscar actualización** y luego **Actualizar y reiniciar**.
+El funcionamiento general de PoliAgenda sigue siendo offline. En algunos dispositivos, el primer reconocimiento OCR puede requerir internet para cargar el motor Tesseract. La fotografía, el texto reconocido y el horario revisado se guardan localmente.
+
+## Datos y seguridad
+
+- Los datos personales no vienen precargados.
+- Horarios, tareas, notas, consignas, actividades, Kardex y fotografía se almacenan en IndexedDB.
+- El código de activación es una restricción local; no permite revocación remota.
+- El respaldo JSON incluye todos los datos creados por el usuario.
+- Conviene exportar un respaldo cada siete días y antes de borrar datos del navegador.
+
+## Actualización
+
+La app consulta `version.json` cuando existe conexión. Si detecta una versión nueva, muestra un aviso y permite actualizar y reiniciar. También existe un botón manual en Configuración.
+
+Después de publicar esta versión, conviene borrar el caché del sitio una sola vez si el teléfono continúa mostrando una interfaz antigua:
+
+- Chrome → Configuración → Configuración de sitios → `naturavidabo.github.io` → Borrar datos.
+- Abrir de nuevo el enlace e instalar la app.
+
+## Pruebas pendientes después de publicar
+
+Las siguientes comprobaciones requieren la URL HTTPS ya actualizada:
+
+- Instalación final como PWA en Android.
+- Agregar a pantalla de inicio desde Safari en iPhone.
+- Cambio real del Service Worker desde una versión publicada anterior.
+- Reconocimiento OCR en los modelos concretos de teléfonos que utilizarán la app.

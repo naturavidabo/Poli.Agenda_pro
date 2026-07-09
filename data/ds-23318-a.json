@@ -1,0 +1,611 @@
+{
+  "metadatos": {
+    "id": "ds23318a",
+    "titulo": "Decreto Supremo N.º 23318-A",
+    "subtitulo": "Reglamento de la Responsabilidad por la Función Pública",
+    "abreviatura": "D.S. 23318-A",
+    "categoria": "Administración y responsabilidad pública",
+    "articulos_totales": 67,
+    "fuente": "Contraloría General del Estado",
+    "fuente_url": "https://www.contraloria.gob.bo/wp-content/uploads/2022/06/20121217_314.pdf",
+    "pdf": "assets/ds-23318-a.pdf",
+    "normas_modificatorias": [
+      "D.S. N.º 26237",
+      "D.S. N.º 29820",
+      "D.S. N.º 29536"
+    ],
+    "fecha_integracion": "2026-07-09",
+    "nota_vigencia": "Texto base con incorporaciones identificadas de los D.S. N.º 26237 y 29820 en los artículos correspondientes. El D.S. N.º 29536 se conserva como norma modificatoria consultable."
+  },
+  "articulos": [
+    {
+      "id": "ds23318a-art-1",
+      "numero": "Artículo 1",
+      "titulo": "Fundamento",
+      "texto": "El presente Reglamento se emite en cumplimiento del artículo 45 de la Ley 1178 de Administración y Control\nGubernamentales de 20 de julio de 1990. Regula el capítulo V, Responsabilidad por la Función Pública, de dicha\nLey así como toda otra norma concordante con la misma.",
+      "estructura": [],
+      "fuente_pdf": "assets/ds-23318-a.pdf"
+    },
+    {
+      "id": "ds23318a-art-2",
+      "numero": "Artículo 2",
+      "titulo": "Alcance",
+      "texto": "Las disposiciones del presente Reglamento se aplican exclusivamente al dictamen y a la determinación de la\nresponsabilidad por la función pública, de manera independiente y sin perjuicio de las normas legales que regulan\nlas relaciones de orden laboral. La terminología adoptada se utiliza sólo para efectos del presente Reglamento.\n\n                                                 CAPITULO II\n                                                TERMINOLOGIA",
+      "estructura": [],
+      "fuente_pdf": "assets/ds-23318-a.pdf"
+    },
+    {
+      "id": "ds23318a-art-3",
+      "numero": "Artículo 3",
+      "titulo": "Responsabilidad",
+      "texto": "I. El servidor público tiene el deber de desempeñar sus funciones con eficacia, economía, eficiencia, transparencia\ny licitud. Su incumplimiento genera responsabilidades jurídicas.\n\nII. Los servidores públicos responderán en el ejercicio de sus funciones:\n         a. Todos ante sus superiores jerárquicos hasta el máximo ejecutivo, por conducto regular;\n         b. Los máximos ejecutivos ante los titulares de las entidades que ejercen tuición, hasta la cabeza de sector,\n         en secuencia jerárquica;\n\n        c. Los titulares de éstas, según ley, ante el Poder Legislativo, los Concejos Municipales o la máxima\n        representación universitaria;\n        d. Todos ellos ante la sociedad.",
+      "estructura": [],
+      "fuente_pdf": "assets/ds-23318-a.pdf"
+    },
+    {
+      "id": "ds23318a-art-4",
+      "numero": "Artículo 4",
+      "titulo": "Eficacia, economía y eficiencia",
+      "texto": "I. Para que un acto operativo o administrativo sea considerado eficaz, económico o eficiente:\n         a. Sus resultados deben alcanzar las metas previstas en los programas de operación, ajustadas en función a\n         las condiciones imperantes durante la gestión, y en especial al razonable aprovechamiento o neutralización\n         de los efectos de factores externos de importancia o magnitud;\n         b. Los recursos invertidos en las operaciones deben ser razonables en relación a los resultados globales\n         alcanzados;\n         c. La relación entre los recursos invertidos y los resultados obtenidos debe aproximarse a un índice de\n         eficiencia establecido para la entidad o a un indicador externo aplicable.\nII. Los efectos negativos en los resultados, originados por deficiencias o negligencias de los servidores públicos,\nconstituirán indicadores de ineficacia.\n\nIII. Las metas y resultados así como los efectos referidos deben ser determinables directa o indirectamente.",
+      "estructura": [],
+      "fuente_pdf": "assets/ds-23318-a.pdf"
+    },
+    {
+      "id": "ds23318a-art-5",
+      "numero": "Artículo 5",
+      "titulo": "Transparencia",
+      "texto": "El desempeño transparente de funciones por los servidores públicos, base de la credibilidad de sus actos,\ninvolucra:\n        a. Generar y transmitir expeditamente información útil, oportuna, pertinente, comprensible, confiable y\n        verificable, a sus superiores jerárquicos, a las entidades que proveen los recursos con que trabajan y a\n        cualquier otra persona que esté facultada para supervisar sus actividades;\n        b. Preservar y permitir en todo momento el acceso a esta información a sus superiores jerárquicos y a las\n        personas encargadas tanto de realizar el control interno o externo posterior, como de verificar la eficacia y\n        confiabilidad del sistema de información;\n        c. Difundir información antes, durante y después de la ejecución de sus actos a fin de procurar una\n        comprensión básica por parte de la sociedad respecto a lo esencial de la asignación y uso de recursos, los\n        principales resultados obtenidos y los factores de significación que influyeron en tales resultados;\n        d. Proporcionar información ya procesada a toda persona individual o colectiva que la solicite y demuestre\n        un legítimo interés.\n\nToda limitación o reserva a la transparencia debe ser específica para cada clase de información y no general para la\nentidad o alguna de sus dependencias y estar expresamente establecida por ley, señalándose claramente ante qué\ninstancia independiente y cómo debe responderse por actos reservados.",
+      "estructura": [],
+      "fuente_pdf": "assets/ds-23318-a.pdf"
+    },
+    {
+      "id": "ds23318a-art-6",
+      "numero": "Artículo 6",
+      "titulo": "Licitud",
+      "texto": "Para que un acto operativo o administrativo sea considerado lícito, debe reunir los requisitos de legalidad, ética y\ntransparencia.",
+      "estructura": [],
+      "fuente_pdf": "assets/ds-23318-a.pdf"
+    },
+    {
+      "id": "ds23318a-art-7",
+      "numero": "Artículo 7",
+      "titulo": "Finalidades, atribuciones, funciones, facultades y deberes",
+      "texto": "a. Finalidades u objetivos son los propósitos o razón de ser inherentes a la naturaleza de cada una de las\n        entidades de la Administración Pública;\n        b. Atribuciones son las potestades y deberes concedidos a las entidades para desarrollar su finalidad o\n        alcanzar su objeto;\n        c. Funciones son las acciones y deberes asignados a cada cargo dentro de las entidades para desarrollar las\n        atribuciones propias de éstas;\n        d. Facultades son las autorizaciones reconocidas a cada cargo para que los servidores públicos puedan\n        ejercer las funciones que les corresponden;\n        e. Deberes son las tareas o actividades obligatorias de cada entidad o servidor público dirigidas a cumplir\n        las atribuciones o funciones que les son inherentes.",
+      "estructura": [],
+      "fuente_pdf": "assets/ds-23318-a.pdf"
+    },
+    {
+      "id": "ds23318a-art-8",
+      "numero": "Artículo 8",
+      "titulo": "Cargo público",
+      "texto": "Cargo público es el empleo u oficio remunerado necesario para el desarrollo de funciones en la estructura formal\nde la Administración Pública.",
+      "estructura": [],
+      "fuente_pdf": "assets/ds-23318-a.pdf"
+    },
+    {
+      "id": "ds23318a-art-9",
+      "numero": "Artículo 9",
+      "titulo": "Relación de dependencia",
+      "texto": "Relación de dependencia es el vínculo jurídico entre un servidor público y su superior jerárquico, que nace de la\nprestación de servicios en una entidad pública en condiciones de subordinación y remuneración, cualquiera sea la\nfuente de ésta.",
+      "estructura": [],
+      "fuente_pdf": "assets/ds-23318-a.pdf"
+    },
+    {
+      "id": "ds23318a-art-10",
+      "numero": "Artículo 10",
+      "titulo": "Entidades que ejercen tuición",
+      "texto": "En tanto el órgano rector competente defina cuáles son las entidades que ejercen tuición, se adoptan los siguientes\ncriterios para identificarlas, salvo disposición legal vigente al respecto.\n\nI. Las entidades que ejercen tuición sobre una o más entidades son las que:\n         a. Deben promover y vigilar, en lo que concierne a los sistemas de Planificación, Inversión,\n         Administración y Control Interno, tanto la compatibilidad de la normatividad específica de la entidad\n         tutelada con la básica o específica de general aplicación emitida por los órganos rectores, como su\n         implantación y funcionamiento;\n         b. Están facultadas para ejercer el seguimiento y supervigilancia, mediante la recepción de información y\n         el control externo posterior de la compatibilidad de las estrategias, políticas, planes y programas\n         específicos de la entidad tutelada con los lineamientos fundamentales establecidos por la cabeza de sector\n         y de la eficacia en la ejecución y aplicación de éstos, incluyendo el cumplimiento de la normatividad\n         operativa emitida por ésta;\n         c. Responden ante una entidad jerárquicamente superior que ejerce tuición sobre ésta o, si no existiera,\n         directamente ante la entidad cabeza de sector.\n\nII. Para cualquier entidad, ante la inexistencia de una o más entidades que jerárquicamente ejercen tuición, la\nentidad cabeza de sector es a la vez la entidad que ejerce tuición, haya o no disposición legal específica al respecto.",
+      "estructura": [],
+      "fuente_pdf": "assets/ds-23318-a.pdf"
+    },
+    {
+      "id": "ds23318a-art-11",
+      "numero": "Artículo 11",
+      "titulo": "Unidad legal pertinente",
+      "texto": "Unidad legal pertinente es:\n        a. La unidad jurídica de la respectiva entidad cuando se trate de una auditoría contratada por ésta o\n        practicada por su unidad de auditoría interna, siempre y cuando en sus resultados no estén involucradas\n        sus autoridades o miembros de dichas unidades;\n        b. La unidad jurídica de la entidad que ejerce tuición cuando la entidad respectiva careciere de unidad\n        legal o cuando se trate de una auditoría practicada directamente por la entidad tutora o contratada por ésta;\n        c. El servicio legal de la Contraloría General de la República cuando se trate de una auditoría propia o\n        contratada por ella, o cuando en los resultados de la auditoría interna o contratada por una entidad\n        estuvieren involucrados autoridades o miembros de su unidad legal o de auditoría.",
+      "estructura": [],
+      "fuente_pdf": "assets/ds-23318-a.pdf"
+    },
+    {
+      "id": "ds23318a-art-12",
+      "numero": "Artículo 12",
+      "titulo": "Autoridad legal competente",
+      "texto": "I.    Autoridad legal competente es:\n\n           a)   La prevista en las normas específicas de la entidad o en su defecto, el servidor\n                público designado por el máximo ejecutivo en la primera semana hábil del año;\n\n           b)   El máximo ejecutivo de la entidad que ejerce tuición o el servidor público que\n                corresponda para los casos señalados en el artículo 67 del presente Reglamento.\n\n           c)   El Superintendente de Servicio Civil o el máximo ejecutivo de la entidad, según\n                corresponda a funcionarios de carrera o a funcionarios provisorios, para conocer\n                de los recursos jerárquicos.\n\n     II.   En los casos de los Gobiernos Municipales, Universidades Públicas, Escalafón Judicial\n           del Poder Judicial, Carrera Fiscal del Ministerio Público, Servicio Exterior y Escalafón\n           Diplomático, Magisterio Público, Servicio de Salud Pública y Seguridad Social, Fuerzas\n           Armadas y Policía Nacional, la autoridad legal competente así como el procedimiento\n           para la determinación de responsabilidad administrativa, se regirá por su legislación\n           especial aplicable",
+      "estructura": [],
+      "fuente_pdf": "assets/ds-23318-a.pdf",
+      "modificado_por": [
+        "D.S. N.º 26237"
+      ]
+    },
+    {
+      "id": "ds23318a-art-13",
+      "numero": "Artículo 13",
+      "titulo": "Naturaleza de la responsabilidad administrativa",
+      "texto": "La responsabilidad administrativa emerge de la contravención del ordenamiento jurídico administrativo y de las\nnormas que regulan la conducta del servidor público.",
+      "estructura": [],
+      "fuente_pdf": "assets/ds-23318-a.pdf"
+    },
+    {
+      "id": "ds23318a-art-14",
+      "numero": "Artículo 14",
+      "titulo": "Ordenamiento jurídico administrativo y normas de conducta",
+      "texto": "I.    Él ordenamiento jurídico administrativo a que se refiere el artículo 29 de la Ley 1178,\n           está constituido por las disposiciones legales atinentes a la Administración Pública y\n           vigentes en el país al momento en que se realizó el acto u omisión.\n\n     II.   Las normas que regulan la conducta funcionaria del servidor público son:\n\n           a)   generales o las establecidas en el Estatuto del Funcionario Público y otras leyes,\n                las que dicte el órgano rector competente o las entidades cabeza de sector, las\n                normas específicamente aplicables para el ejercicio de las profesiones en el sector\n                público, los Códigos de Ética a los que se refiere el artículo 13 del Estatuto del\n\n           Funcionario Público, así como los códigos o reglamentos de ética profesional en lo\n           que no contradigan las anteriormente enunciadas.\n\n     b)    Específicas o las establecidas por cada entidad, que en ningún caso deberán\n           contravenir las anteriores",
+      "estructura": [],
+      "fuente_pdf": "assets/ds-23318-a.pdf",
+      "modificado_por": [
+        "D.S. N.º 26237"
+      ]
+    },
+    {
+      "id": "ds23318a-art-15",
+      "numero": "Artículo 15",
+      "titulo": "Sujetos de responsabilidad administrativa",
+      "texto": "Todo servidor público es pasible de\nresponsabilidad administrativa. Lo son asimismo los ex servidores públicos a efecto de dejar\nconstancia y registro de su responsabilidad. Toda autoridad que conozca y resuelva procesos\ninternos disciplinarios deberá enviar copia de la Resolución final ejecutoriada a la Contraloría\nGeneral          de       la       República        para        fines        de       registro",
+      "estructura": [],
+      "fuente_pdf": "assets/ds-23318-a.pdf",
+      "modificado_por": [
+        "D.S. N.º 26237"
+      ]
+    },
+    {
+      "id": "ds23318a-art-16",
+      "numero": "Artículo 16",
+      "titulo": "Prescripción",
+      "texto": "La responsabilidad administrativa prescribe a los dos años de\ncometida la contravención, tanto para servidores como para ex servidores públicos. Éste\nplazo se interrumpe con el inicio de un proceso interno en los términos previstos por el\nartículo 18 del presente Reglamento. La prescripción deberá ser necesariamente invocada\npor el servidor público que pretende beneficiarse de ella y pronunciada expresamente por la\nautoridad                                legal                                 competente",
+      "estructura": [],
+      "fuente_pdf": "assets/ds-23318-a.pdf",
+      "modificado_por": [
+        "D.S. N.º 26237"
+      ]
+    },
+    {
+      "id": "ds23318a-art-17",
+      "numero": "Artículo 17",
+      "titulo": "Dictamen de responsabilidad administrativa",
+      "texto": "Si en la evaluación de los informes de auditoría interna o externa se advirtieran contravenciones al ordenamiento\njurídico administrativo por parte de los servidores o ex servidores públicos, el Contralor General de la República\npodrá emitir dictamen de responsabilidad administrativa. Este dictamen, junto con un ejemplar de todo lo actuado,\nserá remitido a conocimiento del ejecutivo superior de la entidad respectiva, para que se inicie el proceso interno\nen el plazo fijado por la Ley 1178.",
+      "estructura": [],
+      "fuente_pdf": "assets/ds-23318-a.pdf"
+    },
+    {
+      "id": "ds23318a-art-18",
+      "numero": "Artículo 18",
+      "titulo": "Proceso interno",
+      "texto": "Es el procedimiento administrativo que se incoa a denuncia, de\noficio o en base a un dictamen dentro de una entidad a un servidor o ex servidor público a fin\nde determinar si es responsable de alguna contravención y de que la autoridad competente lo\nsancione cuando así corresponda. Consta de dos etapas: sumarial y de impugnación, que a\nsu     vez    se   constituye    por    los   recursos   de      revocatoria   y   jerárquico",
+      "estructura": [],
+      "fuente_pdf": "assets/ds-23318-a.pdf",
+      "modificado_por": [
+        "D.S. N.º 26237"
+      ]
+    },
+    {
+      "id": "ds23318a-art-19",
+      "numero": "Artículo 19",
+      "titulo": "Responsabilidad del denunciante",
+      "texto": "El servidor público no podrá ser procesado administrativamente ni sancionado dentro de la entidad por haber\npresentado una denuncia, pero ésta podrá originarle responsabilidad civil o penal. Los informes de auditoría o\nlegales que contengan información que pueda generar responsabilidades no se considerarán denuncias para los\nfines del presente artículo.",
+      "estructura": [],
+      "fuente_pdf": "assets/ds-23318-a.pdf"
+    },
+    {
+      "id": "ds23318a-art-20",
+      "numero": "Artículo 20",
+      "titulo": "Prueba preconstituida",
+      "texto": "Al efecto de establecer la responsabilidad administrativa, los informes de auditoría y en su caso el dictamen del\nContralor General de la República tendrán, en concordancia con lo previsto en los artículos 29 y 43 de la Ley\n1178, la calidad de prueba preconstituida, a cuyo fin deben contener con claridad la identificación del presunto\nresponsable de la contravención y las circunstancias en que ésta fue cometida.",
+      "estructura": [],
+      "fuente_pdf": "assets/ds-23318-a.pdf"
+    },
+    {
+      "id": "ds23318a-art-21",
+      "numero": "Artículo 21",
+      "titulo": "Sumariante",
+      "texto": "El sumariante es la autoridad legal competente. Sus facultades son:\n\na) En conocimiento de la presunta falta o contravención del servidor público, de oficio, por denuncia, en base a un dictamen o causa de un informe de auditoría especial; disponer la iniciación del proceso o pronunciarse en contrario con la debida fundamentación;\n\nb) Cuando así lo crea necesario, adoptar a título provisional las medidas precautorias de cambio temporal de funciones o la suspensión del cargo con goce de haberes por un período no mayor a noventa (90) días, tiempo en el que deberá finalizar el proceso interno.\n\nEn caso de que el sumariante adopte la medida precautoria de suspensión del cargo con goce de haberes, deberá comunicar inmediata y simultáneamente a la máxima autoridad ejecutiva de la entidad para que designe a un funcionario interino por el tiempo que dure la suspensión y a la Dirección Administrativa para que efectúe los traspasos necesarios a fin de generar los recursos económicos en la partida 11940 para el pago de salarios al funcionario designado interinamente.\n\nc)   notificar a las partes con la resolución de apertura del sumario;\n\nd)   acumular y evaluar las pruebas de cargo y descargo;\n\ne)   establecer si existe o no responsabilidad administrativa en el servidor público y archivar\n     obrados en caso negativo;\n\nf)   en caso (le establecer la responsabilidad administrativa, pronunciar su resolución\n     fundamentada incluyendo un análisis de las pruebas de cargo y descargo y la sanción\n     de acuerdo a las previsiones del artículo 29 de la Ley No. 1 178 de Administración y\n     Control Gubernamentales.\n\ng)   disponer la retención de hasta el 20% del líquido pagable de los haberes del procesado\n     en caso de que la resolución establezca la sanción de multa, y mientras alcance\n     ejecutoria;\n\nh)    notificar cualesquiera de sus resoluciones al procesado o procesados;\n\ni)    conocer los recursos de revocatoria que sean interpuestos con motivo de las\n      Resoluciones que emita dentro de los procesos disciplinarios que conoce",
+      "estructura": [],
+      "fuente_pdf": "assets/ds-23318-a.pdf",
+      "modificado_por": [
+        "D.S. N.º 26237",
+        "D.S. N.º 29820"
+      ]
+    },
+    {
+      "id": "ds23318a-art-22",
+      "numero": "Artículo 22",
+      "titulo": "Plazos",
+      "texto": "Los plazos a los que debe sujetarse el proceso interno son:\n\na)    tres días hábiles a partir de conocido el hecho o recibida la denuncia, para que el\n      sumariante inicie el proceso con la notificación del procesado;\n\nb)    diez días hábiles de término de prueba computables a partir de la notificación al\n      procesado o procesados;\n\nc)    cinco días hábiles a partir del vencimiento del término de prueba, para que el\n      sumariante emita su resolución;\n\nd)    tres días hábiles a partir de su notificación, para que el procesado interponga recurso de\n      revocatoria en contra de la resolución emitida por el sumariante.\n\ne)    tres días hábiles a partir de la notificación con la Resolución que resuelve la revocatoria\n      para que el procesado interponga recurso jerárquico.\n\nLa resolución del sumariante quedará ejecutoriada en caso de no ser interpuesto el recurso\nde revocatoria en el plazo citado. La sanción establecida entrará en vigencia y las medidas\nprecautorias Serán levantadas",
+      "estructura": [],
+      "fuente_pdf": "assets/ds-23318-a.pdf",
+      "modificado_por": [
+        "D.S. N.º 26237"
+      ]
+    },
+    {
+      "id": "ds23318a-art-23",
+      "numero": "Artículo 23",
+      "titulo": "Impugnación",
+      "texto": "I.    El servidor público afectado podrá impugnar las resoluciones emitidas por el sumariante\n      dentro de un proceso interno, interponiendo los recursos de revocatoria y jerárquico\n      según su orden. Los funcionarios de carrera definidos en el inciso d) del artículo 5 de la\n      Ley del Estatuto del Funcionario Público tramitarán los recursos de revocatoria y\n      jerárquico conforme a procedimiento reglamentado por la Superintendencia de Servicio\n      Civil.\n\nII.   Los funcionarios provisorios harán uso de los recursos de revocatoria y Jerárquico\n      conforme al procedimiento establecido en los artículos 24 al 30 del presente\n      reglamento",
+      "estructura": [],
+      "fuente_pdf": "assets/ds-23318-a.pdf",
+      "modificado_por": [
+        "D.S. N.º 26237"
+      ]
+    },
+    {
+      "id": "ds23318a-art-24",
+      "numero": "Artículo 24",
+      "titulo": "Recurso de revocatoria",
+      "texto": "El recurso de revocatoria será presentado ante la\nmisma autoridad sumariante que pronunció la resolución final del sumario, quien en el plazo\nde 8 días hábiles deberá pronunciar nueva Resolución ratificando o revocando la primera",
+      "estructura": [],
+      "fuente_pdf": "assets/ds-23318-a.pdf",
+      "modificado_por": [
+        "D.S. N.º 26237"
+      ]
+    },
+    {
+      "id": "ds23318a-art-25",
+      "numero": "Artículo 25",
+      "titulo": "Recurso jerárquico",
+      "texto": "Contra la decisión que resuelve el recurso de revocatoria,\npodrá interponerse recurso jerárquico ante la misma autoridad que resolvió la revocatoria,\nquien concederá el recurso en efecto suspensivo ante la máxima autoridad ejecutiva de la\nentidad",
+      "estructura": [],
+      "fuente_pdf": "assets/ds-23318-a.pdf",
+      "modificado_por": [
+        "D.S. N.º 26237"
+      ]
+    },
+    {
+      "id": "ds23318a-art-26",
+      "numero": "Artículo 26",
+      "titulo": "Excusas y recusaciones",
+      "texto": "I.     El régimen de excusas y recusaciones se regirá por lo dispuesto en los artículos 3 y 4\n            de la Ley N° 1760 de Abreviación Procesal Civil y de Asistencia Familiar, en todo lo que\n            fuera aplicable.\n\n     II.    Es atribución del máximo ejecutivo de la entidad que tramita el proceso interno, declarar\n            la legalidad o ilegalidad de la excusa o recusación del Sumariante. En caso de ser\n            declaradas legales, dicha autoridad designará otro servidor público para que actúe\n            como Sumariante.\n\n     III.   Cuando la máxima autoridad ejecutiva de la entidad conozca recursos jerárquicos y se\n            excuse o sea sujeto de recusación como consecuencia de estos, corresponderá\n            pronunciarse al máximo ejecutivo de la entidad que ejerce tuición. En caso de ser\n            declaradas legales, dicha autoridad designará a otro servidor público de igual jerarquía\n            que la autoridad que se excusó o fue recusada para que conozca el recurso.\n\n     IV.    El servidor público o autoridad que sea designado como Sumariante o para conocer el\n            recurso jerárquico no podrá excusarse ni ser recusado",
+      "estructura": [],
+      "fuente_pdf": "assets/ds-23318-a.pdf",
+      "modificado_por": [
+        "D.S. N.º 26237"
+      ]
+    },
+    {
+      "id": "ds23318a-art-27",
+      "numero": "Artículo 27",
+      "titulo": "Prueba en impugnación",
+      "texto": "En impugnación, sea por la vía de la revocatoria o del\n     recurso jerárquico, sólo podrán aportarse documentos nuevos en calidad de prueba. Su\n     ofrecimiento y recepción deben hacerse necesariamente dentro de los cinco días hábiles\n     computables desde su presentación, en el primer caso, y desde la notificación con la\n     providencia            de         radicatoria,         en            el          segundo",
+      "estructura": [],
+      "fuente_pdf": "assets/ds-23318-a.pdf",
+      "modificado_por": [
+        "D.S. N.º 26237"
+      ]
+    },
+    {
+      "id": "ds23318a-art-28",
+      "numero": "Artículo 28",
+      "titulo": "Resolución del recurso jerárquico",
+      "texto": "La resolución de la máxima autoridad\n     ejecutiva en los casos que corresponda, será confirmatoria, revocatoria o anulatoria. Esta\n     resolución no es susceptible de recurso ulterior en la vía administrativa",
+      "estructura": [],
+      "fuente_pdf": "assets/ds-23318-a.pdf",
+      "modificado_por": [
+        "D.S. N.º 26237"
+      ]
+    },
+    {
+      "id": "ds23318a-art-29",
+      "numero": "Artículo 29",
+      "titulo": "Plazo para dictar la resolución",
+      "texto": "En los casos en que el recurso jerárquico se\n     tramite ante la máxima autoridad ejecutiva, el plazo para emitir resolución será de ocho días\n     hábiles, computables desde la radicatoria de los antecedentes",
+      "estructura": [],
+      "fuente_pdf": "assets/ds-23318-a.pdf",
+      "modificado_por": [
+        "D.S. N.º 26237"
+      ]
+    },
+    {
+      "id": "ds23318a-art-30",
+      "numero": "Artículo 30",
+      "titulo": "Características de las resoluciones ejecutoriadas",
+      "texto": "Las resoluciones\n     ejecutoriadas dictadas en los procesos internos causan estado. No podrán ser modificadas o\n     revisadas por otras autoridades administrativas y no liberan a los servidores de otras\n     responsabilidades, sean ellas civiles, penales o ejecutivas",
+      "estructura": [],
+      "fuente_pdf": "assets/ds-23318-a.pdf",
+      "modificado_por": [
+        "D.S. N.º 26237"
+      ]
+    },
+    {
+      "id": "ds23318a-art-31",
+      "numero": "Artículo 31",
+      "titulo": "Resolución contra personal de auditoría interna",
+      "texto": "Emitida la resolución dentro de\n     un recurso jerárquico en los procesos sustanciados contra el Jefe de la Unidad de Auditoría\n     Interna o profesionales\" de esa unidad, la autoridad que corresponda, remitirá una copia de\n     los obrados a conocimiento de la Contraloría General de la República, a los efectos del inciso\n     f) del artículo 27 de la Ley 1178",
+      "estructura": [],
+      "fuente_pdf": "assets/ds-23318-a.pdf",
+      "modificado_por": [
+        "D.S. N.º 26237"
+      ]
+    },
+    {
+      "id": "ds23318a-art-32",
+      "numero": "Artículo 32",
+      "titulo": "Responsables de la ejecución de las resoluciones",
+      "texto": "El máximo ejecutivo o el Ministro del sector, según sea el caso, son responsables de la ejecución de las\nresoluciones pasadas en autoridad de cosa juzgada.",
+      "estructura": [],
+      "fuente_pdf": "assets/ds-23318-a.pdf"
+    },
+    {
+      "id": "ds23318a-art-33",
+      "numero": "Artículo 33",
+      "titulo": "Indicios de responsabilidad civil o penal",
+      "texto": "Si durante la substanciación del proceso la autoridad encargada de su trámite advirtiese indicios de responsabilidad\ncivil o penal, remitirá testimonio o copia legalizada de todo lo actuado a la unidad legal pertinente, para efectos de\nlo dispuesto en el artículo 35 de la Ley 1178, sin que esto signifique suspensión del proceso administrativo interno.\n\n                                             CAPITULO IV\n                                      RESPONSABILIDAD EJECUTIVA",
+      "estructura": [],
+      "fuente_pdf": "assets/ds-23318-a.pdf"
+    },
+    {
+      "id": "ds23318a-art-34",
+      "numero": "Artículo 34",
+      "titulo": "Naturaleza de la responsabilidad ejecutiva",
+      "texto": "La responsabilidad ejecutiva emerge de una gestión deficiente o negligente así como del incumplimiento de los\nmandatos expresamente señalados en la Ley.",
+      "estructura": [],
+      "fuente_pdf": "assets/ds-23318-a.pdf"
+    },
+    {
+      "id": "ds23318a-art-35",
+      "numero": "Artículo 35",
+      "titulo": "Gestión ejecutiva deficiente o negligente",
+      "texto": "Una gestión puede ser considerada deficiente o negligente cuando:\n        a. No se ha realizado una continua evaluación y mejora de los sistemas operativos de administración, de\n        contabilidad e información gerencial, control interno incluyendo auditoría interna, y asesoría legal, ni una\n        evaluación técnica del personal que garantice mantener en el trabajo a los servidores cuya capacidad sea\n        comprobada;\n        b. La gestión no ha sido transparente;\n        c. Las estrategias, políticas, planes y programas de la entidad no se han ajustado oportunamente conforme\n        a los resultados y problemas indicados por el sistema de información o no son concordantes con los\n        lineamientos fundamentales establecidos por la entidad cabeza de sector.\n        d. No ha logrado resultados razonables en términos de eficacia, economía o eficiencia.",
+      "estructura": [],
+      "fuente_pdf": "assets/ds-23318-a.pdf"
+    },
+    {
+      "id": "ds23318a-art-36",
+      "numero": "Artículo 36",
+      "titulo": "Sujeto pasible de responsabilidad ejecutiva",
+      "texto": "I. En cada entidad pública sólo podrán ser sujetos pasibles de dictamen de responsabilidad ejecutiva el máximo\nejecutivo, la dirección colegiada si la hubiere o ambos. Para el efecto, el máximo ejecutivo es el titular o personero\nde más alta jerarquía de cada entidad del sector público.\n\nII. En el caso de ex ejecutivos o ex directores, el Contralor General de la República podrá dictaminar\nresponsabilidad ejecutiva a los fines de dejar constancia y registro de su responsabilidad.",
+      "estructura": [],
+      "fuente_pdf": "assets/ds-23318-a.pdf"
+    },
+    {
+      "id": "ds23318a-art-37",
+      "numero": "Artículo 37",
+      "titulo": "Prescripción",
+      "texto": "La responsabilidad ejecutiva prescribe a los dos años de concluida la gestión del máximo ejecutivo.",
+      "estructura": [],
+      "fuente_pdf": "assets/ds-23318-a.pdf"
+    },
+    {
+      "id": "ds23318a-art-38",
+      "numero": "Artículo 38",
+      "titulo": "Finalidad del dictamen de responsabilidad ejecutiva",
+      "texto": "El dictamen de responsabilidad ejecutiva procura fortalecer la capacidad gerencial del nivel superior encargado de\nla ejecución de estrategias, políticas, planes y programas de gobierno, promover la transparencia y lograr que el\npersonal jerárquico responda públicamente por los beneficios obtenidos para la sociedad o la falta de ellos,\nelementos esenciales para el eficaz funcionamiento del sistema democrático.",
+      "estructura": [],
+      "fuente_pdf": "assets/ds-23318-a.pdf"
+    },
+    {
+      "id": "ds23318a-art-39",
+      "numero": "Artículo 39",
+      "titulo": "Facultad para dictaminar la responsabilidad ejecutiva",
+      "texto": "El Contralor General de la República es, de acuerdo a la Ley 1178, la única autoridad facultada para dictaminar la\nresponsabilidad ejecutiva.",
+      "estructura": [],
+      "fuente_pdf": "assets/ds-23318-a.pdf"
+    },
+    {
+      "id": "ds23318a-art-40",
+      "numero": "Artículo 40",
+      "titulo": "Fundamentación del dictamen de responsabilidad ejecutiva",
+      "texto": "El dictamen de responsabilidad ejecutiva se fundamentará en uno o más informes de auditoría que demuestren que:\n\n        a. El principal ejecutivo no ha respondido conforme al inciso (c) del artículo 1 y el primer párrafo del\n        artículo 28 de la Ley 1178;\n        b. No se han establecido o no funcionan adecuadamente los sistemas de operación, administración,\n        información y control interno o la unidad legal;\n        c. La entidad no ha enviado a la Contraloría copia de sus contratos y la documentación sustentatoria\n        correspondiente;\n        d. No se ha enviado a la entidad que ejerce tuición y a la Contaduría General del Estado o no se ha puesto\n        a disposición de la Contraloría General de la República los estados financieros de la gestión anterior junto\n        con las notas que correspondieren y el informe del auditor interno;\n        e. La máxima autoridad colegiada, si la hubiere, o los ejecutivos superiores de la entidad no han respetado\n        la independencia de la unidad de auditoría interna;\n        f. La gestión ejecutiva ha sido deficiente o negligente.\n        Estos informes deben manifestar expresamente, si fuera el caso, el grado de cumplimiento de las\n        recomendaciones o conminatorias anteriores para mejorar o corregir las causales que puedan originar\n        responsabilidad ejecutiva.",
+      "estructura": [],
+      "fuente_pdf": "assets/ds-23318-a.pdf"
+    },
+    {
+      "id": "ds23318a-art-41",
+      "numero": "Artículo 41",
+      "titulo": "Evidencias para el dictamen",
+      "texto": "Si a tiempo de desarrollar sus tareas los auditores identificaran hallazgos que puedan conducir a la emisión de un\ndictamen de responsabilidad ejecutiva, deben hacer constar expresamente en sus informes las evidencias sobre\ntales aspectos y sobre las medidas adoptadas o en curso de acción para cumplir los mandatos expresos de la Ley o\nsuperar las deficiencias encontradas. El servicio legal de la Contraloría tomará en cuenta los comentarios\nformulados.",
+      "estructura": [],
+      "fuente_pdf": "assets/ds-23318-a.pdf"
+    },
+    {
+      "id": "ds23318a-art-42",
+      "numero": "Artículo 42",
+      "titulo": "Cumplimiento del procedimiento de aclaración",
+      "texto": "Antes de la emisión del dictamen de responsabilidad ejecutiva, el servicio legal de la Contraloría verificará el\ncumplimiento del proceso de selección previsto en los artículos 39 y 40 o del 50 del Reglamento para el ejercicio\nde las atribuciones de la Contraloría General de la República, aprobado por DS 23215.",
+      "estructura": [],
+      "fuente_pdf": "assets/ds-23318-a.pdf"
+    },
+    {
+      "id": "ds23318a-art-43",
+      "numero": "Artículo 43",
+      "titulo": "Características del dictamen",
+      "texto": "El dictamen de responsabilidad ejecutiva es una opinión técnica jurídica emitida por el Contralor General de la\nRepública en uso de las atribuciones establecidas en la Ley 1178, que contiene recomendaciones conforme al\ninciso (g) del artículo 42 de dicha Ley. No procede por consiguiente ningún recurso legal impugnatorio.",
+      "estructura": [],
+      "fuente_pdf": "assets/ds-23318-a.pdf"
+    },
+    {
+      "id": "ds23318a-art-44",
+      "numero": "Artículo 44",
+      "titulo": "Notificación del dictamen",
+      "texto": "Pronunciado el dictamen de responsabilidad ejecutiva se remitirá copia del mismo en calidad de notificación,\nadjuntando un ejemplar de todo lo actuado al ejecutivo o directores responsabilizados, al superior jerárquico de la\ndirección colegiada, si la hubiera y no estuviera involucrada, y a la máxima autoridad de la entidad que ejerce\ntuición.",
+      "estructura": [],
+      "fuente_pdf": "assets/ds-23318-a.pdf"
+    },
+    {
+      "id": "ds23318a-art-45",
+      "numero": "Artículo 45",
+      "titulo": "Aclaración o ampliación del dictamen",
+      "texto": "El servidor público responsable, la dirección colegiada, si la hubiera, y la máxima autoridad de la entidad que\nejerce tuición, podrán solicitar al Contralor General de la República la aclaración o ampliación del dictamen\nmediante oficio fundamentado, en el plazo perentorio de cinco días hábiles desde la entrega del dictamen.",
+      "estructura": [],
+      "fuente_pdf": "assets/ds-23318-a.pdf"
+    },
+    {
+      "id": "ds23318a-art-46",
+      "numero": "Artículo 46",
+      "titulo": "Plazo para la aclaración o ampliación del dictamen",
+      "texto": "El Contralor General de la República aclarará o ampliará el dictamen en el plazo de diez días hábiles si considera\nfundada la solicitud. De lo contrario rechazará dentro del mismo plazo la solicitud presentada. Se pondrá en\nconocimiento de las personas indicadas en el artículo 44 del presente Reglamento las aclaraciones, ampliaciones o\nel rechazo de la petición.",
+      "estructura": [],
+      "fuente_pdf": "assets/ds-23318-a.pdf"
+    },
+    {
+      "id": "ds23318a-art-47",
+      "numero": "Artículo 47",
+      "titulo": "Sanción por responsabilidad ejecutiva",
+      "texto": "Si la autoridad competente impone sanción como consecuencia de un dictamen de responsabilidad ejecutiva, debe\ninformar inmediatamente al Contralor General de la República. Cuando la sanción fuese de suspensión ésta será\nsin goce de haberes.",
+      "estructura": [],
+      "fuente_pdf": "assets/ds-23318-a.pdf"
+    },
+    {
+      "id": "ds23318a-art-48",
+      "numero": "Artículo 48",
+      "titulo": "Responsabilidad por inaplicación de las recomendaciones",
+      "texto": "La dirección colegiada, si existiera, sin participación del ejecutivo o directores comprometidos, o la autoridad\nsuperior del ente que ejerce tuición, debe fundamentar dentro de los diez días hábiles siguientes a la recepción del\ndictamen de responsabilidad ejecutiva las razones por las cuales no aplicará, bajo su responsabilidad, las\nrecomendaciones contenidas en éste.",
+      "estructura": [],
+      "fuente_pdf": "assets/ds-23318-a.pdf"
+    },
+    {
+      "id": "ds23318a-art-49",
+      "numero": "Artículo 49",
+      "titulo": "Informe al Presidente de la República y al Congreso Nacional",
+      "texto": "El Contralor General de la República informará al Presidente de la República y a las Comisiones respectivas del H.\nCongreso Nacional sobre el dictamen de responsabilidad ejecutiva y las aclaraciones, ampliaciones o\nmodificaciones, si las hubiere o el rechazo de ellas, adjuntando copia y antecedentes. Adjuntará igualmente los\nantecedentes referidos a la fundamentación recibida para no aplicar las recomendaciones, en los casos pertinentes.\n\n                                              CAPITULO V\n                                         RESPONSABILIDAD CIVIL",
+      "estructura": [],
+      "fuente_pdf": "assets/ds-23318-a.pdf"
+    },
+    {
+      "id": "ds23318a-art-50",
+      "numero": "Artículo 50",
+      "titulo": "Naturaleza de la responsabilidad civil",
+      "texto": "La responsabilidad civil emerge del daño al Estado valuable en dinero. Será determinada por juez competente.",
+      "estructura": [],
+      "fuente_pdf": "assets/ds-23318-a.pdf"
+    },
+    {
+      "id": "ds23318a-art-51",
+      "numero": "Artículo 51",
+      "titulo": "Características del dictamen de responsabilidad civil",
+      "texto": "El dictamen de responsabilidad civil es una opinión técnica jurídica emitida por el Contralor General de la\nRepública. Tiene valor de prueba preconstituida y contendrá la relación de los hechos, actos u omisiones que\nsupuestamente causaron daño económico al Estado, fundamentación legal, cuantificación del posible daño e\nidentificación del presunto o presuntos responsables.",
+      "estructura": [],
+      "fuente_pdf": "assets/ds-23318-a.pdf"
+    },
+    {
+      "id": "ds23318a-art-52",
+      "numero": "Artículo 52",
+      "titulo": "Finalidad del dictamen de responsabilidad civil",
+      "texto": "El dictamen de responsabilidad civil es un instrumento legal que sirve para:\n        a. Que la entidad requiera al responsable, si fuera el caso, el pago del presunto daño;\n        b. Que la entidad inicie la acción legal que corresponda contra el o los responsables en el plazo señalado\n        por ley;\n        c. Que la Contraloría General de la República exprese divergencia en cuanto al monto del presunto daño\n        económico, los presuntos responsables o cualquier otro aspecto contenido en un informe de auditoría\n        interna o externa.",
+      "estructura": [],
+      "fuente_pdf": "assets/ds-23318-a.pdf"
+    },
+    {
+      "id": "ds23318a-art-53",
+      "numero": "Artículo 53",
+      "titulo": "Notificación con el dictamen",
+      "texto": "Pronunciado el dictamen de responsabilidad civil se remitirá copia del mismo, en calidad de notificación, al\npresunto o presuntos responsables. Otra copia junto con un ejemplar de todo lo actuado se enviará al ejecutivo\nsuperior de la entidad correspondiente, para que cumpla lo dictaminado dentro del plazo fijado por la Ley 1178.",
+      "estructura": [],
+      "fuente_pdf": "assets/ds-23318-a.pdf"
+    },
+    {
+      "id": "ds23318a-art-54",
+      "numero": "Artículo 54",
+      "titulo": "Informes de auditoría para juicio coactivo fiscal",
+      "texto": "Mientras se encuentre en vigencia la Ley de Procedimiento Coactivo Fiscal a que se refiere el artículo 52 de la Ley\n1178, los informes de auditoría emitidos por la Contraloría General de la República y unidades de auditoría interna\nque recomienden la aplicación de los casos previstos en el artículo 77 de la Ley del Sistema de Control Fiscal,\ndeben cumplir antes de su aprobación por el Contralor General de la República con las normas establecidas en los\nartículos 39 y 40 o en el artículo 50 del Reglamento para el ejercicio de las atribuciones de la Contraloría General\nde la República, aprobado por DS 23215 de 22 de julio de 1992.",
+      "estructura": [],
+      "fuente_pdf": "assets/ds-23318-a.pdf"
+    },
+    {
+      "id": "ds23318a-art-55",
+      "numero": "Artículo 55",
+      "titulo": "Otros informes de auditoría",
+      "texto": "A efectos de cumplir el artículo 3 de la Ley de Procedimiento Coactivo Fiscal, los informes de auditoría practicada\npor firmas o profesionales independientes y los informes de auditoría emitidos por la entidad que ejerce tuición\nque presenten hallazgos de daño económico al Estado, requerirán de un informe elaborado por la Contraloría\nGeneral de la República o por la unidad de auditoría interna de la entidad damnificada, para su aprobación por el\nContralor General de la República.",
+      "estructura": [],
+      "fuente_pdf": "assets/ds-23318-a.pdf"
+    },
+    {
+      "id": "ds23318a-art-56",
+      "numero": "Artículo 56",
+      "titulo": "Corresponsabilidad",
+      "texto": "Para efectos del inciso a) del artículo 31 de la Ley 1178, los informes de auditoría deben incluir información\nfundamentada sobre la forma de autorización del uso indebido de bienes, servicios y recursos que causaron daño\neconómico al Estado y la identificación del superior jerárquico que la expidió o manifestación expresa de si el\ndaño económico se originó en las deficiencias de los sistemas de administración y control interno factibles de ser\nimplantados en la entidad.",
+      "estructura": [],
+      "fuente_pdf": "assets/ds-23318-a.pdf"
+    },
+    {
+      "id": "ds23318a-art-57",
+      "numero": "Artículo 57",
+      "titulo": "Repetición del pago",
+      "texto": "En los casos en que una entidad pública sea condenada judicialmente al pago de daños y perjuicios, la entidad que\nejerce tuición debe efectuar o contratar una auditoría con la finalidad de aportar los elementos de juicio necesarios\npara que el Contralor General de la República pueda establecer si existen suficientes indicios de responsabilidad de\nuno o más ejecutivos para emitir o no el dictamen a que se refiere el artículo 43 de la Ley 1178.",
+      "estructura": [],
+      "fuente_pdf": "assets/ds-23318-a.pdf"
+    },
+    {
+      "id": "ds23318a-art-58",
+      "numero": "Artículo 58",
+      "titulo": "Requerimiento de destitución",
+      "texto": "Si el máximo ejecutivo de la entidad damnificada, de la entidad que ejerce tuición o la dirección colegiada no\niniciare o no prosiguiere las acciones legales pertinentes hasta su conclusión, el Contralor General de la República\no quien represente a la Contraloría General de la República en cada Departamento requerirá a quien corresponda la\ndestitución del ejecutivo y del asesor legal principal.",
+      "estructura": [],
+      "fuente_pdf": "assets/ds-23318-a.pdf"
+    },
+    {
+      "id": "ds23318a-art-59",
+      "numero": "Artículo 59",
+      "titulo": "Resarcimiento del daño",
+      "texto": "El resarcimiento del daño económico antes o después de la ejecutoria del pliego de cargo o sentencia no libera ni\nexcluye al servidor o ex servidor público de la responsabilidad administrativa, ejecutiva o penal, si la hubiere.\n\n                                                CAPITULO VI\n                                           RESPONSABILIDAD PENAL",
+      "estructura": [],
+      "fuente_pdf": "assets/ds-23318-a.pdf"
+    },
+    {
+      "id": "ds23318a-art-60",
+      "numero": "Artículo 60",
+      "titulo": "Naturaleza de la responsabilidad penal",
+      "texto": "La responsabilidad es penal cuando la acción u omisión del servidor público o de los particulares se encuentra\ntipificada como delito en el Código Penal.",
+      "estructura": [],
+      "fuente_pdf": "assets/ds-23318-a.pdf"
+    },
+    {
+      "id": "ds23318a-art-61",
+      "numero": "Artículo 61",
+      "titulo": "Indicios de responsabilidad penal",
+      "texto": "Los servidores públicos u otros profesionales contratados que identifiquen indicios de haberse cometido un delito,\nelaborarán con la diligencia y reserva debidas un informe, haciendo conocer este extremo a la unidad legal\npertinente. El informe contendrá una relación de los actos u omisiones, acompañando las pruebas o señalando\ndónde pueden ser encontradas.",
+      "estructura": [],
+      "fuente_pdf": "assets/ds-23318-a.pdf"
+    },
+    {
+      "id": "ds23318a-art-62",
+      "numero": "Artículo 62",
+      "titulo": "Denuncia o querella",
+      "texto": "La autoridad competente denunciará de inmediato los hechos sobre la base del informe legal ante el Ministerio\nPúblico o si fuere el caso presentará la querella respectiva. Si procede se constituirá en parte civil, teniendo tanto el\nmáximo ejecutivo como el asesor legal principal la obligación de proseguir con diligencia la tramitación de la\ncausa hasta su conclusión.\n\n                                                CAPITULO VII\n                                            DISPOSICIONES VARIAS",
+      "estructura": [],
+      "fuente_pdf": "assets/ds-23318-a.pdf"
+    },
+    {
+      "id": "ds23318a-art-63",
+      "numero": "Artículo 63",
+      "titulo": "Principio de prueba de las decisiones gerenciales",
+      "texto": "I. A los efectos del artículo 33 de la Ley 1778, si el servidor público previa, concurrente o inmediatamente tomada\nla decisión hubiera enviado a su superior jerárquico, a los máximos ejecutivos de su entidad y a la autoridad que\nejerce tuición sobre su entidad o institución, un informe escrito sustentando su decisión, éste servirá como\nprincipio de prueba para fines de control posterior. El fundamento debe referirse a que la decisión fue adoptada\nprocurando finalidades específicas como ser:\n         a. Mayor beneficio o resguardo de los bienes de la entidad, considerando los riesgos propios de la\n         operación.\n         b. La solución o alternativa que a su juicio ofrece más posibilidades de resultados positivos netos bajo las\n         circunstancias imperantes y razonablemente previsibles.\n         c. Neutralizar los efectos de situaciones de fuerza mayor dentro de lo razonablemente posible.\n\n        La valuación de estos principios de prueba será independiente de los resultados obtenidos.\n\nII. Los casos en que los resultados fueran determinados por cambios drásticos en las circunstancias posteriores a la\ndecisión o por causas demostrables de fuerza mayor sobreviniente, constituyen también principio de prueba.",
+      "estructura": [],
+      "fuente_pdf": "assets/ds-23318-a.pdf"
+    },
+    {
+      "id": "ds23318a-art-64",
+      "numero": "Artículo 64",
+      "titulo": "Responsabilidad del auditor",
+      "texto": "I. Para efectos de determinar la responsabilidad del auditor o consultor especializado para auditoría se tomará\ncomo causales por analogía las previstas en el artículo 20 del Código de Procedimiento Civil, en lo aplicable,\nademás de las siguientes entre otras:\n        a. No excusarse de la realización de un trabajo en caso de incompatibilidad o conflicto de intereses\n        manifiesto.\n        b. No informar oportunamente por escrito al superior jerárquico sobre una posible incompatibilidad o\n        conflicto de intereses.\n        c. No manifestar con claridad y en forma completa en los informes de auditoría las posibles\n        irregularidades que detecte u omitir cualquier información que pueda favorecer a los involucrados.\n        d. No manifestar en el informe anual a que se refiere el inciso (e) del artículo 27 de la Ley 1178 su\n        concepto sobre la confiabilidad de los registros y las desviaciones de importancia de las cifras contables\n        de los estados financieros.\n        e. No rectificar o no ser rectificable el incumplimiento de las Normas de Auditoría Gubernamental, que\n        desvirtúa un trabajo específico.\n\nII. Las causales señaladas darán lugar a:\n         a. En el caso el auditor servidor público, al proceso interno para determinar la responsabilidad\n         administrativa, sin perjuicio de la responsabilidad civil o penal.\n         b. En el caso de auditores, consultores especializados o firmas contratadas, a la inmediata resolución del\n         contrato, de acuerdo con el artículo 569 del Código Civil, con devolución de las sumas pagadas, sin\n         perjuicio de la responsabilidad civil o penal que pudiera corresponder. Para este efecto en los contratos\n         deberá estipularse la aplicación del citado artículo.",
+      "estructura": [],
+      "fuente_pdf": "assets/ds-23318-a.pdf"
+    },
+    {
+      "id": "ds23318a-art-65",
+      "numero": "Artículo 65",
+      "titulo": "Responsabilidad del abogado",
+      "texto": "I. Para efectos de determinar la responsabilidad del abogado se tomará como causales, por analogía a las previstas\nen el artículo 20 del Código de Procedimiento Civil, en lo aplicable, además de las siguientes entre otras:\n          a. No excusarse de la emisión de un informe legal o de patrocinar una causa en caso de incompatibilidad o\n          conflicto de intereses manifiesto.\n          b. No informar oportunamente por escrito al superior jerárquico sobre una posible incompatibilidad o\n          conflicto de intereses.\n          c. No solicitar oportunamente al juez competente las medidas precautorias o preparatorias de demanda que\n          correspondan o no formular la denuncia respectiva ante el Ministerio Público, en caso de comisión de\n          delitos, previa comunicación a la máxima autoridad ejecutiva de su entidad.\n          d. No manifestar con claridad y en forma completa en los informes legales las posibles irregularidades que\n          detecte u omitir cualquier información que pueda favorecer a los involucrados.\n          e. No informar previamente por escrito ante el máximo ejecutivo de la entidad la inconveniencia de\n          interponer un recurso que podría corresponder.\n          f. Presentar recursos en forma extemporánea o con defectos formales insubsanables.\n\nII. Las causales señaladas darán lugar a:\n         a. En el caso del abogado servidor público, al proceso interno para determinar la responsabilidad\n         administrativa, sin perjuicio de la responsabilidad civil o penal.\n         b. En el caso de abogados o bufetes contratados, a la inmediata resolución del contrato, de acuerdo con el\n         artículo 569 del Código Civil, con devolución de las sumas pagadas y sin perjuicio de la responsabilidad\n         civil o penal que pudiera corresponder. Para este efecto en las igualas profesionales deberá estipularse la\n         aplicación del citado artículo.",
+      "estructura": [],
+      "fuente_pdf": "assets/ds-23318-a.pdf"
+    },
+    {
+      "id": "ds23318a-art-66",
+      "numero": "Artículo 66",
+      "titulo": "Responsabilidad por informes periódicos",
+      "texto": "El asesor legal principal de la entidad pública debe enviar a la Contraloría los informes sobre el estado de las\nacciones judiciales a cargo de las unidades jurídicas de su entidad, en el término de 15 días hábiles siguientes a las\nfechas establecidas en el artículo 45 del Reglamento para el ejercicio de las atribuciones de la Contraloría General\nde la República, aprobado por D S 23215 de 22 de julio de 1992.",
+      "estructura": [],
+      "fuente_pdf": "assets/ds-23318-a.pdf"
+    },
+    {
+      "id": "ds23318a-art-67",
+      "numero": "Artículo 67",
+      "titulo": "Procesamiento de autoridades superiores, abogados y auditores",
+      "texto": "I. (Modificado por el artículo 2 del DS 26237 de 29 de junio de 2001)\nII. En el caso de posible responsabilidad administrativa, el asesor legal principal de la entidad que ejerce tuición\nactuará como sumariante, con las facultades previstas y dentro de los plazos señalados en los artículos 21 al 23 del\npresente reglamento.\n\nIII. (Modificado por el artículo 2 del DS 26237 de 29 de junio de 2001)\n\nIV. (Modificado por el artículo 2 del DS 26237 de 29 de junio de 2001)\n\nV. (Modificado por el artículo 2 del DS 26237 de 29 de junio de 2001)\n\nVI. (Modificado por el artículo 2 del DS 26237 de 29 de junio de 2001)\n\nVII. En caso de posible responsabilidad administrativa de un Ministro de Estado, será el Presidente de la\nRepública quien designe al abogado independiente, que le informará por escrito recomendando la acción a seguir.\n\nVIII. Toda persona que advierta indicios de posible responsabilidad civil o penal de los servidores públicos\ndescritos en los párrafos V y VII anteriores debe remitir todos los antecedentes a la Contraloría General de la\nRepública para que ésta emita, si fuera el caso, el dictamen de responsabilidad civil o el informe sobre la presunta\nresponsabilidad penal, enviándolo juntamente con los demás antecedentes al Ministerio Público para el\nprocesamiento correspondiente.\n\nIX. (Modificado por el artículo 2 del DS 26237 de 29 de junio de 2001)\n\nX. La responsabilidad ejecutiva del Contralor General de la República podrá ser dictaminada por el H. Senado\nNacional en base a un informe de auditoría operacional emitido por una fundación o facultad universitaria\nespecializada en el campo de la auditoría gubernamental de un país no limítrofe y que no tenga diferendos\npendientes con Bolivia.\n\nXI. (Modificado por el artículo 1 del DS 26237 de 29 de junio de 2001)",
+      "estructura": [],
+      "fuente_pdf": "assets/ds-23318-a.pdf",
+      "modificado_por": [
+        "D.S. N.º 26237",
+        "D.S. N.º 29536"
+      ]
+    }
+  ]
+}

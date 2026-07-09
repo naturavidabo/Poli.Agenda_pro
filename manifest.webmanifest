@@ -2,7 +2,7 @@
   "id": "./",
   "name": "PoliAgenda Pro",
   "short_name": "PoliAgenda",
-  "description": "Biblioteca normativa, agenda académica y ayuda memoria policial offline.",
+  "description": "Biblioteca normativa, agenda académica y profesional, tareas, notas y ayuda memoria policial offline.",
   "lang": "es-BO",
   "start_url": "./",
   "scope": "./",
@@ -52,7 +52,7 @@
       ]
     },
     {
-      "name": "Formaciones",
+      "name": "Formaciones y actividades",
       "short_name": "Formaciones",
       "url": "./?view=activities",
       "icons": [
@@ -63,9 +63,20 @@
       ]
     },
     {
-      "name": "Pendientes",
+      "name": "Pendientes y notificaciones",
       "short_name": "Pendientes",
       "url": "./?view=reminders",
+      "icons": [
+        {
+          "src": "./icons/icon-192.png",
+          "sizes": "192x192"
+        }
+      ]
+    },
+    {
+      "name": "Biblioteca normativa",
+      "short_name": "Biblioteca",
+      "url": "./?view=library",
       "icons": [
         {
           "src": "./icons/icon-192.png",

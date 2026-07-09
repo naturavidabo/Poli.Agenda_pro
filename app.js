@@ -1,9 +1,9 @@
 'use strict';
 
-const APP_VERSION = '2.1.0';
+const APP_VERSION = '2.2.0';
 const MEDIA_CACHE = 'poliagenda-media-v1';
 const DB_NAME = 'poliagenda-db';
-const DB_VERSION = 3;
+const DB_VERSION = 4;
 const STORE = 'kv';
 const DAYS = ['Domingo','Lunes','Martes','Miércoles','Jueves','Viernes','Sábado'];
 const WEEK_DAYS = ['Lunes','Martes','Miércoles','Jueves','Viernes'];
@@ -1132,4 +1132,4 @@ openArticle=function(doc,id){
 };
 
 
-if (typeof window !== 'undefined' && !window.__POLI_TEST__) init();
+/* PoliAgenda v2.2 inicia desde v22.js después de aplicar las extensiones. */
