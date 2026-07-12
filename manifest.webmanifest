@@ -1,88 +1,17 @@
 {
-  "id": "./",
-  "name": "PoliAgenda Pro",
-  "short_name": "PoliAgenda",
-  "description": "Biblioteca normativa, agenda académica y profesional, tareas, notas y ayuda memoria policial offline.",
-  "lang": "es-BO",
-  "start_url": "./",
+  "id": "/Poli.Agenda_pro/",
+  "name": "Agenda Policial",
+  "short_name": "Agenda Policial",
+  "description": "Horario académico, formaciones, tareas, bloc de notas y biblioteca normativa policial.",
+  "start_url": "./index.html",
   "scope": "./",
   "display": "standalone",
-  "display_override": [
-    "standalone",
-    "minimal-ui"
-  ],
-  "orientation": "portrait-primary",
-  "background_color": "#f3f6f4",
-  "theme_color": "#0b4a2e",
-  "categories": [
-    "productivity",
-    "education",
-    "utilities"
-  ],
+  "orientation": "portrait",
+  "background_color": "#f4f7f2",
+  "theme_color": "#0a3f2a",
   "icons": [
-    {
-      "src": "./icons/icon-192.png",
-      "sizes": "192x192",
-      "type": "image/png",
-      "purpose": "any"
-    },
-    {
-      "src": "./icons/icon-512.png",
-      "sizes": "512x512",
-      "type": "image/png",
-      "purpose": "any"
-    },
-    {
-      "src": "./icons/icon-maskable-512.png",
-      "sizes": "512x512",
-      "type": "image/png",
-      "purpose": "maskable"
-    }
-  ],
-  "shortcuts": [
-    {
-      "name": "Inicio",
-      "short_name": "Inicio",
-      "url": "./?view=home",
-      "icons": [
-        {
-          "src": "./icons/icon-192.png",
-          "sizes": "192x192"
-        }
-      ]
-    },
-    {
-      "name": "Formaciones y actividades",
-      "short_name": "Formaciones",
-      "url": "./?view=activities",
-      "icons": [
-        {
-          "src": "./icons/icon-192.png",
-          "sizes": "192x192"
-        }
-      ]
-    },
-    {
-      "name": "Pendientes y notificaciones",
-      "short_name": "Pendientes",
-      "url": "./?view=reminders",
-      "icons": [
-        {
-          "src": "./icons/icon-192.png",
-          "sizes": "192x192"
-        }
-      ]
-    },
-    {
-      "name": "Biblioteca normativa",
-      "short_name": "Biblioteca",
-      "url": "./?view=library",
-      "icons": [
-        {
-          "src": "./icons/icon-192.png",
-          "sizes": "192x192"
-        }
-      ]
-    }
+    {"src":"./icons/icon-192.png","sizes":"192x192","type":"image/png","purpose":"any"},
+    {"src":"./icons/icon-512.png","sizes":"512x512","type":"image/png","purpose":"any"},
+    {"src":"./icons/icon-maskable-512.png","sizes":"512x512","type":"image/png","purpose":"maskable"}
   ]
 }

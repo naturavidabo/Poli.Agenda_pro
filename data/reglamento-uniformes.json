@@ -668,7 +668,11 @@
       ],
       "imagen_principal": "assets/uniformes/paginas/pagina-069.webp",
       "visual_tipo": "pagina_original",
-      "visual_fuente_pdf": 69
+      "visual_fuente_pdf": 69,
+      "imagenes_bloque": [
+        "assets/uniformes/bloques/art-36-bloque.jpg"
+      ],
+      "regla_visual": "Lámina de imágenes extraída por bloque del artículo: desde el inicio del artículo hasta antes del siguiente artículo."
     },
     {
       "id": "uniforme-art-37",
@@ -699,7 +703,11 @@
       ],
       "imagen_principal": "assets/uniformes/paginas/pagina-072.webp",
       "visual_tipo": "pagina_original",
-      "visual_fuente_pdf": 72
+      "visual_fuente_pdf": 72,
+      "imagenes_bloque": [
+        "assets/uniformes/bloques/art-37-bloque.jpg"
+      ],
+      "regla_visual": "Lámina de imágenes extraída por bloque del artículo: desde el inicio del artículo hasta antes del siguiente artículo."
     },
     {
       "id": "uniforme-art-38",
@@ -730,7 +738,11 @@
       ],
       "imagen_principal": "assets/uniformes/paginas/pagina-073.webp",
       "visual_tipo": "pagina_original",
-      "visual_fuente_pdf": 73
+      "visual_fuente_pdf": 73,
+      "imagenes_bloque": [
+        "assets/uniformes/bloques/art-38-bloque.jpg"
+      ],
+      "regla_visual": "Lámina de imágenes extraída por bloque del artículo: desde el inicio del artículo hasta antes del siguiente artículo."
     },
     {
       "id": "uniforme-art-39",
@@ -761,7 +773,11 @@
       ],
       "imagen_principal": "assets/uniformes/paginas/pagina-076.webp",
       "visual_tipo": "pagina_original",
-      "visual_fuente_pdf": 76
+      "visual_fuente_pdf": 76,
+      "imagenes_bloque": [
+        "assets/uniformes/bloques/art-39-bloque.jpg"
+      ],
+      "regla_visual": "Lámina de imágenes extraída por bloque del artículo: desde el inicio del artículo hasta antes del siguiente artículo."
     },
     {
       "id": "uniforme-art-40",
@@ -786,7 +802,11 @@
       ],
       "imagen_principal": "assets/uniformes/paginas/pagina-078.webp",
       "visual_tipo": "pagina_original",
-      "visual_fuente_pdf": 78
+      "visual_fuente_pdf": 78,
+      "imagenes_bloque": [
+        "assets/uniformes/bloques/art-40-bloque.jpg"
+      ],
+      "regla_visual": "Lámina de imágenes extraída por bloque del artículo: desde el inicio del artículo hasta antes del siguiente artículo."
     },
     {
       "id": "uniforme-art-41",
@@ -829,7 +849,11 @@
         "3A estándar",
         "3-A estándar",
         "3A manga larga"
-      ]
+      ],
+      "imagenes_bloque": [
+        "assets/uniformes/bloques/art-41-bloque.jpg"
+      ],
+      "regla_visual": "Lámina de imágenes extraída por bloque del artículo: desde el inicio del artículo hasta antes del siguiente artículo."
     },
     {
       "id": "uniforme-art-42",
@@ -867,7 +891,11 @@
         "3A tropical",
         "3-A tropical",
         "3A manga corta"
-      ]
+      ],
+      "imagenes_bloque": [
+        "assets/uniformes/bloques/art-42-bloque.jpg"
+      ],
+      "regla_visual": "Lámina de imágenes extraída por bloque del artículo: desde el inicio del artículo hasta antes del siguiente artículo."
     },
     {
       "id": "uniforme-art-43",
@@ -910,7 +938,11 @@
         "3B estándar",
         "3-B estándar",
         "3B manga larga"
-      ]
+      ],
+      "imagenes_bloque": [
+        "assets/uniformes/bloques/art-43-bloque.jpg"
+      ],
+      "regla_visual": "Lámina de imágenes extraída por bloque del artículo: desde el inicio del artículo hasta antes del siguiente artículo."
     },
     {
       "id": "uniforme-art-44",
@@ -950,7 +982,9 @@
         "3-B tropical",
         "03 B tropical",
         "3B manga corta"
-      ]
+      ],
+      "imagenes_bloque": [],
+      "regla_visual": "Imágenes extraídas por bloque del artículo: desde el inicio del artículo hasta antes del siguiente artículo."
     },
     {
       "id": "uniforme-art-45",
@@ -984,7 +1018,11 @@
       "alias_extra": [
         "Uniforme 4 estándar",
         "Uniforme 4 manga larga"
-      ]
+      ],
+      "imagenes_bloque": [
+        "assets/uniformes/bloques/art-45-bloque.jpg"
+      ],
+      "regla_visual": "Lámina de imágenes extraída por bloque del artículo: desde el inicio del artículo hasta antes del siguiente artículo."
     },
     {
       "id": "uniforme-art-46",
@@ -1015,7 +1053,11 @@
       "alias_extra": [
         "Uniforme 4 tropical",
         "Uniforme 4 manga corta"
-      ]
+      ],
+      "imagenes_bloque": [
+        "assets/uniformes/bloques/art-46-bloque.jpg"
+      ],
+      "regla_visual": "Lámina de imágenes extraída por bloque del artículo: desde el inicio del artículo hasta antes del siguiente artículo."
     },
     {
       "id": "uniforme-art-47",
@@ -1040,7 +1082,11 @@
       ],
       "imagen_principal": "assets/uniformes/paginas/pagina-098.webp",
       "visual_tipo": "pagina_original",
-      "visual_fuente_pdf": 98
+      "visual_fuente_pdf": 98,
+      "imagenes_bloque": [
+        "assets/uniformes/bloques/art-47-bloque.jpg"
+      ],
+      "regla_visual": "Lámina de imágenes extraída por bloque del artículo: desde el inicio del artículo hasta antes del siguiente artículo."
     },
     {
       "id": "uniforme-art-48",
@@ -1065,7 +1111,11 @@
       ],
       "imagen_principal": "assets/uniformes/paginas/pagina-101.webp",
       "visual_tipo": "pagina_original",
-      "visual_fuente_pdf": 101
+      "visual_fuente_pdf": 101,
+      "imagenes_bloque": [
+        "assets/uniformes/bloques/art-48-bloque.jpg"
+      ],
+      "regla_visual": "Lámina de imágenes extraída por bloque del artículo: desde el inicio del artículo hasta antes del siguiente artículo."
     },
     {
       "id": "uniforme-art-49",
@@ -1090,7 +1140,11 @@
       ],
       "imagen_principal": "assets/uniformes/paginas/pagina-104.webp",
       "visual_tipo": "pagina_original",
-      "visual_fuente_pdf": 104
+      "visual_fuente_pdf": 104,
+      "imagenes_bloque": [
+        "assets/uniformes/bloques/art-49-bloque.jpg"
+      ],
+      "regla_visual": "Lámina de imágenes extraída por bloque del artículo: desde el inicio del artículo hasta antes del siguiente artículo."
     },
     {
       "id": "uniforme-art-50",
@@ -1115,7 +1169,11 @@
       ],
       "imagen_principal": "assets/uniformes/paginas/pagina-106.webp",
       "visual_tipo": "pagina_original",
-      "visual_fuente_pdf": 106
+      "visual_fuente_pdf": 106,
+      "imagenes_bloque": [
+        "assets/uniformes/bloques/art-50-bloque.jpg"
+      ],
+      "regla_visual": "Lámina de imágenes extraída por bloque del artículo: desde el inicio del artículo hasta antes del siguiente artículo."
     },
     {
       "id": "uniforme-art-51",
@@ -1140,7 +1198,11 @@
       ],
       "imagen_principal": "assets/uniformes/paginas/pagina-109.webp",
       "visual_tipo": "pagina_original",
-      "visual_fuente_pdf": 109
+      "visual_fuente_pdf": 109,
+      "imagenes_bloque": [
+        "assets/uniformes/bloques/art-51-bloque.jpg"
+      ],
+      "regla_visual": "Lámina de imágenes extraída por bloque del artículo: desde el inicio del artículo hasta antes del siguiente artículo."
     },
     {
       "id": "uniforme-art-52",
@@ -1161,7 +1223,11 @@
       "alias_busqueda": [],
       "imagen_principal": "assets/uniformes/paginas/pagina-111.webp",
       "visual_tipo": "pagina_original",
-      "visual_fuente_pdf": 111
+      "visual_fuente_pdf": 111,
+      "imagenes_bloque": [
+        "assets/uniformes/bloques/art-52-bloque.jpg"
+      ],
+      "regla_visual": "Lámina de imágenes extraída por bloque del artículo: desde el inicio del artículo hasta antes del siguiente artículo."
     }
   ]
 }

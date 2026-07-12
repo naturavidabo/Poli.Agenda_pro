@@ -1,12 +1,1 @@
-{
-  "version": "2.2.0",
-  "releasedAt": "2026-07-09",
-  "notes": [
-    "Biblioteca normativa ampliada a 11 documentos",
-    "Tareas, notas, consignas y notificaciones separadas",
-    "Ficha Kardex voluntaria con importación desde texto",
-    "Fotografía de horario editable con reconocimiento y revisión",
-    "Imágenes de uniformes presentadas antes del texto oficial",
-    "Respaldo integral y actualización sin pérdida de IndexedDB"
-  ]
-}
+{"version":"2.3.0","name":"Agenda Policial","date":"2026-07-12","notes":["Nombre definitivo Agenda Policial","Estructura simplificada: Inicio, Formaciones, Tareas, Horario y Biblioteca","Bloc de notas separado","Uniformes por bloque de artículo","Sumario con numerales legibles"]}
