@@ -1,16 +1,32 @@
-# Auditoría técnica - Agenda Policial v2.4.6
+# Auditoría técnica - Agenda Policial v2.4.7
 
-## Verificaciones aplicadas
+## Correcciones aplicadas
 
-- Versión interna: 2.4.6.
-- Service Worker actualizado a caché agenda-policial-v2.4.6.
-- Horario: metadatos editables sin borrar casilleros.
-- Horario: restauración base con advertencia explícita de plantilla Paralelo A / Turno Mañana / Nivel Capitanes.
-- Tareas: materia vinculada a lista deduplicada de materias del horario.
-- Inicio: alertas académicas para entregas hoy/mañana.
-- OCR: varias variantes de preprocesamiento y refuerzo de docente/instructor desde plantilla.
-- Uniformes: texto completo del artículo con bloque visual y PDF original.
+### Fecha local del dispositivo
 
-## Límite de archivos
+Se reemplazó el uso de `new Date().toISOString().slice(0,10)` para la fecha operativa de la agenda. Esa expresión trabaja en UTC y provocaba que, en Bolivia, durante la noche del domingo la app creyera que ya era lunes. Como luego la hora seguía siendo domingo por la zona local, se marcaban las actividades del lunes como finalizadas y saltaba indebidamente al martes.
 
-Se mantiene la estructura compacta de la versión saneada, sin páginas PDF sueltas masivas.
+Ahora `todayISO()` devuelve fecha local con año, mes y día del dispositivo.
+
+### Biblioteca normativa
+
+Se corrigió `openDoc()` para que cada documento abra su propia vista estructurada, en vez de lanzar una búsqueda genérica de “artículo”.
+
+Se agregó:
+
+- vista de documento;
+- listado de artículos;
+- búsqueda interna por documento;
+- botón visible “Ver documento original PDF” para documentos con PDF;
+- enlace PDF desde cada artículo normativo usando `art.fuente_pdf` y el catálogo local.
+
+## Pruebas estáticas realizadas
+
+- `node --check app.js`: correcto.
+- `node --check sw.js`: correcto.
+- `version.json`: JSON válido.
+- Conteo del paquete: por debajo del límite solicitado.
+
+## Pendiente funcional
+
+El OCR de horario sigue dependiendo de la capacidad del navegador y Tesseract.js. Esta versión no cambia el motor OCR; corrige fecha/agenda y biblioteca normativa.

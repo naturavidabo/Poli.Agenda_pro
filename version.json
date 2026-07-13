@@ -1,12 +1,12 @@
 {
-  "version": "2.4.6",
+  "version": "2.4.7",
   "name": "Agenda Policial",
   "date": "2026-07-13",
   "notes": [
-    "Datos del horario editables: institución, curso, paralelo, turno, nivel y periodo",
-    "Nueva tarea académica sugiere materias automáticamente desde el horario activo sin duplicarlas",
-    "Inicio muestra alertas académicas con punto rojo para entregas de hoy o mañana",
-    "OCR mejorado con varias variantes de preprocesamiento y complemento de docentes desde la plantilla",
-    "Texto del Reglamento de Uniformes reforzado: vista completa sin cortes junto al bloque visual y PDF original visible"
+    "Corrección de fecha local del dispositivo para evitar salto domingo a martes por UTC",
+    "Inicio y cronología vuelven a calcular actividades desde la fecha local real",
+    "Biblioteca normativa abre cada documento con listado de artículos y búsqueda interna",
+    "Botón Ver documento original PDF habilitado para CPE, Ley 1178, decretos y códigos cuando existe PDF",
+    "Reglamento de Uniformes conserva bloques visuales y PDF original"
   ]
 }
