@@ -1,19 +1,30 @@
-# Agenda Policial v2.3.1
+# Agenda Policial v2.4.0
 
-Actualización correctiva sobre v2.3.0.
+Actualización enfocada en la segunda parte solicitada: análisis de horario desde imagen.
 
 ## Cambios principales
 
-- El código de activación ahora se escribe oculto.
-- La activación queda respaldada en almacenamiento local para no pedirse nuevamente después de actualizar.
-- Búsqueda de uniformes corregida para aceptar 3A, 3-A, 03 A, 3B, 3-B, 03 B Tropical y variantes similares.
-- La búsqueda de uniformes se ordena por relevancia, para que el uniforme exacto salga arriba.
-- El detalle del Reglamento de Uniformes vuelve a mostrar imágenes.
-- Se recuperó el botón **Ver PDF original** dentro de los artículos.
-- Se prioriza imagen principal + bloque visual del artículo.
+- Conserva las correcciones de v2.3.1: activación local con código oculto, persistencia de activación, búsqueda de uniformes 3A/3B y botón Ver PDF original.
+- En Horario se mantiene:
+  - Subir imagen desde galería/archivos.
+  - Tomar foto con cámara.
+  - Ver imagen actual del horario.
+  - Reemplazar o eliminar imagen.
+- Nuevo flujo de análisis:
+  - Botón **Leer imagen automáticamente**.
+  - OCR asistido cuando el navegador tenga acceso al motor Tesseract.js.
+  - Si el OCR no está disponible, se puede pegar/corregir texto manualmente.
+  - Parser de líneas con días, horas y materias.
+  - Parser de filas tipo tabla: una hora y varias celdas para lunes a viernes.
+  - Pantalla de revisión antes de guardar.
+  - Corrección editable de día, hora, materia, docente y observación.
+  - Opción de **Reemplazar horario** o **Crear/Agregar parcial**.
+  - Conservación del horario anterior en historial local cuando se reemplaza.
+
+## Nota sobre OCR
+
+El OCR desde imagen requiere que el navegador cargue Tesseract.js. En la primera lectura puede necesitar internet. Si el dispositivo no permite OCR o la imagen es poco nítida, la app no guarda nada automáticamente: permite pegar texto o registrar manualmente.
 
 ## Publicación
 
-Reemplace los archivos del repositorio por los de este paquete. No borre los datos locales desde el navegador.
-
-Después de publicar en GitHub Pages, abra la app, entre a Configuración y use **Buscar actualización** o recargue dos veces para limpiar caché viejo.
+Reemplazar los archivos del repositorio actual conservando la estructura. Después de publicar, abrir la app y usar Buscar actualización o recargar dos veces para asegurar que el Service Worker tome la versión 2.4.0.

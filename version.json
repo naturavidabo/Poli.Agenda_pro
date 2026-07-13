@@ -1,1 +1,1 @@
-{"version":"2.3.1","name":"Agenda Policial","date":"2026-07-13","notes":["Corrección de búsqueda de uniformes 3A/3B","Restaurado botón Ver PDF original","Imágenes de uniformes con imagen principal y bloque del artículo","Activación persistente local y código oculto"]}
+{"version":"2.4.0","name":"Agenda Policial","date":"2026-07-13","notes":["OCR asistido para horarios desde imagen","Subir horario desde galería o cámara","Revisión editable de filas detectadas","Activación persistente y código oculto conservados"]}

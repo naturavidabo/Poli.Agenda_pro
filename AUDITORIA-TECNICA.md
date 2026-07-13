@@ -1,201 +1,28 @@
-# AUDITORÍA TÉCNICA – Agenda Policial v2.3.1
+# Auditoría técnica - Agenda Policial v2.4.0
 
-Corrección puntual sobre v2.3.0 por reporte del usuario.
+## Estado
 
-## Validaciones realizadas
+Versión correctiva construida sobre v2.3.1 para añadir el módulo de horario inteligente desde imagen.
 
-- JavaScript validado con `node --check`.
-- Activación: campo protegido tipo password y persistencia adicional en `localStorage`.
-- Service Worker actualizado a caché `agenda-policial-v2.3.1`.
-- Búsqueda de uniformes verificada y reordenada por relevancia.
-- `3A`, `3-A` y `uniforme 3A` muestran primero el Artículo 41.
-- `3B` y `3-B` muestran primero el Artículo 43.
-- `03 B Tropical` muestra primero el Artículo 44.
-- Artículos de uniformes muestran imagen principal y bloque visual del artículo cuando existen.
-- En el detalle del artículo se restauró el botón **Ver PDF original** con salto a página cuando corresponde.
-- Se comprobó existencia de todas las imágenes referenciadas en `imagen_principal` e `imagenes_bloque`.
+## Verificaciones realizadas
 
-## Resultado de búsqueda probado
+- Sintaxis de `app.js` verificada con `node --check`.
+- Versión interna actualizada a `2.4.0`.
+- Cache del Service Worker actualizado a `agenda-policial-v2.4.0`.
+- `version.json` actualizado a `2.4.0`.
+- Campo de activación permanece oculto y con código local 271261.
+- Conserva búsqueda corregida de uniformes 3A, 3-A, 3B, 3-B y 03 B Tropical.
+- Conserva botón Ver PDF original en artículos.
+- Horario permite imagen desde galería/archivos o cámara.
+- Horario permite ver, reemplazar y eliminar imagen.
+- Se agregó OCR asistido con Tesseract.js cuando está disponible.
+- Se agregó alternativa con TextDetector si el navegador lo soporta.
+- Se agregó fallback manual cuando OCR no está disponible.
+- El parser acepta líneas con día + hora + materia.
+- El parser acepta filas de tabla con rango horario y varias celdas asignadas a lunes-viernes.
+- Antes de guardar, las filas detectadas se muestran para revisión y edición.
+- Al reemplazar horario, se conserva historial local del horario anterior.
 
-```json
-{
-  "3A": [
-    [
-      "Artículo 41",
-      "Uniforme N° 3-A",
-      340
-    ],
-    [
-      "Artículo 42",
-      "Uniforme N° 3-A (Tropical)",
-      305
-    ],
-    [
-      "Artículo 30",
-      "Botines Y Zapatos",
-      165
-    ],
-    [
-      "Artículo 27",
-      "Camisa Policial",
-      165
-    ],
-    [
-      "Artículo 23",
-      "Capa",
-      165
-    ]
-  ],
-  "3-A": [
-    [
-      "Artículo 41",
-      "Uniforme N° 3-A",
-      340
-    ],
-    [
-      "Artículo 42",
-      "Uniforme N° 3-A (Tropical)",
-      305
-    ],
-    [
-      "Artículo 30",
-      "Botines Y Zapatos",
-      165
-    ],
-    [
-      "Artículo 27",
-      "Camisa Policial",
-      165
-    ],
-    [
-      "Artículo 23",
-      "Capa",
-      165
-    ]
-  ],
-  "uniforme 3A": [
-    [
-      "Artículo 41",
-      "Uniforme N° 3-A",
-      215
-    ],
-    [
-      "Artículo 30",
-      "Botines Y Zapatos",
-      140
-    ],
-    [
-      "Artículo 27",
-      "Camisa Policial",
-      140
-    ],
-    [
-      "Artículo 23",
-      "Capa",
-      140
-    ],
-    [
-      "Artículo 21",
-      "Capote",
-      140
-    ]
-  ],
-  "03 A tropical": [
-    [
-      "Artículo 42",
-      "Uniforme N° 3-A (Tropical)",
-      145
-    ],
-    [
-      "Artículo 46",
-      "Uniforme N° 4 (Tropical)",
-      145
-    ],
-    [
-      "Artículo 35",
-      "Clasificación De Los Uniformes",
-      140
-    ]
-  ],
-  "3B": [
-    [
-      "Artículo 43",
-      "Uniforme N° 3-B",
-      315
-    ],
-    [
-      "Artículo 44",
-      "Uniforme N° 3-B (Tropical)",
-      305
-    ],
-    [
-      "Artículo 36",
-      "Uniforme N° 1-A Y 1-A (Táctico)",
-      170
-    ],
-    [
-      "Artículo 37",
-      "Uniforme N° 1-B",
-      170
-    ],
-    [
-      "Artículo 50",
-      "Uniforme N° 7 (De Sociedad)",
-      170
-    ]
-  ],
-  "3-B": [
-    [
-      "Artículo 43",
-      "Uniforme N° 3-B",
-      315
-    ],
-    [
-      "Artículo 44",
-      "Uniforme N° 3-B (Tropical)",
-      305
-    ],
-    [
-      "Artículo 36",
-      "Uniforme N° 1-A Y 1-A (Táctico)",
-      170
-    ],
-    [
-      "Artículo 37",
-      "Uniforme N° 1-B",
-      170
-    ],
-    [
-      "Artículo 50",
-      "Uniforme N° 7 (De Sociedad)",
-      170
-    ]
-  ],
-  "03 B Tropical": [
-    [
-      "Artículo 44",
-      "Uniforme N° 3-B (Tropical)",
-      215
-    ],
-    [
-      "Artículo 46",
-      "Uniforme N° 4 (Tropical)",
-      145
-    ],
-    [
-      "Artículo 35",
-      "Clasificación De Los Uniformes",
-      140
-    ],
-    [
-      "Artículo 14",
-      "Marbetes",
-      140
-    ]
-  ]
-}
-```
+## Limitación conocida
 
-## Alcance
-
-Esta versión corrige lo más urgente detectado en Biblioteca y Activación. La automatización avanzada del horario por imagen queda para la siguiente fase.
+La lectura de horarios desde fotografía depende de la nitidez, perspectiva, resolución y capacidad OCR del navegador. La aplicación no guarda interpretaciones sin revisión del usuario.
