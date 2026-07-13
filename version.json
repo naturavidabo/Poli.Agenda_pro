@@ -1,12 +1,12 @@
 {
-  "version": "2.4.5",
+  "version": "2.4.6",
   "name": "Agenda Policial",
   "date": "2026-07-13",
   "notes": [
-    "Pulido visual de inicio, barra inferior verde olivo e iconos SVG modernos",
-    "Horario con interruptor Día/Semana: vista diaria ampliada y vista semanal editable",
-    "Inicio operativo: muestra formaciones, hora mística, clases próximas y tareas en agenda cronológica",
-    "OCR mejorado con preprocesamiento de imagen y alternativa de plantilla base cuando el navegador no reconoce la foto",
-    "Correcciones de fechas para mañana/lunes y visualización de día con cálculo local"
+    "Datos del horario editables: institución, curso, paralelo, turno, nivel y periodo",
+    "Nueva tarea académica sugiere materias automáticamente desde el horario activo sin duplicarlas",
+    "Inicio muestra alertas académicas con punto rojo para entregas de hoy o mañana",
+    "OCR mejorado con varias variantes de preprocesamiento y complemento de docentes desde la plantilla",
+    "Texto del Reglamento de Uniformes reforzado: vista completa sin cortes junto al bloque visual y PDF original visible"
   ]
 }

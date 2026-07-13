@@ -1,16 +1,16 @@
-# Auditoría técnica — Agenda Policial v2.4.5
+# Auditoría técnica - Agenda Policial v2.4.6
 
-## Resultado
+## Verificaciones aplicadas
 
-- Paquete por debajo del límite de 90 archivos.
-- Service Worker actualizado a `agenda-policial-v2.4.5`.
-- `version.json` actualizado a `2.4.5`.
-- Horario conserva estructura base y agrega vista diaria/semanal.
-- Inicio prioriza agenda cronológica y muestra formaciones próximas.
-- OCR incluye preprocesamiento por canvas y ruta alternativa por plantilla base.
-- Fecha formaciones: soporte para `mañana` y días de semana.
-- Interfaz: barra inferior verde olivo, iconos SVG y botón rápido modernizado.
+- Versión interna: 2.4.6.
+- Service Worker actualizado a caché agenda-policial-v2.4.6.
+- Horario: metadatos editables sin borrar casilleros.
+- Horario: restauración base con advertencia explícita de plantilla Paralelo A / Turno Mañana / Nivel Capitanes.
+- Tareas: materia vinculada a lista deduplicada de materias del horario.
+- Inicio: alertas académicas para entregas hoy/mañana.
+- OCR: varias variantes de preprocesamiento y refuerzo de docente/instructor desde plantilla.
+- Uniformes: texto completo del artículo con bloque visual y PDF original.
 
-## Nota
+## Límite de archivos
 
-El OCR depende del navegador y de que Tesseract.js cargue correctamente. Por eso se agregó una alternativa confiable: aplicar la plantilla base y editar celdas.
+Se mantiene la estructura compacta de la versión saneada, sin páginas PDF sueltas masivas.

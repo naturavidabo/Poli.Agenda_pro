@@ -1,23 +1,22 @@
-# Agenda Policial v2.4.5
+# Agenda Policial v2.4.6 - Corrección de horario, tareas y biblioteca
 
-Versión correctiva enfocada en horario, inicio operativo, estética y alternativa al OCR cuando el navegador no logra reconocer una imagen.
+Versión saneada y reducida. Mantiene menos de 90 archivos.
 
-## Cambios
+## Cambios principales
 
-- Barra inferior verde olivo con iconos SVG modernos.
-- Botón de bloc de notas y configuración reemplazados por iconos referenciales.
-- Inicio muestra formaciones/servicios, hora mística, clases próximas y tareas en agenda cronológica.
-- Horario académico con interruptor Día/Semana.
-- Vista diaria ampliada y cómoda para celular.
-- Vista semanal conserva la tabla completa editable.
-- Analizador de horario con preprocesamiento de imagen para OCR.
-- Botón “Usar plantilla base del horario” cuando el OCR del navegador falla.
-- Mejor extracción de fechas: mañana y días de semana.
+- Datos del horario editables: institución, curso, paralelo, turno, nivel, periodo y nombre.
+- La estructura base del horario muestra advertencia antes de reemplazar.
+- Las tareas académicas ahora sugieren materias desde el horario activo, sin duplicarlas.
+- Inicio muestra alertas con punto rojo para tareas de hoy o mañana.
+- OCR de horario mejorado con varias variantes de preprocesamiento y complemento de docentes desde la plantilla.
+- Reglamento de Uniformes: el texto del artículo se muestra completo y sin cortes; se conserva bloque visual y botón Ver documento original PDF.
 
-## Instalación
+## Publicación
 
-Subir todos los archivos al repositorio GitHub Pages. Luego abrir:
+Subir todos los archivos al repositorio y abrir:
 
-`index.html?v=2.4.5`
+`index.html?v=2.4.6`
 
-Si sigue mostrando una versión vieja, abrir primero `reset.html`.
+Si el navegador mantiene una versión vieja, abrir primero:
+
+`reset.html`
