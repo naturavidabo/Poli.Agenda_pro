@@ -1,28 +1,66 @@
-# Auditoría técnica - Agenda Policial v2.4.0
+# Auditoría técnica — Agenda Policial v2.4.1
 
-## Estado
+Fecha: 13/07/2026
 
-Versión correctiva construida sobre v2.3.1 para añadir el módulo de horario inteligente desde imagen.
+## Objetivo
+Corrección general sobre la v2.4.0, enfocada en:
+- actualización desde GitHub/Service Worker;
+- estética e interfaz;
+- bloc de notas sin botones sobre el texto;
+- conservación de datos locales;
+- verificación de Biblioteca, uniformes y reglamentos.
 
-## Verificaciones realizadas
+## Correcciones aplicadas
 
-- Sintaxis de `app.js` verificada con `node --check`.
-- Versión interna actualizada a `2.4.0`.
-- Cache del Service Worker actualizado a `agenda-policial-v2.4.0`.
-- `version.json` actualizado a `2.4.0`.
-- Campo de activación permanece oculto y con código local 271261.
-- Conserva búsqueda corregida de uniformes 3A, 3-A, 3B, 3-B y 03 B Tropical.
-- Conserva botón Ver PDF original en artículos.
-- Horario permite imagen desde galería/archivos o cámara.
-- Horario permite ver, reemplazar y eliminar imagen.
-- Se agregó OCR asistido con Tesseract.js cuando está disponible.
-- Se agregó alternativa con TextDetector si el navegador lo soporta.
-- Se agregó fallback manual cuando OCR no está disponible.
-- El parser acepta líneas con día + hora + materia.
-- El parser acepta filas de tabla con rango horario y varias celdas asignadas a lunes-viernes.
-- Antes de guardar, las filas detectadas se muestran para revisión y edición.
-- Al reemplazar horario, se conserva historial local del horario anterior.
+### 1. Actualización desde GitHub
+- Se cambió el Service Worker a `agenda-policial-v2.4.1`.
+- `version.json`, `index.html`, `app.js` y `styles.css` ahora usan estrategia network-first para no quedar atrapados en caché viejo.
+- El botón `Buscar actualización` consulta `version.json` con `cache: no-store`.
+- Se agregó `applyUpdate()` para actualizar registro de Service Worker, limpiar cachés `agenda-policial-*` y recargar sin borrar IndexedDB ni localStorage.
+- Se añadió soporte de mensaje `SKIP_WAITING` en el Service Worker.
 
-## Limitación conocida
+### 2. Activación
+- Se conserva el código oculto mediante `input type="password"`.
+- La activación se mantiene en `localStorage` y en estado local.
+- No se borra por una actualización normal de archivos.
 
-La lectura de horarios desde fotografía depende de la nitidez, perspectiva, resolución y capacidad OCR del navegador. La aplicación no guarda interpretaciones sin revisión del usuario.
+### 3. Bloc de notas
+- El formulario de notas deja de tener botones flotantes/pegados encima del área de escritura.
+- `Guardar` y `Cancelar` quedan debajo del contenido, sin obstruir el texto.
+- Se amplió el área de escritura para uso real como bloc de notas policial.
+
+### 4. Interfaz
+- Se refinó la cabecera institucional.
+- Se ajustaron tamaños de botones.
+- Se mejoraron tarjetas, sombras, bordes y contraste.
+- Configuración dejó de verse como una pantalla blanca plana y ahora tiene encabezado institucional.
+- Se mantuvo navegación inferior: Inicio, Formaciones, Tareas, Horario, Biblioteca.
+
+### 5. Biblioteca normativa
+- Se verificó integridad de los principales JSON.
+- Reglamento de Uniformes: 52 artículos.
+- Reglamento Sumario: 92 artículos.
+- Imágenes referenciadas en Reglamento de Uniformes: 33 rutas, 0 faltantes.
+- Se mantiene botón `Ver PDF original` en artículos de uniformes cuando existe página asociada.
+
+## Pruebas realizadas
+
+| Prueba | Resultado |
+|---|---:|
+| `node --check app.js` | OK |
+| `node --check sw.js` | OK |
+| JSON `version.json` | OK |
+| JSON `manifest.webmanifest` | OK |
+| JSON `reglamento-uniformes.json` | OK |
+| JSON `reglamento-sumario-unipol.json` | OK |
+| Artículos uniforme 1–52 | OK |
+| Artículos sumario 1–92 | OK |
+| Imágenes declaradas en uniformes existen | OK |
+| ZIP generado | OK |
+
+## Limitaciones pendientes
+
+- La instalación real y la actualización efectiva deben confirmarse después de subir esta versión al repositorio GitHub Pages, porque dependen del origen HTTPS y del caché real del navegador.
+- El OCR de horario continúa dependiendo del navegador/dispositivo y de la nitidez de la imagen.
+- Si un teléfono conserva datos corruptos de versiones anteriores, puede requerir usar `Buscar actualización`, cerrar y abrir, o borrar caché del sitio una vez.
+

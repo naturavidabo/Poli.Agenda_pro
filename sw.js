@@ -1,5 +1,7 @@
-const CACHE='agenda-policial-v2.4.0';
+const CACHE='agenda-policial-v2.4.1';
 const CORE=['./','./index.html','./styles.css','./app.js','./manifest.webmanifest','./version.json','./icons/icon-192.png','./icons/icon-512.png','./icons/icon-maskable-512.png','./assets/escudo-policia.png','./data/reglamento-uniformes.json','./data/reglamento-sumario-unipol.json','./data/horario-base.json','./data/biblioteca-catalogo.json'];
 self.addEventListener('install',e=>{e.waitUntil(caches.open(CACHE).then(c=>c.addAll(CORE)).then(()=>self.skipWaiting()))});
 self.addEventListener('activate',e=>{e.waitUntil(caches.keys().then(keys=>Promise.all(keys.filter(k=>k!==CACHE&&k.startsWith('agenda-policial')).map(k=>caches.delete(k)))).then(()=>self.clients.claim()))});
-self.addEventListener('fetch',e=>{if(e.request.method!=='GET')return; e.respondWith(caches.match(e.request).then(cached=>cached||fetch(e.request).then(res=>{const copy=res.clone(); caches.open(CACHE).then(c=>c.put(e.request,copy)).catch(()=>{}); return res}).catch(()=>cached||caches.match('./index.html'))))});
+self.addEventListener('message',e=>{if(e.data&&e.data.type==='SKIP_WAITING') self.skipWaiting()});
+async function networkFirst(req){try{const res=await fetch(req,{cache:'no-store'}); const cache=await caches.open(CACHE); cache.put(req,res.clone()).catch(()=>{}); return res}catch(e){return (await caches.match(req))||caches.match('./index.html')}}
+self.addEventListener('fetch',e=>{if(e.request.method!=='GET')return; const url=new URL(e.request.url); if(url.pathname.endsWith('/version.json')||url.pathname.endsWith('/app.js')||url.pathname.endsWith('/styles.css')||url.pathname.endsWith('/index.html')){e.respondWith(networkFirst(e.request)); return;} e.respondWith(caches.match(e.request).then(cached=>cached||fetch(e.request).then(res=>{const copy=res.clone(); caches.open(CACHE).then(c=>c.put(e.request,copy)).catch(()=>{}); return res}).catch(()=>cached||caches.match('./index.html'))))});

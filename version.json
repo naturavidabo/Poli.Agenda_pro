@@ -1,1 +1,1 @@
-{"version":"2.4.0","name":"Agenda Policial","date":"2026-07-13","notes":["OCR asistido para horarios desde imagen","Subir horario desde galería o cámara","Revisión editable de filas detectadas","Activación persistente y código oculto conservados"]}
+{"version":"2.4.1","name":"Agenda Policial","date":"2026-07-13","notes":["Auditoría general correctiva","Actualización desde GitHub con limpieza de caché","Interfaz visual refinada","Bloc de notas sin botones encima del texto","Conserva OCR de horario y correcciones de biblioteca"]}

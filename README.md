@@ -1,30 +1,31 @@
-# Agenda Policial v2.4.0
+# Agenda Policial v2.4.1
 
-Actualización enfocada en la segunda parte solicitada: análisis de horario desde imagen.
+Versión correctiva de auditoría general.
 
 ## Cambios principales
 
-- Conserva las correcciones de v2.3.1: activación local con código oculto, persistencia de activación, búsqueda de uniformes 3A/3B y botón Ver PDF original.
-- En Horario se mantiene:
-  - Subir imagen desde galería/archivos.
-  - Tomar foto con cámara.
-  - Ver imagen actual del horario.
-  - Reemplazar o eliminar imagen.
-- Nuevo flujo de análisis:
-  - Botón **Leer imagen automáticamente**.
-  - OCR asistido cuando el navegador tenga acceso al motor Tesseract.js.
-  - Si el OCR no está disponible, se puede pegar/corregir texto manualmente.
-  - Parser de líneas con días, horas y materias.
-  - Parser de filas tipo tabla: una hora y varias celdas para lunes a viernes.
-  - Pantalla de revisión antes de guardar.
-  - Corrección editable de día, hora, materia, docente y observación.
-  - Opción de **Reemplazar horario** o **Crear/Agregar parcial**.
-  - Conservación del horario anterior en historial local cuando se reemplaza.
-
-## Nota sobre OCR
-
-El OCR desde imagen requiere que el navegador cargue Tesseract.js. En la primera lectura puede necesitar internet. Si el dispositivo no permite OCR o la imagen es poco nítida, la app no guarda nada automáticamente: permite pegar texto o registrar manualmente.
+- Corrección del sistema de actualización desde GitHub Pages.
+- Service Worker con nueva caché `agenda-policial-v2.4.1`.
+- `version.json`, `app.js`, `styles.css` e `index.html` se consultan por red primero para evitar quedarse en versiones antiguas.
+- Botón **Buscar actualización desde GitHub** más confiable.
+- Código de activación oculto.
+- Conservación de datos locales durante actualización.
+- Interfaz más pulida, institucional y menos plana.
+- Bloc de notas corregido: los botones ya no quedan encima del texto.
+- Auditoría de biblioteca, reglamentos e imágenes de uniformes.
 
 ## Publicación
 
-Reemplazar los archivos del repositorio actual conservando la estructura. Después de publicar, abrir la app y usar Buscar actualización o recargar dos veces para asegurar que el Service Worker tome la versión 2.4.0.
+1. Descomprimir el ZIP.
+2. Subir/reemplazar los archivos en el repositorio `Poli.Agenda_pro`.
+3. Confirmar el commit.
+4. Esperar GitHub Pages.
+5. Abrir la app.
+6. Entrar a Configuración → **Buscar actualización desde GitHub**.
+7. Si aparece aviso, pulsar **Actualizar**.
+8. Cerrar y volver a abrir la app.
+
+## Importante
+
+No borrar la carpeta `assets/pages` si existe en el repositorio y contiene material visual adicional. Esta versión no debe borrar IndexedDB ni localStorage.
+
