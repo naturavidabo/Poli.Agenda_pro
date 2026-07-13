@@ -1,0 +1,48 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="robots" content="noindex">
+  <title>Reparar actualización · Agenda Policial</title>
+  <style>
+    body{margin:0;font-family:system-ui,-apple-system,Segoe UI,Roboto,Arial;background:linear-gradient(160deg,#062f1d,#0d7047);color:#102118;min-height:100vh;display:grid;place-items:center;padding:18px}
+    .card{max-width:480px;background:#fff;border-radius:26px;padding:22px;box-shadow:0 24px 70px rgba(0,0,0,.35)}
+    h1{margin:0 0 8px;color:#073b26}p{line-height:1.45;color:#53645b}.log{background:#f2f6f2;border-radius:16px;padding:12px;margin:12px 0;color:#24362c;white-space:pre-wrap;font-size:13px}.btn{border:0;border-radius:14px;background:#073b26;color:white;font-weight:800;padding:12px 15px;text-decoration:none;display:inline-block}.secondary{background:#eef5ef;color:#073b26;border:1px solid #d7e1da}
+  </style>
+</head>
+<body>
+  <div class="card">
+    <h1>Reparar actualización</h1>
+    <p>Esta pantalla limpia solamente el caché y el Service Worker de Agenda Policial. No borra sus notas, tareas, horario ni activación local.</p>
+    <div id="log" class="log">Preparando limpieza...</div>
+    <button class="btn" onclick="repair()">Reparar y abrir Agenda Policial</button>
+    <a class="btn secondary" href="./index.html?v=2.4.2">Abrir sin reparar</a>
+  </div>
+  <script>
+    const log=document.getElementById('log');
+    function add(t){log.textContent+='\n'+t}
+    async function repair(){
+      log.textContent='Iniciando reparación...';
+      try{
+        if('caches' in window){
+          const keys=await caches.keys();
+          const agenda=keys.filter(k=>k.startsWith('agenda-policial'));
+          await Promise.all(agenda.map(k=>caches.delete(k)));
+          add('Cachés limpiados: '+(agenda.join(', ')||'ninguno'));
+        }
+        if('serviceWorker' in navigator){
+          const regs=await navigator.serviceWorker.getRegistrations();
+          await Promise.all(regs.map(r=>r.unregister()));
+          add('Service Worker reiniciado: '+regs.length);
+        }
+        add('Abriendo versión nueva...');
+        setTimeout(()=>location.replace('./index.html?v=2.4.2&reset='+Date.now()),600);
+      }catch(e){
+        add('Error: '+e.message);
+      }
+    }
+    repair();
+  </script>
+</body>
+</html>

@@ -1,31 +1,22 @@
-# Agenda Policial v2.4.1
+# Agenda Policial v2.4.4 - Saneamiento de paquete, horario y uniformes
 
-Versión correctiva de auditoría general.
+Esta versión reduce la cantidad de archivos para evitar el bloqueo de subida cuando el paquete supera 100 archivos.
 
-## Cambios principales
+## Cambios clave
 
-- Corrección del sistema de actualización desde GitHub Pages.
-- Service Worker con nueva caché `agenda-policial-v2.4.1`.
-- `version.json`, `app.js`, `styles.css` e `index.html` se consultan por red primero para evitar quedarse en versiones antiguas.
-- Botón **Buscar actualización desde GitHub** más confiable.
-- Código de activación oculto.
-- Conservación de datos locales durante actualización.
-- Interfaz más pulida, institucional y menos plana.
-- Bloc de notas corregido: los botones ya no quedan encima del texto.
-- Auditoría de biblioteca, reglamentos e imágenes de uniformes.
+- Paquete reducido a menos de 90 archivos.
+- Horario académico prearmado y editable, con campo visible de docente/instructor por casillero.
+- Se conserva imagen de referencia del horario.
+- Reglamento de Uniformes usa bloques visuales consolidados por artículo, no páginas sueltas masivas.
+- Botón visible: Ver documento original PDF.
+- Se conserva reset.html para reparar caché bloqueado.
 
-## Publicación
+## Instalación
 
-1. Descomprimir el ZIP.
-2. Subir/reemplazar los archivos en el repositorio `Poli.Agenda_pro`.
-3. Confirmar el commit.
-4. Esperar GitHub Pages.
-5. Abrir la app.
-6. Entrar a Configuración → **Buscar actualización desde GitHub**.
-7. Si aparece aviso, pulsar **Actualizar**.
-8. Cerrar y volver a abrir la app.
+Subir todos los archivos del ZIP al repositorio GitHub Pages. Luego abrir:
 
-## Importante
+`index.html?v=2.4.4`
 
-No borrar la carpeta `assets/pages` si existe en el repositorio y contiene material visual adicional. Esta versión no debe borrar IndexedDB ni localStorage.
+Si sigue una versión anterior, abrir:
 
+`reset.html`

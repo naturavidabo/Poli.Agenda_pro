@@ -983,7 +983,9 @@
         "03 B tropical",
         "3B manga corta"
       ],
-      "imagenes_bloque": [],
+      "imagenes_bloque": [
+        "assets/uniformes/bloques/art-44-bloque.jpg"
+      ],
       "regla_visual": "Imágenes extraídas por bloque del artículo: desde el inicio del artículo hasta antes del siguiente artículo."
     },
     {

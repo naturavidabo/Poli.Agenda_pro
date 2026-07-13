@@ -1,1 +1,12 @@
-{"version":"2.4.1","name":"Agenda Policial","date":"2026-07-13","notes":["Auditoría general correctiva","Actualización desde GitHub con limpieza de caché","Interfaz visual refinada","Bloc de notas sin botones encima del texto","Conserva OCR de horario y correcciones de biblioteca"]}
+{
+  "version": "2.4.4",
+  "name": "Agenda Policial",
+  "date": "2026-07-13",
+  "notes": [
+    "Paquete saneado por debajo de 90 archivos para permitir subida por límite de plataforma",
+    "Se reemplazaron páginas sueltas de uniformes por bloques visuales consolidados por artículo",
+    "Horario académico mantiene tabla semanal prearmada, editable y con docente/instructor visible",
+    "Biblioteca conserva Ver documento original PDF visible en fichas normativas",
+    "Caché actualizado a agenda-policial-v2.4.4"
+  ]
+}
