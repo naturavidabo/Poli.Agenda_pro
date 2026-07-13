@@ -1,31 +1,19 @@
-# Agenda Policial v2.3.0
+# Agenda Policial v2.3.1
 
-Aplicación PWA offline para uso académico y policial.
+Actualización correctiva sobre v2.3.0.
 
 ## Cambios principales
 
-- Nombre definitivo: **Agenda Policial**.
-- Activación local con código `271261`.
-- Estructura simplificada: Inicio, Formaciones, Tareas, Horario y Biblioteca.
-- Bloc de notas / consignas separado, como app de notas simple.
-- Formaciones y servicios con mensaje inteligente integrado.
-- Tareas académicas con mensaje inteligente propio.
-- Pantalla Inicio prioriza, en modo académico: clase en curso, próxima clase, formaciones/servicios y tareas académicas.
-- Todo registro creado por el usuario es editable.
-- Horario permite subir imagen desde archivos/galería o tomar fotografía, ver la imagen actual y convertir texto pegado en bloques editables.
-- Kardex vacío con importación inteligente desde texto, conservando el texto original.
-- Reglamento de Uniformes muestra imágenes extraídas por bloque de artículo, no por cercanía visual.
-- Reglamento Sumario muestra numerales en listados legibles.
+- El código de activación ahora se escribe oculto.
+- La activación queda respaldada en almacenamiento local para no pedirse nuevamente después de actualizar.
+- Búsqueda de uniformes corregida para aceptar 3A, 3-A, 03 A, 3B, 3-B, 03 B Tropical y variantes similares.
+- La búsqueda de uniformes se ordena por relevancia, para que el uniforme exacto salga arriba.
+- El detalle del Reglamento de Uniformes vuelve a mostrar imágenes.
+- Se recuperó el botón **Ver PDF original** dentro de los artículos.
+- Se prioriza imagen principal + bloque visual del artículo.
 
-## Publicación en GitHub Pages
+## Publicación
 
-1. Descomprimir el ZIP.
-2. Reemplazar los archivos del repositorio actual.
-3. Conservar si existe la carpeta `assets/pages` del repositorio publicado.
-4. Confirmar commit en `main`.
-5. Esperar GitHub Pages.
-6. Abrir el enlace y limpiar caché si venía de una versión anterior.
+Reemplace los archivos del repositorio por los de este paquete. No borre los datos locales desde el navegador.
 
-## Advertencia
-
-La lectura automática de fotografías de horario depende del navegador/dispositivo. La app permite conservar la foto, pegar texto reconocido o cargar manualmente los bloques para asegurar edición y exactitud.
+Después de publicar en GitHub Pages, abra la app, entre a Configuración y use **Buscar actualización** o recargue dos veces para limpiar caché viejo.

@@ -1,23 +1,201 @@
-# Auditoría técnica – Agenda Policial v2.3.0
+# AUDITORÍA TÉCNICA – Agenda Policial v2.3.1
+
+Corrección puntual sobre v2.3.0 por reporte del usuario.
 
 ## Validaciones realizadas
 
-- Sintaxis de `app.js` comprobada.
-- Estructura de PWA actualizada a Agenda Policial.
-- Activación local configurada con código 271261.
-- Navegación simplificada en 5 pestañas: Inicio, Formaciones, Tareas, Horario, Biblioteca.
-- Bloc de notas separado, accesible desde icono superior y botón +.
-- Formaciones y tareas tienen editores y analizadores independientes.
-- Sumario formatea numerales como listado legible.
-- Uniformes muestran imágenes extraídas por bloque de artículo.
-- Manifiesto contiene iconos instalables.
-- Service Worker con caché nuevo `agenda-policial-v2.3.0`.
-- Respaldo/exportación JSON disponible.
-- Kardex sin datos reales precargados.
+- JavaScript validado con `node --check`.
+- Activación: campo protegido tipo password y persistencia adicional en `localStorage`.
+- Service Worker actualizado a caché `agenda-policial-v2.3.1`.
+- Búsqueda de uniformes verificada y reordenada por relevancia.
+- `3A`, `3-A` y `uniforme 3A` muestran primero el Artículo 41.
+- `3B` y `3-B` muestran primero el Artículo 43.
+- `03 B Tropical` muestra primero el Artículo 44.
+- Artículos de uniformes muestran imagen principal y bloque visual del artículo cuando existen.
+- En el detalle del artículo se restauró el botón **Ver PDF original** con salto a página cuando corresponde.
+- Se comprobó existencia de todas las imágenes referenciadas en `imagen_principal` e `imagenes_bloque`.
 
-## Puntos de verificación posterior a publicar
+## Resultado de búsqueda probado
 
-- Instalación real desde Chrome/Safari.
-- Lectura de horario desde foto según dispositivo.
-- Confirmar visualmente todos los bloques de uniformes contra el PDF oficial.
-- Comprobar actualización desde GitHub sobre la versión anterior.
+```json
+{
+  "3A": [
+    [
+      "Artículo 41",
+      "Uniforme N° 3-A",
+      340
+    ],
+    [
+      "Artículo 42",
+      "Uniforme N° 3-A (Tropical)",
+      305
+    ],
+    [
+      "Artículo 30",
+      "Botines Y Zapatos",
+      165
+    ],
+    [
+      "Artículo 27",
+      "Camisa Policial",
+      165
+    ],
+    [
+      "Artículo 23",
+      "Capa",
+      165
+    ]
+  ],
+  "3-A": [
+    [
+      "Artículo 41",
+      "Uniforme N° 3-A",
+      340
+    ],
+    [
+      "Artículo 42",
+      "Uniforme N° 3-A (Tropical)",
+      305
+    ],
+    [
+      "Artículo 30",
+      "Botines Y Zapatos",
+      165
+    ],
+    [
+      "Artículo 27",
+      "Camisa Policial",
+      165
+    ],
+    [
+      "Artículo 23",
+      "Capa",
+      165
+    ]
+  ],
+  "uniforme 3A": [
+    [
+      "Artículo 41",
+      "Uniforme N° 3-A",
+      215
+    ],
+    [
+      "Artículo 30",
+      "Botines Y Zapatos",
+      140
+    ],
+    [
+      "Artículo 27",
+      "Camisa Policial",
+      140
+    ],
+    [
+      "Artículo 23",
+      "Capa",
+      140
+    ],
+    [
+      "Artículo 21",
+      "Capote",
+      140
+    ]
+  ],
+  "03 A tropical": [
+    [
+      "Artículo 42",
+      "Uniforme N° 3-A (Tropical)",
+      145
+    ],
+    [
+      "Artículo 46",
+      "Uniforme N° 4 (Tropical)",
+      145
+    ],
+    [
+      "Artículo 35",
+      "Clasificación De Los Uniformes",
+      140
+    ]
+  ],
+  "3B": [
+    [
+      "Artículo 43",
+      "Uniforme N° 3-B",
+      315
+    ],
+    [
+      "Artículo 44",
+      "Uniforme N° 3-B (Tropical)",
+      305
+    ],
+    [
+      "Artículo 36",
+      "Uniforme N° 1-A Y 1-A (Táctico)",
+      170
+    ],
+    [
+      "Artículo 37",
+      "Uniforme N° 1-B",
+      170
+    ],
+    [
+      "Artículo 50",
+      "Uniforme N° 7 (De Sociedad)",
+      170
+    ]
+  ],
+  "3-B": [
+    [
+      "Artículo 43",
+      "Uniforme N° 3-B",
+      315
+    ],
+    [
+      "Artículo 44",
+      "Uniforme N° 3-B (Tropical)",
+      305
+    ],
+    [
+      "Artículo 36",
+      "Uniforme N° 1-A Y 1-A (Táctico)",
+      170
+    ],
+    [
+      "Artículo 37",
+      "Uniforme N° 1-B",
+      170
+    ],
+    [
+      "Artículo 50",
+      "Uniforme N° 7 (De Sociedad)",
+      170
+    ]
+  ],
+  "03 B Tropical": [
+    [
+      "Artículo 44",
+      "Uniforme N° 3-B (Tropical)",
+      215
+    ],
+    [
+      "Artículo 46",
+      "Uniforme N° 4 (Tropical)",
+      145
+    ],
+    [
+      "Artículo 35",
+      "Clasificación De Los Uniformes",
+      140
+    ],
+    [
+      "Artículo 14",
+      "Marbetes",
+      140
+    ]
+  ]
+}
+```
+
+## Alcance
+
+Esta versión corrige lo más urgente detectado en Biblioteca y Activación. La automatización avanzada del horario por imagen queda para la siguiente fase.
