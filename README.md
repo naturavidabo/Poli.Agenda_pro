@@ -1,22 +1,23 @@
-# Agenda Policial v2.4.4 - Saneamiento de paquete, horario y uniformes
+# Agenda Policial v2.4.5
 
-Esta versión reduce la cantidad de archivos para evitar el bloqueo de subida cuando el paquete supera 100 archivos.
+Versión correctiva enfocada en horario, inicio operativo, estética y alternativa al OCR cuando el navegador no logra reconocer una imagen.
 
-## Cambios clave
+## Cambios
 
-- Paquete reducido a menos de 90 archivos.
-- Horario académico prearmado y editable, con campo visible de docente/instructor por casillero.
-- Se conserva imagen de referencia del horario.
-- Reglamento de Uniformes usa bloques visuales consolidados por artículo, no páginas sueltas masivas.
-- Botón visible: Ver documento original PDF.
-- Se conserva reset.html para reparar caché bloqueado.
+- Barra inferior verde olivo con iconos SVG modernos.
+- Botón de bloc de notas y configuración reemplazados por iconos referenciales.
+- Inicio muestra formaciones/servicios, hora mística, clases próximas y tareas en agenda cronológica.
+- Horario académico con interruptor Día/Semana.
+- Vista diaria ampliada y cómoda para celular.
+- Vista semanal conserva la tabla completa editable.
+- Analizador de horario con preprocesamiento de imagen para OCR.
+- Botón “Usar plantilla base del horario” cuando el OCR del navegador falla.
+- Mejor extracción de fechas: mañana y días de semana.
 
 ## Instalación
 
-Subir todos los archivos del ZIP al repositorio GitHub Pages. Luego abrir:
+Subir todos los archivos al repositorio GitHub Pages. Luego abrir:
 
-`index.html?v=2.4.4`
+`index.html?v=2.4.5`
 
-Si sigue una versión anterior, abrir:
-
-`reset.html`
+Si sigue mostrando una versión vieja, abrir primero `reset.html`.

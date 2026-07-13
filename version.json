@@ -1,12 +1,12 @@
 {
-  "version": "2.4.4",
+  "version": "2.4.5",
   "name": "Agenda Policial",
   "date": "2026-07-13",
   "notes": [
-    "Paquete saneado por debajo de 90 archivos para permitir subida por límite de plataforma",
-    "Se reemplazaron páginas sueltas de uniformes por bloques visuales consolidados por artículo",
-    "Horario académico mantiene tabla semanal prearmada, editable y con docente/instructor visible",
-    "Biblioteca conserva Ver documento original PDF visible en fichas normativas",
-    "Caché actualizado a agenda-policial-v2.4.4"
+    "Pulido visual de inicio, barra inferior verde olivo e iconos SVG modernos",
+    "Horario con interruptor Día/Semana: vista diaria ampliada y vista semanal editable",
+    "Inicio operativo: muestra formaciones, hora mística, clases próximas y tareas en agenda cronológica",
+    "OCR mejorado con preprocesamiento de imagen y alternativa de plantilla base cuando el navegador no reconoce la foto",
+    "Correcciones de fechas para mañana/lunes y visualización de día con cálculo local"
   ]
 }
