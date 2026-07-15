@@ -1,12 +1,13 @@
 {
-  "version": "2.4.7",
+  "version": "2.4.8",
   "name": "Agenda Policial",
-  "date": "2026-07-13",
+  "date": "2026-07-14",
   "notes": [
-    "Corrección de fecha local del dispositivo para evitar salto domingo a martes por UTC",
-    "Inicio y cronología vuelven a calcular actividades desde la fecha local real",
-    "Biblioteca normativa abre cada documento con listado de artículos y búsqueda interna",
-    "Botón Ver documento original PDF habilitado para CPE, Ley 1178, decretos y códigos cuando existe PDF",
-    "Reglamento de Uniformes conserva bloques visuales y PDF original"
+    "Tareas académicas con materia desplegable tomada del horario activo",
+    "Botón Próxima clase y hora automática según la primera hora de la materia",
+    "Subtareas renombradas a Puntos de trabajo y mejor detección desde mensajes inteligentes",
+    "Inicio reordenado: actividad actual, próxima actividad, contador visible, alertas y cronología sin duplicados",
+    "Configuración saneada, panel de docentes/instructores e indicadores por color",
+    "Ajustes de interfaz para iPhone con safe-area y botones superiores más tocables"
   ]
 }

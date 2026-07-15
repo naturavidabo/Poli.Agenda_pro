@@ -1,28 +1,33 @@
-# Agenda Policial v2.4.7 - Fecha local y biblioteca normativa
+# Agenda Policial v2.4.8
 
-Versión correctiva enfocada en dos fallas detectadas en uso real:
+Versión de saneamiento académico, configuración e interfaz móvil.
 
-1. La pantalla de Inicio calculaba mal el día cuando el dispositivo estaba en Bolivia y la hora local aún era domingo, pero UTC ya era lunes. Se corrigió el cálculo para usar fecha local del dispositivo, no UTC.
-2. Los documentos normativos distintos al Reglamento de Uniformes no abrían correctamente. Ahora cada documento tiene vista propia, listado de artículos, búsqueda interna y botón visible para abrir el PDF original cuando el paquete lo incluye.
+## Cambios principales
+
+- Tareas académicas con materia seleccionable desde el horario activo.
+- Botón **Próxima clase** para calcular la fecha de entrega en base a la próxima aparición de la materia.
+- Se elimina la hora como campo manual obligatorio; la app calcula la primera hora de la materia en la fecha seleccionada.
+- “Subtareas” cambia a **Puntos de trabajo**.
+- Mensaje inteligente de tareas detecta numeraciones, guiones y requisitos como puntos de trabajo.
+- Inicio muestra actividad actual, próxima actividad, contador visible, alertas y cronología sin repetir la misma actividad.
+- Formaciones pasadas quedan marcadas como actividad concluida.
+- Configuración saneada: se retiran datos no útiles de instalación, activación y conexión de la vista principal.
+- Panel nuevo de **Docentes / instructores** con indicador por color.
+- Mejoras para iPhone: safe-area superior, botones superiores más grandes y separación de la barra del sistema.
+- Herramientas técnicas quedan en sección avanzada.
 
 ## Publicación
 
-Suba todo el contenido del ZIP al repositorio de GitHub Pages y abra:
+Subir todo el contenido del ZIP al repositorio de GitHub Pages.
 
-`index.html?v=2.4.7`
+Abrir:
 
-Si el navegador sigue mostrando una versión anterior, abra primero:
+```text
+index.html?v=2.4.8
+```
 
-`reset.html`
+Si el navegador queda atrapado en versión vieja:
 
-Luego vuelva a abrir `index.html?v=2.4.7`.
-
-## Verificación rápida
-
-- Configuración debe mostrar v2.4.7.
-- En domingo por la noche, la próxima actividad académica debe ser lunes, no martes.
-- La Hora Mística del lunes debe aparecer como actividad real del horario.
-- Biblioteca → Código Penal debe mostrar listado de artículos y botón PDF.
-- Biblioteca → Código de Procedimiento Penal debe mostrar listado de artículos y botón PDF.
-- Biblioteca → Ley 1178, D.S. 23215, D.S. 23318-A, D.S. 26237, D.S. 29820, D.S. 29536 y CPE deben abrir su vista documental.
-- Reglamento de Uniformes conserva bloques visuales y PDF original.
+```text
+reset.html
+```

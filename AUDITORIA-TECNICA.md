@@ -1,32 +1,48 @@
-# Auditoría técnica - Agenda Policial v2.4.7
+# Auditoría técnica — Agenda Policial v2.4.8
 
-## Correcciones aplicadas
+## Verificación
 
-### Fecha local del dispositivo
+- `app.js`: sintaxis JavaScript verificada con `node --check`.
+- `sw.js`: sintaxis JavaScript verificada con `node --check`.
+- `version.json`: actualizado a 2.4.8.
+- Service Worker: caché actualizado a `agenda-policial-v2.4.8`.
+- Total de archivos: por debajo del límite operativo indicado.
 
-Se reemplazó el uso de `new Date().toISOString().slice(0,10)` para la fecha operativa de la agenda. Esa expresión trabaja en UTC y provocaba que, en Bolivia, durante la noche del domingo la app creyera que ya era lunes. Como luego la hora seguía siendo domingo por la zona local, se marcaban las actividades del lunes como finalizadas y saltaba indebidamente al martes.
+## Correcciones auditadas
 
-Ahora `todayISO()` devuelve fecha local con año, mes y día del dispositivo.
+### Tareas académicas
 
-### Biblioteca normativa
+- Campo Materia cambia a selector `<select>` basado en materias únicas del horario activo.
+- Se agrega botón Próxima clase.
+- La hora de entrega se calcula automáticamente con la primera hora de la materia en la fecha elegida.
+- Subtareas se renombra a Puntos de trabajo.
+- Parser de mensaje inteligente separa numeraciones, guiones y requisitos.
 
-Se corrigió `openDoc()` para que cada documento abra su propia vista estructurada, en vez de lanzar una búsqueda genérica de “artículo”.
+### Inicio
 
-Se agregó:
+- Se separa actividad actual de próxima actividad.
+- Se añade contador visible en cápsula destacada.
+- Se evita duplicar la actividad principal en la cronología.
+- Formaciones pasadas se muestran como concluidas.
 
-- vista de documento;
-- listado de artículos;
-- búsqueda interna por documento;
-- botón visible “Ver documento original PDF” para documentos con PDF;
-- enlace PDF desde cada artículo normativo usando `art.fuente_pdf` y el catálogo local.
+### Configuración
 
-## Pruebas estáticas realizadas
+- Se retiran de la vista principal indicadores no interactivos: conexión, activación e instalación.
+- Botones de actualización se ordenan como 1 y 2.
+- Acciones peligrosas quedan diferenciadas con advertencia.
+- Herramientas técnicas quedan en bloque avanzado.
 
-- `node --check app.js`: correcto.
-- `node --check sw.js`: correcto.
-- `version.json`: JSON válido.
-- Conteo del paquete: por debajo del límite solicitado.
+### Docentes / instructores
 
-## Pendiente funcional
+- Panel generado desde docentes registrados en el horario activo.
+- Clasificación: Tranquilo, Normal, Estricto, Muy estricto, Cuidado especial.
+- Indicador visual discreto por color.
 
-El OCR de horario sigue dependiendo de la capacidad del navegador y Tesseract.js. Esta versión no cambia el motor OCR; corrige fecha/agenda y biblioteca normativa.
+### iPhone
+
+- Se aplica `env(safe-area-inset-top)` y `env(safe-area-inset-bottom)`.
+- Botones superiores más grandes para evitar conflicto con la barra de estado.
+
+## Observación
+
+La revisión fina de imágenes del Reglamento de Uniformes se mantiene como control de baja incidencia para una versión posterior si se detecta un artículo puntual con recorte incompleto.
