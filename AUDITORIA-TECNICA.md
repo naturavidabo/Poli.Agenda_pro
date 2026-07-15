@@ -1,48 +1,48 @@
-# Auditoría técnica — Agenda Policial v2.4.8
+# Auditoría técnica - Agenda Policial v2.4.9
 
-## Verificación
+## Correcciones aplicadas
 
-- `app.js`: sintaxis JavaScript verificada con `node --check`.
-- `sw.js`: sintaxis JavaScript verificada con `node --check`.
-- `version.json`: actualizado a 2.4.8.
-- Service Worker: caché actualizado a `agenda-policial-v2.4.8`.
-- Total de archivos: por debajo del límite operativo indicado.
+### 1. Reloj de actividad actual
+- Se corrigió el contador de la tarjeta **Actividad actual**.
+- Antes calculaba el tiempo contra la hora de inicio de la clase; por eso, durante una clase en curso, podía mostrar **Finalizado**.
+- Ahora, si la actividad está en curso, calcula contra la hora de finalización y muestra:
+  - `Finaliza en X min`
+  - `Finaliza en X h Y min`
+- La próxima actividad mantiene el cálculo contra la hora de inicio: `Faltan X min`.
 
-## Correcciones auditadas
+### 2. Fecha y hora local
+- Se mantiene el cálculo con fecha local del dispositivo.
+- La agenda recurrente semanal se ordena por día local y hora local.
+- Se revisaron las funciones de actividad actual, próxima actividad y cronología.
 
-### Tareas académicas
+### 3. Biblioteca normativa y PDFs
+- Se incorporó el PDF del **Reglamento de la Comisión Sumaria ESP-UNIPOL** como archivo local.
+- El documento Sumario ahora muestra botón **Ver documento original PDF**.
+- Se revisó el catálogo completo de PDFs.
 
-- Campo Materia cambia a selector `<select>` basado en materias únicas del horario activo.
-- Se agrega botón Próxima clase.
-- La hora de entrega se calcula automáticamente con la primera hora de la materia en la fecha elegida.
-- Subtareas se renombra a Puntos de trabajo.
-- Parser de mensaje inteligente separa numeraciones, guiones y requisitos.
+## Verificación de PDFs
 
-### Inicio
+| Documento | PDF | Verificación |
+|---|---|---|
+| Reglamento de Uniformes | assets/reglamento-uniformes-2021.pdf | OK |
+| Reglamento Comisión Sumaria | assets/reglamento-comision-sumaria-unipol.pdf | OK |
+| Constitución Política del Estado | assets/cpe.pdf | OK |
+| Ley 1178 / D.S. 23215 | assets/ley-1178-ds-23215.pdf | OK |
+| D.S. 23318-A | assets/ds-23318-a.pdf | OK |
+| D.S. 26237 | assets/ds-26237.pdf | OK |
+| D.S. 29820 | assets/ds-29820.pdf | OK |
+| D.S. 29536 | assets/ds-29536.pdf | OK |
+| Código Penal / Procedimiento Penal | assets/codigo-penal-procedimiento-penal.pdf | OK |
 
-- Se separa actividad actual de próxima actividad.
-- Se añade contador visible en cápsula destacada.
-- Se evita duplicar la actividad principal en la cronología.
-- Formaciones pasadas se muestran como concluidas.
+## Pruebas realizadas
 
-### Configuración
-
-- Se retiran de la vista principal indicadores no interactivos: conexión, activación e instalación.
-- Botones de actualización se ordenan como 1 y 2.
-- Acciones peligrosas quedan diferenciadas con advertencia.
-- Herramientas técnicas quedan en bloque avanzado.
-
-### Docentes / instructores
-
-- Panel generado desde docentes registrados en el horario activo.
-- Clasificación: Tranquilo, Normal, Estricto, Muy estricto, Cuidado especial.
-- Indicador visual discreto por color.
-
-### iPhone
-
-- Se aplica `env(safe-area-inset-top)` y `env(safe-area-inset-bottom)`.
-- Botones superiores más grandes para evitar conflicto con la barra de estado.
+- `node --check app.js`: OK.
+- `node --check sw.js`: OK.
+- `version.json`: actualizado a 2.4.9.
+- Service Worker: caché actualizado a `agenda-policial-v2.4.9`.
+- PDF Sumario renderizado: 11 páginas, primera página verificada visualmente.
+- Catálogo PDF: rutas existentes y archivos no vacíos.
 
 ## Observación
 
-La revisión fina de imágenes del Reglamento de Uniformes se mantiene como control de baja incidencia para una versión posterior si se detecta un artículo puntual con recorte incompleto.
+Para que el celular deje de mostrar una versión anterior, después de subir esta versión al repositorio se recomienda abrir `reset.html` una vez y luego ingresar con `index.html?v=2.4.9`.

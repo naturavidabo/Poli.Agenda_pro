@@ -20,7 +20,9 @@
       "abreviatura": "Comisión Sumaria",
       "categoria": "Académica y disciplinaria",
       "archivo": "data/reglamento-sumario-unipol.json",
-      "icono": "scale"
+      "icono": "scale",
+      "pdf": "assets/reglamento-comision-sumaria-unipol.pdf",
+      "descripcion": "Reglamento disciplinario académico de la Comisión Sumaria ESP-UNIPOL, con consulta estructurada y PDF original incorporado."
     },
     {
       "id": "cpe",

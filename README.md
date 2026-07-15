@@ -1,33 +1,41 @@
-# Agenda Policial v2.4.8
+# Agenda Policial v2.4.9
 
-Versión de saneamiento académico, configuración e interfaz móvil.
+Versión correctiva enfocada en dos puntos:
 
-## Cambios principales
+1. Reloj/contador de la actividad actual.
+2. Apertura de PDFs de la biblioteca normativa, especialmente el Reglamento de la Comisión Sumaria.
 
-- Tareas académicas con materia seleccionable desde el horario activo.
-- Botón **Próxima clase** para calcular la fecha de entrega en base a la próxima aparición de la materia.
-- Se elimina la hora como campo manual obligatorio; la app calcula la primera hora de la materia en la fecha seleccionada.
-- “Subtareas” cambia a **Puntos de trabajo**.
-- Mensaje inteligente de tareas detecta numeraciones, guiones y requisitos como puntos de trabajo.
-- Inicio muestra actividad actual, próxima actividad, contador visible, alertas y cronología sin repetir la misma actividad.
-- Formaciones pasadas quedan marcadas como actividad concluida.
-- Configuración saneada: se retiran datos no útiles de instalación, activación y conexión de la vista principal.
-- Panel nuevo de **Docentes / instructores** con indicador por color.
-- Mejoras para iPhone: safe-area superior, botones superiores más grandes y separación de la barra del sistema.
-- Herramientas técnicas quedan en sección avanzada.
+## Correcciones principales
 
-## Publicación
+- La tarjeta **Actividad actual** ya no muestra `Finalizado` mientras la clase sigue en curso.
+- Durante una actividad actual muestra el tiempo restante hasta finalizar.
+- La próxima actividad sigue mostrando el tiempo que falta para iniciar.
+- Se incorporó el PDF del Reglamento de la Comisión Sumaria ESP-UNIPOL.
+- Se revisaron las rutas de los demás PDFs de la biblioteca.
+- Caché actualizado a v2.4.9.
 
-Subir todo el contenido del ZIP al repositorio de GitHub Pages.
+## Instalación / actualización
+
+Subir todo el contenido del ZIP al repositorio.
 
 Abrir:
 
 ```text
-index.html?v=2.4.8
+index.html?v=2.4.9
 ```
 
-Si el navegador queda atrapado en versión vieja:
+Si aparece una versión anterior:
 
 ```text
 reset.html
 ```
+
+Luego volver a abrir:
+
+```text
+index.html?v=2.4.9
+```
+
+## Respaldo
+
+Antes de actualizar una instalación con datos reales, se recomienda usar la opción de respaldo JSON desde Configuración.

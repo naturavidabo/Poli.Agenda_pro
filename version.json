@@ -1,13 +1,12 @@
 {
-  "version": "2.4.8",
+  "version": "2.4.9",
   "name": "Agenda Policial",
-  "date": "2026-07-14",
+  "date": "2026-07-15",
   "notes": [
-    "Tareas académicas con materia desplegable tomada del horario activo",
-    "Botón Próxima clase y hora automática según la primera hora de la materia",
-    "Subtareas renombradas a Puntos de trabajo y mejor detección desde mensajes inteligentes",
-    "Inicio reordenado: actividad actual, próxima actividad, contador visible, alertas y cronología sin duplicados",
-    "Configuración saneada, panel de docentes/instructores e indicadores por color",
-    "Ajustes de interfaz para iPhone con safe-area y botones superiores más tocables"
+    "Corrección del contador: actividad actual ahora muestra tiempo hasta finalizar, no hasta iniciar",
+    "Fecha y hora local verificadas para ordenar actividad actual, próxima actividad y cronología",
+    "PDF del Reglamento de la Comisión Sumaria ESP-UNIPOL incorporado y visible",
+    "Catálogo de biblioteca revisado con rutas PDF existentes para CPE, SAFCO, decretos, Código Penal, CPP, Sumario y Uniformes",
+    "Service Worker actualizado a cache 2.4.9 para forzar reemplazo de versión anterior"
   ]
 }

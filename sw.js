@@ -1,5 +1,5 @@
-const CACHE='agenda-policial-v2.4.8';
-const CORE=['./','./index.html','./styles.css','./app.js','./manifest.webmanifest','./version.json','./icons/icon-192.png','./icons/icon-512.png','./icons/icon-maskable-512.png','./assets/escudo-policia.png','./data/reglamento-uniformes.json','./data/reglamento-sumario-unipol.json','./data/horario-base.json','./data/biblioteca-catalogo.json'];
+const CACHE='agenda-policial-v2.4.9';
+const CORE=['./','./index.html','./styles.css','./app.js','./manifest.webmanifest','./version.json','./icons/icon-192.png','./icons/icon-512.png','./icons/icon-maskable-512.png','./assets/escudo-policia.png','./assets/reglamento-comision-sumaria-unipol.pdf','./data/reglamento-uniformes.json','./data/reglamento-sumario-unipol.json','./data/horario-base.json','./data/biblioteca-catalogo.json'];
 
 self.addEventListener('install',event=>{
   event.waitUntil((async()=>{
