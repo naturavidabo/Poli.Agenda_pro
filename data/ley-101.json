@@ -1,0 +1,840 @@
+{
+  "metadatos": {
+    "id": "ley101",
+    "titulo": "Ley N.º 101 — Régimen Disciplinario de la Policía Boliviana",
+    "abreviatura": "Ley 101",
+    "categoria": "Policial y disciplinaria",
+    "articulos_totales": 103,
+    "fuente": "Ministerio de Gobierno",
+    "fuente_url": "https://web.mingobierno.gob.bo/wp-content/uploads/2025/09/LEY-101-DE-REGIMEN-DISCIPLINARIO-DE-LA-POLICIA-BOLIVIANA.pdf",
+    "pdf": "assets/ley-101.pdf",
+    "fecha_integracion": "2026-07-25",
+    "nota": "Texto estructurado extraído del PDF institucional incorporado para búsqueda offline. Consulte el PDF original para verificación formal."
+  },
+  "articulos": [
+    {
+      "id": "ley101-art-1",
+      "numero": "Artículo 1",
+      "titulo": "OBJETO",
+      "texto": "La presente Ley tiene por objeto regular el Régimen\ndisciplinario de la Policía Boliviana, estableciendo las faltas y sanciones, las autoridades\ncompetentes y los respectivos procedimientos, garantizando un proceso disciplinario eficiente,\neficaz y respetuoso de los derechos humanos, en resguardo de la dignidad de las servidoras y\nlos servidores públicos policiales.",
+      "documento": "Ley N.º 101 — Régimen Disciplinario de la Policía Boliviana",
+      "fuente_pdf": "assets/ley-101.pdf"
+    },
+    {
+      "id": "ley101-art-2",
+      "numero": "Artículo 2",
+      "titulo": "FINALIDAD",
+      "texto": "La finalidad de la presente Ley es cautelar, proteger y\nresguardar la ética, la disciplina, el servicio público policial, los intereses e imagen institucional\nde la Policía Boliviana.",
+      "documento": "Ley N.º 101 — Régimen Disciplinario de la Policía Boliviana",
+      "fuente_pdf": "assets/ley-101.pdf"
+    },
+    {
+      "id": "ley101-art-3",
+      "numero": "Artículo 3",
+      "titulo": "PRINCIPIOS",
+      "texto": "La función pública policial deberá sujetarse a los\nsiguientes principios:\n\nHONOR. Cualidad moral de la policía o el policía expresada en la lealtad y\ncompromiso con la Patria y con la Institución Policial, que lo impele a defender los\nintereses del Estado y de la Institución Policial, en el marco de la misión\nconstitucional que se le tiene asignada al servicio de la sociedad y que orienta su\naccionar para resguardar su prestigio.\n\nÉTICA. Cualidad moral de la policía o el policía expresada en actos que denotan la\npráctica de valores humanos y sociales así como la observancia de los principios de\nservicio a la sociedad, a la institución y al Estado Plurinacional de Bolivia.\n\nGaceta Oficial del Estado Plurinacional de Bolivia\nDerechos Reservados ®2010 - www.gacetaoficialdebolivia.gob.bo\n\nDEBER DE OBEDIENCIA. Sujeción o sumisión debida a una autoridad\njerárquicamente superior que imparte órdenes enmarcadas en la ley y conforme a sus\natribuciones conferidas por ella, que surge de la estructura vertical de la institución\nque se ejerce bajo mando único.\n\nDISCIPLINA. Conducta de la policía o el policía que cumple con las reglas de orden\njerárquico y de subordinación, respetando la estructura institucional, en observancia\nde las leyes y reglamentos que rigen a la Policía Boliviana.\n\nAUTORIDAD. Facultad para ejercer el mando por una autoridad jerárquicamente\nsuperior, establecida legalmente y conforme a sus atribuciones respecto a sus\nsubalternos, en base a la obediencia que le deben y el respeto mutuo, constituyendo la\nbase para el mantenimiento de la disciplina en la institución.\n\nJERARQUÍA POLICIAL. Autoridad de una policía o un policía, determinada por el\ngrado alcanzado o por el cargo que desempeña legalmente.\n\nLa jerarquía que proviene del grado es permanente y la jerarquía que proviene del\ncargo o función, es transitoria y dura mientras se ejerza el cargo o función asignada.\n\nCOOPERACIÓN. Acción coordinada y mancomunada de los miembros de la\nInstitución, destinada a optimizar el cumplimiento de su misión.\n\nLEALTAD. Orientación de la conducta de la policía o el policía que refleja la\nfidelidad y la nobleza que se debe a la Patria, a la Institución y a las camaradas y los\ncamaradas.\n\nSOLIDARIDAD. Orientación de la conducta que contribuye al espíritu del logro de\nla misión institucional.\n\nRESPONSABILIDAD. Principio por el que todas y todos los policías deben\nresponder por los actos realizados en el ejercicio de sus funciones o en el\ncumplimiento del deber. La profesión de Policía exige un alto grado de sacrificio, celo\nfuncional y consagración en el cumplimiento del deber. La responsabilidad no se\ndelega, se asume.\n\nSECRETO PROFESIONAL. Deber de guardar respecto a terceros, estricta\nconfidencialidad y reserva sobre los hechos e informaciones que fueran de su\nconocimiento en el ejercicio de la función policial, excepto cuando se proporcione por\nel conducto y jerarquía regular o cuando medie orden de autoridad.",
+      "documento": "Ley N.º 101 — Régimen Disciplinario de la Policía Boliviana",
+      "fuente_pdf": "assets/ley-101.pdf"
+    },
+    {
+      "id": "ley101-art-4",
+      "numero": "Artículo 4",
+      "titulo": "ÁMBITO DE APLICACIÓN",
+      "texto": "La presente Ley se aplica a todas y\ntodos los servidores públicos del servicio activo de la Policía Boliviana, sin distinción de\ngrados o jerarquías, y a las policías y los policías recién egresados de las Unidades Académicas\nde Pregrado de la Universidad Policial (UNIPOL) o sus similares en el exterior, que aún no\nhubieran sido incorporados al escalafón.\n\nTÍTULO II\n\nGaceta Oficial del Estado Plurinacional de Bolivia\nDerechos Reservados ®2010 - www.gacetaoficialdebolivia.gob.bo\n\nFALTAS Y SANCIONES\n\nCAPÍTULO I\nDISPOSICIONES GENERALES",
+      "documento": "Ley N.º 101 — Régimen Disciplinario de la Policía Boliviana",
+      "fuente_pdf": "assets/ley-101.pdf"
+    },
+    {
+      "id": "ley101-art-5",
+      "numero": "Artículo 5",
+      "titulo": "RESPONSABILIDAD",
+      "texto": "I. Toda servidora y servidor público policial responderá de los resultados emergentes del\ndesempeño de sus funciones, deberes y atribuciones, que podrá ser administrativa,\nejecutiva, civil y penal.\n\nII. Las acciones y hechos que constituyen posibles delitos, son de jurisdicción y\ncompetencia de la justicia ordinaria; sin perjuicio de la acción disciplinaria cuando los\nhechos también constituyan falta disciplinaria.",
+      "documento": "Ley N.º 101 — Régimen Disciplinario de la Policía Boliviana",
+      "fuente_pdf": "assets/ley-101.pdf"
+    },
+    {
+      "id": "ley101-art-6",
+      "numero": "Artículo 6",
+      "titulo": "FALTA DISCIPLINARIA",
+      "texto": "Se considera falta disciplinaria a toda\nacción u omisión que en el ejercicio de sus funciones incurran las servidoras y los servidores\npúblicos policiales, que estén previstas y sancionadas por la presente Ley. No constituyen faltas\ndisciplinarias las que no cumplan este requisito.",
+      "documento": "Ley N.º 101 — Régimen Disciplinario de la Policía Boliviana",
+      "fuente_pdf": "assets/ley-101.pdf"
+    },
+    {
+      "id": "ley101-art-7",
+      "numero": "Artículo 7",
+      "titulo": "CLASIFICACIÓN",
+      "texto": "I. Las faltas disciplinarias se clasifican en:\n\na) Faltas Leves, y\n\nb) Faltas Graves\n\nII. Las Faltas Leves y Graves se sub clasifican, según la gravedad de las mismas.",
+      "documento": "Ley N.º 101 — Régimen Disciplinario de la Policía Boliviana",
+      "fuente_pdf": "assets/ley-101.pdf"
+    },
+    {
+      "id": "ley101-art-8",
+      "numero": "Artículo 8",
+      "titulo": "TIPOS DE SANCIONES",
+      "texto": "Las sanciones podrán ser las siguientes:\n1. Llamada de Atención Verbal. Es la reprensión verbal del superior jerárquico\nhacia el subalterno por la comisión de una falta leve.\n\n2. Llamada de Atención Escrita. Es la reprensión mediante memorando del\nsuperior jerárquico hacia el subalterno por la comisión de una falta leve.\n\n3. Arresto. Es la permanencia obligada y sin salida del recinto policial de la\nservidora o servidor público policial por la comisión de una falta leve.\n\n4. Trabajo en Fines de Semana y Feriados. Es la prestación de trabajo en días de\ndescanso y feriados, de la servidora o servidor público policial por la comisión\nde una falta leve, en su lugar de trabajo.\n\n5. Retiro Temporal con pérdida de antigüedad y sin goce de haberes. Es la\nsuspensión temporal del ejercicio de la función pública policial, sin cómputo de\nantigüedad para fines de ascenso sin goce de haberes, que se impone por la\n\nGaceta Oficial del Estado Plurinacional de Bolivia\nDerechos Reservados ®2010 - www.gacetaoficialdebolivia.gob.bo\n\ncomisión de faltas graves señaladas en los Artículos 12 y 13 de la presente Ley.\n\n6. Retiro o Baja Definitiva de la Institución sin derecho a reincorporación. Es\nla desvinculación final del ejercicio de la función pública policial con pérdida\nde grado, que se impone por la comisión de las faltas graves señalado en el\nartículo 14 de la presente Ley.\n\nCAPÍTULO II\nFALTAS LEVES",
+      "documento": "Ley N.º 101 — Régimen Disciplinario de la Policía Boliviana",
+      "fuente_pdf": "assets/ley-101.pdf"
+    },
+    {
+      "id": "ley101-art-9",
+      "numero": "Artículo 9",
+      "titulo": "FALTAS LEVES CON LLAMADA DE ATENCIÓN VERBAL",
+      "texto": "Las Faltas Leves que dan lugar a la sanción de Llamada de Atención Verbal impuesta por el\ninmediato superior, que deberá ser puesta en conocimiento de la Dirección de Personal o de\nRecursos Humanos, son:\n\n1. La negligencia en el aseo personal, descuido en la limpieza del vestuario o uso\nincorrecto del uniforme.\n\n2. No presentarse con el uniforme reglamentario previsto para los diferentes actos\ndel servicio.\n\n3. Omitir el saludo, no responder o hacerlo con desaire, vistiendo uniforme.\n\n4. No utilizar el marbete de identificación personal en el uniforme.\n\n5. Ingresar a otras Unidades y Organismos Operativos sin identificarse ante la\nOficial o el Oficial o Superior de Servicio Interno.\n\n6. Omitir el parte de cortesía al superior.\n\n7. No observar el horario establecido para el cumplimiento de sus funciones.\n\n8. Dejación momentánea e injustificada de las funciones públicas policiales.\n\n9. No guardar el respeto y consideración entre miembros de la institución.\n\n10. Demostrar falta de cortesía con el público.\n\n11. No identificarse a requerimiento del superior, estando de uniforme o de\nservicio.",
+      "documento": "Ley N.º 101 — Régimen Disciplinario de la Policía Boliviana",
+      "fuente_pdf": "assets/ley-101.pdf"
+    },
+    {
+      "id": "ley101-art-10",
+      "numero": "Artículo 10",
+      "titulo": "Ley 101",
+      "texto": "(FALTAS LEVES CON LLAMADA DE ATENCIÓN ESCRITA Y\nARRESTO DE UNO A TRES DIAS). Las Faltas Leves que dan lugar a la sanción de Llamada\nde Atención Escrita, Arresto de uno a tres días o su equivalente en Trabajo en Fines de Semana\ny Feriados, ejecutada por la o el Superior de la Unidad con copia del memorando a la Dirección\nNacional de Personal o de Recursos Humanos, previo informe de la servidora o el servidor\npúblico policial que presenció el hecho, son:\n1. La reincidencia de una de las faltas previstas en el Artículo anterior.\n\nGaceta Oficial del Estado Plurinacional de Bolivia\nDerechos Reservados ®2010 - www.gacetaoficialdebolivia.gob.bo\n\n2. Demorar deliberadamente la tramitación de solicitudes elevadas\nreglamentariamente.\n\n3. Negligencia en el desempeño de las funciones asignadas.\n\n4. Fingir enfermedad u otros problemas, para rehuir sus obligaciones.\n\n5. Encubrir Faltas Leves.\n\n6. No prestar apoyo o cooperación a los miembros de la Institución en labores\ninherentes a la función policial.\n\n7. Desconocer la autoridad de la servidora o servidor público policial, faltándole al\nrespeto en actos del servicio.\n\n8. Efectuar llamada de atención a una servidora o servidor público policial, en\nforma despectiva.\n\n9. Dirigirse a la o el superior en forma agresiva o despectiva, demostrando mala\nconducta o insubordinación.\n\n10. No presentarse a las citaciones como testigo en un proceso disciplinario interno,\nsin causa justificada.\n\n11. Omitir la elaboración de informes policiales, en el día de su actuación o de su\nrequerimiento.\n\n12. Inobservancia del conducto regular al elevar solicitudes.\n\n13. No cumplir instructivas administrativas internas de cada unidad.\n\n14. Exhibirse en manifestaciones indecorosas en forma pública, estando de\nuniforme.\n\n15. Presentarse al cumplimiento de sus funciones con aliento alcohólico.\n\n16. Hacer uso de su descanso, sin el relevo correspondiente o sin autorización\nsuperior.",
+      "documento": "Ley N.º 101 — Régimen Disciplinario de la Policía Boliviana",
+      "fuente_pdf": "assets/ley-101.pdf"
+    },
+    {
+      "id": "ley101-art-11",
+      "numero": "Artículo 11",
+      "titulo": "Ley 101",
+      "texto": "(FALTAS LEVES CON LLAMADA DE ATENCIÓN ESCRITA Y\nARRESTO DE 4 A 10 DÍAS). Las Faltas Leves que dan lugar a la sanción de Llamada de\nAtención Escrita, Arresto de cuatro a diez días o su equivalente en Trabajo en Fines de Semana\ny Feriados, impuesta por el superior de la unidad o por el Comandante Departamental, con\ncopia del memorando a la Dirección Nacional de Personal o a Recursos Humanos, previo\ninforme de la servidora o servidor público policial que presenció el hecho, son:\n\nGaceta Oficial del Estado Plurinacional de Bolivia\nDerechos Reservados ®2010 - www.gacetaoficialdebolivia.gob.bo\n\n1. La reincidencia de una de las faltas previstas en el Artículo anterior o la\nreincidencia de las faltas previstas en el Artículo 9.\n\n2. No observar las normas de seguridad en la tenencia, transporte, portación y\nmanipulación de armas de fuego.\n\n3. Utilizar marbetes de identificación que correspondan a otra servidora u otro\nservidor público policial, dentro del recinto policial.\n\n4. Incumplimiento a instrucciones superiores, salvo que sean contrarias a las\nnormas vigentes o que hubieran sido objeto de representación.\n\n5. Utilizar a la servidora o servidor público policial en actividades ajenas al\nservicio.\n\n6. Faltar a la verdad al elevar informes o partes verbales o escritos, siempre que no\nhubieran trascendido el ámbito interno institucional.\n\n7. Inobservancia del deber de cuidado o pérdida de las prendas, equipo y\nmateriales propios de la institución, que se encuentren bajo su tenencia, guarda\no responsabilidad, sin perjuicio de la restitución cuando corresponda.\n\n8. Exhibirse públicamente de uniforme en actos que menoscaben el prestigio\ninstitucional.\n\n9. No realizar la acción directa conforme a procedimiento.\n\n10. Interferir en la acción directa o el desarrollo de las investigaciones que efectúa\nel personal asignado o responsable de ella.\n\n11. Modificar, desautorizar o suspender arbitrariamente la sanción impuesta por\notro superior.\n\n12. Inasistencia o abandono injustificado de sus funciones por un día con sanción\nde cuatro a cinco días de arresto.\n\n13. Inasistencia o abandono injustificado de sus funciones, por dos días continuos\ncon sanción de cinco a diez días de arresto o su equivalente en trabajo en fines\nde semana y feriados.\n\n14. Contravenir disposiciones de Auto de Buen Gobierno.\n\n15. No cumplir la función policial, para dedicarse a actividades particulares,\nencontrándose de servicio.\n\n16. Presentar memoriales o solicitudes sin observar el respeto correspondiente que\nmerecen las autoridades institucionales.\n\n17. Inobservancia de los procedimientos en la custodia de los arrestados y\n\nGaceta Oficial del Estado Plurinacional de Bolivia\nDerechos Reservados ®2010 - www.gacetaoficialdebolivia.gob.bo\n\naprehendidos en recintos policiales.\n\n18. Negarse a prestar auxilio a las personas que lo soliciten, salvo causal justificada.\n\n19. No trasmitir oportunamente las órdenes superiores.\n\n20. No dar respuesta a los Requerimientos del Fiscal Policial en el tiempo señalado.\n\n21. Agredirse física o verbalmente entre miembros de la institución en\ncumplimiento de sus funciones.\n\n22. Pérdida o deterioro de correspondencia oficial.\n\nCAPÍTULO III\nFALTAS GRAVES",
+      "documento": "Ley N.º 101 — Régimen Disciplinario de la Policía Boliviana",
+      "fuente_pdf": "assets/ley-101.pdf"
+    },
+    {
+      "id": "ley101-art-12",
+      "numero": "Artículo 12",
+      "titulo": "Ley 101",
+      "texto": "(FALTAS GRAVES CON RETIRO TEMPORAL DE TRES MESES\nA UN AÑO). Las Faltas Graves a ser sancionadas con retiro temporal de la institución con\npérdida de antigüedad y sin goce de haberes de tres meses a un año, sin perjuicio de la acción\npenal cuando corresponda, son:\n\n1. La reincidencia de una de las faltas previstas en el Artículo anterior.\n\n2. Declarar o mantener en comisión de servicio o destinar al personal policial\nomitiendo el cumplimiento de las normas vigentes.\n\n3. Formular peticiones colectivas verbales o escritas, que estén al margen de la ley\ny que sean contrarias al régimen interno, que alteren la disciplina establecida\npor normas reglamentarías o que omitan el conducto regular.\n\n4. Recurrir a influencias o recomendaciones para obtener destinos u otras\nprebendas en beneficio personal o de terceros, sin perjuicio de la acción penal\nque corresponda.\n\n5. Encubrir faltas graves, no sancionarlas o no denunciarlas.\n\n6. Utilizar marbetes de identificación que correspondan a otra u otro policía, fuera\nde los recintos policiales.\n\n7. Ostentar condecoraciones sin respaldo legal.\n\n8. Atribuirse grados jerárquicos, cargo o prerrogativa que no le correspondan.\n\n9. Uso arbitrario o indebido de los vehículos oficiales de la institución para fines\nparticulares.\n\n10. Incumplimiento injustificado de los plazos establecidos en el Proceso\nAdministrativo Disciplinario Policial.\n\nGaceta Oficial del Estado Plurinacional de Bolivia\nDerechos Reservados ®2010 - www.gacetaoficialdebolivia.gob.bo\n\n11. Intimidar, agredir física o verbalmente a las o los miembros de los Tribunales\nDisciplinarios, de la Fiscalía Policial y de la Dirección General de Investigación\nPolicial Interna.\n\n12. Ordenar o inducir la ejecución de actos que constituyan faltas, para beneficio\npersonal o de terceros.\n\n13. Inobservancia del deber de cuidado o pérdida de armamento perteneciente a la\ninstitución, bajo su responsabilidad, sin perjuicio de la restitución, cuando\ncorresponda.\n\n14. Omitir el parte de novedades administrativas con relación al manejo logístico de\nla unidad o a las novedades del Servicio Policial.\n\n15. Tomar el nombre de un superior o autoridad para transmitir órdenes falsas o\nalterar sustancialmente las que se hubiesen recibido.\n\n16. Ocultar maliciosamente implementos o artículos pertenecientes al Estado, a la\ninstitución, a otra u otro policía o colega de trabajo.\n\n17. Incumplimiento de la sanción de arresto o su equivalente en trabajo en fines de\nsemana y feriados, impuesta por una o un superior jerárquico.\n\n18. Decomisar o retener licencias o documentos de vehículos motorizados en casos\nno previstos por las normas vigentes.\n\n19. Consumir bebidas alcohólicas o sustancias controladas, durante el\ncumplimiento de funciones.\n\n20. Circular en vía pública vistiendo uniforme en estado de ebriedad.\n\n21. Agredir física o verbalmente a miembros de la institución que cumplen servicio.\n\n22. Cometer acoso sexual en contra de sus camaradas de trabajo u otras personas\nque se encuentren bajo custodia, cuidado u otras situaciones relacionadas con el\nejercicio de sus funciones.\n\n23. Cometer acoso laboral en contra de sus camaradas de trabajo,\nindependientemente del nivel jerárquico.\n\n24. Hacer pública ostentación de su militancia política haciendo proselitismo en las\nunidades estando en servicio activo; agravándose este hecho cuando se está de\nuniforme o se cumple funciones de mando.\n\n25. Faltar a la verdad u omitir hechos, al elevar informes o partes del servicio o\nactividad policial.\n\n26. Realizar denuncias de faltas disciplinarias que sean falsas o calumniosas.\n27. Tenencia injustificada de equipo o armamento policial perteneciente a la\n\nGaceta Oficial del Estado Plurinacional de Bolivia\nDerechos Reservados ®2010 - www.gacetaoficialdebolivia.gob.bo\n\ninstitución.\n\n28. Otorgar autorizaciones de circulación de vehículos en contraposición a lo\nestablecido en las normas legales.\n\n29. Disparar armas de fuego sin observar las normas legales vigentes.\n\n30. Continuar deliberadamente al mando de una unidad u otro cargo, habiendo sido\ncambiado de destino o suspendido por orden expresa de la superioridad.\n\n31. Actuar con injusticia o favoritismo en la recepción de exámenes de ascenso,\nconcurso de méritos y en la calificación del desempeño profesional.\n\n32. No cumplir con las normas y reglamentos institucionales para convocar y\ndesignar a becas, cursos, seminarios o representaciones de carácter institucional,\nnacional o internacional.\n\n33. Desobedecer e incumplir resoluciones y autos ejecutoriados, emanados de los\nTribunales Disciplinarios.\n\n34. Desobedecer e incumplir resoluciones administrativas emitidas por el Comando\nGeneral.\n\n35. No interponer los recursos que franquea el Procedimiento Administrativo\nPolicial, estando obligado para hacerlo.\n\n36. No acudir con prontitud al lugar de sus funciones en caso de inminente peligro\npara la sociedad o la institución; aún encontrándose de vacaciones, licencia o\ndescanso, salvo razón justificada.\n\n37. Extraviar o disponer arbitrariamente cuadernos de investigación o expedientes\ndisciplinarios.\n\n38. Las agresiones verbales y/o sicológicas, por motivos racistas, sexistas o\ndiscriminatorios en el marco de la Ley Nº 045.",
+      "documento": "Ley N.º 101 — Régimen Disciplinario de la Policía Boliviana",
+      "fuente_pdf": "assets/ley-101.pdf"
+    },
+    {
+      "id": "ley101-art-13",
+      "numero": "Artículo 13",
+      "titulo": "Ley 101",
+      "texto": "(FALTAS GRAVES CON RETIRO TEMPORAL DE UNO A DOS\nAÑOS). Las Faltas Graves a ser sancionadas con retiro temporal de la institución con pérdida\nde antigüedad, sin goce de haberes de uno a dos años, sin perjuicio de la acción penal, cuando\ncorresponda, son:\n\n1. La reincidencia de una de las faltas previstas en el Artículo anterior.\n\n2. Inasistencia o abandono injustificado de sus funciones, por tres días continuos.\n\n3. No extender valor fiscal al imponer multas o por la prestación de servicios\npoliciales.\n\nGaceta Oficial del Estado Plurinacional de Bolivia\nDerechos Reservados ®2010 - www.gacetaoficialdebolivia.gob.bo\n\n4. No depositar oportunamente o disponer arbitrariamente de dineros provenientes\nde las recaudaciones policiales.\n\n5. Introducir o permitir el ingreso de bebidas alcohólicas o cualquier tipo de\nsustancias controladas a los recintos de detención.\n\n6. Ocasionar por descuido o negligencia, la fuga de arrestados, aprehendidos o\ndetenidos que se encuentran bajo custodia policial.\n\n7. Extraviar, extraer folios o inutilizar dolosamente expedientes disciplinarios,\ncuadernos de investigación, pruebas, informes periciales, archivos de personal,\nvalores policiales y documentos administrativos que se encuentren bajo su\nresponsabilidad en el marco de la función policial, sin perjuicio de la reposición\nde los mismos.\n\n8. Divulgar información confidencial, que sea de su conocimiento en el servicio\npolicial.\n\n9. Otorgar permisos al personal policial, para beneficio personal o de terceros.\n\n10. Extender licencias o conceder permisos de conducción de motorizados sin que\nlos interesados cumplan los requisitos establecidos por ley.\n\n11. Incurrir en conductas que denigren el prestigio e imagen del Estado o la\nInstitución, al encontrarse en representaciones, comisiones, agregadurías,\ndelegaciones y otros, en el extranjero.\n\n12. Revelar de manera verbal o escrita a los medios de comunicación o a terceros\nmisiones, operativos, órdenes superiores de carácter secreto, confidencial o\nreservado.\n\n13. Recurrir de manera verbal o escrita a medios de comunicación social para emitir\nagravios en contra de la institución y sus componentes.\n\n14. Ser autor o difusor de panfletos que dañen el prestigio y honor institucional o de\nsus componentes.\n\n15. Fomentar la organización o formar parte de logias u organizaciones, que atenten\ncontra los intereses de la institución, la sociedad o el Estado.\n\n16. Mantener relaciones sexuales en dependencias policiales o lugares donde se\ncumplan funciones policiales.\n\n17. Dictar Resoluciones contrarias a la Ley Orgánica y la presente Ley.\n\n18. Agredir físicamente a los arrestados, aprehendidos o detenidos en celdas\npoliciales.\n\n19. Incumplimiento a funciones policiales establecidas en la Ley de Aduanas\n\nGaceta Oficial del Estado Plurinacional de Bolivia\nDerechos Reservados ®2010 - www.gacetaoficialdebolivia.gob.bo\n\nencontrándose destinado en el Control Operativo Aduanero.\n\n20. Incumplimiento, resistencia colectiva a mandatos, órdenes o disposiciones\nreglamentarias.\n\n21. No reparar o restituir los daños materiales ocasionados a los bienes de la\ninstitución.\n\n22. La denegación de acceso al servicio, por motivos racistas, sexistas o\ndiscriminatorios.",
+      "documento": "Ley N.º 101 — Régimen Disciplinario de la Policía Boliviana",
+      "fuente_pdf": "assets/ley-101.pdf"
+    },
+    {
+      "id": "ley101-art-14",
+      "numero": "Artículo 14",
+      "titulo": "FALTAS GRAVES CON RETIRO O BAJA DEFINITIVA",
+      "texto": "Las\nFaltas Graves a ser sancionadas con retiro o baja definitiva de la institución sin derecho a\nreincorporación, sin perjuicio de la acción penal cuando corresponda, son:\n\n1. La reincidencia de una de las faltas previstas en el Artículo anterior.\n\n2. Vender, dar en calidad de prenda o ser intermediario en la comercialización de\narmas, municiones, explosivos, equipo policial y otros bienes de propiedad de la\ninstitución, sin cumplir la normativa vigente.\n\n3. Incurrir en actos públicos, deshonrando los símbolos nacionales, la institución o\nel uniforme policial.\n\n4. Recibir como consecuencia de las funciones policiales, dádivas y otros\nbeneficios personales.\n\n5. Ejecutar tratos inhumanos crueles o degradantes, acciones de tortura, atentando\ncontra los derechos humanos.\n\n6. Incumplir los procedimientos establecidos para el uso de la fuerza.\n\n7. Retención y uso injustificado de vehículos, valores u objetos hallados,\nrecuperados, secuestrados, incautados o confiscados.\n\n8. Ordenar, instigar o ejecutar servicios policiales para fines ilícitos.\n\n9. Incurrir en deserción, conforme lo establecido en el Artículo 15 de esta Ley.\n\n10. Instigar o liderar motines, huelgas, suspensión o interrupción del servicio, como\nactos de protestas o medidas de presión.\n\n11. Destruir, modificar, alterar, extraer o utilizar de forma dolosa información de la\nPolicía Boliviana, sea en medios físicos o informáticos.\n\n12. Comprometerse a gestionar o favorecer incorporaciones o reincorporaciones a\nla Policía Boliviana, cambios de destino, convocatorias a exámenes de ascenso\ne ingreso a las Unidades Académicas del Sistema Educativo Policial, a cambio\n\nGaceta Oficial del Estado Plurinacional de Bolivia\nDerechos Reservados ®2010 - www.gacetaoficialdebolivia.gob.bo\n\nde beneficio económico.\n\n13. Utilizar, credenciales, emblemas, uniformes o distintivos policiales que no\ncorrespondan a la unidad en la que presta servicios, para fines ilícitos.\n\n14. Concertar acuerdos o convenios ilícitos con delincuentes en beneficio personal\no de terceros.\n\n15. Expedir o presentar certificados o copias legalizadas de documentos falsos o\nalterados en su contenido.\n\n16. Realizar acciones o presentar planes, programas o proyectos que atenten contra\nla integralidad orgánica y funcional de la institución.\n\n17. Ser encontrado en flagrancia cometiendo acciones delincuenciales dolosas o en\nvinculación con personas del hampa, comprometiendo gravemente la imagen y\nel prestigio institucional.\n\n18. Agresión física y/o sexual por motivos racistas o discriminatorios.",
+      "documento": "Ley N.º 101 — Régimen Disciplinario de la Policía Boliviana",
+      "fuente_pdf": "assets/ley-101.pdf"
+    },
+    {
+      "id": "ley101-art-15",
+      "numero": "Artículo 15",
+      "titulo": "DESERCIÓN",
+      "texto": "La servidora o servidor público policial que abandone\nsu destino o no asista al lugar de sus funciones, por más de tres días consecutivos o no se\npresente al mismo en el término legal previsto, sin causa justificada, incurrirá en deserción.",
+      "documento": "Ley N.º 101 — Régimen Disciplinario de la Policía Boliviana",
+      "fuente_pdf": "assets/ley-101.pdf"
+    },
+    {
+      "id": "ley101-art-16",
+      "numero": "Artículo 16",
+      "titulo": "FALTAS EN EL SISTEMA EDUCATIVO POLICIAL",
+      "texto": "Las faltas\ncometidas por docentes, instructores, personal administrativo y estudiantes, contra el Sistema\nEducativo Policial o Régimen Académico, se sancionarán de acuerdo a la normativa interna y\ndisciplinaria de cada Unidad Académica.\n\nCAPÍTULO IV\nIMPOSICIÓN DE LAS SANCIONES",
+      "documento": "Ley N.º 101 — Régimen Disciplinario de la Policía Boliviana",
+      "fuente_pdf": "assets/ley-101.pdf"
+    },
+    {
+      "id": "ley101-art-17",
+      "numero": "Artículo 17",
+      "titulo": "FORMAS DE IMPOSICIÓN DE LA SANCIÓN",
+      "texto": "I. La sanción de las Faltas Leves será de aplicación inmediata conforme a la presente\nLey.\n\nII. La imposición de sanción a faltas graves emergen de un proceso Administrativo\nDisciplinario Policial.\n\nIII. A los efectos de la imposición de las sanciones, se considera reincidencia el incurrir\nen una misma falta, dentro de un año para el caso de las faltas leves y tres años para\nlas faltas graves, de haber ocurrido la primera falta.",
+      "documento": "Ley N.º 101 — Régimen Disciplinario de la Policía Boliviana",
+      "fuente_pdf": "assets/ley-101.pdf"
+    },
+    {
+      "id": "ley101-art-18",
+      "numero": "Artículo 18",
+      "titulo": "IMPEDIMENTO",
+      "texto": "Las servidoras y servidores públicos policiales que\ncuenten con antecedentes disciplinarios, no podrán ser convocados a cursos de post grado ni a\nexámenes de ascenso.\n\nCAPÍTULO V\n\nGaceta Oficial del Estado Plurinacional de Bolivia\nDerechos Reservados ®2010 - www.gacetaoficialdebolivia.gob.bo\n\nEXIMENTES, ATENUANTES Y AGRAVANTES",
+      "documento": "Ley N.º 101 — Régimen Disciplinario de la Policía Boliviana",
+      "fuente_pdf": "assets/ley-101.pdf"
+    },
+    {
+      "id": "ley101-art-19",
+      "numero": "Artículo 19",
+      "titulo": "EXIMENTES DE RESPONSABILIDAD",
+      "texto": "I. En la consideración de las faltas disciplinarias y sus sanciones, serán eximentes de\nresponsabilidad disciplinaria aquellas actuaciones que, en el cumplimiento de la ley,\nimpliquen el uso de la fuerza proporcional con la amenaza o un estado de necesidad\nevidente.\n\nII. Queda exenta de responsabilidad la servidora o servidor público policial que se\nniegue a cumplir una orden que suponga un atentado a la seguridad personal, la\nConstitución y las leyes.",
+      "documento": "Ley N.º 101 — Régimen Disciplinario de la Policía Boliviana",
+      "fuente_pdf": "assets/ley-101.pdf"
+    },
+    {
+      "id": "ley101-art-20",
+      "numero": "Artículo 20",
+      "titulo": "ATENUANTES",
+      "texto": "En la imposición de las sanciones podrán\nconsiderarse las siguientes atenuantes:\n\n1. Los méritos y buena conducta anterior a la comisión de la falta.\n\n2. Haberse originado la falta en un exceso de celo funcionario o bien del servicio.\n\n3. Reconocer la comisión de la falta espontáneamente sin rehuir responsabilidades.\n\n4. Sin previo requerimiento, resarcir el daño o perjuicio causado y declararse\nresponsable.\n\n5. Presentarse en forma voluntaria ante el superior a cargo de la unidad o\nrepartición, haciendo conocer la comisión de la falta.",
+      "documento": "Ley N.º 101 — Régimen Disciplinario de la Policía Boliviana",
+      "fuente_pdf": "assets/ley-101.pdf"
+    },
+    {
+      "id": "ley101-art-21",
+      "numero": "Artículo 21",
+      "titulo": "AGRAVANTES",
+      "texto": "En la imposición de las sanciones podrán\nconsiderarse las siguientes agravantes, cuando se cometa la falta:\n\n1. En forma colectiva.\n\n2. En presencia de subalternos.\n\n3. Con premeditación o por recompensa.\n\n4. Aprovechándose de la confianza, que la o el superior le hubiere conferido.\n\n5. Tener mayor jerarquía.\n\nTÍTULO III\n\nTRIBUNALES Y AUTORIDADES DEL RÉGIMEN DISCIPLINARIO\n\nCAPÍTULO I\nDISPOSICIONES GENERALES",
+      "documento": "Ley N.º 101 — Régimen Disciplinario de la Policía Boliviana",
+      "fuente_pdf": "assets/ley-101.pdf"
+    },
+    {
+      "id": "ley101-art-22",
+      "numero": "Artículo 22",
+      "titulo": "INDEPENDENCIA FUNCIONAL",
+      "texto": "Los tribunales y las autoridades\nGaceta Oficial del Estado Plurinacional de Bolivia\nDerechos Reservados ®2010 - www.gacetaoficialdebolivia.gob.bo\n\ndel régimen disciplinario de la Policía Boliviana están sometidos a la Constitución Política del\nEstado, las leyes y reglamentos, y ejercerán sus funciones con independencia funcional y de\nforma exclusiva, con excepción del ejercicio de la docencia.",
+      "documento": "Ley N.º 101 — Régimen Disciplinario de la Policía Boliviana",
+      "fuente_pdf": "assets/ley-101.pdf"
+    },
+    {
+      "id": "ley101-art-23",
+      "numero": "Artículo 23",
+      "titulo": "Ley 101",
+      "texto": "(REQUISITOS GENERALES PARA SER DESIGNADA O\nDESIGNADO MIEMBRO DE LOS TRIBUNALES DISCIPLINARIOS O FISCAL\nPOLICIAL). Para ser designada o designado miembro de los Tribunales Disciplinarios o\nFiscal Policial de la Policía Boliviana se requiere:\n\n1. Encontrarse en servicio activo y tener buena conducta profesional,\n\n2. Tener excelentes fojas de concepto y de servicios,\n\n3. No haber sido sancionado por la comisión de faltas graves, y\n\n4. No tener pliego de cargo ejecutoriado.",
+      "documento": "Ley N.º 101 — Régimen Disciplinario de la Policía Boliviana",
+      "fuente_pdf": "assets/ley-101.pdf"
+    },
+    {
+      "id": "ley101-art-24",
+      "numero": "Artículo 24",
+      "titulo": "DESIGNACIÓN",
+      "texto": "Las y los miembros de los Tribunales\nDisciplinarios, Fiscal General, fiscales departamentales, fiscales policiales; y el personal de\napoyo, serán designadas o designados por la Orden General de Destinos. Durarán en sus\nfunciones hasta dos gestiones anuales.\n\nCAPÍTULO II\nTRIBUNALES DISCIPLINARIOS",
+      "documento": "Ley N.º 101 — Régimen Disciplinario de la Policía Boliviana",
+      "fuente_pdf": "assets/ley-101.pdf"
+    },
+    {
+      "id": "ley101-art-25",
+      "numero": "Artículo 25",
+      "titulo": "TRIBUNALES DISCIPLINARIOS",
+      "texto": "I. Constituyen Tribunales Disciplinarios:\n\n1. El Tribunal Disciplinario Superior, con jurisdicción y competencia en todo el\nterritorio del Estado;\n\n2. Los Tribunales Disciplinarios Departamentales, con jurisdicción y competencia\nen el ámbito departamental que corresponda.\n\nII. Los fallos de los Tribunales Disciplinarios son internos e independientes.",
+      "documento": "Ley N.º 101 — Régimen Disciplinario de la Policía Boliviana",
+      "fuente_pdf": "assets/ley-101.pdf"
+    },
+    {
+      "id": "ley101-art-26",
+      "numero": "Artículo 26",
+      "titulo": "Ley 101",
+      "texto": "(CONFORMACIÓN DEL TRIBUNAL DISCIPLINARIO\nSUPERIOR).\n\nI. El Tribunal Disciplinario Superior será designado de acuerdo al Artículo 24 de esta\nLey y estará conformado por:\n\na) Una Presidenta o Presidente: General de la Policía Boliviana en servicio\nactivo, preferentemente Abogada o Abogado.\n\nb) Dos Vocales Permanentes: Una o un Coronel y una o un Sub Oficial de la\nPolicía Boliviana, preferentemente abogadas o abogados.\n\nGaceta Oficial del Estado Plurinacional de Bolivia\nDerechos Reservados ®2010 - www.gacetaoficialdebolivia.gob.bo\n\nc) Dos Vocales Suplentes: Una o un Coronel y una o un Sub Oficial de la\nPolicía Boliviana, preferentemente abogadas o abogados, sin perjuicio de\nsus funciones.",
+      "documento": "Ley N.º 101 — Régimen Disciplinario de la Policía Boliviana",
+      "fuente_pdf": "assets/ley-101.pdf"
+    },
+    {
+      "id": "ley101-art-27",
+      "numero": "Artículo 27",
+      "titulo": "Ley 101",
+      "texto": "(CONFORMACIÓN DE LOS TRIBUNALES DISCIPLINARIOS\nDEPARTAMENTALES). Los Tribunales Disciplinarios Departamentales serán designados de\nacuerdo al Artículo 24 de esta Ley y estarán conformados por:\n\na) Una Presidenta o Presidente: Coronel DESP del servicio activo, con\npreferencia Abogada o Abogado.\n\nb) Dos Vocales Permanentes: Entre Jefes y Suboficiales del servicio activo,\ncon preferencia abogadas o abogados.\n\nc) Dos Vocales Suplentes. Entre Jefes y Suboficiales del servicio activo, con\npreferencia abogadas o abogados, sin perjuicio de sus funciones.",
+      "documento": "Ley N.º 101 — Régimen Disciplinario de la Policía Boliviana",
+      "fuente_pdf": "assets/ley-101.pdf"
+    },
+    {
+      "id": "ley101-art-28",
+      "numero": "Artículo 28",
+      "titulo": "PERSONAL DE APOYO",
+      "texto": "Los Tribunales Disciplinarios contarán\ncon el siguiente personal de apoyo:\n\na) Una Secretaria o un Secretario: Oficial o Suboficial de profesión Abogada\no Abogado.\n\nb) Una o un Oficial de Diligencias: Una o un Sargento o Cabo.\n\nc) Una o un auxiliar: Una o un Cabo o Policía, y el personal suficiente para\nbrindar sus servicios en forma eficaz y eficiente.\n\nCAPÍTULO III\nATRIBUCIONES DE LOS TRIBUNALES\n\nSECCIÓN I\nTRIBUNAL DISCIPLINARIO SUPERIOR",
+      "documento": "Ley N.º 101 — Régimen Disciplinario de la Policía Boliviana",
+      "fuente_pdf": "assets/ley-101.pdf"
+    },
+    {
+      "id": "ley101-art-29",
+      "numero": "Artículo 29",
+      "titulo": "Ley 101",
+      "texto": "(ATRIBUCIONES DEL TRIBUNAL DISCIPLINARIO\nSUPERIOR). El Tribunal Disciplinario Superior, tiene las siguientes atribuciones:\n\na) Conocer y resolver en grado de Apelación, las resoluciones emitidas por\nlos Tribunales Disciplinarios Departamentales.\n\nb) Cumplir y hacer cumplir estrictamente los plazos y términos del Proceso\nAdministrativo Disciplinario Policial establecidos en esta Ley.",
+      "documento": "Ley N.º 101 — Régimen Disciplinario de la Policía Boliviana",
+      "fuente_pdf": "assets/ley-101.pdf"
+    },
+    {
+      "id": "ley101-art-30",
+      "numero": "Artículo 30",
+      "titulo": "Ley 101",
+      "texto": "(ATRIBUCIONES DE LA PRESIDENTA O EL PRESIDENTE\nDEL TRIBUNAL DISCIPLINARIO SUPERIOR). La Presidenta o el Presidente del\nTribunal Disciplinario Superior, tiene las siguientes atribuciones:\n1. Convocar y presidir las sesiones del Tribunal Disciplinario Superior, dirigir los\n\nGaceta Oficial del Estado Plurinacional de Bolivia\nDerechos Reservados ®2010 - www.gacetaoficialdebolivia.gob.bo\n\ndebates y deliberaciones.\n\n2. Dirigir la correspondencia a nombre del Tribunal.\n\n3. Dictar providencias de mero trámite.\n\n4. Emitir circulares e instructivas de carácter administrativo a los Tribunales\nDisciplinarios Departamentales.\n\n5. Evaluar y calificar al personal de su dependencia.\n\n6. Formular sugerencias para su mejor funcionamiento y elevarlas al Comando\nGeneral de la Policía Boliviana.\n\n7. Elevar informe anual de labores al Comando General de la Policía Boliviana.",
+      "documento": "Ley N.º 101 — Régimen Disciplinario de la Policía Boliviana",
+      "fuente_pdf": "assets/ley-101.pdf"
+    },
+    {
+      "id": "ley101-art-31",
+      "numero": "Artículo 31",
+      "titulo": "Ley 101",
+      "texto": "(ATRIBUCIONES DE LAS VOCALES Y LOS VOCALES\nPERMANENTES DEL TRIBUNAL DISCIPLINARIO SUPERIOR). Las Vocales y los\nVocales Permanentes del Tribunal Disciplinario Superior, tienen las siguientes atribuciones:\n\n1. Suplir por antigüedad a la Presidenta o el Presidente en casos de ausencia o\nimpedimento.\n\n2. Participar en sesiones del Tribunal Disciplinario Superior, con voz y voto.\n\n3. Proyectar resoluciones de los recursos que le sean sorteados como vocal relator.\n\n4. Formular sugerencias para su mejor funcionamiento y elevarlas ante la\nPresidenta o el Presidente del Tribunal Disciplinario Superior.\n\nSECCIÓN II\nTRIBUNALES DISCIPLINARIOS DEPARTAMENTALES",
+      "documento": "Ley N.º 101 — Régimen Disciplinario de la Policía Boliviana",
+      "fuente_pdf": "assets/ley-101.pdf"
+    },
+    {
+      "id": "ley101-art-32",
+      "numero": "Artículo 32",
+      "titulo": "Ley 101",
+      "texto": "(ATRIBUCIONES DEL TRIBUNAL DISCIPLINARIO\nDEPARTAMENTAL). El Tribunal Disciplinario Departamental, tiene las siguientes\natribuciones:\n\na) Conocer y resolver los procesos disciplinarios.\n\nb) Cumplir y hacer cumplir estrictamente los plazos y términos del Proceso\nDisciplinario Policial establecidos en esta Ley.\n\nc) Remitir las apelaciones al Tribunal Disciplinario Superior.",
+      "documento": "Ley N.º 101 — Régimen Disciplinario de la Policía Boliviana",
+      "fuente_pdf": "assets/ley-101.pdf"
+    },
+    {
+      "id": "ley101-art-33",
+      "numero": "Artículo 33",
+      "titulo": "Ley 101",
+      "texto": "(ATRIBUCIONES DE LA PRESIDENTA O DEL PRESIDENTE\nDEL TRIBUNAL DISCIPLINARIO DEPARTAMENTAL). La Presidenta o el Presidente\ndel Tribunal Disciplinario Departamental tienen las siguientes atribuciones:\n\nGaceta Oficial del Estado Plurinacional de Bolivia\nDerechos Reservados ®2010 - www.gacetaoficialdebolivia.gob.bo\n\n1. Ejercitar control y supervisión disciplinaria de las y los miembros del Tribunal.\n\n2. Convocar y presidir las audiencias del Tribunal Departamental y dirigir los\ndebates.\n\n3. Dirigir la correspondencia a nombre del Tribunal Departamental.\n\n4. Dictar las providencias y resoluciones que correspondan.\n\n5. Evaluar y calificar al personal de su dependencia.\n\n6. Informar al Tribunal Disciplinario Superior, los fallos emitidos dentro de su\njurisdicción y competencia.\n\n7. Formular sugerencias para su mejor funcionamiento y elevarlas ante la\nPresidenta o el Presidente del Tribunal Disciplinario Superior.\n\n8. Elevar informe anual de labores al Tribunal Disciplinario Superior.",
+      "documento": "Ley N.º 101 — Régimen Disciplinario de la Policía Boliviana",
+      "fuente_pdf": "assets/ley-101.pdf"
+    },
+    {
+      "id": "ley101-art-34",
+      "numero": "Artículo 34",
+      "titulo": "Ley 101",
+      "texto": "(ATRIBUCIONES DE LAS VOCALES O LOS VOCALES\nPERMANENTES DEL TRIBUNAL DISCIPLINARIO DEPARTAMENTAL). Las Vocales\ny los Vocales Permanentes de los Tribunales Disciplinarios Departamentales tienen las\nsiguientes atribuciones:\n\n1. Suplir por antigüedad a la Presidenta o el Presidente en casos de ausencia o\nimpedimento.\n\n2. Participar en todas las audiencias de procesamiento, con voz y voto.\n\n3. Participar en la elaboración de resoluciones.\n\nSECCIÓN III\nPERSONAL DE APOYO",
+      "documento": "Ley N.º 101 — Régimen Disciplinario de la Policía Boliviana",
+      "fuente_pdf": "assets/ley-101.pdf"
+    },
+    {
+      "id": "ley101-art-35",
+      "numero": "Artículo 35",
+      "titulo": "Ley 101",
+      "texto": "(ATRIBUCIONES DE LA SECRETARIA O DEL SECRETARIO\nDEL TRIBUNAL). La Secretaria o el Secretario del Tribunal Disciplinario, tiene las siguientes\natribuciones:\n\n1. Asistir a la Presidenta o al Presidente del Tribunal Disciplinario, en la redacción\nde autos y providencias.\n\n2. Arrimar y foliar los actuados en forma cronológica desde su recepción y\nautorizar las diligencias.\n\n3. Firmar y colocar su pie de firma en todas las providencias, autos, resoluciones y\ndemás actuaciones.\n\n4. Dejar constancia mediante nota marginal, del desglose de documentos,\n\nGaceta Oficial del Estado Plurinacional de Bolivia\nDerechos Reservados ®2010 - www.gacetaoficialdebolivia.gob.bo\n\nordenados por providencia.\n\n5. Registrar en el libro diario, el control de ingreso y salida de memoriales, así\ncomo en el de tomas de razón, autos motivados y resoluciones.\n\n6. Custodiar y revisar los actuados cuando sean presentados por las o los Fiscales\nPoliciales o sean prestados a las Abogadas o los Abogados defensores o\nrecurrentes.\n\n7. Representar por escrito cuando note alteración en la foliación, suplantación,\nraspadura, enmienda u otras alteraciones en los actuados.\n\n8. Proporcionar toda información que requieran los Tribunales Disciplinarios\nPoliciales, Organismos Policiales y otras instituciones de acuerdo a\nprocedimientos legales y administrativos.\n\n9. Franquear a las partes, previo decreto de la Presidenta o el Presidente, los\ncertificados, informes, copias o testimonios que fueran solicitados por escrito y\ncorridos los decretos de mero trámite.\n\n10. Arrimar la documentación a los procesos en trámite.\n\n11. Enviar al archivo central, los procesos concluidos, bajo inventario.\n\n12. Grabar y transcribir las actas de las audiencias públicas, declaraciones de\ntestigos de cargo y descargo.\n\n13. Registrar y archivar todos los fallos emitidos por el Tribunal Disciplinario, con\nfines de control y estadística.",
+      "documento": "Ley N.º 101 — Régimen Disciplinario de la Policía Boliviana",
+      "fuente_pdf": "assets/ley-101.pdf"
+    },
+    {
+      "id": "ley101-art-36",
+      "numero": "Artículo 36",
+      "titulo": "Ley 101",
+      "texto": "(ATRIBUCIONES DE LA AUXILIAR O DEL AUXILIAR DEL\nTRIBUNAL). La Auxiliar o el Auxiliar del Tribunal Disciplinario, es responsable de apoyar a\nla Secretaria o el Secretario y Oficiales de Diligencias en el trabajo que efectúan.",
+      "documento": "Ley N.º 101 — Régimen Disciplinario de la Policía Boliviana",
+      "fuente_pdf": "assets/ley-101.pdf"
+    },
+    {
+      "id": "ley101-art-37",
+      "numero": "Artículo 37",
+      "titulo": "Ley 101",
+      "texto": "(ATRIBUCIONES DE LA O DEL OFICIAL DE DILIGENCIAS\nDEL TRIBUNAL). La o el Oficial de Diligencias del Tribunal Disciplinario, tiene las\nsiguientes atribuciones:\n\n1. Practicar y sentar las diligencias de citación y notificación de acuerdo a\nprocedimiento, con las resoluciones emitidas por el Tribunal Disciplinario.\n\n2. Representar por escrito ante el Tribunal Disciplinario, sobre las o los procesados\nque no hubiesen sido habidos o hayan rechazado su legal notificación.\n\n3. Cuidar la documentación bajo su responsabilidad.\n\nCAPÍTULO IV\n\nGaceta Oficial del Estado Plurinacional de Bolivia\nDerechos Reservados ®2010 - www.gacetaoficialdebolivia.gob.bo\n\nFISCALÍA POLICIAL Y ATRIBUCIONES",
+      "documento": "Ley N.º 101 — Régimen Disciplinario de la Policía Boliviana",
+      "fuente_pdf": "assets/ley-101.pdf"
+    },
+    {
+      "id": "ley101-art-38",
+      "numero": "Artículo 38",
+      "titulo": "FISCALÍA POLICIAL",
+      "texto": "La Fiscalía Policial, tiene por finalidad\ndefender los intereses institucionales, su prestigio, imagen, principios y normas, en todo el\nterritorio del Estado; asimismo, promover la acción disciplinaria administrativa, dirigir las\ninvestigaciones velando por su legalidad, con independencia funcional, objetividad, celeridad y\ntransparencia, respetando los derechos humanos y garantías constitucionales de los procesados.",
+      "documento": "Ley N.º 101 — Régimen Disciplinario de la Policía Boliviana",
+      "fuente_pdf": "assets/ley-101.pdf"
+    },
+    {
+      "id": "ley101-art-39",
+      "numero": "Artículo 39",
+      "titulo": "ESTRUCTURA DE LA FISCALÍA POLICIAL",
+      "texto": "La Fiscalía Policial\nestá conformada por:\n\n1. La o el Fiscal General Policial: Jefe en el grado de Coronel DESP. del servicio\nactivo con título de Abogado.\n\n2. Las o los Fiscales Departamentales Policiales: Jefes en el grado de Coronel\nDESP. del servicio activo, con título de Abogado.\n\n3. Las o los Fiscales Policiales: Jefes, Oficiales o Suboficiales, del servicio activo,\npreferentemente con título de Abogado. Su número será determinado de\nacuerdo a las necesidades de la Fiscalía Policial.\n\n4. Personal de apoyo administrativo: Oficiales, Suboficiales o Sargentos, del\nservicio activo, preferentemente con título de Abogado.",
+      "documento": "Ley N.º 101 — Régimen Disciplinario de la Policía Boliviana",
+      "fuente_pdf": "assets/ley-101.pdf"
+    },
+    {
+      "id": "ley101-art-40",
+      "numero": "Artículo 40",
+      "titulo": "ATRIBUCIONES DE LA O EL FISCAL GENERAL POLICIAL",
+      "texto": "Son atribuciones de la o el Fiscal General Policial:\n\n1. Ordenar, iniciar, dirigir y coordinar investigaciones a nivel nacional.\n\n2. Asumir la defensa de los intereses institucionales ante el Tribunal Disciplinario\nSuperior.\n\n3. Coordinar acciones con la Oficina de Control Interno.\n\n4. Ejercer la dirección, orientación y supervisión general de la Fiscalía Policial.\n\n5. Exigir la correcta, pronta y transparente investigación de los casos y\nsustanciación de los procesos evitando su retardación.\n\n6. Emitir instrucciones y directivas a las o los Fiscales Policiales Departamentales,\nde carácter general o específicos, para el mejor funcionamiento de la Fiscalía\nPolicial.\n\n7. Disponer el desplazamiento de las o los Fiscales Policiales por razones de\nservicio, para la atención de asuntos específicos declarándolos en comisión, sin\nque esto implique el traslado de lugar de sus funciones.\n\nPor ser la Fiscalía Policial parte denunciante y actuar en representación de la\nPolicía Boliviana, la o el Fiscal General Policial no podrá emitir dictámenes\n\nGaceta Oficial del Estado Plurinacional de Bolivia\nDerechos Reservados ®2010 - www.gacetaoficialdebolivia.gob.bo\n\nrelativos a los procesos que en grado de apelación conozca el Tribunal\nDisciplinario Superior.",
+      "documento": "Ley N.º 101 — Régimen Disciplinario de la Policía Boliviana",
+      "fuente_pdf": "assets/ley-101.pdf"
+    },
+    {
+      "id": "ley101-art-41",
+      "numero": "Artículo 41",
+      "titulo": "Ley 101",
+      "texto": "(ATRIBUCIONES DE LA O EL FISCAL DEPARTAMENTAL\nPOLICIAL). Son atribuciones de la o el Fiscal Departamental Policial:\n\n1. Ordenar, iniciar, dirigir y coordinar investigaciones a nivel departamental.\n\n2. Ejercer la dirección, orientación y supervisión general de la Fiscalía Policial\nDepartamental.\n\n3. Exigir la correcta, pronta y transparente investigación de los casos y\nsustanciación de los procesos evitando su retardación.\n\n4. Supervisar, orientar y exigir la legalidad de las actividades de las o los Fiscales\nPoliciales.\n\n5. Emitir instrucciones y directivas para el mejor funcionamiento de la Fiscalía\nPolicial Departamental.\n\n6. Disponer el desplazamiento de Fiscales Policiales por razones de servicio, para\nla atención de asuntos específicos, declarándolos en comisión.\n\n7. Conocer y resolver impugnaciones a resoluciones que dispongan rechazo de las\ninvestigaciones.\n\n8. Designar a uno o más fiscales para que actúen en un caso determinado o en\nvarios de ellos.\n\n9. Reasignar casos previa resolución fundamentada que justifique la separación de\nla o el Fiscal Policial de los casos anteriormente asignados.\n\n10. Remitir al Ministerio Público, cuando en la investigación se encuentren indicios\nde la comisión de delitos.",
+      "documento": "Ley N.º 101 — Régimen Disciplinario de la Policía Boliviana",
+      "fuente_pdf": "assets/ley-101.pdf"
+    },
+    {
+      "id": "ley101-art-42",
+      "numero": "Artículo 42",
+      "titulo": "ATRIBUCIONES DE LAS Y LOS FISCALES POLICIALES",
+      "texto": "Son\natribuciones de las y los Fiscales Policiales las siguientes:\n\n1. Iniciar las investigaciones sean de oficio o a denuncia.\n\n2. Citar y tomar declaraciones del denunciante, del denunciado o denunciados, de\ntestigos y otras personas relacionadas con el caso en investigación.\n\n3. Requerir información o peritajes de las unidades u organismos especializados\nde la Policía Boliviana para fines de las investigaciones a su cargo.\n\n4. Cumplir con el término legal para efectuar las investigaciones y acusar o\nrechazar la denuncia, según corresponda.\n5. Ofrecer, producir prueba y sustentar la acusación.\n\nGaceta Oficial del Estado Plurinacional de Bolivia\nDerechos Reservados ®2010 - www.gacetaoficialdebolivia.gob.bo\n\n6. Apelar las Resoluciones contrarias a los intereses institucionales, emitidas por\nel Tribunal Disciplinario Departamental.\n\n7. Propugnar las Resoluciones favorables a los intereses institucionales, emitidas\npor el Tribunal Disciplinario Departamental.\n\n8. Solicitar al Tribunal Disciplinario Departamental, la ampliación de la acusación,\ncuando haya nuevos elementos de convicción contra la procesada o las\nprocesadas y el o los procesados o cuando se identifiquen nuevos involucrados.\n\n9. Remitir antecedentes a la autoridad competente, para establecer el daño civil\ncausado a favor de las víctimas o de la institución.\n\n10. Remitir al Ministerio Público antecedentes cuando en la investigación se\nencuentren indicios de la comisión de delitos.\n\nCAPÍTULO V\nDIRECCIÓN GENERAL DE INVESTIGACIÓN POLICIAL INTERNA",
+      "documento": "Ley N.º 101 — Régimen Disciplinario de la Policía Boliviana",
+      "fuente_pdf": "assets/ley-101.pdf"
+    },
+    {
+      "id": "ley101-art-43",
+      "numero": "Artículo 43",
+      "titulo": "Ley 101",
+      "texto": "(DIRECCIÓN GENERAL DE INVESTIGACIÓN POLICIAL\nINTERNA). Es el organismo de la Policía Boliviana, dependiente orgánica y\ndisciplinariamente de la Inspectoría General, que tiene la función de investigar los hechos que\nconstituyan falta grave, bajo la dirección funcional de la o del Fiscal Policial en los casos\nconcretos. Las investigadoras y los investigadores no podrán ser removidos de las funciones\nasignadas hasta su conclusión.",
+      "documento": "Ley N.º 101 — Régimen Disciplinario de la Policía Boliviana",
+      "fuente_pdf": "assets/ley-101.pdf"
+    },
+    {
+      "id": "ley101-art-44",
+      "numero": "Artículo 44",
+      "titulo": "Ley 101",
+      "texto": "(ATRIBUCIONES DE LA DIRECTORA O DEL DIRECTOR\nGENERAL DE INVESTIGACIÓN POLICIAL INTERNA). La Directora o el Director\nGeneral de Investigación Policial Interna tiene la atribución de planificar, diseñar, orientar y\ndirigir la estrategia y tácticas del desarrollo y operativización de las funciones de la Dirección\nGeneral de Investigación Policial Interna y asignar a las investigadoras o a los investigadores a\nsu cargo, que son exclusivamente miembros de la Policía Boliviana.\n\nCAPÍTULO VI\nOFICINA DE CONTROL INTERNO Y ATRIBUCIONES",
+      "documento": "Ley N.º 101 — Régimen Disciplinario de la Policía Boliviana",
+      "fuente_pdf": "assets/ley-101.pdf"
+    },
+    {
+      "id": "ley101-art-45",
+      "numero": "Artículo 45",
+      "titulo": "OFICINA DE CONTROL INTERNO",
+      "texto": "I. Se crea la Oficina de Control Interno, dependiente del Ministerio de Gobierno, a\ncargo de una Directora o un Director General, policía o civil, designado por la\nMinistra o el Ministro de Gobierno.\n\nII. La Oficina de Control Interno tiene por objeto realizar tareas de inteligencia e\ninvestigación disciplinaria, bajo la dirección funcional de una o un Fiscal Policial\nadscrito.\n\nIII. Las investigadoras o los investigadores podrán ser policías y civiles, con facultades\n\nGaceta Oficial del Estado Plurinacional de Bolivia\nDerechos Reservados ®2010 - www.gacetaoficialdebolivia.gob.bo\n\npara realizar investigaciones y seguimiento de las investigaciones a casos específicos\nque dirigen los Fiscales Policiales, asimismo podrán a requerimiento y por instrucción\nsuperior, coordinar y coadyuvar en las mismas.",
+      "documento": "Ley N.º 101 — Régimen Disciplinario de la Policía Boliviana",
+      "fuente_pdf": "assets/ley-101.pdf"
+    },
+    {
+      "id": "ley101-art-46",
+      "numero": "Artículo 46",
+      "titulo": "Ley 101",
+      "texto": "(ATRIBUCIONES DE LA DIRECTORA O DEL DIRECTOR\nGENERAL DE LA OFICINA DE CONTROL INTERNO). La Directora o el Director\nGeneral de la Oficina de Control Interno, centralizan la información de todas las\ninvestigaciones efectuadas; diseña, orienta y dirige la estrategia y tácticas del desarrollo y\noperativización de las funciones de la Dirección General.",
+      "documento": "Ley N.º 101 — Régimen Disciplinario de la Policía Boliviana",
+      "fuente_pdf": "assets/ley-101.pdf"
+    },
+    {
+      "id": "ley101-art-47",
+      "numero": "Artículo 47",
+      "titulo": "AGENTES ENCUBIERTOS",
+      "texto": "Para la investigación de faltas graves,\nel Director General de la Oficina de Control Interno, instruirá la intervención de agentes\nencubiertos o infiltrados en misiones previamente autorizadas.\n\nLa información proveniente de estos agentes, cuando sea corroborada con otras\npruebas, previo proceso, será suficiente para imponer la sanción que corresponda.\n\nNo estará exento de la responsabilidad que corresponda, si en el curso de la\ninvestigación realiza actos distintos a los específicamente instruidos o con evidente exceso o\ndesproporcionalidad, con relación a las necesidades o finalidades de la misma.",
+      "documento": "Ley N.º 101 — Régimen Disciplinario de la Policía Boliviana",
+      "fuente_pdf": "assets/ley-101.pdf"
+    },
+    {
+      "id": "ley101-art-48",
+      "numero": "Artículo 48",
+      "titulo": "Ley 101",
+      "texto": "(REQUISITOS GENERALES PARA SER DESIGNADA O\nDESIGNADO MIEMBRO CIVIL DE LA OFICINA DE CONTROL INTERNO). Para ser\ndesignado miembro civil de la Oficina de Control Interno, se requiere:\n\n1. Cumplir con los requisitos establecidos en el Artículo 234 de la Constitución\nPolítica del Estado.\n\n2. No tener relación de parentesco hasta el cuarto grado de consanguinidad,\nsegundo de afinidad o el derivado de los vínculos de adopción con autoridades\nde la Oficina de Control Interno o con autoridades y servidoras y servidores\npúblicos del Régimen Disciplinario Policial.\n\n3. No tener una sanción ejecutoriada dispuesta mediante Resolución\nAdministrativa Sancionatoria.\n\nTÍTULO IV\nDEL PROCEDIMIENTO ADMINISTRATIVO DISCIPLINARIO POLICIAL\n\nCAPÍTULO I\nNORMAS GENERALES DEL PROCEDIMIENTO",
+      "documento": "Ley N.º 101 — Régimen Disciplinario de la Policía Boliviana",
+      "fuente_pdf": "assets/ley-101.pdf"
+    },
+    {
+      "id": "ley101-art-49",
+      "numero": "Artículo 49",
+      "titulo": "PRINCIPIOS",
+      "texto": "El Procedimiento Administrativo Disciplinario Policial\nse basa en los siguientes principios:\n\n1. LEGALIDAD. Toda sanción respecto a una acción u omisión debe responder a\nuna norma o normativa legal expresa y dictada con anterioridad al hecho que se\ninvestiga.\n\nGaceta Oficial del Estado Plurinacional de Bolivia\nDerechos Reservados ®2010 - www.gacetaoficialdebolivia.gob.bo\n\n2. PROPORCIONALIDAD. La sanción debe ser proporcional a la acción u\nomisión objeto del Proceso Administrativo Disciplinario, considerando la\nmayor o menor gravedad del hecho investigado.\n\n3. PRESUNCIÓN DE INOCENCIA. Se presume la inocencia de la persona\nsujeta a procesamiento mientras no se demuestre lo contrario mediante Proceso\nAdministrativo Disciplinario de la Policía Boliviana.\n\n4. DEBIDO PROCESO. Se garantiza a la persona sujeta a Proceso\nAdministrativo Disciplinario, la instancia de apelación de la Resolución o Fallo\nemitido por el Tribunal o Autoridad Competente de primera instancia por\nTribunal o Autoridad Superior garantizando el ejercicio del legítimo derecho a\nla defensa, la imparcialidad, la justicia y legalidad de las Resoluciones o Fallos.\n\n5. JERARQUÍA NORMATIVA. Se garantiza el respeto a la jerarquía de las\nnormas, no pudiendo una normativa inferior prevalecer ante otra de superior\njerarquía. Sin perjuicio de lo anterior, la norma especial es de aplicación\npreferente a la norma de carácter general.\n\n6. TRANSPARENCIA Y GRATUIDAD. Todo el procedimiento administrativo\ndisciplinario de la Policía Boliviana, debe llevarse a cabo con la más absoluta\ntransparencia, en sujeción a las normas vigentes y estar exento de costo\npecuniario para las servidoras y servidores públicos policiales sujetos a\nprocesamiento.\n\n7. PUBLICIDAD. Todos los actuados de las investigaciones y del procesamiento\ndeberán estar a disposición, de las y los fiscales a cargo, de los procesados y de\nsus abogadas o abogados.\n\n8. ECONOMÍA, SIMPLICIDAD Y CELERIDAD. La simplicidad y celeridad\ndel procedimiento administrativo disciplinario de la Policía Boliviana, evitan\nerogaciones o gastos administrativos a la institución, las actuaciones deben ser\nsimples, garantizando la comprensión de todas y todos los involucrados en el\nprocesamiento tras el propósito de averiguar la verdad objetiva de la conducta\ninvestigada y cumpliendo con los plazos y términos previstos en la Ley.\n\n9. CONGRUENCIA. La procesada o el procesado no podrá ser sancionado por\nun hecho distinto al atribuido en la acusación o su ampliación.",
+      "documento": "Ley N.º 101 — Régimen Disciplinario de la Policía Boliviana",
+      "fuente_pdf": "assets/ley-101.pdf"
+    },
+    {
+      "id": "ley101-art-50",
+      "numero": "Artículo 50",
+      "titulo": "ETAPAS DEL PROCEDIMIENTO DISCIPLINARIO",
+      "texto": "El\nprocedimiento Administrativo Disciplinario Policial, está conformado por dos etapas:\n\n1. Investigación que consiste en la obtención y acumulación de elementos de\nprueba; y\n\n2. El proceso oral que consiste en la determinación de responsabilidad\ndisciplinario, por la existencia de falta grave.",
+      "documento": "Ley N.º 101 — Régimen Disciplinario de la Policía Boliviana",
+      "fuente_pdf": "assets/ley-101.pdf"
+    },
+    {
+      "id": "ley101-art-51",
+      "numero": "Artículo 51",
+      "titulo": "PLAZOS Y TÉRMINOS",
+      "texto": "Los plazos y términos contenidos en la\nGaceta Oficial del Estado Plurinacional de Bolivia\nDerechos Reservados ®2010 - www.gacetaoficialdebolivia.gob.bo\n\npresente Ley, son de cumplimiento obligatorio.",
+      "documento": "Ley N.º 101 — Régimen Disciplinario de la Policía Boliviana",
+      "fuente_pdf": "assets/ley-101.pdf"
+    },
+    {
+      "id": "ley101-art-52",
+      "numero": "Artículo 52",
+      "titulo": "EXCEPCIONES",
+      "texto": "Por la naturaleza de los procesos disciplinarios,\núnicamente podrán plantearse las excepciones de prescripción de la acción o la cosa juzgada,\ndebidamente justificadas. Serán presentadas en el primer momento de la Audiencia y resueltas\nen forma inmediata.\n\nCualquier otro incidente o excepción será rechazado sin mayor trámite.",
+      "documento": "Ley N.º 101 — Régimen Disciplinario de la Policía Boliviana",
+      "fuente_pdf": "assets/ley-101.pdf"
+    },
+    {
+      "id": "ley101-art-53",
+      "numero": "Artículo 53",
+      "titulo": "PRESCRIPCIÓN",
+      "texto": "I. La facultad para ejercer la acción disciplinaria prescribe a los dos años de cometida la\nfalta grave.\n\nII. El término de la prescripción se interrumpe con el inicio de la investigación o cuando\nel procesado sea declarado rebelde.",
+      "documento": "Ley N.º 101 — Régimen Disciplinario de la Policía Boliviana",
+      "fuente_pdf": "assets/ley-101.pdf"
+    },
+    {
+      "id": "ley101-art-54",
+      "numero": "Artículo 54",
+      "titulo": "CITACIONES                               Y   NOTIFICACIONES",
+      "texto": "Las citaciones y\nnotificaciones se realizarán:\n\n1. En forma personal en el último destino laboral o en el domicilio señalado en su\narchivo personal. En caso de no ser habido la servidora o el servidor público\npolicial sometido a investigación o proceso, se deberá realizar la representación\ncon un testigo de actuación. Con la representación legal se emitirá la citación o\nnotificación por Cédula.\n\n2. El domicilio procesal, luego de la primera notificación, se fija en la Fiscalía\nPolicial o en los Tribunales Disciplinarios, según corresponda.",
+      "documento": "Ley N.º 101 — Régimen Disciplinario de la Policía Boliviana",
+      "fuente_pdf": "assets/ley-101.pdf"
+    },
+    {
+      "id": "ley101-art-55",
+      "numero": "Artículo 55",
+      "titulo": "ASISTENCIA LEGAL EN LA DEFENSA",
+      "texto": "Las servidoras y\nservidores públicos policiales sujetos a proceso, podrán asumir su defensa material o ser\nasistidos por una abogada o un abogado. No podrán ser abogadas o abogados defensores los\nmiembros del régimen disciplinario.\n\nA solicitud de la persona procesada o cuando se carezca de defensa técnica, los\nTribunales Disciplinarios, podrán asignar una Abogada o Abogado Defensor de Oficio.",
+      "documento": "Ley N.º 101 — Régimen Disciplinario de la Policía Boliviana",
+      "fuente_pdf": "assets/ley-101.pdf"
+    },
+    {
+      "id": "ley101-art-56",
+      "numero": "Artículo 56",
+      "titulo": "DEFENSORAS O DEFENSORES DE OFICIO",
+      "texto": "I. Los Tribunales Disciplinarios podrán designar como Defensoras o Defensores de\nOficio a las servidoras y los servidores públicos policiales que tengan título de\nabogado en provisión nacional en aquellos procesos disciplinarios que así lo\nrequieran, de la lista de aquéllos que presten su servicio en la Sede del Tribunal, que\nproporcione la Unidad de Recursos Humanos.\n\nII. No podrán ser designadas Defensoras o Defensores de Oficio las servidoras y los\nservidores públicos policiales que cumplan cargos de dirección, sean asesores legales\nen la institución o miembros del régimen disciplinario.\n\nGaceta Oficial del Estado Plurinacional de Bolivia\nDerechos Reservados ®2010 - www.gacetaoficialdebolivia.gob.bo\n\nIII. Las Defensoras o Defensores de Oficio serán declarados en comisión mientras dure el\nproceso.",
+      "documento": "Ley N.º 101 — Régimen Disciplinario de la Policía Boliviana",
+      "fuente_pdf": "assets/ley-101.pdf"
+    },
+    {
+      "id": "ley101-art-57",
+      "numero": "Artículo 57",
+      "titulo": "MEDIDAS PREVENTIVAS",
+      "texto": "La servidora o el servidor público\npolicial sometido a investigación o acusación por la comisión de faltas graves será sujeto de las\nsiguientes medidas preventivas:\n\na) Al inicio de la Etapa Investigativa, será puesta o puesto a Disposición\nInvestigativa de la Fiscalía Policial, será cambiada o cambiado de unidad\npero no de destino a otro distrito, no gozará de vacación ni viaje en\ncomisión, para garantizar su presencia en el lugar donde se sustancie el\nproceso disciplinario.\n\nb) Radicada la causa en el Tribunal Disciplinario Departamental, para las\nfaltas graves señaladas en el Artículo 14, en el día será puesto a\nDisposición Procesal del Tribunal Disciplinario Departamental con\nsuspensión de funciones y sin goce de haberes con comunicación a la\nDirección General de Recursos Humanos.\n\nEn caso de absolución con Resolución Ejecutoriada, se le repondrá el\nsalario no pagado sin pérdida de antigüedad y el Comando General le\nrestituirá a sus funciones.\n\nEn caso de Resolución Condenatoria, la Sanción comenzará a\ncontabilizarse a partir de la suspensión.\n\nc) En caso de flagrancia y connotación institucional, por las faltas graves del\nArtículo 14, en el día, será suspendido de funciones sin goce de haberes y\nsometido al proceso especial. En caso de absolución con Resolución\nEjecutoriada, se le repondrá el salario no pagado sin pérdida de\nantigüedad y el Comando General le restituirá a sus funciones.",
+      "documento": "Ley N.º 101 — Régimen Disciplinario de la Policía Boliviana",
+      "fuente_pdf": "assets/ley-101.pdf"
+    },
+    {
+      "id": "ley101-art-58",
+      "numero": "Artículo 58",
+      "titulo": "Ley 101",
+      "texto": "(RESOLUCIONES DEL TRIBUNAL DISCIPLINARIO\nDEPARTAMENTAL). Las Resoluciones emitidas por el Tribunal Disciplinario\nDepartamental, son de primera instancia y podrán ser objeto de apelación ante el Tribunal\nDisciplinario Superior. Cuando no sean objeto de apelación, adquieren ejecutoria, debiendo\nprocederse a su remisión al Comando General de la Policía Boliviana y a otras instancias\ncompetentes, para tal efecto.",
+      "documento": "Ley N.º 101 — Régimen Disciplinario de la Policía Boliviana",
+      "fuente_pdf": "assets/ley-101.pdf"
+    },
+    {
+      "id": "ley101-art-59",
+      "numero": "Artículo 59",
+      "titulo": "Ley 101",
+      "texto": "(RESOLUCIONES DEL TRIBUNAL DISCIPLINARIO\nSUPERIOR). Las Resoluciones emitidas por el Tribunal Disciplinario Superior serán\ndefinitivas e inapelables en el ámbito administrativo, sin perjuicio de los recursos previstos por\nla Constitución y la ley, que no implican suspensión de la ejecución de la resolución\nadministrativa, cuando corresponda.\n\nCAPÍTULO II\n\nGaceta Oficial del Estado Plurinacional de Bolivia\nDerechos Reservados ®2010 - www.gacetaoficialdebolivia.gob.bo\n\nEXCUSAS Y RECUSACIONES",
+      "documento": "Ley N.º 101 — Régimen Disciplinario de la Policía Boliviana",
+      "fuente_pdf": "assets/ley-101.pdf"
+    },
+    {
+      "id": "ley101-art-60",
+      "numero": "Artículo 60",
+      "titulo": "Ley 101",
+      "texto": "(EXCUSAS DE LAS O LOS MIEMBROS DE LOS TRIBUNALES\nDISCIPLINARIOS POLICIALES). La Presidenta o el Presidente del Tribunal Disciplinario\nSuperior, la Presidenta o el Presidente del Tribunal Disciplinario Departamental y las Vocales o\nlos Vocales Permanentes de los Tribunales, deberán excusarse o podrán ser recusados cuando se\nencuentren comprendidos en cualquiera de las siguientes causales:\n\n1. El parentesco con alguna de las partes o sus abogadas o abogados, hasta el\ncuarto grado de consanguinidad, segundo de afinidad o el derivado de los\nvínculos de adopción.\n\n2. Tener con algunas de las partes, relación de comadre o compadre, madrina o\npadrino, ahijada o ahijado u otra relación espiritual.\n\n3. Tener amistad íntima con alguna de las partes, que se manifestaren por trato y\nfamiliaridad constantes o pertenecer a la misma promoción de egreso.\n\n4. Tener enemistad, odio o resentimiento con alguna de las partes, que se\nmanifestaren por hechos conocidos. En ningún caso procederá la recusación por\nataques u ofensas inferidas después que hubiere comenzado a conocer el asunto.\n\n5. Ser acreedora o acreedor, deudora o deudor o garante de alguna de las partes.\n\n6. La existencia de un litigio pendiente con alguna de las partes, siempre que no\nhubiere sido promovido expresamente para inhabilitarlos.",
+      "documento": "Ley N.º 101 — Régimen Disciplinario de la Policía Boliviana",
+      "fuente_pdf": "assets/ley-101.pdf"
+    },
+    {
+      "id": "ley101-art-61",
+      "numero": "Artículo 61",
+      "titulo": "OBLIGACIÓN DE EXCUSA",
+      "texto": "1. Las o los miembros de los Tribunales Disciplinarios, cuando estén\ncomprendidos en cualquiera de las causas señaladas en el artículo anterior,\ndeberán excusarse de oficio con fundamentación objetiva antes de emitir el\nAuto Inicial del Proceso.\n\n2. Decretada la excusa, inmediatamente se convocará a la Vocal o el Vocal\nSuplente.\n\n3. Será nulo todo acto o resolución pronunciada después de la excusa.",
+      "documento": "Ley N.º 101 — Régimen Disciplinario de la Policía Boliviana",
+      "fuente_pdf": "assets/ley-101.pdf"
+    },
+    {
+      "id": "ley101-art-62",
+      "numero": "Artículo 62",
+      "titulo": "DE LAS RECUSACIONES",
+      "texto": "I. No podrán ser recusadas o recusados más de dos miembros de los Tribunales\nDisciplinarios, previo fundamento objetivo y por escrito dentro de las siguientes\nveinticuatro horas de la notificación con el Auto Inicial de Proceso.\n\nII. De allanarse a la recusación, en las siguientes veinticuatro horas se convocará a las\nVocales o los Vocales Suplentes, respectivamente.\n\nIII. De no allanarse a la recusación, se suspenderá la audiencia y, con el informe de las o\n\nGaceta Oficial del Estado Plurinacional de Bolivia\nDerechos Reservados ®2010 - www.gacetaoficialdebolivia.gob.bo\n\nlos miembros del Tribunal que fueron recusadas o recusados, en las siguientes\nveinticuatro horas, las Vocales o los Vocales no recusados la resolverán, pudiendo\nconvocarse a las Vocales o los Vocales Suplentes para tal efecto.",
+      "documento": "Ley N.º 101 — Régimen Disciplinario de la Policía Boliviana",
+      "fuente_pdf": "assets/ley-101.pdf"
+    },
+    {
+      "id": "ley101-art-63",
+      "numero": "Artículo 63",
+      "titulo": "IRRECUSABILIDAD DE FISCALES",
+      "texto": "Las y los Fiscales Policiales,\nson irrecusables.\n\nCAPÍTULO III\nETAPA INVESTIGATIVA",
+      "documento": "Ley N.º 101 — Régimen Disciplinario de la Policía Boliviana",
+      "fuente_pdf": "assets/ley-101.pdf"
+    },
+    {
+      "id": "ley101-art-64",
+      "numero": "Artículo 64",
+      "titulo": "INICIO",
+      "texto": "La etapa investigativa se iniciará:\n1. De Oficio, cuando de forma directa o por intermedio de cualquier servidora o\nservidor de la Dirección General de Investigación Interna o de la Oficina de\nControl Interno del Ministerio de Gobierno tenga información de una falta\ngrave cometida presuntamente por uno o más servidoras o servidores públicos\npoliciales o en los casos de flagrancia, dará lugar a que la Fiscalía Policial inicie\nla investigación.\n\n2. A denuncia que podrá ser verbal o escrita.",
+      "documento": "Ley N.º 101 — Régimen Disciplinario de la Policía Boliviana",
+      "fuente_pdf": "assets/ley-101.pdf"
+    },
+    {
+      "id": "ley101-art-65",
+      "numero": "Artículo 65",
+      "titulo": "DENUNCIA Y OBLIGACION DE DENUNCIAR",
+      "texto": "I. Cualquier persona particular que conozca de la comisión de una falta grave, podrá\nponerla en conocimiento del Fiscal Policial o de la Dirección General de\nInvestigación Policial Interna, debiendo en su caso aportar los elementos que\nsustenten la misma.\n\nII. Todo miembro de la Policía Boliviana que tenga conocimiento de una falta grave\ncometida por cualquier servidora o servidor público policial, está obligado a\ndenunciar sobre la misma ante la Fiscalía Policial o la Dirección General de\nInvestigación Policial Interna.\n\nIII. No serán objeto de investigación las denuncias anónimas. Cuando la denuncia\nresultare falsa o calumniosa el denunciante incurrirá en responsabilidad civil, penal o\ndisciplinaria, según corresponda.",
+      "documento": "Ley N.º 101 — Régimen Disciplinario de la Policía Boliviana",
+      "fuente_pdf": "assets/ley-101.pdf"
+    },
+    {
+      "id": "ley101-art-66",
+      "numero": "Artículo 66",
+      "titulo": "REQUERIMIENTO DE INICIO DE INVESTIGACIÓN",
+      "texto": "La o el\nFiscal Policial asignado, dentro de las veinticuatro horas de recibida la denuncia o la\ninformación sobre la comisión de faltas graves, emitirá su requerimiento de inicio de\ninvestigación y dispondrá la realización de los actos investigativos necesarios.",
+      "documento": "Ley N.º 101 — Régimen Disciplinario de la Policía Boliviana",
+      "fuente_pdf": "assets/ley-101.pdf"
+    },
+    {
+      "id": "ley101-art-67",
+      "numero": "Artículo 67",
+      "titulo": "DE LA INVESTIGACIÓN",
+      "texto": "La investigación disciplinaria tendrá un\nplazo máximo de duración de quince días calendario, plazo que podrá ampliarse únicamente\npor diez días a solicitud fundamentada de la o el Fiscal Policial a la o al Fiscal Departamental.\n\nPara casos complejos comprendidos en el Artículo 14 podrá ampliarse únicamente por\nveinte días a solicitud fundamentada de la o el Fiscal Policial.\n\nGaceta Oficial del Estado Plurinacional de Bolivia\nDerechos Reservados ®2010 - www.gacetaoficialdebolivia.gob.bo",
+      "documento": "Ley N.º 101 — Régimen Disciplinario de la Policía Boliviana",
+      "fuente_pdf": "assets/ley-101.pdf"
+    },
+    {
+      "id": "ley101-art-68",
+      "numero": "Artículo 68",
+      "titulo": "DILIGENCIAS DE INVESTIGACIÓN",
+      "texto": "La investigadora o el\ninvestigador asignado al caso es la encargada o el encargado de realizar las diligencias\ninvestigativas dispuestas por el Fiscal Policial:\n\na) Practicar citaciones y notificaciones.\n\nb) Recepcionar las declaraciones de la denunciante o del denunciante, de la\ndenunciada o del denunciado y de testigos\n\nc) Recepcionar y recolectar las pruebas\n\nd) Elaborar las actas correspondientes, y\n\ne) Otras que se consideren pertinentes.",
+      "documento": "Ley N.º 101 — Régimen Disciplinario de la Policía Boliviana",
+      "fuente_pdf": "assets/ley-101.pdf"
+    },
+    {
+      "id": "ley101-art-69",
+      "numero": "Artículo 69",
+      "titulo": "DECLARACIÓN POR COMISIÓN",
+      "texto": "Cuando las denunciadas o los\ndenunciados o testigos, por impedimento justificado y comprobado no puedan concurrir al\nrequerimiento de la o el Fiscal Policial, podrá comisionarse la recepción de la declaración en el\nlugar que se encuentre.",
+      "documento": "Ley N.º 101 — Régimen Disciplinario de la Policía Boliviana",
+      "fuente_pdf": "assets/ley-101.pdf"
+    },
+    {
+      "id": "ley101-art-70",
+      "numero": "Artículo 70",
+      "titulo": "CONCLUSIÓN DE LA INVESTIGACIÓN DISCIPLINARIA",
+      "texto": "Concluida la investigación, la investigadora o el investigador asignado al caso presentará su\ninforme conclusivo y la o el Fiscal Policial, podrá:\n\n1. Rechazar la denuncia mediante resolución fundamentada, debiendo notificarse a\nlas partes involucradas, cuando:\n\na) La denuncia resultare falsa.\n\nb) No se compruebe el hecho o la participación de la servidora o servidor\npúblico policial procesado, o\n\nc) No existan elementos suficientes para sustentar la acusación.\n\nd) Cuando se demuestre la existencia de cosa juzgada o prescripción.\n\n2. Acusar al procesado ante el Tribunal Disciplinario Departamental, cuando se\ncompruebe la existencia del hecho y su participación en él.",
+      "documento": "Ley N.º 101 — Régimen Disciplinario de la Policía Boliviana",
+      "fuente_pdf": "assets/ley-101.pdf"
+    },
+    {
+      "id": "ley101-art-71",
+      "numero": "Artículo 71",
+      "titulo": "IMPUGNACIÓN DEL RECHAZO DE DENUNCIA",
+      "texto": "Las partes\ninvolucradas, dentro de las cuarenta y ocho horas de notificadas, podrán impugnar formalmente\nla resolución de la o del Fiscal Policial de rechazo de denuncia ante la misma o el mismo Fiscal\nPolicial, quien dentro de las veinticuatro horas de recibida la impugnación, deberá remitirla a la\no al Fiscal Departamental Policial, quien dentro de los subsiguientes tres días hábiles emitirá\nResolución Administrativa definitiva sobre el particular, pudiendo confirmar o revocar.\n\nSi revoca podrá acusar o instruir la ampliación de la investigación.",
+      "documento": "Ley N.º 101 — Régimen Disciplinario de la Policía Boliviana",
+      "fuente_pdf": "assets/ley-101.pdf"
+    },
+    {
+      "id": "ley101-art-72",
+      "numero": "Artículo 72",
+      "titulo": "CONTENIDO DE LA ACUSACIÓN FISCAL POLICIAL",
+      "texto": "La\nGaceta Oficial del Estado Plurinacional de Bolivia\nDerechos Reservados ®2010 - www.gacetaoficialdebolivia.gob.bo\n\nAcusación deberá contener:\n\na) Los datos que sirvan para identificar a la procesada o procesado;\n\nb) La relación precisa y circunstanciada de la falta grave atribuida;\n\nc) La fundamentación de la acusación, con la expresión de los elementos de\nconvicción que la motiven;\n\nd) Los preceptos jurídicos aplicables; y\n\ne) El ofrecimiento de la prueba que se producirá en el proceso oral.\n\nCAPÍTULO IV\nETAPA DEL PROCESO ORAL",
+      "documento": "Ley N.º 101 — Régimen Disciplinario de la Policía Boliviana",
+      "fuente_pdf": "assets/ley-101.pdf"
+    },
+    {
+      "id": "ley101-art-73",
+      "numero": "Artículo 73",
+      "titulo": "DEL PROCESO ORAL",
+      "texto": "El Proceso Oral se realizará sobre la base de\nla acusación de la o del Fiscal Policial, en forma oral, pública, contradictoria y continua, para la\ndemostración de la comisión de la falta grave y determinar la responsabilidad de la procesada o\ndel procesado y de las procesadas o los procesados.\n\nEn los casos que afecten a la seguridad de las partes, la estabilidad y el prestigio\ninstitucional, el Tribunal mediante Resolución Administrativa justificará y decretará la reserva\nde la audiencia hasta la conclusión del proceso.",
+      "documento": "Ley N.º 101 — Régimen Disciplinario de la Policía Boliviana",
+      "fuente_pdf": "assets/ley-101.pdf"
+    },
+    {
+      "id": "ley101-art-74",
+      "numero": "Artículo 74",
+      "titulo": "AUTO DE INICIO DE PROCESAMIENTO",
+      "texto": "Una vez recibida la\nAcusación Fiscal Policial, dentro de las veinticuatro horas se emitirá el Auto de Inicio de\nProcesamiento, señalando en forma expresa la o las faltas graves que se acusa a las servidoras o\nservidores públicos policiales procesados, señalando día y hora de realización de la Audiencia\nde Proceso Oral, entre el tercer y octavo día hábil posterior a la notificación, a efecto que se\nprepare la defensa.\n\nLos defectos de forma de la Acusación Fiscal Policial, no impedirán la prosecución\ndel proceso ni son causa de nulidad.",
+      "documento": "Ley N.º 101 — Régimen Disciplinario de la Policía Boliviana",
+      "fuente_pdf": "assets/ley-101.pdf"
+    },
+    {
+      "id": "ley101-art-75",
+      "numero": "Artículo 75",
+      "titulo": "RECURSO DE REPOSICIÓN",
+      "texto": "Este recurso procederá solamente\ncontra providencias de mero trámite a fin de que el mismo Tribunal advertido de su error, las\nrevoque o modifique. El Tribunal deberá resolverlo de inmediato en la misma Audiencia, sin\nrecurso ulterior.",
+      "documento": "Ley N.º 101 — Régimen Disciplinario de la Policía Boliviana",
+      "fuente_pdf": "assets/ley-101.pdf"
+    },
+    {
+      "id": "ley101-art-76",
+      "numero": "Artículo 76",
+      "titulo": "DIRECCIÓN DE LA AUDIENCIA",
+      "texto": "I. La Presidenta o el Presidente del Tribunal Disciplinario, o en su caso la Vocal o el\nVocal más antiguo presidirá y dirigirá la audiencia ordenando los actos necesarios y\ngarantizando su desarrollo.\n\nII. En todo momento, la Presidenta o el Presidente del Tribunal moderará el interrogatorio,\nbuscando que se desarrolle sin presiones ni ofendiendo la dignidad humana, que las\n\nGaceta Oficial del Estado Plurinacional de Bolivia\nDerechos Reservados ®2010 - www.gacetaoficialdebolivia.gob.bo\n\npreguntas sean claras, objetivas y relacionadas con el hecho.",
+      "documento": "Ley N.º 101 — Régimen Disciplinario de la Policía Boliviana",
+      "fuente_pdf": "assets/ley-101.pdf"
+    },
+    {
+      "id": "ley101-art-77",
+      "numero": "Artículo 77",
+      "titulo": "AUDIENCIA",
+      "texto": "I. La audiencia se realizará el día y hora fijados, con la presencia ininterrumpida de la\nPresidenta o del Presidente del Tribunal y las Vocales o los Vocales, quienes se\nconstituirán en la sala de audiencia. Se verificará e informará por Secretaría la\npresencia de la o del Fiscal Policial, las partes, abogados, testigos, peritos o\nintérpretes, se declarará instalada la audiencia de proceso oral, ordenándose la lectura\ndel Auto de Apertura de Proceso Oral y de la Acusación Fiscal Policial, prosiguiendo\ncon la audiencia hasta su conclusión.\n\nII. Tanto el Fiscal Policial como la parte procesada deberán fundamentar sus alegatos\niniciales.",
+      "documento": "Ley N.º 101 — Régimen Disciplinario de la Policía Boliviana",
+      "fuente_pdf": "assets/ley-101.pdf"
+    },
+    {
+      "id": "ley101-art-78",
+      "numero": "Artículo 78",
+      "titulo": "LECTURA DE DOCUMENTOS",
+      "texto": "Durante el proceso sólo podrán ser\nleídos los siguientes documentos:\n\na) Las declaraciones producidas por comisión, los dictámenes periciales, los\ninformes y certificaciones de entidades públicas y privadas, sin perjuicio\nde que el Tribunal pueda citar personalmente al perito, investigador o\ntestigo.\n\nb) La denuncia, la prueba documental, los informes de investigación, las\nactas de reconocimiento, registro o inspecciones practicadas conforme a\nesta Ley.",
+      "documento": "Ley N.º 101 — Régimen Disciplinario de la Policía Boliviana",
+      "fuente_pdf": "assets/ley-101.pdf"
+    },
+    {
+      "id": "ley101-art-79",
+      "numero": "Artículo 79",
+      "titulo": "CONTINUIDAD DEL PROCESO ORAL",
+      "texto": "La característica\nfundamental del Proceso Oral, es que una vez iniciado, se realizará en forma continua todos los\ndías y horas hábiles sin interrupción hasta que se dicte Resolución Final.\n\nLa Presidenta o el Presidente del Tribunal Disciplinario, ordenará los recesos diarios,\nfijará la hora de reinicio y la habilitación de días y horas extraordinarias.",
+      "documento": "Ley N.º 101 — Régimen Disciplinario de la Policía Boliviana",
+      "fuente_pdf": "assets/ley-101.pdf"
+    },
+    {
+      "id": "ley101-art-80",
+      "numero": "Artículo 80",
+      "titulo": "CAUSALES DE SUSPENSIÓN",
+      "texto": "I. La Audiencia del Proceso se suspenderá únicamente cuando:\n\n1. Si la defensora o el defensor no asiste a la audiencia o se retira, se considerará\nabandono de defensa y se nombrará una defensora o un defensor de oficio\ndebiendo reinstalarse la audiencia al día siguiente hábil.\n\n2. Si la o el Fiscal Policial no asiste a la audiencia, el Tribunal suspenderá la\nmisma, debiendo reinstalarla al siguiente día hábil.\n\n3. En caso de inasistencia justificada de la servidora o servidor público policial\nprocesado, el Tribunal suspenderá la misma, por única vez, debiendo\nreinstalarla al siguiente día hábil.\n4. No comparezcan testigos o peritos cuya intervención sea imprescindible, salvo\n\nGaceta Oficial del Estado Plurinacional de Bolivia\nDerechos Reservados ®2010 - www.gacetaoficialdebolivia.gob.bo\n\nconformidad expresa de las partes.\n\nII. Si la servidora o servidor público policial procesado no se presenta el siguiente día\nhábil, a la audiencia señalada, el Tribunal dispondrá la declaratoria en rebeldía, se le\nasignará defensor de oficio y fijará nuevo día y hora de audiencia.",
+      "documento": "Ley N.º 101 — Régimen Disciplinario de la Policía Boliviana",
+      "fuente_pdf": "assets/ley-101.pdf"
+    },
+    {
+      "id": "ley101-art-81",
+      "numero": "Artículo 81",
+      "titulo": "TRASLADO DE AUDIENCIA",
+      "texto": "Cuando la persona procesada se\nencuentre impedida legalmente de concurrir a la audiencia en el Tribunal Disciplinario\nDepartamental, ésta se instalará en el lugar donde se encuentre la persona, previas las\nnotificaciones, citaciones y emplazamientos respectivos.",
+      "documento": "Ley N.º 101 — Régimen Disciplinario de la Policía Boliviana",
+      "fuente_pdf": "assets/ley-101.pdf"
+    },
+    {
+      "id": "ley101-art-82",
+      "numero": "Artículo 82",
+      "titulo": "Ley 101",
+      "texto": "(INTERROGATORIO DE LA PROCESADA O DEL\nPROCESADO). Se recibirá la declaración voluntaria de la procesada o del procesado en forma\ndialogada, explicándole previamente con palabras claras y sencillas el hecho por el cual se le\nacusa, con la aclaración de que puede o no declarar y que el derecho a guardar silencio no será\nutilizado en su contra, continuándose con el proceso.\n\nSi la procesada o el procesado acepta declarar, la o el Fiscal Policial, la abogada o el\nabogado de la denunciante o del denunciante, la defensora o el defensor y las o los miembros\ndel Tribunal en ese orden podrán interrogar a la procesada o al procesado con las preguntas que\nestimen necesarias para esclarecer la verdad.\n\nEn caso de que fueran varias o varios los procesados, declararán por separado en la\nmisma audiencia.",
+      "documento": "Ley N.º 101 — Régimen Disciplinario de la Policía Boliviana",
+      "fuente_pdf": "assets/ley-101.pdf"
+    },
+    {
+      "id": "ley101-art-83",
+      "numero": "Artículo 83",
+      "titulo": "PRUEBA",
+      "texto": "Las pruebas se recibirán en el siguiente orden: la ofrecida\npor la o el Fiscal Policial, la denunciante o el denunciante y la procesada o procesado,\nguardándose las siguientes formalidades:\n\n1. Antes de declarar las y los testigos y peritos, no se comunicarán entre sí, ni con\notras personas, ni podrán estar presentes en la audiencia.\n\n2. Las y los testigos responderán y explicarán la razón y el contenido de sus\ndeclaraciones con la mayor precisión posible.\n\n3. Podrá ser testigo, cualquier persona que tenga conocimiento del hecho.\n\n4. Las o los peritos e investigadoras o investigadores tienen la facultad de\nconsultar notas o utilizar medios técnicos en su declaración.\n\n5. Las y los testigos y peritos para intervenir o ampliar la información sobre el\nhecho que motiva el proceso lo harán bajo juramento.\n\n6. Los reclamos por prueba ilegalmente obtenida se formularán en la audiencia y\nserán resueltos a tiempo de emitir resolución.",
+      "documento": "Ley N.º 101 — Régimen Disciplinario de la Policía Boliviana",
+      "fuente_pdf": "assets/ley-101.pdf"
+    },
+    {
+      "id": "ley101-art-84",
+      "numero": "Artículo 84",
+      "titulo": "CONTRADICCIONES",
+      "texto": "Si las o los testigos y peritos incurren en\ncontradicciones, respecto a sus declaraciones anteriores o peritajes, se ordenará leer las\ndeclaraciones anteriores o las conclusiones del peritaje, si persisten las contradicciones y resulta\n\nGaceta Oficial del Estado Plurinacional de Bolivia\nDerechos Reservados ®2010 - www.gacetaoficialdebolivia.gob.bo\n\nde ello falso testimonio, se remitirán antecedentes al Ministerio Público para su procesamiento\nconforme a lo dispuesto por el Código Penal.",
+      "documento": "Ley N.º 101 — Régimen Disciplinario de la Policía Boliviana",
+      "fuente_pdf": "assets/ley-101.pdf"
+    },
+    {
+      "id": "ley101-art-85",
+      "numero": "Artículo 85",
+      "titulo": "LIBERTAD PROBATORIA",
+      "texto": "El Tribunal admitirá como medios de\nprueba todos los elementos lícitos de convicción que puedan conducir al conocimiento de la\nverdad histórica del hecho, de la responsabilidad y de la personalidad de la procesada o del\nprocesado, podrán utilizarse otros medios lícitos además de los previstos en esta Ley.\n\nUn medio de prueba será admitido en la investigación o en el proceso, si se refiere,\ndirecta o indirectamente, al objeto de la investigación y sea útil para el descubrimiento de la\nverdad, el Tribunal limitará los medios de prueba cuando ellos resulten manifiestamente\nexcesivos o impertinentes.",
+      "documento": "Ley N.º 101 — Régimen Disciplinario de la Policía Boliviana",
+      "fuente_pdf": "assets/ley-101.pdf"
+    },
+    {
+      "id": "ley101-art-86",
+      "numero": "Artículo 86",
+      "titulo": "MEDIOS DE PRUEBA",
+      "texto": "Son medios de prueba todos aquellos que\npuedan conducir al esclarecimiento de los hechos que motivan el proceso, entre ellos:\n\n1. Los documentos públicos. Aquellos cuya emisión está respaldada por la fe del\nEstado.\n\n2. Los informes y partes. Son documentos de comunicación interna por los\ncuales, se hace conocer a la superioridad, sobre las novedades del servicio, las\ncircunstancias de casos atendidos u otros hechos que deben ser formal y\nobligatoriamente informados.\n\n3. La inspección ocular. Que es la verificación in situ de cosas y lugares, su\nestado actual, particularidades propias y otros con la finalidad de obtener\nmayores elementos de convicción.\n\n4. Los peritajes. Es la aplicación de un conocimiento especial en alguna ciencia,\narte o técnica con el objeto de descubrir la verdad o valorar un elemento de\nprueba, pudiendo ser presentado por las partes previa acreditación de idoneidad.\n\n5. Las declaraciones testificales. Son los testimonios de las personas, que vieron,\noyeron o conocen directamente del hecho.\n\n6. El careo. Cuando exista contradicción en las declaraciones de las y los testigos\nse podrá confrontar a las personas que las emitieron, a quienes se les llamará la\natención sobre las contradicciones advertidas a fin de averiguar quién dice la\nverdad.\n\n7. Las fotocopias legalizadas, que puedan generar convicción sobre el o los\nhechos.\n\n8. Objetos e instrumentos, que se vinculen con el hecho o hayan sido utilizados\npara su comisión.\n\n9. Grabaciones y filmaciones, que por medios audiovisuales públicos,\n\nGaceta Oficial del Estado Plurinacional de Bolivia\nDerechos Reservados ®2010 - www.gacetaoficialdebolivia.gob.bo\n\ndemuestren fehacientemente la comisión de la falta grave, siendo evidente e\nincuestionable, clara e indubitable.\n\n10. Grabaciones y filmaciones consensuadas, cuando exista la autorización o\nconformidad expresa de por lo menos una de las personas participantes en el\nhecho grabado o filmado.\n\n11. Informes y Testimonios de los investigadores, sobre sus actuaciones\ninvestigativas.\n\n12. Pruebas obtenidas por los Agentes Encubiertos, incluyendo fotografías,\nfilmaciones, documentos, grabaciones o informes.",
+      "documento": "Ley N.º 101 — Régimen Disciplinario de la Policía Boliviana",
+      "fuente_pdf": "assets/ley-101.pdf"
+    },
+    {
+      "id": "ley101-art-87",
+      "numero": "Artículo 87",
+      "titulo": "VALORACIÓN",
+      "texto": "El Tribunal asignará el valor correspondiente a cada\nuno de los elementos de prueba con aplicación de las reglas de la sana critica, justificando y\nfundamentando adecuadamente las razones por las cuales les otorga determinado valor, en base\na la apreciación conjunta y armónica de toda la prueba producida.",
+      "documento": "Ley N.º 101 — Régimen Disciplinario de la Policía Boliviana",
+      "fuente_pdf": "assets/ley-101.pdf"
+    },
+    {
+      "id": "ley101-art-88",
+      "numero": "Artículo 88",
+      "titulo": "ALEGATOS FINALES",
+      "texto": "Terminada la recepción de las pruebas, la o\nel Fiscal Policial, la abogada o el abogado de la denunciante o del denunciante y la defensora o\nel defensor de la procesada o del procesado, en ese orden, formularán sus alegatos finales en\nforma oral, podrán utilizar notas de apoyo a la exposición pero no se permitirá la lectura total\nde memoriales o documentos escritos.",
+      "documento": "Ley N.º 101 — Régimen Disciplinario de la Policía Boliviana",
+      "fuente_pdf": "assets/ley-101.pdf"
+    },
+    {
+      "id": "ley101-art-89",
+      "numero": "Artículo 89",
+      "titulo": "DELIBERACIÓN Y RESOLUCIÓN",
+      "texto": "Luego de los alegatos finales,\nlos miembros del Tribunal pasarán de inmediato y sin interrupción a deliberar en sesión\nreservada a la que solo podrá asistir la Secretaria o el Secretario, a cuya conclusión se dictará la\nResolución de Primera Instancia, que será notificada en la misma audiencia.",
+      "documento": "Ley N.º 101 — Régimen Disciplinario de la Policía Boliviana",
+      "fuente_pdf": "assets/ley-101.pdf"
+    },
+    {
+      "id": "ley101-art-90",
+      "numero": "Artículo 90",
+      "titulo": "NORMAS PARA DELIBERAR",
+      "texto": "La deliberación se sujetará a las\nsiguientes normas:\n\n1. Se resolverán los reclamos sobre la licitud de la prueba presentada y observada.\n\n2. Los miembros del Tribunal valorarán las pruebas producidas durante el proceso\nde modo integral, conforme a la sana crítica.\n\n3. Se valorarán los eximentes de responsabilidad.\n\n4. Se valorarán las circunstancias atenuantes o agravantes para la imposición de la\nsanción.\n\n5. Las decisiones se adoptarán por simple mayoría de votos.\n\n6. Cualquier disidencia será fundamentada, debiendo constar por escrito dentro de\nla Resolución de primera instancia.\n\nCAPÍTULO V\n\nGaceta Oficial del Estado Plurinacional de Bolivia\nDerechos Reservados ®2010 - www.gacetaoficialdebolivia.gob.bo\n\nRESOLUCIONES",
+      "documento": "Ley N.º 101 — Régimen Disciplinario de la Policía Boliviana",
+      "fuente_pdf": "assets/ley-101.pdf"
+    },
+    {
+      "id": "ley101-art-91",
+      "numero": "Artículo 91",
+      "titulo": "Ley 101",
+      "texto": "(CONTENIDO DE LA RESOLUCIÓN DE PRIMERA\nINSTANCIA). El Tribunal, en la misma Audiencia Oral de Procesamiento, emitirá la\nResolución de Primera Instancia, declarando probada o improbada la acusación. Resolución\nque será suscrita por todos los miembros del Tribunal.\n\nSe la dictará en nombre de la Policía Boliviana y deberá contener:\n\na) Identificación de la Sala del Tribunal Disciplinario Departamental que\nconoció el proceso.\n\nb) Número de Resolución y fecha de emisión.\n\nc) La identificación de las partes.\n\nd) La forma de inicio de la investigación, sea de oficio, por denuncia.\n\ne) Los hechos acusados y su tipificación.\n\nf) El análisis y valoración de las pruebas producidas por las partes.\n\ng) La relación de los hechos probados y la fundamentación legal que da\nlugar a la Resolución.\n\nh) Constancia de la disidencia fundamentada, si existe.\n\ni) La parte Resolutiva en la que el Tribunal adopta su decisión.\n\nj) Firma de los miembros del Tribunal.\n\nk) Otros que considere pertinente el Tribunal.",
+      "documento": "Ley N.º 101 — Régimen Disciplinario de la Policía Boliviana",
+      "fuente_pdf": "assets/ley-101.pdf"
+    },
+    {
+      "id": "ley101-art-92",
+      "numero": "Artículo 92",
+      "titulo": "RESOLUCIÓN ABSOLUTORIA",
+      "texto": "I. Se dictará Resolución Absolutoria cuando:\n\n1. La prueba aportada no haya sido suficiente para generar convicción sobre la\nexistencia del hecho o la participación de la procesada o del procesado.\n\n2. Se demuestre que el hecho no constituye falta grave.\n\n3. Exista cualquier eximente de responsabilidad.\n\nII. En caso de absolución con Resolución Ejecutoriada se le repondrá el salario no\npagado, sin perdida de antigüedad y el Comando General le restituirá a sus funciones\ny publicará un comunicado interno sobre la absolución.\n\nGaceta Oficial del Estado Plurinacional de Bolivia\nDerechos Reservados ®2010 - www.gacetaoficialdebolivia.gob.bo",
+      "documento": "Ley N.º 101 — Régimen Disciplinario de la Policía Boliviana",
+      "fuente_pdf": "assets/ley-101.pdf"
+    },
+    {
+      "id": "ley101-art-93",
+      "numero": "Artículo 93",
+      "titulo": "RESOLUCIÓN SANCIONATORIA",
+      "texto": "Se dictará Resolución\nSancionatoria cuando la prueba aportada sea suficiente para generar en el Tribunal la plena\nconvicción sobre la responsabilidad disciplinaria de la procesada o del procesado.\n\nLa resolución fijará con precisión la sanción que corresponda, la forma y lugar de su\ncumplimiento.",
+      "documento": "Ley N.º 101 — Régimen Disciplinario de la Policía Boliviana",
+      "fuente_pdf": "assets/ley-101.pdf"
+    },
+    {
+      "id": "ley101-art-94",
+      "numero": "Artículo 94",
+      "titulo": "ENMIENDA",
+      "texto": "Los errores de forma serán enmendados en el plazo de\nveinticuatro horas por el Tribunal, de oficio o a petición de parte, siempre que no afecten al\nfondo de la misma.",
+      "documento": "Ley N.º 101 — Régimen Disciplinario de la Policía Boliviana",
+      "fuente_pdf": "assets/ley-101.pdf"
+    },
+    {
+      "id": "ley101-art-95",
+      "numero": "Artículo 95",
+      "titulo": "Ley 101",
+      "texto": "(EJECUTORIA DE LA RESOLUCIÓN DE PRIMERA\nINSTANCIA). Adquieren ejecutoria las Resoluciones de Primera Instancia, que no hubieran\nsido objeto de apelación por las partes; debiendo remitirse al Comando General vía Tribunal\nDisciplinario Superior, para su ejecución, cumplimiento y archivo.\n\nLos actuados del proceso serán remitidos al Tribunal Disciplinario Superior para su\narchivo.\n\nCAPÍTULO VI\nRECURSO DE APELACIÓN",
+      "documento": "Ley N.º 101 — Régimen Disciplinario de la Policía Boliviana",
+      "fuente_pdf": "assets/ley-101.pdf"
+    },
+    {
+      "id": "ley101-art-96",
+      "numero": "Artículo 96",
+      "titulo": "APELACIÓN",
+      "texto": "I. Dentro del término de tres días hábiles perentorios, computables a partir del día\nsiguiente hábil al de la notificación con la Resolución, las partes podrán interponer\nRecurso de Apelación fundamentada ante el Tribunal Disciplinario Departamental,\ndebiendo anunciar que apelarán el fallo emitido en la misma Audiencia Oral de\nProcesamiento.\n\nII. Una vez presentado el recurso de Apelación en forma escrita, el Tribunal\nDisciplinario Departamental trasladará a la otra parte el recurso, que podrá ser\ncontestado en el mismo plazo. Con o sin respuesta, el Tribunal concederá el recurso\nen efecto suspensivo, y remitirá en el plazo de veinticuatro horas los actuados al\nTribunal Disciplinario Superior para su consideración en grado de Apelación.",
+      "documento": "Ley N.º 101 — Régimen Disciplinario de la Policía Boliviana",
+      "fuente_pdf": "assets/ley-101.pdf"
+    },
+    {
+      "id": "ley101-art-97",
+      "numero": "Artículo 97",
+      "titulo": "PROCEDENCIA",
+      "texto": "El recurso de apelación procede contra las\nResoluciones de Primera Instancia:\n\n1. Por inobservancia o vulneración de la Constitución Política del Estado, la Ley\nOrgánica o esta Ley.\n\n2. Cuando el precepto legal que se invoque constituya un defecto del\nprocedimiento, el recurso solo será admisible si la interesada o el interesado ha\nreclamado oportunamente su saneamiento o ha efectuado reserva de recurrir,\nsalvo en los casos de vicios de la resolución.\n\n3. En el recurso se citará concretamente las disposiciones legales que se\n\nGaceta Oficial del Estado Plurinacional de Bolivia\nDerechos Reservados ®2010 - www.gacetaoficialdebolivia.gob.bo\n\nconsideren violadas y se expresará cuál es la aplicación legal que se pretende,\nindicándose por separado cada vulneración con sus fundamentos.",
+      "documento": "Ley N.º 101 — Régimen Disciplinario de la Policía Boliviana",
+      "fuente_pdf": "assets/ley-101.pdf"
+    },
+    {
+      "id": "ley101-art-98",
+      "numero": "Artículo 98",
+      "titulo": "RESOLUCIÓN DE APELACIÓN",
+      "texto": "El Tribunal Disciplinario\nSuperior, recibidos los actuados en grado de apelación, actuará de puro derecho, pudiendo\nrecibirse únicamente prueba documental de reciente obtención.\n\nLa Resolución de Apelación deberá ser pronunciada en el plazo de diez días hábiles y\npodrá:\n\n1. Confirmar en todo o en parte la Resolución de Primera Instancia,\npronunciándose en el fondo cuando corresponda.\n\n2. Revocar en todo o en parte la Resolución de Primera Instancia, pronunciándose\nen el fondo.\n\n3. Anular la Resolución de Primera Instancia, cuando le sea imposible reparar\ndirectamente la inobservancia de la ley o su errónea aplicación, devolviendo al\nTribunal de origen para su reparación.\n\nLas partes, dentro de las veinticuatro horas siguientes a su notificación, con la\nResolución podrán solicitar complementación y enmienda, que de ser admitida no podrá afectar\nal fondo de la resolución, la que será resuelta en el plazo de veinticuatro horas.\n\nEjecutoriada la Resolución Final, el Tribunal Disciplinario Superior remitirá al\nComando General de la Policía Boliviana para su ejecución, cumplimiento y archivo.",
+      "documento": "Ley N.º 101 — Régimen Disciplinario de la Policía Boliviana",
+      "fuente_pdf": "assets/ley-101.pdf"
+    },
+    {
+      "id": "ley101-art-99",
+      "numero": "Artículo 99",
+      "titulo": "CONTENIDO DE LA RESOLUCIÓN DE APELACIÓN",
+      "texto": "El\nTribunal Disciplinario Superior emitirá la Resolución Final, que deberá contener:\n\na) Identificación del Tribunal Disciplinario Superior que conoció el recurso.\n\nb) Número de Resolución y fecha de emisión.\n\nc) La identificación de las partes.\n\nd) Relación de la Resolución de Primera Instancia y del Recurso.\n\ne) El análisis y valoración de la prueba adjuntada al recurso.\n\nf) Fundamentación legal que da lugar a la Resolución.\n\ng) Constancia de la disidencia fundamentada, si existe.\n\nh) La parte resolutiva, en la que el Tribunal adopta su decisión.\n\ni) Firma de las y los miembros del Tribunal Disciplinario Superior.\n\nCAPÍTULO VII\n\nGaceta Oficial del Estado Plurinacional de Bolivia\nDerechos Reservados ®2010 - www.gacetaoficialdebolivia.gob.bo\n\nEJECUCIÓN DE RESOLUCIONES",
+      "documento": "Ley N.º 101 — Régimen Disciplinario de la Policía Boliviana",
+      "fuente_pdf": "assets/ley-101.pdf"
+    },
+    {
+      "id": "ley101-art-100",
+      "numero": "Artículo 100",
+      "titulo": "ANTECEDENTES DISCIPLINARIOS",
+      "texto": "Únicamente las\nResoluciones sancionatorias ejecutoriadas constituirán antecedentes disciplinarios, que\nconstarán en el archivo personal. El Tribunal Disciplinario Superior a través de su\nDepartamento de Archivo, Registros y Antecedentes será el único órgano autorizado para su\ncertificación.\n\nLos memorándums de sanción por falta leve, se consideran deméritos y no\nantecedentes disciplinarios.\n\nTampoco se consideran antecedentes disciplinarios y no podrá emitirse certificaciones\nsobre:\n\na) Las denuncias.\n\nb) Las investigaciones en curso.\n\nc) Los procesos disciplinarios no concluidos o con archivo de obrados.\n\nd) Resolución de Sobreseimiento, Rechazo, Absolución o Prescripción con\narchivo de obrados.",
+      "documento": "Ley N.º 101 — Régimen Disciplinario de la Policía Boliviana",
+      "fuente_pdf": "assets/ley-101.pdf"
+    },
+    {
+      "id": "ley101-art-101",
+      "numero": "Artículo 101",
+      "titulo": "CUMPLIMIENTO DE RESOLUCIONES DISCIPLINARIAS",
+      "texto": "I. El Comando General de la Policía Boliviana a través de la Dirección Nacional de\nPersonal, ejecutará las Resoluciones emitidas por el Tribunal Disciplinario Superior,\nadjuntando al archivo de la servidora o el servidor público policial sancionado.\n\nEn los casos de sanciones por retiro temporal de la institución, el Comando General\nde la Policía Boliviana, dispondrá la ejecución de la sanción manteniendo el ítem del\nfuncionario sin goce de haberes. Cuando haya sido cumplida procederá a su\nreincorporación al servicio activo y asignación de destino, a la presentación de su\nsolicitud, en el plazo de ocho días ante la Dirección General de Recursos Humanos a\nobjeto de que se le asignen funciones, cuyo incumplimiento dará lugar a su\nprocesamiento por la falta grave de deserción.\n\nII. La sanción dictaminada en la Resolución Sancionatoria, comenzará a contabilizarse a\npartir de la suspensión.\n\nCAPÍTULO VIII\nPROCEDIMIENTOS ESPECIALES",
+      "documento": "Ley N.º 101 — Régimen Disciplinario de la Policía Boliviana",
+      "fuente_pdf": "assets/ley-101.pdf"
+    },
+    {
+      "id": "ley101-art-102",
+      "numero": "Artículo 102",
+      "titulo": "Ley 101",
+      "texto": "(PROCEDIMIENTO ANTE LAS FALTAS GRAVES EN\nFLAGRANCIA O DE CONNOTACIÓN INSTITUCIONAL). La o el Fiscal Policial, al\nasumir conocimiento de la comisión de una falta grave en flagrancia o de connotación\ninstitucional, reunirá todos los antecedentes del caso en el plazo máximo de cuarenta y ocho\n\nGaceta Oficial del Estado Plurinacional de Bolivia\nDerechos Reservados ®2010 - www.gacetaoficialdebolivia.gob.bo\n\nhoras para emitir la Acusación Fiscal Policial ante el Tribunal Disciplinario Departamental,\nquien evaluará los antecedentes para emitir o no el Auto Inicial de Proceso.\n\nDictado el Auto Inicial de Proceso, pondrá a la procesada o al procesado bajo\ndisposición procesal, y en el plazo máximo de cuarenta y ocho horas llevará a cabo la audiencia\nde proceso, que en caso de ser necesario podrá ser móvil. Concluida la audiencia, se emitirá la\nResolución de Primera Instancia.\n\nDe interponerse apelación, el Tribunal Disciplinario Superior, deberá resolver el\nrecurso dentro de los siguientes cinco días de su recepción.",
+      "documento": "Ley N.º 101 — Régimen Disciplinario de la Policía Boliviana",
+      "fuente_pdf": "assets/ley-101.pdf"
+    },
+    {
+      "id": "ley101-art-103",
+      "numero": "Artículo 103",
+      "titulo": "Ley 101",
+      "texto": "(PROCEDIMIENTO ANTE LA FALTA GRAVE DE\nDESERCIÓN). En los casos de Deserción, la o el Superior de la Unidad informará por escrito\na la o al Fiscal Policial, debiendo adjuntar originales o copias legalizadas de los documentos\nque comprueben la falta, sin perjuicio de remitir los antecedentes al Comando Departamental o\na la Dirección Nacional correspondiente.\n\nLa o el Fiscal Policial, al asumir conocimiento del hecho dispondrá que una\ninvestigadora o un investigador verifique las circunstancias de la posible ausencia de la\nservidora o servidor público policial en el plazo de cuarenta y ocho horas. Constatada la\nausencia, emitirá requerimiento de inicio de investigaciones e informará al Tribunal\nDisciplinario Departamental y dentro de los cinco días hábiles emitirá su Acusación.\n\nEl Tribunal Disciplinario Departamental, recepcionada la Acusación en el plazo\nmáximo de cuarenta y ocho horas emitirá el Auto de Procesamiento, que será notificado en el\núltimo destino laboral o en el domicilio registrado en su archivo personal, y dentro de las\nsiguientes setenta y dos horas llevará a cabo la audiencia del proceso, emitiendo la Resolución\nde Primera Instancia al finalizar la misma.\n\nLa ausencia injustificada de la procesada o del procesado a los actos del proceso, no\nimpide su continuación, correspondiendo la designación de una Abogada o un Abogado de\noficio a los efectos de garantizar su derecho a la defensa.\n\nDe interponerse apelación, el Tribunal Disciplinario Superior, deberá resolver el\nrecurso dentro de los siguientes cinco días de su recepción.\n\nDISPOSICIONES ADICIONALES\n\nPRIMERA. (SUSPENSIÓN INDEFINIDA). El Comando General o el Comando\nDepartamental de la Policía Boliviana, mediante Resolución Administrativa, dispondrá la\nSuspensión Indefinida de la institución sin goce de haberes, cuando la servidora o servidor\npúblico policial tenga la calidad jurídica de imputada o imputado, acusada o acusado por el\nMinisterio Público y se encuentre con medida cautelar de detención preventiva o domiciliaria,\nque le impida cumplir funciones.\n\nSEGUNDA. (REASIGNACIÓN DE FUNCIONES POR IMPUTACIÓN DEL\nMINISTERIO PÚBLICO). La servidora o servidor público policial que fuera imputado por el\nMinisterio Público y que se encuentre con medidas sustitutivas a la detención preventiva, será\npuesto a disposición del Comando Departamental, para la reasignación de funciones en\n\nGaceta Oficial del Estado Plurinacional de Bolivia\nDerechos Reservados ®2010 - www.gacetaoficialdebolivia.gob.bo\n\nunidades operativas cumpliendo servicio interno y con prohibición de usar uniforme fuera de\nlas instalaciones policiales, con goce de haberes hasta la culminación del proceso penal o hasta\nque se modifique su situación jurídica.\n\nTERCERA. (RESTITUCIÓN DE DERECHOS). El mismo Comando que emitió\nla Resolución Administrativa de Suspensión Indefinida, mediante otra Resolución, dispondrá la\nrestitución de derechos institucionales de la servidora o servidor público policial, cuando:\n\na) Presente Sentencia Absolutoria Ejecutoriada.\n\nb) Presente Resolución Ejecutoriada que extinga la acción penal.\n\nc) Presente Resolución Ejecutoriada de Sobreseimiento.\n\nDebiendo remitir una copia original de la Resolución, al Comando General para su\nejecución, cumplimiento y archivo.\n\nCUARTA. (CÓMPUTO DE INASISTENCIA). A fines de contabilizar los días de\ninasistencia se tendrá en cuenta el tipo de servicio que presta la unidad o repartición policial;\ndebiendo computarse únicamente los días hábiles en aquellas que brindan servicios en horario\nde oficina y todos los días en las unidades o reparticiones policiales cuyo servicio es de\nveinticuatro horas.\n\nQUINTA. (DEL DESCANSO). Constituye el día de descanso el periodo de tiempo\nsimilar al de servicio, que se concede privativamente a la servidora o servidor público policial\nque ha cumplido un servicio ordinario previo. La servidora o servidor público policial que no\nha cumplido servicio no tiene derecho al descanso.\n\nDISPOSICIONES TRANSITORIAS\n\nPRIMERA. (SOCIALIZACIÓN). Sin perjuicio de la aplicación de la presente Ley,\nla o el Comandante General de la Policía Boliviana y las o los Comandantes Departamentales,\nquedan encargados de la socialización y capacitación a todo el personal de la presente Ley, en\nun plazo de noventa días a partir de su publicación, bajo responsabilidad.\n\nSEGUNDA. (ADECUACIÓN).\n\nI. Los procedimientos que, a la publicación de la presente Ley, se encuentren en etapa\nde investigación, dentro del plazo de 6 meses deberán ser concluidos con su rechazo o\nacusación, aplicando en todo caso la norma más favorable al procesado y el proceso\nde la presente Ley.\n\nII. Los procesos que se encuentran en actual trámite y hubieran sido objeto de acusación,\ncontinuarán rigiéndose por el Reglamento de Faltas Disciplinarias y sus Sanciones de\nla Policía Nacional aprobado mediante Resolución Suprema No. 222266 de 9 de\nFebrero de 2004, hasta su conclusión, debiendo concluir en un plazo máximo de doce\nmeses desde la publicación de esta Ley y se aplicará en todo caso la norma más\nfavorable a la procesada o el procesado.\n\nGaceta Oficial del Estado Plurinacional de Bolivia\nDerechos Reservados ®2010 - www.gacetaoficialdebolivia.gob.bo\n\nTERCERA. (ASIGNACIÓN PRESUPUESTARIA). Los Tribunales y Autoridades\ncompetentes, para el ejercicio de sus funciones contarán con un presupuesto especial asignado\nanualmente por el Comando General de la Policía Boliviana, exceptuando la Oficina de Control\nInterno y la Dirección Nacional de Investigaciones Especiales dependiente del Ministerio de\nGobierno que funcionará con su propio presupuesto.\n\nCUARTA. (APLICACIÓN). Las servidoras y servidores públicos policiales que con\nanterioridad a la presente disposición, hayan sido objeto de detención domiciliaria, preventiva,\nacusación formal, así como los que hayan sido retirados como consecuencia de un proceso\ndisciplinario, no percibirán salarios ni ninguna otra remuneración.\n\nDISPOSICIONES ABROGATORIAS Y DEROGATORIAS\n\nPRIMERA. (ABROGATORIA). Queda abrogado el Reglamento de Faltas\nDisciplinarias y sus Sanciones de la Policía Nacional aprobado mediante Resolución Suprema\nNo. 222266 de 9 de febrero de 2004.\n\nSEGUNDA. (DEROGATORIAS). Quedan derogadas todas las disposiciones\ncontrarias a la presente Ley.\n\nRemítase al Órgano Ejecutivo, para fines constitucionales.\n\nEs dada en la Sala de Sesiones de la Asamblea Legislativa Plurinacional, a los\nveintitrés días del mes de marzo del año dos mil once.\n\nFdo. René Oscar Martínez Callahuanca, Héctor Enrique Arce Zaconeta, Zonia\nGuardia Melgar, Carmen García M., Agripina Ramírez Nava, Ángel David Cortés Villegas.\n\nPor tanto, la promulgo para que se tenga y cumpla como Ley del\nEstado Plurinacional de Bolivia.\n\nPalacio de Gobierno de la ciudad de La Paz, a los cuatro días del mes de abril de\ndos mil once años.\n\nFDO. EVO MORALES AYMA, Oscar Coca Antezana, Sacha Sergio Llorentty\nSolíz, Nilda Copa Condori.\n\nGaceta Oficial del Estado Plurinacional de Bolivia\nDerechos Reservados ®2010 - www.gacetaoficialdebolivia.gob.bo",
+      "documento": "Ley N.º 101 — Régimen Disciplinario de la Policía Boliviana",
+      "fuente_pdf": "assets/ley-101.pdf"
+    }
+  ]
+}

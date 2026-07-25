@@ -1,7 +1,7 @@
 {
   "metadatos": {
-    "version": "2.5.0",
-    "fecha_integracion": "2026-07-24",
+    "version": "2.6.1",
+    "fecha_integracion": "2026-07-25",
     "documentos_totales": 16
   },
   "documentos": [
@@ -110,45 +110,50 @@
       "titulo": "Ley N.º 777 — Sistema de Planificación Integral del Estado",
       "abreviatura": "Ley 777",
       "categoria": "Planificación pública",
-      "url": "https://www.gacetaoficialdebolivia.gob.bo/normas/buscar/777",
       "icono": "briefcase",
-      "descripcion": "Acceso a la publicación oficial de la Ley N.º 777."
+      "descripcion": "PDF institucional incorporado y consulta estructurada por sus 36 artículos.",
+      "archivo": "data/ley-777.json",
+      "pdf": "assets/ley-777.pdf"
     },
     {
       "id": "ley101",
       "titulo": "Ley N.º 101 — Régimen Disciplinario de la Policía Boliviana",
       "abreviatura": "Ley 101",
       "categoria": "Policial y disciplinaria",
-      "url": "https://www.gacetaoficialdebolivia.gob.bo/normas/buscar/101",
       "icono": "shield",
-      "descripcion": "Acceso a la publicación oficial de la Ley N.º 101."
+      "descripcion": "PDF institucional incorporado y consulta estructurada por sus 103 artículos.",
+      "archivo": "data/ley-101.json",
+      "pdf": "assets/ley-101.pdf"
     },
     {
       "id": "leyorganicapolicia",
-      "titulo": "Ley Orgánica de la Policía Boliviana",
+      "titulo": "Ley Orgánica de la Policía Nacional — Ley N.º 734",
       "abreviatura": "Ley Orgánica",
       "categoria": "Policial e institucional",
-      "url": "https://www.lexivox.org/norms/BO-L-734.html",
       "icono": "shield",
-      "descripcion": "Consulta de la Ley Orgánica de la Policía Boliviana."
+      "descripcion": "Ley N.º 734 incorporada en PDF y estructurada por sus 138 artículos.",
+      "archivo": "data/ley-organica-policia.json",
+      "pdf": "assets/ley-organica-policia.pdf"
     },
     {
       "id": "ley004",
       "titulo": "Ley N.º 004 — Marcelo Quiroga Santa Cruz",
       "abreviatura": "Ley 004",
       "categoria": "Lucha contra la corrupción",
-      "url": "https://www.lexivox.org/norms/BO-L-N4.html",
       "icono": "scale",
-      "descripcion": "Ley de lucha contra la corrupción, enriquecimiento ilícito e investigación de fortunas."
+      "descripcion": "PDF institucional incorporado y consulta estructurada por sus 40 artículos.",
+      "archivo": "data/ley-004.json",
+      "pdf": "assets/ley-004.pdf"
     },
     {
       "id": "ley348",
       "titulo": "Ley N.º 348 — Vida Libre de Violencia",
       "abreviatura": "Ley 348",
       "categoria": "Protección y derechos",
-      "url": "https://www.silep.gob.bo/norma/12781/ley_actualizada",
       "icono": "scale",
-      "descripcion": "Ley Integral para Garantizar a las Mujeres una Vida Libre de Violencia."
+      "descripcion": "PDF institucional incorporado y consulta estructurada por sus 100 artículos.",
+      "archivo": "data/ley-348.json",
+      "pdf": "assets/ley-348.pdf"
     }
   ]
 }

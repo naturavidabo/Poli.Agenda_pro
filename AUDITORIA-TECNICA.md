@@ -1,48 +1,35 @@
-# Auditoría técnica - Agenda Policial v2.4.9
+# Auditoría técnica — Agenda Policial v2.6.1
 
-## Correcciones aplicadas
+Fecha de estabilización: 25 de julio de 2026.
 
-### 1. Reloj de actividad actual
-- Se corrigió el contador de la tarjeta **Actividad actual**.
-- Antes calculaba el tiempo contra la hora de inicio de la clase; por eso, durante una clase en curso, podía mostrar **Finalizado**.
-- Ahora, si la actividad está en curso, calcula contra la hora de finalización y muestra:
-  - `Finaliza en X min`
-  - `Finaliza en X h Y min`
-- La próxima actividad mantiene el cálculo contra la hora de inicio: `Faltan X min`.
+## Interfaz
 
-### 2. Fecha y hora local
-- Se mantiene el cálculo con fecha local del dispositivo.
-- La agenda recurrente semanal se ordena por día local y hora local.
-- Se revisaron las funciones de actividad actual, próxima actividad y cronología.
+- Barra inferior limitada a cinco opciones y verificada a 390 px de ancho.
+- Biblioteca permanece dentro de la misma fila, sin desbordamiento horizontal.
+- El acceso académico online se trasladó al encabezado.
+- Se eliminó la búsqueda global del encabezado.
+- La Biblioteca conserva un buscador propio, contextual y mejorado por nombre de ley, artículo y palabras clave.
 
-### 3. Biblioteca normativa y PDFs
-- Se incorporó el PDF del **Reglamento de la Comisión Sumaria ESP-UNIPOL** como archivo local.
-- El documento Sumario ahora muestra botón **Ver documento original PDF**.
-- Se revisó el catálogo completo de PDFs.
+## Biblioteca normativa
 
-## Verificación de PDFs
+- Ley N.º 777: 36 artículos estructurados + PDF local.
+- Ley N.º 101: 103 artículos estructurados + PDF local.
+- Ley Orgánica de la Policía Nacional, Ley N.º 734: 138 artículos estructurados + PDF local.
+- Ley N.º 004: 40 artículos estructurados + PDF local.
+- Ley N.º 348: 100 artículos estructurados + PDF local.
+- Los accesos priorizan el PDF incorporado; no dependen de enlaces externos para estos cinco documentos.
 
-| Documento | PDF | Verificación |
-|---|---|---|
-| Reglamento de Uniformes | assets/reglamento-uniformes-2021.pdf | OK |
-| Reglamento Comisión Sumaria | assets/reglamento-comision-sumaria-unipol.pdf | OK |
-| Constitución Política del Estado | assets/cpe.pdf | OK |
-| Ley 1178 / D.S. 23215 | assets/ley-1178-ds-23215.pdf | OK |
-| D.S. 23318-A | assets/ds-23318-a.pdf | OK |
-| D.S. 26237 | assets/ds-26237.pdf | OK |
-| D.S. 29820 | assets/ds-29820.pdf | OK |
-| D.S. 29536 | assets/ds-29536.pdf | OK |
-| Código Penal / Procedimiento Penal | assets/codigo-penal-procedimiento-penal.pdf | OK |
+## Pruebas ejecutadas
 
-## Pruebas realizadas
+- Sintaxis de `app.js`: correcta.
+- Sintaxis de `online.js`: correcta.
+- Validación de todos los archivos JSON: correcta.
+- Apertura e información básica de los cinco PDF: correcta y sin cifrado.
+- Prueba de interfaz simulada a 390 × 844 px: cinco botones de navegación, sin desbordamiento y sin errores JavaScript.
+- Prueba de acceso al Área Académica Online: correcta.
+- Prueba de búsqueda y apertura de la Ley N.º 101 y Ley N.º 348: correcta.
+- Archivos totales del repositorio: 86, por debajo del límite solicitado de 100.
 
-- `node --check app.js`: OK.
-- `node --check sw.js`: OK.
-- `version.json`: actualizado a 2.4.9.
-- Service Worker: caché actualizado a `agenda-policial-v2.4.9`.
-- PDF Sumario renderizado: 11 páginas, primera página verificada visualmente.
-- Catálogo PDF: rutas existentes y archivos no vacíos.
+## Actualización
 
-## Observación
-
-Para que el celular deje de mostrar una versión anterior, después de subir esta versión al repositorio se recomienda abrir `reset.html` una vez y luego ingresar con `index.html?v=2.4.9`.
+La versión conserva IndexedDB y la activación local existente. El Service Worker usa el caché `agenda-policial-v2.6.1` y elimina cachés antiguos de Agenda Policial durante la activación.
