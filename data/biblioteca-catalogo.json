@@ -1,8 +1,8 @@
 {
   "metadatos": {
-    "version": "2.2.0",
-    "fecha_integracion": "2026-07-09",
-    "documentos_totales": 11
+    "version": "2.5.0",
+    "fecha_integracion": "2026-07-24",
+    "documentos_totales": 16
   },
   "documentos": [
     {
@@ -104,6 +104,51 @@
       "archivo": "data/codigo-procedimiento-penal.json",
       "pdf": "assets/codigo-penal-procedimiento-penal.pdf",
       "icono": "scale"
+    },
+    {
+      "id": "ley777",
+      "titulo": "Ley N.º 777 — Sistema de Planificación Integral del Estado",
+      "abreviatura": "Ley 777",
+      "categoria": "Planificación pública",
+      "url": "https://www.gacetaoficialdebolivia.gob.bo/normas/buscar/777",
+      "icono": "briefcase",
+      "descripcion": "Acceso a la publicación oficial de la Ley N.º 777."
+    },
+    {
+      "id": "ley101",
+      "titulo": "Ley N.º 101 — Régimen Disciplinario de la Policía Boliviana",
+      "abreviatura": "Ley 101",
+      "categoria": "Policial y disciplinaria",
+      "url": "https://www.gacetaoficialdebolivia.gob.bo/normas/buscar/101",
+      "icono": "shield",
+      "descripcion": "Acceso a la publicación oficial de la Ley N.º 101."
+    },
+    {
+      "id": "leyorganicapolicia",
+      "titulo": "Ley Orgánica de la Policía Boliviana",
+      "abreviatura": "Ley Orgánica",
+      "categoria": "Policial e institucional",
+      "url": "https://www.lexivox.org/norms/BO-L-734.html",
+      "icono": "shield",
+      "descripcion": "Consulta de la Ley Orgánica de la Policía Boliviana."
+    },
+    {
+      "id": "ley004",
+      "titulo": "Ley N.º 004 — Marcelo Quiroga Santa Cruz",
+      "abreviatura": "Ley 004",
+      "categoria": "Lucha contra la corrupción",
+      "url": "https://www.lexivox.org/norms/BO-L-N4.html",
+      "icono": "scale",
+      "descripcion": "Ley de lucha contra la corrupción, enriquecimiento ilícito e investigación de fortunas."
+    },
+    {
+      "id": "ley348",
+      "titulo": "Ley N.º 348 — Vida Libre de Violencia",
+      "abreviatura": "Ley 348",
+      "categoria": "Protección y derechos",
+      "url": "https://www.silep.gob.bo/norma/12781/ley_actualizada",
+      "icono": "scale",
+      "descripcion": "Ley Integral para Garantizar a las Mujeres una Vida Libre de Violencia."
     }
   ]
 }

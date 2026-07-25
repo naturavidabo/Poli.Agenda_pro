@@ -1,12 +1,1 @@
-{
-  "version": "2.4.9",
-  "name": "Agenda Policial",
-  "date": "2026-07-15",
-  "notes": [
-    "Corrección del contador: actividad actual ahora muestra tiempo hasta finalizar, no hasta iniciar",
-    "Fecha y hora local verificadas para ordenar actividad actual, próxima actividad y cronología",
-    "PDF del Reglamento de la Comisión Sumaria ESP-UNIPOL incorporado y visible",
-    "Catálogo de biblioteca revisado con rutas PDF existentes para CPE, SAFCO, decretos, Código Penal, CPP, Sumario y Uniformes",
-    "Service Worker actualizado a cache 2.4.9 para forzar reemplazo de versión anterior"
-  ]
-}
+{"version":"2.6.0","build":"2026-07-25","channel":"online-preparada"}

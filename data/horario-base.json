@@ -8,7 +8,9 @@
     "turno": "Mañana",
     "nivel": "Capitanes",
     "periodo": "Segundo semestre - Gestión 2026",
-    "vigente": true
+    "vigente": true,
+    "actualizado": "2026-07-24",
+    "descripcion": "Nivel Capitanes, Paralelo A, turno mañana, segundo semestre 2026"
   },
   "entradas": [
     {
@@ -708,5 +710,5 @@
       "observacion": ""
     }
   ],
-  "fuente_visual": "assets/horario-referencia.webp"
+  "fuente_visual": "assets/horario-segundo-semestre-2026.png"
 }

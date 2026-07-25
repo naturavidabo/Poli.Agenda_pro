@@ -1,5 +1,5 @@
-const CACHE='agenda-policial-v2.4.9';
-const CORE=['./','./index.html','./styles.css','./app.js','./manifest.webmanifest','./version.json','./icons/icon-192.png','./icons/icon-512.png','./icons/icon-maskable-512.png','./assets/escudo-policia.png','./assets/reglamento-comision-sumaria-unipol.pdf','./data/reglamento-uniformes.json','./data/reglamento-sumario-unipol.json','./data/horario-base.json','./data/biblioteca-catalogo.json'];
+const CACHE='agenda-policial-v2.6.0';
+const CORE=['./','./index.html','./styles.css','./online.css','./app.js','./online.js','./manifest.webmanifest','./version.json','./icons/icon-192.png','./icons/icon-512.png','./icons/icon-maskable-512.png','./assets/escudo-policia.png','./assets/horario-segundo-semestre-2026.png','./assets/reglamento-comision-sumaria-unipol.pdf','./data/reglamento-uniformes.json','./data/reglamento-sumario-unipol.json','./data/horario-base.json','./data/biblioteca-catalogo.json'];
 
 self.addEventListener('install',event=>{
   event.waitUntil((async()=>{
@@ -53,7 +53,7 @@ self.addEventListener('fetch',event=>{
   if(event.request.method!=='GET') return;
   const url=new URL(event.request.url);
   const path=url.pathname;
-  const isCore=path.endsWith('/')||path.endsWith('/index.html')||path.endsWith('/app.js')||path.endsWith('/styles.css')||path.endsWith('/manifest.webmanifest')||path.endsWith('/version.json')||path.endsWith('/sw.js');
+  const isCore=path.endsWith('/')||path.endsWith('/index.html')||path.endsWith('/app.js')||path.endsWith('/online.js')||path.endsWith('/styles.css')||path.endsWith('/online.css')||path.endsWith('/manifest.webmanifest')||path.endsWith('/version.json')||path.endsWith('/sw.js');
   if(event.request.mode==='navigate'||isCore){
     event.respondWith(networkFirst(event.request));
     return;
