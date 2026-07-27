@@ -1,4 +1,4 @@
-# Auditoría técnica — Agenda Policial v2.6.4
+# Auditoría técnica — Agenda Policial v2.6.5
 
 Fecha de estabilización: 27 de julio de 2026.
 
@@ -27,7 +27,7 @@ Fecha de estabilización: 27 de julio de 2026.
 - Hora mística y organización/control de lunes a viernes.
 - Acondicionamiento físico el lunes de 14:00 a 16:00.
 - Tiro policial el jueves de 14:00 a 16:00.
-- Migración v2.6.4 conserva un historial local antes de sustituir un horario incorrecto.
+- Migración v2.6.5 conserva un historial local antes de sustituir un horario incorrecto.
 
 ## Nómina
 
@@ -49,4 +49,4 @@ Fecha de estabilización: 27 de julio de 2026.
 
 ## Actualización
 
-La versión conserva IndexedDB, localStorage, activaciones, roles locales y publicaciones de la v2.6.3. El caché `agenda-policial-v2.6.4` sustituye los cachés antiguos de Agenda Policial sin borrar los datos del usuario.
+La versión conserva IndexedDB, localStorage, activaciones, roles locales y publicaciones de la v2.6.3. El caché `agenda-policial-v2.6.5` sustituye los cachés antiguos de Agenda Policial sin borrar los datos del usuario.

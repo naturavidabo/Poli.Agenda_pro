@@ -1,0 +1,19 @@
+Agenda Policial v2.6.5 — verificación técnica
+
+Resultado: APROBADO PARA PRUEBA Y PUBLICACIÓN EN GITHUB PAGES
+
+1. Versión visible: 2.6.5
+2. Caché Service Worker: agenda-policial-v2.6.5
+3. Catálogo de horarios activos: operativo
+4. Horario Capitanes A: 53 bloques y actualización automática
+5. Selector “Elige tu horario”: operativo; solo muestra horarios activos
+6. Acceso online: campos Usuario y Contraseña
+7. Usuario de prueba 0000 / 0000: conservado
+8. Iconos decorativos del acceso online: retirados
+9. Roles locales: refresco inmediato y sincronización entre pestañas del mismo dispositivo
+10. Sincronización entre celulares: preparada, requiere proyecto Supabase conectado
+11. JavaScript app.js: sintaxis válida
+12. JavaScript online.js: sintaxis válida
+13. JSON principales: válidos
+14. Archivos del repositorio: por debajo de 100
+15. Activación, biblioteca offline y datos locales: conservados

@@ -1,4 +1,4 @@
--- Agenda Policial Online v2.6.4
+-- Agenda Policial Online v2.6.5
 -- Ejecutar una sola vez en Supabase SQL Editor. Las funciones son idempotentes.
 create extension if not exists pgcrypto;
 

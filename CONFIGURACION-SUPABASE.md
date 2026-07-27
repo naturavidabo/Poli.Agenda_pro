@@ -1,4 +1,4 @@
-# Configuración de Supabase — Agenda Policial v2.6.4
+# Configuración de Supabase — Agenda Policial v2.6.5
 
 1. Crear un proyecto nuevo en Supabase.
 2. Abrir SQL Editor y ejecutar `supabase-schema.sql`.
@@ -19,3 +19,6 @@ const ONLINE_CFG = {
 8. Desde Integrantes y roles, asignar encargado de curso, administrador académico y asistentes.
 
 El SQL incluye funciones para cerrar o reabrir el periodo académico. El cierre archiva publicaciones, desactiva a los usuarios no administradores y conserva la aplicación offline.
+
+## Nota v2.6.5
+La aplicación detecta cuando no existe conexión Supabase y trabaja en modo local. En ese modo, los cambios de rol se aplican en el mismo dispositivo y entre pestañas del mismo navegador. Para que un rol asignado aparezca automáticamente en otros celulares, debe crearse y conectarse un proyecto Supabase exclusivo para Agenda Policial usando `ONLINE_CFG.url` y `ONLINE_CFG.anonKey`.

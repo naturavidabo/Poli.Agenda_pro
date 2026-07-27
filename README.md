@@ -1,4 +1,4 @@
-# Agenda Policial v2.6.4
+# Agenda Policial v2.6.5
 
 Aplicación PWA de consulta normativa offline y apoyo académico con un área online opcional.
 
@@ -19,7 +19,7 @@ Aplicación PWA de consulta normativa offline y apoyo académico con un área on
 - Barra inferior estable con cinco accesos: Inicio, Formación, Tareas, Horario y Biblioteca.
 - Acceso académico ubicado en el encabezado y separado de la experiencia offline.
 - Biblioteca normativa con PDF locales y textos estructurados.
-- Service Worker y caché actualizados a la versión 2.6.4.
+- Service Worker y caché actualizados a la versión 2.6.5.
 
 ## Nómina académica preinstalada
 
@@ -52,3 +52,11 @@ Sin Supabase, la nómina y las pruebas funcionan localmente en cada dispositivo.
 ## Publicación
 
 El proyecto mantiene menos de 100 archivos y puede publicarse en GitHub Pages. No colocar claves secretas ni `service_role` dentro del repositorio.
+
+## Cambios v2.6.5
+- Selector **Elige tu horario** basado en un catálogo de horarios activos.
+- Capitanes A se actualiza automáticamente desde la plantilla oficial.
+- Acceso online simplificado a **Usuario** y **Contraseña**.
+- Se conserva el usuario de prueba `0000 / 0000`.
+- Área online sin iconos decorativos ni accesos duplicados.
+- Roles locales se refrescan y sincronizan entre pestañas del mismo dispositivo; entre celulares requieren Supabase.

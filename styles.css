@@ -66,3 +66,7 @@ body{background:linear-gradient(180deg,#e9efe5 0%,#f9faf5 38%,#edf3ea 100%)}
 .doc-item small{display:block;color:#607068;margin-top:8px;font-weight:750}
 .doc-status{display:inline-flex;border-radius:999px;padding:5px 8px;background:#e7f3e9;color:#245832;font-size:11px;font-weight:900;margin-bottom:7px}
 @media(max-width:420px){.academic-access{grid-template-columns:32px 1fr auto;padding:9px}.academic-access-state{padding:5px 7px}.academic-access-copy b{font-size:12px}.academic-access-copy small{font-size:10.5px}.nav-btn{font-size:9.5px}.nav-btn .ui-icon{width:20px;height:20px}}
+
+
+/* Selector de horarios v2.6.5 */
+.schedule-picker{padding:14px 16px;margin-bottom:12px;background:linear-gradient(135deg,#f7faf6,#eef5ef)}.schedule-picker label{display:grid;grid-template-columns:minmax(0,1fr) minmax(180px,280px);align-items:center;gap:12px;font-weight:900;color:#173b28}.schedule-picker select{width:100%;padding:11px 13px;border-radius:12px;border:1px solid #cddbd1;background:#fff;font:inherit;font-weight:800;color:#153c28}.schedule-picker small{display:block;margin-top:7px;color:#69766e}.schedule-auto-badge{display:inline-flex;align-items:center;padding:7px 10px;border-radius:999px;background:#e8f3ea;color:#235439;font-size:12px;font-weight:900}@media(max-width:620px){.schedule-picker label{grid-template-columns:1fr}.schedule-picker select{min-width:0}}

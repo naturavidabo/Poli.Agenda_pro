@@ -1,4 +1,4 @@
-/* Agenda Policial Online v2.6.4 — módulo académico opcional y nómina preinstalada */
+/* Agenda Policial Online v2.6.5 — acceso claro, usuario de prueba y roles locales estabilizados */
 const ONLINE_CFG = {
   url: '',
   anonKey: '',
@@ -9,6 +9,8 @@ const ACADEMIC_ROSTER_URL = './data/academic-users.json';
 const ACADEMIC_USERS_STORAGE = 'agenda-academic-users-v263';
 const ACADEMIC_POSTS_STORAGE = 'agenda-academic-posts-v263';
 const ACADEMIC_SESSION_STORAGE = 'agenda-academic-session';
+const ACADEMIC_TEST_CREDENTIAL = '0000';
+const ACADEMIC_ROLE_CHANNEL = 'agenda-academic-role-sync-v265';
 
 const ACADEMIC_TYPES = {
   examenes: {
@@ -198,9 +200,19 @@ async function academicLocalUsers() {
 }
 
 async function academicLocalLogin(ci, phone) {
-  const users = await academicLocalUsers();
   const ciKey = academicCredential(ci);
   const phoneKey = academicCredential(phone);
+  if (ciKey === ACADEMIC_TEST_CREDENTIAL && phoneKey === ACADEMIC_TEST_CREDENTIAL) {
+    return {
+      session_token: 'local:test-user',
+      user_id: 'test-user',
+      full_name: 'Usuario de prueba',
+      role: 'administrador_general',
+      roster_number: 0,
+      storage_mode: 'test_local'
+    };
+  }
+  const users = await academicLocalUsers();
   const user = users.find(item =>
     item.active &&
     item.ci &&
@@ -222,11 +234,14 @@ async function academicLocalLogin(ci, phone) {
 async function academicLogin() {
   const ci = $('#academicCi')?.value.trim();
   const phone = $('#academicPhone')?.value.trim();
-  if (!ci || !phone) return toast('Ingrese carnet y número celular');
+  if (!ci || !phone) return toast('Ingrese usuario y contraseña');
 
   try {
     let user;
-    if (onlineConfigured()) {
+    const isTest = academicCredential(ci) === ACADEMIC_TEST_CREDENTIAL && academicCredential(phone) === ACADEMIC_TEST_CREDENTIAL;
+    if (isTest) {
+      user = await academicLocalLogin(ci, phone);
+    } else if (onlineConfigured()) {
       user = await academicRPC('academic_login', { p_ci: ci, p_phone: phone });
       if (Array.isArray(user)) user = user[0];
     } else {
@@ -809,6 +824,7 @@ async function saveAcademicUser(event, id) {
         users.push({ ...data, id: uid(), data_status: data.ci && data.phone ? 'completo' : 'pendiente' });
       }
       academicSaveLocalUsers(users);
+      notifyAcademicRoleChange(id || '', data);
     }
     closeModal();
     loadAcademicUsers();
@@ -899,6 +915,7 @@ async function importAcademicRosterFile() {
 
 async function validateAcademicLocalSession() {
   if (!academicSession) return;
+  if (academicSession.storage_mode === 'test_local' && academicSession.session_token === 'local:test-user') return;
   if (onlineConfigured() && academicSession.storage_mode === 'local_roster') {
     academicSession = null;
     localStorage.removeItem(ACADEMIC_SESSION_STORAGE);
@@ -940,7 +957,7 @@ window.addEventListener('DOMContentLoaded', () => {
 });
 
 /* =========================================================
-   Agenda Policial Online v2.6.4 — panel académico pulido
+   Agenda Policial Online v2.6.5 — panel académico pulido
    Inspirado en una vista rápida por pendientes y materias,
    conservando la identidad institucional de Agenda Policial.
    ========================================================= */
@@ -1558,3 +1575,169 @@ window.addEventListener('online', () => {
 window.addEventListener('offline', () => {
   if (state?.view === 'online' && academicSession) render();
 });
+
+
+/* =========================================================
+   Agenda Policial Online v2.6.5 — interfaz clara y roles
+   ========================================================= */
+let academicRoleBus = null;
+try { academicRoleBus = 'BroadcastChannel' in window ? new BroadcastChannel(ACADEMIC_ROLE_CHANNEL) : null; } catch {}
+
+function academicIsTestSession() {
+  return academicSession?.storage_mode === 'test_local' && academicSession?.session_token === 'local:test-user';
+}
+
+function refreshAcademicSessionFromLocalStore() {
+  if (!academicSession || onlineConfigured() || academicIsTestSession()) return false;
+  const stored = academicLocalStorageUsers().users || [];
+  const user = stored.find(item => String(item.id) === String(academicSession.user_id));
+  if (!user || !user.active) {
+    academicSession = null;
+    localStorage.removeItem(ACADEMIC_SESSION_STORAGE);
+    return true;
+  }
+  const changed = academicSession.role !== user.role || academicSession.full_name !== user.full_name;
+  academicSession.role = user.role || 'lector';
+  academicSession.full_name = user.full_name || academicSession.full_name;
+  localStorage.setItem(ACADEMIC_SESSION_STORAGE, JSON.stringify(academicSession));
+  return changed;
+}
+
+function notifyAcademicRoleChange(userId, data = {}) {
+  const payload = { type: 'academic-user-updated', userId: String(userId || ''), role: data.role || '', active: data.active, at: Date.now() };
+  try { localStorage.setItem('agenda-academic-role-event-v265', JSON.stringify(payload)); } catch {}
+  try { academicRoleBus?.postMessage(payload); } catch {}
+}
+
+function handleAcademicRoleEvent(event) {
+  const payload = event?.data || event;
+  if (!payload || payload.type !== 'academic-user-updated') return;
+  const changed = refreshAcademicSessionFromLocalStore();
+  if (state?.view === 'online' && (changed || String(payload.userId) === String(academicSession?.user_id))) render();
+}
+try { academicRoleBus?.addEventListener('message', handleAcademicRoleEvent); } catch {}
+window.addEventListener('storage', event => {
+  if (event.key === ACADEMIC_USERS_STORAGE || event.key === 'agenda-academic-role-event-v265') {
+    let payload = { type: 'academic-user-updated' };
+    try { if (event.newValue && event.key === 'agenda-academic-role-event-v265') payload = JSON.parse(event.newValue); } catch {}
+    handleAcademicRoleEvent(payload);
+  }
+});
+
+onlineLoginView = function onlineLoginViewV265() {
+  return `
+    <section class="online-page online-login-clean">
+      <div class="online-login-hero clean">
+        <span class="eyebrow">Acceso reservado al curso</span>
+        <h2>Área académica online</h2>
+        <p>Ingrese con las credenciales asignadas. El resto de la aplicación continúa disponible sin conexión.</p>
+      </div>
+      <div class="card academic-login clean">
+        <h3>Iniciar sesión</h3>
+        <label>Usuario
+          <input id="academicCi" inputmode="numeric" autocomplete="username" placeholder="Ingrese su usuario">
+        </label>
+        <label>Contraseña
+          <input id="academicPhone" inputmode="tel" autocomplete="current-password" placeholder="Ingrese su contraseña" type="password">
+        </label>
+        <button class="btn academic-main-btn" onclick="academicLogin()">Ingresar</button>
+        <p class="academic-credential-note">Usuario del curso: C.I. · Contraseña: número de celular.</p>
+        <div class="online-test-note"><b>Acceso de prueba</b><span>Usuario 0000 · Contraseña 0000</span></div>
+        ${!onlineConfigured() ? `<div class="online-setup-note"><b>Modo local de preparación</b><span>Los roles se conservan en este dispositivo. La sincronización entre celulares comenzará al conectar un proyecto Supabase exclusivo para Agenda Policial.</span></div>` : ''}
+      </div>
+    </section>
+  `;
+};
+
+function academicTextNav() {
+  return `
+    <nav class="academic-text-nav" aria-label="Secciones académicas">
+      <button class="${academicTab === 'panel' ? 'active' : ''}" onclick="setAcademicTab('panel')">Panel</button>
+      <button class="${academicTab === 'formaciones' ? 'active' : ''}" onclick="setAcademicTab('formaciones')">Formaciones</button>
+      <button class="${academicTab === 'tareas' ? 'active' : ''}" onclick="setAcademicTab('tareas')">Tareas</button>
+      <button class="${academicTab === 'examenes' ? 'active' : ''}" onclick="setAcademicTab('examenes')">Exámenes</button>
+      <button class="${academicTab === 'resumenes' ? 'active' : ''}" onclick="setAcademicTab('resumenes')">Resúmenes</button>
+      <button class="${academicTab === 'calendario' ? 'active' : ''}" onclick="setAcademicTab('calendario')">Agenda</button>
+      ${academicCanManageUsers() ? `<button class="${academicTab === 'usuarios' ? 'active' : ''}" onclick="setAcademicTab('usuarios')">Roles</button>` : ''}
+    </nav>
+  `;
+}
+
+academicSubnav = function academicSubnavV265() { return academicTextNav(); };
+
+academicProfileHeader = function academicProfileHeaderV265() {
+  refreshAcademicSessionFromLocalStore();
+  const connection = academicConnectionState();
+  const test = academicIsTestSession();
+  return `
+    <div class="online-profile compact-profile">
+      <div class="online-avatar">${esc(academicInitials(academicSession?.full_name || 'AP'))}</div>
+      <div class="online-profile-copy">
+        <span class="eyebrow">Área académica · Capitanes A</span>
+        <h2>${esc(academicSession?.full_name || 'Usuario')}</h2>
+        <div class="online-profile-meta">
+          <span>${esc(academicRoleLabel(academicSession?.role))}</span>
+          <span class="sync-pill ${test ? 'prep' : connection.cls}">${test ? 'Prueba local' : connection.label}</span>
+        </div>
+      </div>
+      <button class="online-logout" onclick="academicLogout()">Salir</button>
+    </div>
+  `;
+};
+
+academicDashboard = function academicDashboardV265() {
+  const manage = academicCanManageUsers() ? `
+    <button class="academic-manage-card clean-manage" onclick="setAcademicTab('usuarios')">
+      <span><b>Integrantes y roles</b><small>Asignar las funciones del curso y activar accesos.</small></span>
+      <strong>Abrir</strong>
+    </button>` : '';
+  return `
+    ${academicProfileHeader()}
+    ${academicTextNav()}
+    <section class="academic-welcome clean-welcome">
+      <div><span class="eyebrow">${academicGreeting()}</span><h2>Panel académico</h2><p id="academicTodayText">Revisando la actividad de hoy…</p></div>
+    </section>
+    <div class="academic-summary-grid" id="academicSummaryGrid">
+      ${['Formación','Tareas','Examen','Resúmenes'].map(label => `<div class="academic-summary-card loading"><strong>—</strong><b>${label}</b><small>Cargando…</small></div>`).join('')}
+    </div>
+    <section class="academic-today-card">
+      <div class="online-section-heading compact"><div><span class="eyebrow">Información prioritaria</span><h3>Hoy y próximos días</h3></div><button class="text-btn" onclick="setAcademicTab('calendario')">Ver agenda</button></div>
+      <div id="academicUpcomingList" class="academic-timeline"><div class="academic-loading-line"></div></div>
+    </section>
+    <section class="academic-recent-card">
+      <div class="online-section-heading compact"><div><span class="eyebrow">Actualizaciones</span><h3>Actividad reciente</h3></div>${academicCanPublish() ? `<button class="text-btn" onclick="openAcademicPublishMenu()">Publicar</button>` : ''}</div>
+      <div id="academicRecentList"><div class="academic-loading-line"></div></div>
+    </section>
+    ${manage}
+  `;
+};
+
+academicModuleView = function academicModuleViewV265() {
+  const info = ACADEMIC_TYPES[academicTab];
+  return `
+    ${academicProfileHeader()}
+    ${academicTextNav()}
+    <div class="online-module-head refined clean-module-head">
+      <div><div><span class="eyebrow">Módulo académico</span><h3>${info.label}</h3><p>${info.help}</p></div></div>
+      ${academicCanPublish() ? `<button class="btn academic-main-btn" onclick="openAcademicPostForm('${academicTab}')">Nueva publicación</button>` : ''}
+    </div>
+    ${academicFilterBar()}
+    <div id="academicPosts"><div class="card small"><p>Cargando contenido…</p></div></div>
+  `;
+};
+
+const _academicUsersViewV264 = academicUsersView;
+academicUsersView = function academicUsersViewV265() {
+  return _academicUsersViewV264().replace(academicSubnav(), academicTextNav()).replace('<span class="module-big-icon">👥</span>', '');
+};
+
+const _academicCalendarViewV264 = academicCalendarView;
+academicCalendarView = function academicCalendarViewV265() {
+  return _academicCalendarViewV264().replace(academicSubnav(), academicTextNav()).replace('<span class="module-big-icon">📅</span>', '');
+};
+
+const _renderOnlineV264 = renderOnline;
+renderOnline = function renderOnlineV265() {
+  refreshAcademicSessionFromLocalStore();
+  return _renderOnlineV264();
+};

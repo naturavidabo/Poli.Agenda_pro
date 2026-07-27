@@ -1,4 +1,4 @@
--- Agenda Policial v2.6.4 — nómina inicial Capitanes A
+-- Agenda Policial v2.6.5 — nómina inicial Capitanes A
 -- Ejecutar después de supabase-schema.sql.
 -- Los cuatro registros sin C.I. o celular permanecen inactivos hasta completar sus datos.
 insert into academic_users(roster_number,full_name,department,ci,phone,role,active)
