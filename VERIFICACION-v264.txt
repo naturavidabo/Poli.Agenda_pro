@@ -1,0 +1,26 @@
+Agenda Policial v2.6.4 — verificación técnica
+Fecha: 27/07/2026
+
+RESULTADO: APROBADA COMO BASE DE PULIDO ONLINE
+
+1. Versión visible: 2.6.4
+2. Caché Service Worker: agenda-policial-v2.6.4
+3. Archivos del repositorio: 90 o menos
+4. JavaScript: sintaxis válida
+5. JSON: todos válidos
+6. Horario oficial: 53 bloques conservados
+7. Nómina: 54 integrantes; 50 habilitados; 4 pendientes
+8. Administrador general: registro N.º 17
+9. Barra inferior: 5 accesos estables
+10. Área online:
+    - Panel diario y próximos eventos
+    - Agenda mensual
+    - Filtros por estado
+    - Vista por materia
+    - Seguimiento personal de tareas
+    - Publicación según rol
+    - Integrantes y funciones
+11. Persistencia: conserva claves y datos locales de v2.6.3
+12. Supabase: estructura preparada, pero la sincronización real requiere URL y clave publicable del proyecto
+
+Nota: no se incluyeron contenidos académicos ficticios. Los módulos aparecen vacíos hasta que los roles autorizados publiquen información o se conecte Supabase.

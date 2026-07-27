@@ -1,35 +1,52 @@
-# Auditoría técnica — Agenda Policial v2.6.1
+# Auditoría técnica — Agenda Policial v2.6.4
 
-Fecha de estabilización: 25 de julio de 2026.
+Fecha de estabilización: 27 de julio de 2026.
 
-## Interfaz
+## Interfaz y navegación
 
-- Barra inferior limitada a cinco opciones y verificada a 390 px de ancho.
-- Biblioteca permanece dentro de la misma fila, sin desbordamiento horizontal.
-- El acceso académico online se trasladó al encabezado.
-- Se eliminó la búsqueda global del encabezado.
-- La Biblioteca conserva un buscador propio, contextual y mejorado por nombre de ley, artículo y palabras clave.
+- Barra inferior limitada a cinco opciones, sin segunda fila ni deformación de Biblioteca.
+- Acceso académico separado en el encabezado.
+- Botón flotante contextual: en el área online solo aparece para roles con permiso de publicación.
+- Encabezado ajustado para pantallas angostas, con truncado controlado y sin desplazamiento horizontal visible.
+- Panel online reorganizado con resumen de la jornada, agenda, accesos rápidos y actividad reciente.
 
-## Biblioteca normativa
+## Área online
 
-- Ley N.º 777: 36 artículos estructurados + PDF local.
-- Ley N.º 101: 103 artículos estructurados + PDF local.
-- Ley Orgánica de la Policía Nacional, Ley N.º 734: 138 artículos estructurados + PDF local.
-- Ley N.º 004: 40 artículos estructurados + PDF local.
-- Ley N.º 348: 100 artículos estructurados + PDF local.
-- Los accesos priorizan el PDF incorporado; no dependen de enlaces externos para estos cinco documentos.
+- Tablero con próxima formación, tareas pendientes, próximo examen y resúmenes recientes.
+- Sección “Hoy y próximos días” ordenada cronológicamente.
+- Agenda académica mensual para formaciones, vencimientos de tareas y exámenes.
+- Filtros por estado en cada módulo.
+- Vista general o agrupada por materia en Tareas, Exámenes y Resúmenes.
+- Marcación personal de tareas cumplidas, almacenada por usuario y sin alterar el contenido oficial.
+- Menú de publicación único para Exámenes, Formaciones, Tareas y Resúmenes.
+- Panel de integrantes con búsqueda, filtro por rol, estado activo/inactivo y edición individual.
+
+## Horario
+
+- 53 bloques oficiales cargados.
+- Hora mística y organización/control de lunes a viernes.
+- Acondicionamiento físico el lunes de 14:00 a 16:00.
+- Tiro policial el jueves de 14:00 a 16:00.
+- Migración v2.6.4 conserva un historial local antes de sustituir un horario incorrecto.
+
+## Nómina
+
+- 54 integrantes identificados en el Paralelo A.
+- 50 con credenciales completas y acceso activo.
+- 4 pendientes de C.I. y celular, conservados como inactivos.
+- Administrador general preasignado al registro N.º 17.
+- Un celular de nueve dígitos queda marcado para revisión dentro de los datos preinstalados.
 
 ## Pruebas ejecutadas
 
-- Sintaxis de `app.js`: correcta.
-- Sintaxis de `online.js`: correcta.
-- Validación de todos los archivos JSON: correcta.
-- Apertura e información básica de los cinco PDF: correcta y sin cifrado.
-- Prueba de interfaz simulada a 390 × 844 px: cinco botones de navegación, sin desbordamiento y sin errores JavaScript.
-- Prueba de acceso al Área Académica Online: correcta.
-- Prueba de búsqueda y apertura de la Ley N.º 101 y Ley N.º 348: correcta.
-- Archivos totales del repositorio: 86, por debajo del límite solicitado de 100.
+- Sintaxis de `app.js` y `online.js` validada con Node.js.
+- Lectura válida de todos los archivos JSON.
+- Generación de vistas HTML del panel, módulos y agenda en un entorno aislado.
+- Pruebas lógicas de filtros, agrupación por materia, resumen diario y calendario.
+- Revisión visual móvil a 390 × 844 px.
+- Conteo del repositorio por debajo del límite de 100 archivos.
+- Verificación de la firma del horario oficial y de la nómina preinstalada.
 
 ## Actualización
 
-La versión conserva IndexedDB y la activación local existente. El Service Worker usa el caché `agenda-policial-v2.6.1` y elimina cachés antiguos de Agenda Policial durante la activación.
+La versión conserva IndexedDB, localStorage, activaciones, roles locales y publicaciones de la v2.6.3. El caché `agenda-policial-v2.6.4` sustituye los cachés antiguos de Agenda Policial sin borrar los datos del usuario.

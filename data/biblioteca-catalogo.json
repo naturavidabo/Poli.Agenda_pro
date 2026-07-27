@@ -1,6 +1,6 @@
 {
   "metadatos": {
-    "version": "2.6.1",
+    "version": "2.6.4",
     "fecha_integracion": "2026-07-25",
     "documentos_totales": 16
   },
@@ -155,5 +155,6 @@
       "archivo": "data/ley-348.json",
       "pdf": "assets/ley-348.pdf"
     }
-  ]
+  ],
+  "version": "2.6.4"
 }

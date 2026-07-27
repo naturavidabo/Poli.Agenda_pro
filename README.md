@@ -1,21 +1,54 @@
-# Agenda Policial v2.6.1
+# Agenda Policial v2.6.4
 
-Aplicación PWA de consulta normativa y apoyo académico.
+Aplicación PWA de consulta normativa offline y apoyo académico con un área online opcional.
 
-## Cambios de estabilización
+## Pulido del área online
 
-- Barra inferior corregida y limitada a cinco accesos: Inicio, Formación, Tareas, Horario y Biblioteca.
-- Acceso al Área Académica Online trasladado al encabezado principal.
-- Eliminación de la búsqueda general imprecisa del encabezado; la Biblioteca conserva su buscador contextual.
-- Leyes N.º 777, N.º 101, Ley Orgánica de la Policía Nacional, N.º 004 y N.º 348 incorporadas como PDF local y texto estructurado para búsqueda.
-- Apertura prioritaria de documentos locales; no depende de enlaces externos para estas normas.
-- Service Worker y caché actualizados a la versión 2.6.1.
-- Compatible con actualización sobre versiones anteriores sin eliminar los datos guardados en IndexedDB.
+- Panel académico con resumen de la jornada, próximas actividades y publicaciones recientes.
+- Tarjetas de acceso rápido para Exámenes, Formaciones, Tareas y Resúmenes.
+- Agenda académica mensual que reúne formaciones, vencimientos de tareas y exámenes.
+- Filtros por estado: próximas, pendientes, urgentes, completadas, recientes y realizadas.
+- Vista general o agrupada por materia en Tareas, Exámenes y Resúmenes.
+- Marcación personal de tareas cumplidas sin modificar la publicación oficial.
+- Botón de publicación exclusivo para roles autorizados.
+- Estado visible de conexión y diseño institucional refinado.
 
-## Área académica online
+## Base estabilizada
 
-La interfaz y la estructura base están preparadas. La conexión real requiere configurar el proyecto Supabase, ejecutar `supabase-schema.sql`, colocar la URL y la clave publicable, y cargar la nómina académica.
+- Horario oficial del Curso de Capacitación Policial, Capitanes A, segundo semestre 2026, con 53 bloques.
+- Barra inferior estable con cinco accesos: Inicio, Formación, Tareas, Horario y Biblioteca.
+- Acceso académico ubicado en el encabezado y separado de la experiencia offline.
+- Biblioteca normativa con PDF locales y textos estructurados.
+- Service Worker y caché actualizados a la versión 2.6.4.
+
+## Nómina académica preinstalada
+
+- 54 integrantes identificados.
+- 50 registros con C.I. y celular habilitados.
+- 4 integrantes permanecen inactivos hasta completar C.I. y celular.
+- La cuenta de Mauro Cristhian Espinoza Rivera queda como administrador general.
+- Los demás integrantes empiezan como lectores.
+- Acceso: usuario = C.I.; contraseña = número de celular.
+
+## Roles
+
+- Administrador general.
+- Encargado de curso.
+- Administrador académico.
+- Asistente académico.
+- Lector.
+
+El administrador general asigna los roles desde **Integrantes y funciones**.
+
+## Área académica
+
+- Exámenes.
+- Formaciones: formación general o servicio extraordinario, fecha, lugar, hora de control, hora del parte, uniforme, comunicado, observaciones y archivo opcional.
+- Tareas con seguimiento personal de cumplimiento.
+- Resúmenes con materia, tema, texto y archivo Word, PDF o imagen.
+
+Sin Supabase, la nómina y las pruebas funcionan localmente en cada dispositivo. Para sincronizar publicaciones, roles y accesos entre celulares, ejecutar `supabase-schema.sql`, luego `supabase-roster-seed.sql`, crear el bucket `academic-files` y completar `ONLINE_CFG` en `online.js`.
 
 ## Publicación
 
-El contenido del directorio puede publicarse en GitHub Pages. No se deben exponer claves secretas de Supabase ni la clave `service_role`.
+El proyecto mantiene menos de 100 archivos y puede publicarse en GitHub Pages. No colocar claves secretas ni `service_role` dentro del repositorio.
