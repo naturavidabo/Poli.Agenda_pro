@@ -1,0 +1,29 @@
+AGENDA POLICIAL v2.6.8 — ESTABILIZACIÓN
+
+Archivos funcionales modificados:
+- app.js
+- online.js
+- styles.css
+- online.css
+- data/horario-base.json
+- index.html
+- sw.js
+- version.json
+- README.md
+- CONFIGURACION-SUPABASE.md
+- supabase-v268-migration.sql
+
+Correcciones principales:
+- Hora mística únicamente el lunes.
+- Organización y control de martes a viernes en el bloque inicial.
+- Cinco bloques 11:50–12:35 tratados como no lectivos.
+- Los no lectivos quedan fuera de próxima actividad, cronología, alertas y cuentas regresivas.
+- Colores constantes y sobrios por materia.
+- Cronología agrupada por fecha.
+- Tareas online agrupadas por materia y docente, con estados y contadores reales.
+- Progreso individual de tareas sincronizable.
+- Sesión online persistente durante pérdidas temporales de conexión.
+- Acceso interno de mantenimiento oculto de toda interfaz y lista visible.
+- Migración selectiva de horario mediante appVersion, scheduleVersion y databaseVersion.
+- Archivado de notas implementado para eliminar un botón heredado sin función.
+- Imagen histórica del horario marcada como referencia; la tabla digital corregida prevalece.

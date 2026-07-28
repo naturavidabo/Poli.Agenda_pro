@@ -1,5 +1,5 @@
-const APP_VERSION='2.6.5';
-const BUILD_DATE='2026-07-27';
+const APP_VERSION='2.6.8';
+const BUILD_DATE='2026-07-28';
 const ACTIVATION_CODE='271261';
 const SECONDARY_ACTIVATION_CODE='2026JINETES';
 const SECONDARY_ACTIVATION_EXPIRES='2026-08-30T23:59:59-04:00';
@@ -55,7 +55,7 @@ function applyCatalogSchedule(template,archive=true,reason='Actualización autom
 function seedSchedule(force=false){const template=currentScheduleTemplate();if(!template)return false;if(force||isPlaceholderSchedule())return applyCatalogSchedule(template,force,'Restauración del horario oficial');return false}
 function scheduleHasOfficialSignature(){const blocks=state.scheduleBlocks||[];const has=(day,start,end,subject)=>blocks.some(b=>normalize(b.dia)===normalize(day)&&b.inicio===start&&b.fin===end&&normalize(b.materia||'')===normalize(subject));return blocks.length===53&&has('lunes','06:45','07:15','Hora mística')&&has('viernes','07:15','07:30','Organización y control')&&has('lunes','14:00','16:00','Acondicionamiento físico')&&has('jueves','14:00','16:00','Tiro policial')}
 function isLegacyIncorrectSchedule(){const meta=state.scheduleMeta||{};return meta.id==='horario-sucre-2026-2'||meta.template_version==='2026-07-24'||(state.scheduleBlocks||[]).some(b=>normalize(b.materia||'').includes('parte de diana'))||((meta.nivel||'').toLowerCase().includes('capitan')&&!scheduleHasOfficialSignature())}
-function ensureScheduleTemplate(){let changed=false;const migration='2026-07-27-v265';const active=activeScheduleCatalog();if(!active.length)return false;if(!state.selectedScheduleId||!scheduleTemplateById(state.selectedScheduleId)){state.selectedScheduleId=active[0].id;changed=true}const template=currentScheduleTemplate();const expectedVersion=template?.metadatos?.template_version||docs.horario?.catalog_version||'';const mustRefresh=isPlaceholderSchedule()||isLegacyIncorrectSchedule()||state.scheduleSource!=='catalog'||state.scheduleTemplateVersion!==expectedVersion||state.scheduleMeta?.catalog_id!==template?.id;if(state.settings.scheduleMigration!==migration||mustRefresh){if(mustRefresh)changed=applyCatalogSchedule(template,true,'Actualización automática del horario oficial v2.6.5')||changed;else if(template){state.scheduleMeta=scheduleTemplateMeta(template);state.scheduleTemplateVersion=expectedVersion;changed=true}state.settings.scheduleMigration=migration;changed=true}return changed}
+function ensureScheduleTemplate(){let changed=false;const migration='2026-07-28-v268';const active=activeScheduleCatalog();if(!active.length)return false;if(!state.selectedScheduleId||!scheduleTemplateById(state.selectedScheduleId)){state.selectedScheduleId=active[0].id;changed=true}const template=currentScheduleTemplate();const expectedVersion=template?.metadatos?.template_version||docs.horario?.catalog_version||'';const mustRefresh=isPlaceholderSchedule()||isLegacyIncorrectSchedule()||state.scheduleSource!=='catalog'||state.scheduleTemplateVersion!==expectedVersion||state.scheduleMeta?.catalog_id!==template?.id;if(state.settings.scheduleMigration!==migration||mustRefresh){if(mustRefresh)changed=applyCatalogSchedule(template,true,'Actualización automática del horario oficial v2.6.7')||changed;else if(template){state.scheduleMeta=scheduleTemplateMeta(template);state.scheduleTemplateVersion=expectedVersion;changed=true}state.settings.scheduleMigration=migration;changed=true}return changed}
 async function selectScheduleProfile(id){const template=scheduleTemplateById(id);if(!template)return toast('Ese horario no está activo');if(String(state.selectedScheduleId)===String(template.id)&&state.scheduleTemplateVersion===(template.metadatos?.template_version||docs.horario?.catalog_version||''))return toast('Ese horario ya está seleccionado');applyCatalogSchedule(template,true,`Cambio de horario a ${template.etiqueta||template.id}`);await save();render();toast(`Horario seleccionado: ${template.etiqueta||'activo'}`)}
 async function restoreBaseSchedule(){const template=currentScheduleTemplate();if(!template)return toast('No hay horario activo');if(!confirm(`Se restaurará el horario oficial de ${template.etiqueta||'la opción seleccionada'}. El horario actual quedará en el historial local. ¿Continuar?`))return;applyCatalogSchedule(template,true,'Restauración manual del horario oficial');await save();render();toast('Horario oficial restaurado')}
 function bindSW(){window.addEventListener('beforeinstallprompt',e=>{e.preventDefault();deferredPrompt=e}); $('#updateNow')?.addEventListener('click',applyUpdate); if('serviceWorker' in navigator){navigator.serviceWorker.register('./sw.js',{updateViaCache:'none'}).then(reg=>{window._swReg=reg; reg.update().catch(()=>{}); if(reg.waiting) showUpdateBanner(); reg.addEventListener('updatefound',()=>{const nw=reg.installing; if(!nw)return; nw.addEventListener('statechange',()=>{if(nw.state==='installed'&&navigator.serviceWorker.controller) showUpdateBanner()})}); navigator.serviceWorker.addEventListener('controllerchange',()=>{if(!window._refreshing){window._refreshing=true; location.replace('./index.html?v='+APP_VERSION+'&r='+Date.now())}})}).catch(()=>{})}}
@@ -216,3 +216,175 @@ async function auditUniformImages(articleNum=''){if(!docs.uniformes) await loadA
 function exportBackup(){if(!confirm('Se generará una copia de respaldo JSON con sus datos locales. ¿Guardar respaldo?'))return; const blob=new Blob([JSON.stringify(state,null,2)],{type:'application/json'}); const a=document.createElement('a'); a.href=URL.createObjectURL(blob); a.download='agenda-policial-respaldo.json'; a.click(); state.settings.lastBackup=new Date().toISOString(); save(); toast('Respaldo generado')}
 function importBackup(){const input=$('#backupImport'); input.onchange=e=>{const f=e.target.files[0]; if(!f)return; const rd=new FileReader(); rd.onload=async()=>{try{const data=JSON.parse(rd.result); if(confirm('¿Reemplazar datos actuales por el respaldo?')){state={...structuredClone(DEFAULT_STATE),...data}; await save(); closeModal(); render(); toast('Respaldo importado')}}catch{toast('Archivo inválido')}}; rd.readAsText(f)}; input.click()}
 window.addEventListener('DOMContentLoaded',init);
+
+
+/* =========================================================
+   Agenda Policial v2.6.8 — estabilización de horario y agenda
+   ========================================================= */
+const SCHEDULE_DATA_VERSION='2026-07-28-04';
+const DATABASE_DATA_VERSION='agenda-db-2';
+
+const SUBJECT_VISUALS={
+  'planificacion estrategica':{accent:'#4f6f8f',soft:'#edf3f8'},
+  'procedimientos especiales':{accent:'#357d98',soft:'#eaf5f8'},
+  'auditoria gubernamental':{accent:'#70815a',soft:'#f1f5ed'},
+  'inteligencia estrategica':{accent:'#74658b',soft:'#f3f0f7'},
+  'ciencia politica':{accent:'#4e7a75',soft:'#edf5f3'},
+  'administracion general':{accent:'#3d7894',soft:'#edf5f8'},
+  'metodologia de investigacion':{accent:'#687078',soft:'#f1f3f4'},
+  'acondicionamiento fisico':{accent:'#94694e',soft:'#f9f0eb'},
+  'tiro policial':{accent:'#8a7048',soft:'#f7f2e8'},
+  'hora mistica':{accent:'#9a7a2f',soft:'#faf5e8'},
+  'organizacion y control':{accent:'#476b55',soft:'#eef5f0'},
+  'descanso 25 minutos':{accent:'#8a8d8b',soft:'#f4f5f4'},
+  'descanso 10 minutos':{accent:'#8a8d8b',soft:'#f4f5f4'}
+};
+const SUBJECT_VISUAL_FALLBACKS=[
+  {accent:'#54706c',soft:'#eef4f3'},
+  {accent:'#63728a',soft:'#f0f2f6'},
+  {accent:'#7b6b57',soft:'#f5f1ec'},
+  {accent:'#6c7756',soft:'#f2f4ed'},
+  {accent:'#765f75',soft:'#f5f0f4'}
+];
+function subjectVisual(subject=''){
+  const key=normalize(subject||'sin materia');
+  if(SUBJECT_VISUALS[key])return SUBJECT_VISUALS[key];
+  let hash=0;for(const ch of key)hash=(hash*31+ch.charCodeAt(0))>>>0;
+  return SUBJECT_VISUAL_FALLBACKS[hash%SUBJECT_VISUAL_FALLBACKS.length];
+}
+function subjectStyleAttr(subject=''){const v=subjectVisual(subject);return `style="--subject-accent:${v.accent};--subject-soft:${v.soft}"`}
+function teacherForSubject(subject=''){
+  const key=normalize(subject);const row=(state.scheduleBlocks||[]).find(b=>normalize(b.materia||'')===key&&(b.docente||b.instructor)&&!/pendiente|no consignado/i.test(b.docente||b.instructor||''));
+  return row?.docente||row?.instructor||'';
+}
+function isCapitanesASelected(){return String(state.selectedScheduleId||'capitanes-a-2026-2')==='capitanes-a-2026-2'}
+function isNonLectiveBlock(b){
+  if(!b)return false;
+  if(b.es_no_lectiva===true||b.no_lectiva===true)return true;
+  const text=normalize(`${b.tipo||''} ${b.estado||''} ${b.observacion||''}`);
+  if(text.includes('no lectiva')||text.includes('no se pasan clases'))return true;
+  return isCapitanesASelected()&&b.inicio==='11:50'&&b.fin==='12:35'&&['lunes','martes','miercoles','jueves','viernes'].includes(normalize(b.dia));
+}
+function canonicalScheduleEntry(entry){
+  const e={...entry};const day=normalize(e.dia||'');
+  if(isCapitanesASelected()&&e.inicio==='06:45'&&e.fin==='07:15'){
+    if(day==='lunes'){e.materia='Hora mística';e.tipo='formacion'}
+    else if(['martes','miercoles','jueves','viernes'].includes(day)){e.materia='Organización y control';e.tipo='formacion'}
+  }
+  if(isCapitanesASelected()&&e.inicio==='11:50'&&e.fin==='12:35'&&['lunes','martes','miercoles','jueves','viernes'].includes(day)){
+    e.tipo='no_lectiva';e.estado='no_lectiva';e.es_no_lectiva=true;e.observacion='HORARIO NO LECTIVO · NO SE PASAN CLASES';
+  }
+  return e;
+}
+function normalizeScheduleEntry(e){return canonicalScheduleEntry({...e,id:e.id||uid(),dia:normDayWord(e.dia)||normalize(e.dia||'lunes'),inicio:e.inicio||'',fin:e.fin||'',materia:e.materia||e.actividad||'',docente:e.docente||e.instructor||'',tipo:e.tipo||'clase',lugar:e.lugar||'',uniforme:e.uniforme||'',observacion:e.observacion||''})}
+function getTodayBlocks(){return getBlocksForDay(currentDayKey())}
+function getBlocksForDay(day){return (state.scheduleBlocks||[]).filter(b=>normalize(b.dia)===day).map(canonicalScheduleEntry).sort((a,b)=>minutes(a.inicio)-minutes(b.inicio))}
+function scheduleHasOfficialSignature(){
+  const blocks=(state.scheduleBlocks||[]).map(canonicalScheduleEntry);
+  const has=(day,start,end,subject)=>blocks.some(b=>normalize(b.dia)===normalize(day)&&b.inicio===start&&b.fin===end&&normalize(b.materia||'')===normalize(subject));
+  const nonLective=blocks.filter(isNonLectiveBlock).length;
+  return blocks.length===53&&has('lunes','06:45','07:15','Hora mística')&&has('martes','06:45','07:15','Organización y control')&&has('viernes','06:45','07:15','Organización y control')&&nonLective===5&&has('lunes','14:00','16:00','Acondicionamiento físico')&&has('jueves','14:00','16:00','Tiro policial');
+}
+function ensureScheduleTemplate(){
+  let changed=false;const active=activeScheduleCatalog();if(!active.length)return false;
+  state.settings=state.settings||{};
+  if(!state.selectedScheduleId||!scheduleTemplateById(state.selectedScheduleId)){state.selectedScheduleId=active[0].id;changed=true}
+  const template=currentScheduleTemplate();const expected=template?.metadatos?.template_version||docs.horario?.catalog_version||SCHEDULE_DATA_VERSION;
+  const installed=state.settings.scheduleVersion||state.scheduleTemplateVersion||'';
+  const mustRefresh=isPlaceholderSchedule()||isLegacyIncorrectSchedule()||!scheduleHasOfficialSignature()||state.scheduleSource!=='catalog'||installed!==expected||state.scheduleMeta?.catalog_id!==template?.id;
+  if(mustRefresh){changed=applyCatalogSchedule(template,Boolean(state.scheduleBlocks?.length),'Migración selectiva del horario oficial v2.6.8')||changed}
+  else if(template){state.scheduleBlocks=(state.scheduleBlocks||[]).map(normalizeScheduleEntry);state.scheduleMeta=scheduleTemplateMeta(template);state.scheduleTemplateVersion=expected}
+  if(state.settings.appVersion!==APP_VERSION){state.settings.appVersion=APP_VERSION;changed=true}
+  if(state.settings.scheduleVersion!==expected){state.settings.scheduleVersion=expected;changed=true}
+  if(state.settings.databaseVersion!==DATABASE_DATA_VERSION){state.settings.databaseVersion=DATABASE_DATA_VERSION;changed=true}
+  if(state.settings.scheduleMigration!=='2026-07-28-v268'){state.settings.scheduleMigration='2026-07-28-v268';changed=true}
+  return changed;
+}
+function classifyBlock(b,iso=todayISO()){
+  if(isNonLectiveBlock(b))return 'non-lective';
+  const now=new Date();const isToday=iso===todayISO();const m=now.getHours()*60+now.getMinutes(),a=minutes(b.inicio),z=minutes(b.fin);
+  if(a==null||z==null)return '';
+  if(isToday&&m>=a&&m<z)return 'current';if(isToday&&m>=z)return 'finished';return 'next';
+}
+function upcomingScheduleItems(limit=6){
+  const out=[];
+  for(let add=0;add<7&&out.length<limit*2;add++){
+    const iso=addDaysISO(todayISO(),add);const day=weekdayISO(iso);
+    getBlocksForDay(day).forEach(b=>{if(isNonLectiveBlock(b))return;const cls=classifyBlock(b,iso);if(cls!=='finished')out.push({kind:'schedule',date:iso,time:b.inicio,block:b,sort:eventDateTime({date:iso,time:b.inicio})})});
+  }
+  return out.sort((a,b)=>a.sort-b.sort).slice(0,limit);
+}
+function currentAgendaItem(){
+  const now=new Date(),iso=todayISO();
+  const curSchedule=getBlocksForDay(currentDayKey()).find(b=>!isNonLectiveBlock(b)&&classifyBlock(b,iso)==='current');
+  if(curSchedule)return {kind:'schedule',date:iso,time:curSchedule.inicio,block:curSchedule,sort:eventDateTime({date:iso,time:curSchedule.inicio})};
+  const curForm=state.formations.filter(f=>f.status!=='archived'&&f.date===iso).find(f=>{const t=f.formacion||f.arribo||f.parte;if(!t)return false;const start=eventDateTime({date:f.date,time:t}),end=new Date(start.getTime()+60*60000);return now>=start&&now<=end});
+  if(curForm)return {kind:'formation',date:iso,time:curForm.formacion||curForm.arribo||curForm.parte,formation:curForm,sort:eventDateTime({date:iso,time:curForm.formacion||curForm.arribo||curForm.parte})};return null;
+}
+function agendaFullDate(iso){const [y,m,d]=String(iso).split('-').map(Number);return new Intl.DateTimeFormat('es-BO',{weekday:'long',day:'numeric',month:'long'}).format(new Date(y,m-1,d))}
+function agendaDayTitle(iso){const diff=Math.round((new Date(`${iso}T00:00:00`)-new Date(`${todayISO()}T00:00:00`))/86400000);const full=agendaFullDate(iso);if(diff===0)return `HOY — ${full}`;if(diff===1)return `MAÑANA — ${full}`;return full.toUpperCase()}
+function renderAgendaTimeline(items){
+  const groups=new Map();items.forEach(it=>{if(!groups.has(it.date))groups.set(it.date,[]);groups.get(it.date).push(it)});
+  return [...groups.entries()].map(([date,rows],index)=>`<section class="agenda-day-group tone-${index%2}" data-agenda-date="${esc(date)}"><header class="agenda-day-header">${esc(agendaDayTitle(date))}</header><div class="agenda-day-items">${rows.map(agendaMiniCard).join('')}</div></section>`).join('');
+}
+function agendaMiniCard(item){
+  if(item.kind==='formation')return `<div class="agenda-mini formation" onclick="openFormation('${item.formation.id}')"><span>Formación</span><b>${esc(item.formation.title||item.formation.type||'Formación / servicio')}</b><small>${esc(item.time||'')} ${item.formation.uniforme?'· '+esc(item.formation.uniforme):''}</small></div>`;
+  if(item.kind==='task'){const style=subjectStyleAttr(item.task.subject||'');return `<div class="agenda-mini task subject-coded" ${style} onclick="openTask('${item.task.id}')"><span>Tarea</span><b>${esc(item.task.title||'Tarea académica')}</b><small>${esc(item.task.subject||'Sin materia')} · ${esc(item.time==='23:59'?'':item.time)}</small></div>`}
+  const b=canonicalScheduleEntry(item.block);const style=subjectStyleAttr(b.materia||'');return `<div class="agenda-mini class subject-coded" ${style} onclick="openClassDetail('${b.id}')"><span>${/hora mística|organización y control/i.test(b.materia||'')?'Actividad institucional':'Clase'}</span><b>${esc(b.materia||'Actividad')}</b><small>${esc(b.inicio)}-${esc(b.fin)} ${b.docente?'· '+esc(b.docente)+' '+teacherIndicator(b.docente):''}</small></div>`;
+}
+function classCard(title,b,kind,iso=todayISO()){
+  b=canonicalScheduleEntry(b);if(isNonLectiveBlock(b))return '';
+  const isFormation=/(hora mística|hora mistica|organización y control|organizacion y control|parte de diana|parte de asamblea)/i.test(b.materia||'');const cd=kind==='current'?intervalCountdown(iso,b.inicio,b.fin):countdown(iso,b.inicio);const style=subjectStyleAttr(b.materia||'');
+  return `<div class="card dashboard-card subject-coded ${kind==='next'?'priority':''} ${isFormation?'formation-highlight':''} clickable" ${style} onclick="openClassDetail('${b.id}')"><div class="row between"><span class="tag ${isFormation?'warn':''}">${esc(title)}</span>${kind==='next'||kind==='current'?`<span class="countdown-pill">${esc(cd)}</span>`:''}</div><h3>${esc(b.materia||b.actividad||'Actividad')}</h3><p><b>${fmtDate(iso)} · ${b.inicio||''} - ${b.fin||''}</b> ${b.docente?' · '+esc(b.docente):''} ${teacherIndicator(b.docente)}</p>${b.lugar?`<p>📍 ${esc(b.lugar)}</p>`:''}</div>`;
+}
+function renderInicio(){
+  const agendaAll=upcomingAgenda(18).filter(it=>it.kind!=='schedule'||!isNonLectiveBlock(it.block));const current=currentAgendaItem();const next=agendaAll.find(x=>itemKey(x)!==itemKey(current));const skip=new Set([itemKey(current),itemKey(next)]);const chron=agendaAll.filter(x=>!skip.has(itemKey(x))).slice(0,12);
+  const urgentTasks=state.tasks.filter(t=>t.status!=='done'&&t.status!=='archived'&&t.dueDate&&t.dueDate<=addDaysISO(todayISO(),1)).sort((a,b)=>(a.dueDate+(a.dueTime||'99:99')).localeCompare(b.dueDate+(b.dueTime||'99:99'))).slice(0,4);
+  const alerts=urgentTasks.length?`<div class="home-alerts"><div class="row between"><h2 class="section-title">Alertas académicas</h2><button class="option-btn" onclick="go('tareas')">Ver tareas</button></div>${urgentTasks.map(t=>`<div class="alert-task subject-coded clickable" ${subjectStyleAttr(t.subject||'')} onclick="openTask('${t.id}')"><span class="alert-dot"></span><div><b>${esc(t.title||'Tarea académica')}</b><small>${esc(t.subject||'Sin materia')} · ${t.dueDate===todayISO()?'Hoy':t.dueDate===addDaysISO(todayISO(),1)?'Mañana':fmtDate(t.dueDate)} ${esc(t.dueTime||'')}</small></div></div>`).join('')}</div>`:'';
+  return `<section><div class="home-hero"><div><span class="eyebrow">Panel de inicio</span><h2>Agenda próxima</h2><p>Actividades reales, formaciones, servicios y tareas organizadas por fecha.</p></div></div>${current?mainAgendaCard('Actividad actual',current,'current'):''}${next?mainAgendaCard('Próxima actividad',next,'next'):''}${alerts}<div class="row between"><h2 class="section-title">Cronología</h2><button class="option-btn" onclick="go('horario')">Horario</button></div>${chron.length?`<div class="agenda-timeline-grouped">${renderAgendaTimeline(chron)}</div>`:`<div class="card small"><p>No hay actividades próximas registradas.</p></div>`}</section>`;
+}
+function dailyBlockCard(b){
+  b=canonicalScheduleEntry(b);const non=isNonLectiveBlock(b);const cls=non?'non-lective':/descanso/i.test(b.materia||'')?'break':/(hora mística|hora mistica|organización y control|organizacion y control|parte)/i.test(b.materia||'')?'formation':'class';const style=subjectStyleAttr(b.materia||'');
+  if(non)return `<div class="daily-block non-lective clickable" ${style} onclick="openScheduleBlockForm('${b.id}')"><div class="time-badge">${esc(b.inicio)}<span>${esc(b.fin)}</span></div><div><span class="non-lective-label">HORARIO NO LECTIVO</span><b class="non-lective-subject">${esc(b.materia||'Bloque figurativo')}</b><p>NO SE PASAN CLASES</p><small>Este bloque no genera alertas ni próxima actividad.</small></div></div>`;
+  return `<div class="daily-block ${cls} subject-coded clickable" ${style} onclick="openScheduleBlockForm('${b.id}')"><div class="time-badge">${esc(b.inicio)}<span>${esc(b.fin)}</span></div><div><b>${esc(b.materia||'Actividad')}</b><p>${esc(b.docente||b.instructor||(/descanso/i.test(b.materia||'')?'':'Docente / instructor pendiente'))} ${teacherIndicator(b.docente||b.instructor)}</p>${b.observacion?`<small>${esc(b.observacion)}</small>`:''}</div></div>`;
+}
+function scheduleTableRow(r){
+  const cells=scheduleDays().map(day=>{let b=findScheduleCell(day,r.inicio,r.fin);if(b)b=canonicalScheduleEntry(b);const non=b&&isNonLectiveBlock(b),isBreak=b&&/descanso/i.test(b.materia||''),isSpecial=b&&/(parte|hora mística|hora mistica|organización y control|organizacion y control)/i.test(b.materia||'');const cls=non?'non-lective':isBreak?'break':isSpecial?'special':b?'filled':'empty';const style=b?subjectStyleAttr(b.materia||''):'';
+    return `<td class="schedule-cell ${cls}" ${style} onclick="openScheduleCell('${day}','${r.inicio}','${r.fin}')">${b?(non?`<div class="non-lective-label">NO LECTIVO</div><div class="cell-subject non-lective-subject">${esc(b.materia||'')}</div><div class="cell-teacher">NO SE PASAN CLASES</div>`:`<div class="cell-subject">${esc(b.materia||'')}</div><div class="cell-teacher">${esc(b.docente||b.instructor||(/descanso/i.test(b.materia||'')?'': 'Docente / instructor pendiente'))}</div>`):`<div class="cell-empty">Toque para llenar</div><div class="cell-teacher">Docente / instructor</div>`}</td>`}).join('');
+  return `<tr><th class="time-col">${esc(r.inicio)}<br><span>${esc(r.fin)}</span></th>${cells}</tr>`;
+}
+function openClassDetail(id){
+  let b=(state.scheduleBlocks||[]).find(x=>x.id===id);if(!b)return;b=canonicalScheduleEntry(b);const non=isNonLectiveBlock(b);
+  showModal(`<h2>${esc(b.materia||'Actividad')}</h2><p><b>${esc(b.dia)}</b> · ${esc(b.inicio)} - ${esc(b.fin)}</p>${non?`<div class="non-lective-detail"><b>HORARIO NO LECTIVO</b><span>NO SE PASAN CLASES</span><p>Este bloque es únicamente figurativo y no participa en alertas, cronología ni próxima actividad.</p></div>`:`<p><b>Docente:</b> ${esc(b.docente||'')}</p><p><b>Lugar:</b> ${esc(b.lugar||'')}</p><p>${esc(b.observacion||'')}</p>`}<button class="btn" onclick="closeModal();openScheduleBlockForm('${b.id}')">Editar</button>`);
+}
+function openScheduleBlockForm(id=null,day=null){
+  const existing=id?state.scheduleBlocks.find(x=>x.id===id):null;const b=existing?canonicalScheduleEntry(existing):{dia:day||currentDayKey(),inicio:'07:30',fin:'08:10',tipo:'clase',docente:''};
+  showModal(`<h2>${id?'Editar':'Nuevo'} bloque</h2><form id="blockForm">${buildForm([{name:'dia',label:'Día',type:'select',options:['lunes','martes','miercoles','jueves','viernes','sabado','domingo']},{name:'inicio',label:'Inicio',type:'time'},{name:'fin',label:'Fin',type:'time'},{name:'tipo',label:'Tipo',type:'select',options:['clase','formacion','descanso','actividad','no_lectiva']},{name:'materia',label:'Materia / actividad'},{name:'docente',label:'Docente / instructor'},{name:'lugar',label:'Aula / lugar'},{name:'observacion',label:'Observación',type:'textarea'}],b)}<div class="form-actions"><button class="btn" type="submit">Guardar</button>${id?`<button class="btn danger" type="button" onclick="deleteBlock('${id}')">Eliminar</button>`:''}<button class="btn secondary" type="button" onclick="closeModal()">Cancelar</button></div></form>`);
+  $('#blockForm').onsubmit=async e=>{e.preventDefault();let data=formData(e.target);data.es_no_lectiva=data.tipo==='no_lectiva';if(data.es_no_lectiva&&!/no lectiva/i.test(data.observacion||''))data.observacion='HORARIO NO LECTIVO · NO SE PASAN CLASES';if(id)Object.assign(existing,data);else state.scheduleBlocks.push({...data,id:uid()});await save();closeModal();render()};
+}
+
+
+/* v2.6.8 — la tabla digital corregida es la fuente operativa oficial. */
+openReferenceScheduleImage=function(){
+  const template=currentScheduleTemplate();
+  const src=(state.scheduleMeta?.fuente_visual||template?.fuente_visual||docs.horario?.fuente_visual||'assets/horario-segundo-semestre-2026.png');
+  showModal(`<h2>Imagen de referencia del horario</h2>
+    <div class="schedule-reference-notice"><b>Tabla digital corregida</b><span>La aplicación aplica Hora mística únicamente el lunes, Organización y control de martes a viernes y excluye los bloques no lectivos de la actividad real. Si la imagen histórica difiere, prevalece la tabla digital de esta versión.</span></div>
+    <img class="image-preview schedule-reference-image" src="./${esc(src)}" alt="Imagen de referencia del horario">
+    <div class="row wrap"><button class="btn" onclick="restoreBaseSchedule()">Restaurar horario oficial</button><button class="btn secondary" onclick="closeModal()">Cerrar</button></div>`);
+};
+
+/* v2.6.8 — archivo de notas funcional; elimina un botón sin acción heredado. */
+function showArchivedNotes(){
+  const notes=state.notes.filter(n=>n.archived);
+  $('#app').innerHTML=appShell(`<section><div class="row between wrap"><h2 class="section-title">Notas archivadas</h2><button class="btn secondary" onclick="openNotes()">Volver</button></div><div class="tabs"><button onclick="openNotes()">Todo</button><button class="active">Archivadas</button></div><div class="note-grid">${notes.map(n=>`<div class="note-card"><h3>${esc(n.title||'Sin título')}</h3><p>${esc((n.text||'').slice(0,130))}${(n.text||'').length>130?'...':''}</p><div class="muted">${new Date(n.updated||n.created).toLocaleString('es-BO')}</div><div class="row wrap"><button class="btn secondary" onclick="restoreNote('${n.id}')">Restaurar</button><button class="btn ghost" onclick="openNoteForm('${n.id}')">Ver / editar</button></div></div>`).join('')||'<div class="card small"><p>No hay notas archivadas.</p></div>'}</div></section>`);
+}
+async function archiveNote(id){const n=state.notes.find(x=>x.id===id);if(!n)return;n.archived=true;n.updated=new Date().toISOString();await save();closeModal();openNotes();toast('Nota archivada')}
+async function restoreNote(id){const n=state.notes.find(x=>x.id===id);if(!n)return;n.archived=false;n.updated=new Date().toISOString();await save();showArchivedNotes();toast('Nota restaurada')}
+openNoteForm=function(id=null){
+  const n=id?state.notes.find(x=>x.id===id):{title:'',text:'',category:''};
+  if(!n)return toast('Nota no encontrada');
+  showModal(`<button class="icon-btn close" onclick="closeModal()">×</button><h2>${id?'Editar':'Nueva'} nota</h2><p class="subtle">Bloc de notas policial. Escriba libremente; se puede editar después.</p><form id="noteForm" class="note-editor-form">${buildForm([{name:'title',label:'Título'},{name:'category',label:'Carpeta / categoría'},{name:'text',label:'Texto',type:'textarea'}],n)}<div class="form-actions note-actions"><button class="btn" type="submit">Guardar</button>${id&&!n.archived?`<button class="btn secondary" type="button" onclick="archiveNote('${id}')">Archivar</button>`:''}${id&&n.archived?`<button class="btn secondary" type="button" onclick="restoreNote('${id}');closeModal()">Restaurar</button>`:''}<button class="btn ghost" type="button" onclick="closeModal()">Cancelar</button></div></form>`);
+  const textArea=$('#noteForm textarea[name="text"]');if(textArea)textArea.classList.add('note-textarea');
+  $('#noteForm').onsubmit=async e=>{e.preventDefault();const data=formData(e.target);if(id)Object.assign(n,data,{updated:new Date().toISOString()});else state.notes.push({...data,id:uid(),created:new Date().toISOString(),updated:new Date().toISOString(),archived:false});await save();closeModal();openNotes();toast('Nota guardada')};
+};

@@ -1,0 +1,102 @@
+AGENDA POLICIAL v2.6.8 — INFORME DE VERIFICACIÓN
+
+ORIGEN Y SEGURIDAD
+- Origen funcional: AgendaPolicial_v267_CORRECCION_INGRESO_ONLINE.zip.
+- Respaldo previo: AgendaPolicial_v267_RESPALDO_ORIGEN.zip.
+- No se reconstruyó la aplicación desde cero.
+- Activación principal y clave secundaria conservadas sin alterar su lógica.
+- Biblioteca y 22 archivos normativos/PDF verificados por SHA-256 sin cambios.
+
+VERSIONES DE DATOS
+- appVersion: 2.6.8
+- scheduleVersion: 2026-07-28-04
+- databaseVersion: agenda-db-2
+- Service Worker: agenda-policial-v2.6.8
+
+HORARIO
+- 53 bloques incluidos dentro de data/horario-base.json y sincronizados en Supabase.
+- Lunes 06:45: Hora mística.
+- Martes a viernes 06:45: Organización y control.
+- 5 bloques no lectivos de 11:50 a 12:35.
+- Ciencia Política no lectiva no se detecta como próxima clase.
+- La migración se ejecuta una vez y conserva tareas personales.
+
+PRUEBAS FUNCIONALES AUTOMATIZADAS
+- 36 verificaciones de ejecución mediante entorno JavaScript simulado: aprobadas.
+- Sintaxis JavaScript de app.js, online.js y sw.js: aprobada.
+- 84 controladores de botones/cambios revisados: todos resueltos.
+- Referencias locales de index.html y caché del Service Worker: existentes.
+- Archivos JSON: válidos.
+- Balance estructural CSS: válido.
+- Barra inferior: 5 botones.
+- Sesión válida conservada en modo sin conexión.
+- Acceso interno de mantenimiento ausente de pantalla de ingreso, perfil y documentación visible.
+- Tareas: agrupación por materia, docente, pendientes reales, entregadas y vencidas verificadas.
+- Supabase: 53 bloques y 5 no lectivos confirmados después de la migración.
+
+ESTABILIDAD Y DATOS
+- La actualización del horario reemplaza solo la plantilla obsoleta.
+- No elimina tareas, perfil, sesión válida, preferencias, activación ni biblioteca.
+- El repositorio final contiene 91 archivos, por debajo del límite de 100.
+- No se detectaron referencias locales faltantes ni botones directos sin función.
+
+LIMITACIÓN DE LA PRUEBA
+- El entorno de trabajo no permitió ejecutar una prueba visual completa en un dispositivo Android físico. Se realizaron pruebas de sintaxis, estructura, persistencia, migración y ejecución funcional automatizada sobre el código completo. Se recomienda la comprobación final en un celular antes de distribuir masivamente.
+
+RESULTADO
+APROBADO PARA PRUEBA CONTROLADA Y PUBLICACIÓN EN EL REPOSITORIO.
+
+SALIDA DEL ENSAYO FUNCIONAL
+{
+  "version": "2.6.8",
+  "activation": "271261",
+  "secondary": "2026JINETES",
+  "migration_first": true,
+  "tasks_preserved": true,
+  "migration_second": false,
+  "schedule_version": "2026-07-28-04",
+  "database_version": "agenda-db-2",
+  "app_data_version": "2.6.8",
+  "block_count": 53,
+  "monday": "Hora mística",
+  "martes": "Organización y control",
+  "miercoles": "Organización y control",
+  "jueves": "Organización y control",
+  "viernes": "Organización y control",
+  "nonlective_count": 5,
+  "nonlective_upcoming": false,
+  "nonlective_class": "non-lective",
+  "nonlective_html": true,
+  "science_not_next": true,
+  "color_consistent": true,
+  "color_distinct": true,
+  "timeline_grouped": true,
+  "nav_count": 5,
+  "schedule_html": true,
+  "session_offline_kept": true,
+  "session_key_compatible": true,
+  "login_hidden": true,
+  "profile_hidden": true,
+  "pending_count": 1,
+  "delivered_state": "entregada",
+  "expired_state": "vencida",
+  "grouped_tasks": true,
+  "task_filters": true,
+  "task_general_card": true,
+  "module_clear": true
+}
+ALL_VM_TESTS_OK
+
+SALIDA DE CONTROLES ESTÁTICOS
+file_count=91
+html_local_refs=7
+sw_core_refs=24
+handlers_checked=84
+app_version=True
+activation=True
+secondary=True
+schedule_version=True
+db_version=True
+schedule_entries=53
+preserved_hashes_checked=22
+STATIC_CHECKS_OK

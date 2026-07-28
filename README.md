@@ -1,34 +1,30 @@
-# Agenda Policial v2.6.5
+# Agenda Policial v2.6.8
 
-Aplicación PWA de consulta normativa offline y apoyo académico con un área online opcional.
+Aplicación PWA institucional con biblioteca normativa offline y área académica online opcional.
 
-## Pulido del área online
+## Estabilización del horario
 
-- Panel académico con resumen de la jornada, próximas actividades y publicaciones recientes.
-- Tarjetas de acceso rápido para Exámenes, Formaciones, Tareas y Resúmenes.
-- Agenda académica mensual que reúne formaciones, vencimientos de tareas y exámenes.
-- Filtros por estado: próximas, pendientes, urgentes, completadas, recientes y realizadas.
-- Vista general o agrupada por materia en Tareas, Exámenes y Resúmenes.
-- Marcación personal de tareas cumplidas sin modificar la publicación oficial.
-- Botón de publicación exclusivo para roles autorizados.
-- Estado visible de conexión y diseño institucional refinado.
+- Horario oficial Capitanes A incorporado dentro de la versión con 53 bloques.
+- Hora mística únicamente el lunes de 06:45 a 07:15.
+- Organización y control de martes a viernes en el mismo bloque.
+- Los bloques de 11:50 a 12:35 están identificados como **HORARIO NO LECTIVO · NO SE PASAN CLASES**.
+- Los bloques no lectivos no participan en próxima actividad, cuenta regresiva, cronología, alertas ni estado “en curso”.
+- Migración selectiva mediante `appVersion`, `scheduleVersion` y `databaseVersion`; no borra tareas, sesión, perfil, activación ni configuraciones.
 
-## Base estabilizada
+## Interfaz
 
-- Horario oficial del Curso de Capacitación Policial, Capitanes A, segundo semestre 2026, con 53 bloques.
-- Barra inferior estable con cinco accesos: Inicio, Formación, Tareas, Horario y Biblioteca.
-- Acceso académico ubicado en el encabezado y separado de la experiencia offline.
-- Biblioteca normativa con PDF locales y textos estructurados.
-- Service Worker y caché actualizados a la versión 2.6.5.
+- Colores sobrios y constantes por materia en horario, tareas y cronología.
+- Cronología separada por HOY, MAÑANA y fecha completa.
+- Barra inferior estable con Inicio, Formación, Tareas, Horario y Biblioteca.
+- Selector **Elige tu horario**, preparado para habilitar otros cursos o paralelos.
 
-## Nómina académica preinstalada
+## Área académica online
 
-- 54 integrantes identificados.
-- 50 registros con C.I. y celular habilitados.
-- 4 integrantes permanecen inactivos hasta completar C.I. y celular.
-- La cuenta de Mauro Cristhian Espinoza Rivera queda como administrador general.
-- Los demás integrantes empiezan como lectores.
-- Acceso: usuario = C.I.; contraseña = número de celular.
+- Formaciones, Tareas, Exámenes y Resúmenes.
+- Tareas con vista general o por materia, docente, contadores reales y estados Pendiente, Urgente, Entregada, Vencida y Sin tareas.
+- Sesión persistente: una pérdida temporal de internet no envía al formulario de acceso.
+- Los roles y publicaciones se sincronizan mediante Supabase.
+- Las credenciales internas de mantenimiento no se muestran en la interfaz ni en la lista de integrantes.
 
 ## Roles
 
@@ -38,25 +34,25 @@ Aplicación PWA de consulta normativa offline y apoyo académico con un área on
 - Asistente académico.
 - Lector.
 
-El administrador general asigna los roles desde **Integrantes y funciones**.
+## Datos protegidos
 
-## Área académica
+La actualización conserva:
 
-- Exámenes.
-- Formaciones: formación general o servicio extraordinario, fecha, lugar, hora de control, hora del parte, uniforme, comunicado, observaciones y archivo opcional.
-- Tareas con seguimiento personal de cumplimiento.
-- Resúmenes con materia, tema, texto y archivo Word, PDF o imagen.
+- activación principal `271261`;
+- clave secundaria `2026JINETES` con su lógica vigente;
+- biblioteca, reglamentos y leyes;
+- datos personales locales;
+- tareas y configuraciones;
+- sesión académica válida.
 
-Sin Supabase, la nómina y las pruebas funcionan localmente en cada dispositivo. Para sincronizar publicaciones, roles y accesos entre celulares, ejecutar `supabase-schema.sql`, luego `supabase-roster-seed.sql`, crear el bucket `academic-files` y completar `ONLINE_CFG` en `online.js`.
+## Supabase
+
+Proyecto conectado: `lkwrulzrulmbfypwywmo`.
+
+La aplicación utiliza solo la URL y la clave publicable. Nunca debe incorporarse una clave secreta o `service_role` al repositorio.
+
+El archivo `supabase-v268-migration.sql` documenta las modificaciones de esta versión.
 
 ## Publicación
 
-El proyecto mantiene menos de 100 archivos y puede publicarse en GitHub Pages. No colocar claves secretas ni `service_role` dentro del repositorio.
-
-## Cambios v2.6.5
-- Selector **Elige tu horario** basado en un catálogo de horarios activos.
-- Capitanes A se actualiza automáticamente desde la plantilla oficial.
-- Acceso online simplificado a **Usuario** y **Contraseña**.
-- Se conserva el usuario de prueba `0000 / 0000`.
-- Área online sin iconos decorativos ni accesos duplicados.
-- Roles locales se refrescan y sincronizan entre pestañas del mismo dispositivo; entre celulares requieren Supabase.
+El proyecto se mantiene por debajo de 100 archivos y puede publicarse en GitHub Pages. Se debe subir el contenido de la carpeta raíz del ZIP, conservando la estructura de archivos.

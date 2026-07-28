@@ -70,3 +70,21 @@ body{background:linear-gradient(180deg,#e9efe5 0%,#f9faf5 38%,#edf3ea 100%)}
 
 /* Selector de horarios v2.6.5 */
 .schedule-picker{padding:14px 16px;margin-bottom:12px;background:linear-gradient(135deg,#f7faf6,#eef5ef)}.schedule-picker label{display:grid;grid-template-columns:minmax(0,1fr) minmax(180px,280px);align-items:center;gap:12px;font-weight:900;color:#173b28}.schedule-picker select{width:100%;padding:11px 13px;border-radius:12px;border:1px solid #cddbd1;background:#fff;font:inherit;font-weight:800;color:#153c28}.schedule-picker small{display:block;margin-top:7px;color:#69766e}.schedule-auto-badge{display:inline-flex;align-items:center;padding:7px 10px;border-radius:999px;background:#e8f3ea;color:#235439;font-size:12px;font-weight:900}@media(max-width:620px){.schedule-picker label{grid-template-columns:1fr}.schedule-picker select{min-width:0}}
+
+
+/* v2.6.8 — materias, bloques no lectivos y cronología */
+.subject-coded{border-left:4px solid var(--subject-accent)!important;background:linear-gradient(90deg,var(--subject-soft),#fff 44%)!important}
+.subject-coded .tag{border-color:color-mix(in srgb,var(--subject-accent) 35%,#dfe7e2);color:var(--subject-accent)}
+.daily-block.subject-coded{border-left:4px solid var(--subject-accent);background:linear-gradient(90deg,var(--subject-soft),#fff 56%)}
+.schedule-cell.filled{box-shadow:inset 4px 0 0 var(--subject-accent);background:linear-gradient(90deg,var(--subject-soft),#fff 62%)}
+.schedule-cell.special{box-shadow:inset 4px 0 0 var(--subject-accent);background:linear-gradient(90deg,var(--subject-soft),#fff 62%)}
+.daily-block.non-lective,.schedule-cell.non-lective{position:relative;background:repeating-linear-gradient(135deg,#fff7ed 0,#fff7ed 8px,#fbe7cf 8px,#fbe7cf 16px)!important;border-color:#d97706!important;box-shadow:inset 4px 0 0 #d97706!important}
+.non-lective-label{display:inline-flex;width:max-content;max-width:100%;padding:4px 8px;border-radius:999px;background:#c2410c;color:white;font-size:.69rem;font-weight:900;letter-spacing:.04em;line-height:1.15}
+.non-lective-subject{text-decoration:line-through;text-decoration-thickness:2px;text-decoration-color:#c2410c;opacity:.62}
+.daily-block.non-lective p,.schedule-cell.non-lective .cell-teacher{color:#9a3412;font-weight:900}
+.non-lective-detail{display:grid;gap:8px;margin:14px 0;padding:16px;border:1px solid #f0a75b;border-radius:18px;background:repeating-linear-gradient(135deg,#fff8ef 0,#fff8ef 10px,#fcebd6 10px,#fcebd6 20px)}
+.non-lective-detail>b{color:#9a3412;font-size:1rem}.non-lective-detail>span{font-weight:900;color:#c2410c}
+.agenda-timeline-grouped{display:grid;gap:14px}.agenda-day-group{overflow:hidden;border:1px solid #dfe8e1;border-radius:18px;background:#fff}.agenda-day-group.tone-1{background:#f7faf7}.agenda-day-header{position:sticky;top:0;z-index:1;padding:10px 14px;background:#eaf1ea;color:#234a31;font-size:.78rem;font-weight:900;letter-spacing:.04em;text-transform:uppercase}.agenda-day-group.tone-1 .agenda-day-header{background:#f2efe7;color:#5c4a27}.agenda-day-items{display:grid}.agenda-day-items .agenda-mini{border-radius:0;border-left-width:4px;margin:0;border-top:1px solid #eef2ef}.agenda-day-items .agenda-mini:first-child{border-top:0}
+@media(max-width:520px){.agenda-day-header{font-size:.72rem;padding:9px 12px}.daily-block.non-lective{align-items:flex-start}.non-lective-label{font-size:.62rem}.schedule-cell.non-lective .non-lective-label{white-space:normal;border-radius:7px;padding:3px 5px}.schedule-cell.non-lective .cell-teacher{font-size:.62rem}}
+
+.schedule-reference-notice{display:grid;gap:5px;margin:10px 0 14px;padding:12px 14px;border-left:4px solid #b7791f;border-radius:12px;background:#fff8e6;color:#26382d}.schedule-reference-notice b{color:#8a5600}.schedule-reference-notice span{font-size:.92rem;line-height:1.45}

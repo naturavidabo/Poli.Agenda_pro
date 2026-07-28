@@ -1,4 +1,4 @@
-/* Agenda Policial Online v2.6.6 — conexión real con Supabase */
+/* Agenda Policial Online v2.6.8 — conexión real con Supabase */
 const ONLINE_CFG = {
   url: 'https://lkwrulzrulmbfypwywmo.supabase.co',
   anonKey: 'sb_publishable_vtek6lVCGZkmyicgAPqDMw_8EOTFrRU',
@@ -10,7 +10,7 @@ const ACADEMIC_USERS_STORAGE = 'agenda-academic-users-v263';
 const ACADEMIC_POSTS_STORAGE = 'agenda-academic-posts-v263';
 const ACADEMIC_SESSION_STORAGE = 'agenda-academic-session';
 const ACADEMIC_TEST_CREDENTIAL = '0000';
-const ACADEMIC_ROLE_CHANNEL = 'agenda-academic-role-sync-v266';
+const ACADEMIC_ROLE_CHANNEL = 'agenda-academic-role-sync-v268';
 
 const ACADEMIC_TYPES = {
   examenes: {
@@ -53,6 +53,10 @@ function onlineConfigured() {
 
 function academicCredential(value) {
   return String(value || '').replace(/\D/g, '');
+}
+
+function academicRemoteTokenIsValid(value) {
+  return /^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i.test(String(value || ''));
 }
 
 function academicHeaders(extra = {}) {
@@ -206,7 +210,7 @@ async function academicLocalLogin(ci, phone) {
     return {
       session_token: 'local:test-user',
       user_id: 'test-user',
-      full_name: 'Usuario de prueba',
+      full_name: 'Administrador del sistema',
       role: 'administrador_general',
       roster_number: 0,
       storage_mode: 'test_local'
@@ -236,25 +240,30 @@ async function academicLogin() {
   const phone = $('#academicPhone')?.value.trim();
   if (!ci || !phone) return toast('Ingrese usuario y contraseña');
 
+  let user;
   try {
-    let user;
     if (onlineConfigured()) {
       user = await academicRPC('academic_login', { p_ci: ci, p_phone: phone });
       if (Array.isArray(user)) user = user[0];
     } else {
       user = await academicLocalLogin(ci, phone);
     }
-
-    if (!user?.session_token) return toast('Datos no registrados o acceso inactivo');
-    academicSession = user;
-    academicTab = 'panel';
-    localStorage.setItem(ACADEMIC_SESSION_STORAGE, JSON.stringify(user));
-    render();
-    toast('Acceso académico habilitado');
   } catch (error) {
-    console.error(error);
-    toast('No se pudo conectar al área académica');
+    console.error('Error de conexión académica:', error);
+    return toast('No se pudo conectar con Supabase. Revise internet e intente nuevamente');
   }
+
+  if (!user?.session_token) return toast('Usuario o contraseña incorrectos, o acceso inactivo');
+
+  academicSession = user;
+  academicTab = 'panel';
+  localStorage.setItem(ACADEMIC_SESSION_STORAGE, JSON.stringify(user));
+  toast('Acceso académico habilitado');
+
+  // Recarga limpia para evitar que restos de la interfaz anterior interrumpan el ingreso.
+  setTimeout(() => {
+    location.replace(`./index.html?online=1&v=2.6.8&r=${Date.now()}`);
+  }, 180);
 }
 
 async function academicLogout(silent = false) {
@@ -919,13 +928,26 @@ async function importAcademicRosterFile() {
 
 async function validateAcademicLocalSession() {
   if (!academicSession) return;
+
   if (onlineConfigured()) {
+    // Versiones anteriores guardaban tokens como "local:cap-a-017".
+    // Esos valores no son UUID de Supabase y deben limpiarse sin generar error.
+    if (!academicRemoteTokenIsValid(academicSession.session_token)) {
+      academicSession = null;
+      localStorage.removeItem(ACADEMIC_SESSION_STORAGE);
+      return;
+    }
+
     try {
       const refreshed = await academicRPC('academic_refresh_session', {
         p_token: academicSession.session_token
       });
       const user = Array.isArray(refreshed) ? refreshed[0] : refreshed;
-      if (!user?.session_token || user.module_enabled === false) throw new Error('Sesión inactiva');
+
+      if (!user?.session_token || user.module_enabled === false) {
+        throw new Error('Sesión inactiva');
+      }
+
       academicSession = user;
       localStorage.setItem(ACADEMIC_SESSION_STORAGE, JSON.stringify(user));
       return;
@@ -936,11 +958,13 @@ async function validateAcademicLocalSession() {
       return;
     }
   }
+
   if (!String(academicSession.session_token || '').startsWith('local:')) {
     academicSession = null;
     localStorage.removeItem(ACADEMIC_SESSION_STORAGE);
     return;
   }
+
   const users = await academicLocalUsers();
   const user = users.find(item => String(item.id) === String(academicSession.user_id));
   if (!user?.active) {
@@ -948,6 +972,7 @@ async function validateAcademicLocalSession() {
     localStorage.removeItem(ACADEMIC_SESSION_STORAGE);
     return;
   }
+
   academicSession.full_name = user.full_name;
   academicSession.role = user.role;
   localStorage.setItem(ACADEMIC_SESSION_STORAGE, JSON.stringify(academicSession));
@@ -965,13 +990,20 @@ render = function renderWithAcademicModule() {
 };
 
 window.addEventListener('DOMContentLoaded', () => {
-  validateAcademicLocalSession().then(() => {
-    if (state.activated && state.mode) render();
-  });
+  validateAcademicLocalSession()
+    .then(() => {
+      if (state.activated && state.mode) render();
+    })
+    .catch(error => {
+      console.error('Recuperación académica:', error);
+      academicSession = null;
+      localStorage.removeItem(ACADEMIC_SESSION_STORAGE);
+      if (state.activated && state.mode) render();
+    });
 });
 
 /* =========================================================
-   Agenda Policial Online v2.6.6 — panel académico pulido
+   Agenda Policial Online v2.6.8 — panel académico pulido
    Inspirado en una vista rápida por pendientes y materias,
    conservando la identidad institucional de Agenda Policial.
    ========================================================= */
@@ -1592,13 +1624,17 @@ window.addEventListener('offline', () => {
 
 
 /* =========================================================
-   Agenda Policial Online v2.6.6 — interfaz clara y roles
+   Agenda Policial Online v2.6.8 — interfaz clara y roles
    ========================================================= */
 let academicRoleBus = null;
 try { academicRoleBus = 'BroadcastChannel' in window ? new BroadcastChannel(ACADEMIC_ROLE_CHANNEL) : null; } catch {}
 
 function academicIsTestSession() {
-  return academicSession?.storage_mode === 'test_local' && academicSession?.session_token === 'local:test-user';
+  return Boolean(
+    academicSession?.is_test ||
+    academicSession?.storage_mode === 'test_online' ||
+    (academicSession?.storage_mode === 'test_local' && academicSession?.session_token === 'local:test-user')
+  );
 }
 
 function refreshAcademicSessionFromLocalStore() {
@@ -1656,7 +1692,7 @@ onlineLoginView = function onlineLoginViewV265() {
         </label>
         <button class="btn academic-main-btn" onclick="academicLogin()">Ingresar</button>
         <p class="academic-credential-note">Usuario del curso: C.I. · Contraseña: número de celular.</p>
-        <div class="online-test-note"><b>Acceso de prueba</b><span>Usuario 0000 · Contraseña 0000</span></div>
+        
         ${!onlineConfigured() ? `<div class="online-setup-note"><b>Modo local de preparación</b><span>Los roles se conservan en este dispositivo. La sincronización entre celulares comenzará al conectar un proyecto Supabase exclusivo para Agenda Policial.</span></div>` : ''}
       </div>
     </section>
@@ -1755,3 +1791,163 @@ renderOnline = function renderOnlineV265() {
   refreshAcademicSessionFromLocalStore();
   return _renderOnlineV264();
 };
+
+
+/* =========================================================
+   Agenda Policial Online v2.6.8 — sesión persistente y tareas
+   ========================================================= */
+const ACADEMIC_POST_CACHE_STORAGE='agenda-academic-post-cache-v268';
+const ACADEMIC_TASK_QUEUE_STORAGE='agenda-academic-task-queue-v268';
+let academicSubjectExpanded=new Set();
+
+function academicDisplayName(){return academicIsTestSession()?'Administrador del sistema':(academicSession?.full_name||'Usuario')}
+function academicIsNetworkError(error){return !navigator.onLine||error?.name==='TypeError'||error?.code==='NETWORK_ERROR'||error?.status===0||/failed to fetch|network|internet|abort/i.test(String(error?.message||''))}
+function academicPostCache(){try{return JSON.parse(localStorage.getItem(ACADEMIC_POST_CACHE_STORAGE)||'{}')}catch{return {}}}
+function saveAcademicPostCache(cache){localStorage.setItem(ACADEMIC_POST_CACHE_STORAGE,JSON.stringify(cache))}
+function academicCacheKey(type){return `${academicSession?.course_code||'curso'}:${type||'all'}`}
+function academicCachedPosts(type){return academicPostCache()[academicCacheKey(type)]?.rows||[]}
+function academicStorePosts(type,rows){const cache=academicPostCache();cache[academicCacheKey(type)]={rows:Array.isArray(rows)?rows:[],saved_at:new Date().toISOString()};saveAcademicPostCache(cache)}
+
+academicRPC=async function academicRPCV268(fn,body={}){
+  const controller=new AbortController();const timer=setTimeout(()=>controller.abort(),15000);
+  try{
+    const response=await fetch(`${ONLINE_CFG.url}/rest/v1/rpc/${fn}`,{method:'POST',headers:academicHeaders(),body:JSON.stringify(body),signal:controller.signal});
+    const text=await response.text();
+    if(!response.ok){const error=new Error(text||`Error ${response.status}`);error.status=response.status;throw error}
+    return text?JSON.parse(text):null;
+  }catch(error){if(error?.name==='AbortError'){const timeout=new Error('Tiempo de conexión agotado');timeout.code='NETWORK_ERROR';throw timeout}throw error}
+  finally{clearTimeout(timer)}
+};
+
+validateAcademicLocalSession=async function validateAcademicSessionV268(){
+  if(!academicSession)return;
+  if(onlineConfigured()){
+    if(!academicRemoteTokenIsValid(academicSession.session_token)){academicSession=null;localStorage.removeItem(ACADEMIC_SESSION_STORAGE);return}
+    if(!navigator.onLine){academicSession.offline_cached=true;localStorage.setItem(ACADEMIC_SESSION_STORAGE,JSON.stringify(academicSession));return}
+    try{
+      const refreshed=await academicRPC('academic_refresh_session',{p_token:academicSession.session_token});const user=Array.isArray(refreshed)?refreshed[0]:refreshed;
+      if(!user?.session_token||user.module_enabled===false){academicSession=null;localStorage.removeItem(ACADEMIC_SESSION_STORAGE);return}
+      academicSession={...academicSession,...user,offline_cached:false,last_validated_at:new Date().toISOString()};localStorage.setItem(ACADEMIC_SESSION_STORAGE,JSON.stringify(academicSession));return;
+    }catch(error){
+      if(academicIsNetworkError(error)){academicSession.offline_cached=true;localStorage.setItem(ACADEMIC_SESSION_STORAGE,JSON.stringify(academicSession));return}
+      console.warn('Sesión académica inválida:',error);academicSession=null;localStorage.removeItem(ACADEMIC_SESSION_STORAGE);return;
+    }
+  }
+  if(!String(academicSession.session_token||'').startsWith('local:')){academicSession=null;localStorage.removeItem(ACADEMIC_SESSION_STORAGE);return}
+  const users=await academicLocalUsers();const user=users.find(item=>String(item.id)===String(academicSession.user_id));if(!user?.active){academicSession=null;localStorage.removeItem(ACADEMIC_SESSION_STORAGE);return}
+  academicSession.full_name=user.full_name;academicSession.role=user.role;localStorage.setItem(ACADEMIC_SESSION_STORAGE,JSON.stringify(academicSession));
+};
+
+academicLogin=async function academicLoginV268(){
+  const ci=$('#academicCi')?.value.trim(),phone=$('#academicPhone')?.value.trim();if(!ci||!phone)return toast('Ingrese usuario y contraseña');
+  try{
+    let user=onlineConfigured()?await academicRPC('academic_login',{p_ci:ci,p_phone:phone}):await academicLocalLogin(ci,phone);if(Array.isArray(user))user=user[0];
+    if(!user?.session_token)return toast('Usuario o contraseña incorrectos, o acceso inactivo');
+    academicSession={...user,offline_cached:false,last_validated_at:new Date().toISOString()};academicTab='panel';localStorage.setItem(ACADEMIC_SESSION_STORAGE,JSON.stringify(academicSession));toast('Acceso académico habilitado');setTimeout(()=>location.replace(`./index.html?online=1&v=2.6.8&r=${Date.now()}`),120);
+  }catch(error){console.error(error);toast(academicIsNetworkError(error)?'Sin conexión. Intente nuevamente cuando tenga internet':'No fue posible validar las credenciales')}
+};
+
+onlineLoginView=function onlineLoginViewV268(){return `<section class="online-page online-login-clean"><div class="online-login-hero clean"><span class="eyebrow">Acceso reservado al curso</span><h2>Área académica online</h2><p>Ingrese con las credenciales asignadas. El resto de la aplicación continúa disponible sin conexión.</p></div><div class="card academic-login clean"><h3>Iniciar sesión</h3><label>Usuario<input id="academicCi" inputmode="numeric" autocomplete="username" placeholder="Ingrese su usuario"></label><label>Contraseña<input id="academicPhone" inputmode="tel" autocomplete="current-password" placeholder="Ingrese su contraseña" type="password"></label><button class="btn academic-main-btn" onclick="academicLogin()">Ingresar</button><p class="academic-credential-note">Utilice las credenciales asignadas para el curso.</p></div></section>`};
+
+academicProfileHeader=function academicProfileHeaderV268(){
+  const connection=academicConnectionState();const name=academicDisplayName();return `<div class="online-profile compact-profile"><div class="online-avatar">${esc(academicInitials(name))}</div><div class="online-profile-copy"><span class="eyebrow">Área académica · Capitanes A</span><h2>${esc(name)}</h2><div class="online-profile-meta"><span>${esc(academicRoleLabel(academicSession?.role))}</span><span class="sync-pill ${connection.cls}">${connection.label}</span></div></div><button class="online-logout" onclick="academicLogout()">Salir</button></div>`;
+};
+
+academicFetchPosts=async function academicFetchPostsV268(type=null){
+  if(onlineConfigured()){
+    if(type){
+      if(navigator.onLine){try{const rows=await academicRPC('academic_get_posts',{p_token:academicSession.session_token,p_type:type});const list=Array.isArray(rows)?rows:[];academicStorePosts(type,list);return list}catch(error){if(!academicIsNetworkError(error))throw error}}
+      return academicCachedPosts(type);
+    }
+    const all=[];for(const key of Object.keys(ACADEMIC_TYPES))all.push(...await academicFetchPosts(key));return all;
+  }
+  return academicLocalPosts().filter(post=>!post.archived&&(!type||post.post_type===type));
+};
+
+function academicTaskRawMap(){try{const all=JSON.parse(localStorage.getItem(ACADEMIC_TASK_STATUS_STORAGE)||'{}');return all}catch{return {}}}
+function academicSaveTaskMap(mine){const all=academicTaskRawMap();all[String(academicSession?.user_id||'anonymous')]=mine;localStorage.setItem(ACADEMIC_TASK_STATUS_STORAGE,JSON.stringify(all))}
+academicTaskStatusMap=function academicTaskStatusMapV268(){const all=academicTaskRawMap();const raw=all[String(academicSession?.user_id||'anonymous')]||{};const out={};Object.entries(raw).forEach(([id,value])=>out[id]=value===true?'entregada':value===false?'pendiente':String(value||'pendiente'));return out};
+academicTaskIsDone=function academicTaskIsDoneV268(postId){return academicTaskStatusMap()[postId]==='entregada'};
+function academicTaskQueue(){try{return JSON.parse(localStorage.getItem(ACADEMIC_TASK_QUEUE_STORAGE)||'[]')}catch{return []}}
+function academicQueueTaskProgress(postId,status){const queue=academicTaskQueue().filter(x=>x.post_id!==postId);queue.push({post_id:postId,status,at:Date.now()});localStorage.setItem(ACADEMIC_TASK_QUEUE_STORAGE,JSON.stringify(queue))}
+async function academicSyncTaskProgress(){
+  if(!academicSession||!onlineConfigured()||!navigator.onLine||academicIsTestSession())return;
+  try{const rows=await academicRPC('academic_get_task_progress',{p_token:academicSession.session_token});const mine=academicTaskStatusMap();(rows||[]).forEach(row=>mine[row.post_id]=row.status);academicSaveTaskMap(mine)}catch(error){if(!academicIsNetworkError(error))console.warn(error)}
+}
+async function flushAcademicTaskQueue(){
+  if(!academicSession||!onlineConfigured()||!navigator.onLine||academicIsTestSession())return;const queue=academicTaskQueue();if(!queue.length)return;const pending=[];
+  for(const row of queue){try{await academicRPC('academic_set_task_progress',{p_token:academicSession.session_token,p_post_id:row.post_id,p_status:row.status})}catch(error){pending.push(row)}}
+  localStorage.setItem(ACADEMIC_TASK_QUEUE_STORAGE,JSON.stringify(pending));
+}
+toggleAcademicTask=async function toggleAcademicTaskV268(postId){
+  const mine=academicTaskStatusMap();const next=mine[postId]==='entregada'?'pendiente':'entregada';mine[postId]=next;academicSaveTaskMap(mine);loadAcademicPosts();toast(next==='entregada'?'Tarea marcada como entregada':'Tarea marcada como pendiente');
+  if(onlineConfigured()&&!academicIsTestSession()){
+    if(navigator.onLine){try{await academicRPC('academic_set_task_progress',{p_token:academicSession.session_token,p_post_id:postId,p_status:next});return}catch(error){console.warn(error)}}
+    academicQueueTaskProgress(postId,next);
+  }
+};
+
+function academicTaskState(post){
+  const fields=post.fields||{},explicit=normalize(fields.status||fields.estado||'');if(academicTaskIsDone(post.id)||/entregada|cumplida|completada/.test(explicit))return 'entregada';if(/finalizada|cancelada|archivada/.test(explicit))return 'finalizada';const diff=academicDayDifference(academicDateOnly(post));if(diff!==null&&diff<0)return 'vencida';if(diff!==null&&diff<=2)return 'urgente';return 'pendiente';
+}
+function academicTaskStateLabel(state){return ({pendiente:'Pendiente',urgente:'Urgente',entregada:'Entregada',vencida:'Vencida',finalizada:'Finalizada'})[state]||'Pendiente'}
+function academicTaskPending(post){return ['pendiente','urgente'].includes(academicTaskState(post))}
+academicFilterOptions=function academicFilterOptionsV268(tab){return ({formaciones:[['next','Próximas'],['current','Vigentes'],['previous','Anteriores'],['all','Todas']],tareas:[['pending','Pendientes'],['urgent','Urgentes'],['completed','Entregadas'],['expired','Vencidas'],['all','Todas']],examenes:[['upcoming','Próximos'],['past','Realizados'],['all','Todos']],resumenes:[['recent','Recientes'],['file','Con archivo'],['text','Solo texto'],['all','Todos']]})[tab]||[['all','Todos']]};
+academicPostMatchesFilter=function academicPostMatchesFilterV268(post){
+  if(ACADEMIC_TYPES[academicTab]&&post.post_type!==academicTab)return false;const date=academicDateOnly(post),diff=academicDayDifference(date);
+  if(academicTab==='formaciones'){if(academicFilter==='next')return diff!==null&&diff>=0;if(academicFilter==='current')return diff!==null&&diff>=0&&diff<=7;if(academicFilter==='previous')return diff!==null&&diff<0}
+  if(academicTab==='tareas'){const state=academicTaskState(post);if(academicFilter==='pending')return ['pendiente','urgente'].includes(state);if(academicFilter==='urgent')return state==='urgente';if(academicFilter==='completed')return state==='entregada';if(academicFilter==='expired')return state==='vencida'}
+  if(academicTab==='examenes'){if(academicFilter==='upcoming')return diff!==null&&diff>=0;if(academicFilter==='past')return diff!==null&&diff<0}
+  if(academicTab==='resumenes'){if(academicFilter==='recent'){const createdDiff=academicDayDifference(String(post.created_at||'').slice(0,10));return createdDiff!==null&&createdDiff>=-14}if(academicFilter==='file')return Boolean(post.file_url);if(academicFilter==='text')return Boolean(post.body)&&!post.file_url}
+  return true;
+};
+function academicSubjectKey(subject){return normalize(subject||'sin materia').replace(/[^a-z0-9]+/g,'-')||'sin-materia'}
+function toggleAcademicSubjectGroup(key){academicSubjectExpanded.has(key)?academicSubjectExpanded.delete(key):academicSubjectExpanded.add(key);loadAcademicPosts()}
+academicGroupedPosts=function academicGroupedPostsV268(posts){
+  if(academicTab!=='tareas'){
+    const groups=new Map();posts.forEach(post=>{const subject=academicSubjectName(post);if(!groups.has(subject))groups.set(subject,[]);groups.get(subject).push(post)});return [...groups.entries()].sort((a,b)=>a[0].localeCompare(b[0],'es')).map(([subject,items])=>`<section class="academic-subject-group subject-coded" ${subjectStyleAttr(subject)}><header><div><h3>${esc(subject)}</h3><small>${items.length} publicación${items.length===1?'':'es'}</small></div></header><div class="academic-subject-posts">${items.map(academicPostCard).join('')}</div></section>`).join('');
+  }
+  const groups=new Map();const subjects=[...new Set([...scheduleSubjects(),...posts.map(academicSubjectName)])].sort((a,b)=>a.localeCompare(b,'es'));posts.forEach(post=>{const subject=academicSubjectName(post);if(!groups.has(subject))groups.set(subject,[]);groups.get(subject).push(post)});
+  if(subjects.length&&!academicSubjectExpanded.size){const firstWithPending=subjects.find(subject=>(groups.get(subject)||[]).some(academicTaskPending));const firstWithItems=firstWithPending||subjects.find(subject=>(groups.get(subject)||[]).length)||subjects[0];academicSubjectExpanded.add(academicSubjectKey(firstWithItems))}
+  return subjects.map(subject=>{const items=(groups.get(subject)||[]).sort(academicPostSort),key=academicSubjectKey(subject),open=academicSubjectExpanded.has(key),pending=items.filter(academicTaskPending).length,delivered=items.filter(p=>academicTaskState(p)==='entregada').length,expired=items.filter(p=>academicTaskState(p)==='vencida').length,teacher=teacherForSubject(subject)||'Docente no consignado';
+    return `<section class="academic-subject-card subject-coded ${open?'open':''}" ${subjectStyleAttr(subject)}><button class="academic-subject-toggle" onclick="toggleAcademicSubjectGroup('${key}')" aria-expanded="${open}"><span class="subject-color-dot"></span><span class="subject-card-copy"><b>${esc(subject)}</b><small>${esc(teacher)}</small></span><span class="subject-count ${pending?'has-pending':'empty'}">${pending?`${pending} pendiente${pending===1?'':'s'}`:'Sin tareas'}</span><span class="subject-chevron">⌄</span></button>${open?`<div class="academic-subject-summary"><span>${items.length} total</span><span>${delivered} entregada${delivered===1?'':'s'}</span><span>${expired} vencida${expired===1?'':'s'}</span></div><div class="academic-subject-posts">${items.length?items.map(academicPostCard).join(''):'<div class="subject-empty-state">No existen tareas publicadas para esta materia.</div>'}</div>`:''}</section>`}).join('');
+};
+
+academicPostCard=function academicPostCardV268(post){
+  const fields=post.fields||{},subject=fields.subject||'',visual=subjectStyleAttr(subject||post.title||post.post_type),date=academicDateOnly(post);let meta='',status='';
+  if(post.post_type==='formaciones'){const diff=academicDayDifference(date);meta=`<div class="formation-meta"><span>Fecha: ${esc(fields.date||'Sin fecha')}</span><span>Lugar: ${esc(fields.place||'Sin lugar')}</span><span>Control: ${esc(fields.control_time||'-')}</span><span>Parte: ${esc(fields.report_time||'-')}</span></div>${fields.uniform?`<p><b>Uniforme:</b> ${esc(fields.uniform)}</p>`:''}${fields.observations?`<p><b>Observaciones:</b> ${esc(fields.observations)}</p>`:''}`;status=diff===0?'<span class="academic-status urgent">Hoy</span>':diff!==null&&diff>0?'<span class="academic-status upcoming">Próxima</span>':'<span class="academic-status neutral">Concluida</span>'}
+  if(post.post_type==='resumenes'){meta=`<p><b>Materia:</b> ${esc(subject)} · <b>Tema:</b> ${esc(fields.topic||'')}</p>`;status=post.file_url?'<span class="academic-status file">Con archivo</span>':'<span class="academic-status neutral">Texto</span>'}
+  if(post.post_type==='tareas'){const taskState=academicTaskState(post);meta=`<p><b>Materia:</b> ${esc(subject||'Sin materia')} · <b>Entrega:</b> ${esc(fields.due_date||'Sin fecha')}</p>${fields.teacher?`<p><b>Docente:</b> ${esc(fields.teacher)}</p>`:''}`;status=`<span class="academic-status ${taskState}">${academicTaskStateLabel(taskState)}</span>`}
+  if(post.post_type==='examenes'){const diff=academicDayDifference(date);meta=`<p><b>Materia:</b> ${esc(subject)} · <b>Fecha:</b> ${esc(fields.date||'')} ${esc(fields.time||'')} · <b>Lugar:</b> ${esc(fields.place||'')}</p>`;status=diff!==null&&diff>=0?'<span class="academic-status exam">Próximo</span>':'<span class="academic-status neutral">Realizado</span>'}
+  const taskAction=post.post_type==='tareas'?`<button class="academic-task-toggle ${academicTaskState(post)==='entregada'?'done':''}" onclick="toggleAcademicTask('${esc(post.id)}')">${academicTaskState(post)==='entregada'?'✓ Entregada':'Marcar entregada'}</button>`:'';
+  return `<article class="card academic-post subject-coded" ${visual}><div class="row between"><span class="tag">${esc(ACADEMIC_TYPES[post.post_type]?.label||post.post_type)}</span>${status}</div><h3>${esc(post.title||'Publicación académica')}</h3>${meta}${post.body?`<p class="academic-post-body">${esc(post.body)}</p>`:''}${post.file_url?`<a class="academic-file-link" href="${esc(post.file_url)}" target="_blank" rel="noopener">Abrir archivo adjunto</a>`:''}<div class="academic-post-footer"><small>${esc(post.author_name||'')}</small>${taskAction}</div></article>`;
+};
+
+loadAcademicPosts=async function loadAcademicPostsV268(){
+  const box=$('#academicPosts');if(!box||!academicSession||!ACADEMIC_TYPES[academicTab])return;
+  try{if(academicTab==='tareas'){await flushAcademicTaskQueue();await academicSyncTaskProgress()}const rows=await academicFetchPosts(academicTab);const posts=rows.filter(academicPostMatchesFilter).sort(academicPostSort);
+    if(academicViewMode==='subject'&&['tareas','examenes','resumenes'].includes(academicTab)){box.innerHTML=academicGroupedPosts(posts);return}
+    box.innerHTML=posts.length?posts.map(academicPostCard).join(''):'<div class="card small empty-online"><p>No existen publicaciones con este filtro.</p></div>';
+  }catch(error){console.error(error);const cached=academicCachedPosts(academicTab);box.innerHTML=cached.length?cached.filter(academicPostMatchesFilter).sort(academicPostSort).map(academicPostCard).join(''):'<div class="card small warn-card"><p>No fue posible sincronizar y todavía no hay contenido guardado en este dispositivo.</p></div>'}
+};
+
+academicModuleView=function academicModuleViewV268(){
+  const info=ACADEMIC_TYPES[academicTab];const taskIntro=academicTab==='tareas'?'<p class="module-guidance">Cambie entre la vista general y la vista por materia. Los estados y contadores se actualizan con las tareas reales.</p>':'';
+  return `${academicProfileHeader()}${academicTextNav()}<div class="online-module-head refined clean-module-head"><div><div><span class="eyebrow">Módulo académico</span><h3>${info.label}</h3><p>${info.help}</p></div></div>${academicCanPublish()?`<button class="btn academic-main-btn" onclick="openAcademicPostForm('${academicTab}')">Nueva publicación</button>`:''}</div>${taskIntro}${academicFilterBar()}<div id="academicPosts"><div class="card small"><p>Cargando contenido…</p></div></div>`;
+};
+
+function academicGroupedTimeline(posts){
+  const groups=new Map();posts.forEach(p=>{const date=academicDateOnly(p)||'sin-fecha';if(!groups.has(date))groups.set(date,[]);groups.get(date).push(p)});
+  return [...groups.entries()].map(([date,items],i)=>`<section class="online-day-group tone-${i%2}"><header>${date==='sin-fecha'?'SIN FECHA':esc(agendaDayTitle(date))}</header><div>${items.map(academicEventRow).join('')}</div></section>`).join('');
+}
+loadAcademicDashboard=async function loadAcademicDashboardV268(){
+  if(!academicSession||academicTab!=='panel')return;
+  try{await flushAcademicTaskQueue();await academicSyncTaskProgress();const posts=await academicFetchPosts();if(academicTab!=='panel')return;const today=todayISO(),formations=posts.filter(p=>p.post_type==='formaciones'),tasks=posts.filter(p=>p.post_type==='tareas'),exams=posts.filter(p=>p.post_type==='examenes'),summaries=posts.filter(p=>p.post_type==='resumenes'),future=p=>academicDateOnly(p)&&academicDateOnly(p)>=today,byDate=(a,b)=>(academicDateObject(a)?.getTime()||Infinity)-(academicDateObject(b)?.getTime()||Infinity),nextFormation=formations.filter(future).sort(byDate)[0],pendingTasks=tasks.filter(academicTaskPending),nextExam=exams.filter(future).sort(byDate)[0],recentSummaries=summaries.filter(p=>{const diff=academicDayDifference(String(p.created_at||'').slice(0,10));return diff!==null&&diff>=-7});
+    const summary=$('#academicSummaryGrid');if(summary)summary.innerHTML=[academicDashboardSummaryCard('',nextFormation?academicDateLabel(nextFormation):'—','Próxima formación',nextFormation?.title||'Sin publicación','formaciones','formation-tone'),academicDashboardSummaryCard('',pendingTasks.length,'Tareas pendientes',pendingTasks.length?'Revisar entregas':'Sin pendientes','tareas',pendingTasks.length?'task-tone':''),academicDashboardSummaryCard('',nextExam?academicDateLabel(nextExam):'—','Próximo examen',nextExam?.title||'Sin cronograma','examenes','exam-tone'),academicDashboardSummaryCard('',recentSummaries.length,'Resúmenes nuevos',recentSummaries.length?'Últimos 7 días':'Sin novedades','resumenes','summary-tone')].join('');
+    const todayItems=posts.filter(p=>academicDateOnly(p)===today),todayText=$('#academicTodayText');if(todayText)todayText.textContent=todayItems.length?`${todayItems.length} actividad${todayItems.length===1?'':'es'} programada${todayItems.length===1?'':'s'} para hoy.`:'No hay actividad registrada para hoy. Revise los próximos días.';
+    const upcoming=posts.filter(p=>['formaciones','tareas','examenes'].includes(p.post_type)&&future(p)).sort(byDate).slice(0,8),upcomingBox=$('#academicUpcomingList');if(upcomingBox)upcomingBox.innerHTML=upcoming.length?academicGroupedTimeline(upcoming):'<div class="empty-academic-line"><p>No hay actividades próximas registradas.</p></div>';
+    const recent=[...posts].sort((a,b)=>String(b.created_at||'').localeCompare(String(a.created_at||''))).slice(0,5),recentBox=$('#academicRecentList');if(recentBox)recentBox.innerHTML=recent.length?recent.map(post=>`<button class="academic-recent-row subject-coded" ${subjectStyleAttr(academicSubjectName(post))} onclick="setAcademicTab('${post.post_type}')"><span><b>${esc(post.title||academicEventKind(post))}</b><small>${esc(academicEventKind(post))} · ${esc(post.author_name||'Curso')}</small></span><time>${esc(String(post.created_at||'').slice(0,10)?fmtDate(String(post.created_at||'').slice(0,10)):'')}</time></button>`).join(''):'<div class="empty-academic-line"><p>Todavía no existen publicaciones.</p></div>';
+  }catch(error){console.error(error);const upcomingBox=$('#academicUpcomingList');if(upcomingBox)upcomingBox.innerHTML='<div class="empty-academic-line warning"><p>Sin conexión. Se conservará la sesión y se reintentará automáticamente.</p></div>'}
+};
+
+window.addEventListener('online',()=>{flushAcademicTaskQueue().then(()=>{if(state?.view==='online'&&academicSession){validateAcademicLocalSession().then(()=>render())}})});

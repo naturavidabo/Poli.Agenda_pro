@@ -1,19 +1,21 @@
-# Supabase conectado — Agenda Policial v2.6.6
+# Supabase conectado — Agenda Policial v2.6.8
 
-Proyecto conectado:
 - Project ref: `lkwrulzrulmbfypwywmo`
 - Bucket: `academic-files`
-- Acceso: C.I. como usuario y celular como contraseña.
+- Acceso académico: usuario asignado y contraseña asignada.
+- La aplicación contiene únicamente URL y clave publicable.
+- No contiene `service_role`, contraseña de base de datos ni claves secretas.
 
-La aplicación utiliza únicamente la URL y la clave publicable.
-Nunca se incorpora una clave secreta o `service_role`.
+## Estado
 
-Estado inicial:
-- 54 integrantes cargados.
-- 50 accesos completos y activos.
-- 4 integrantes pendientes e inactivos.
-- Mauro Cristhian Espinoza Rivera: administrador general.
-- Usuario de prueba `0000 / 0000`: lector sin permisos de modificación.
+- Nómina Capitanes A cargada y separada de otros paralelos.
+- 54 integrantes visibles para administración; los registros incompletos permanecen inactivos.
+- La cuenta interna de mantenimiento está excluida de las listas visibles.
+- Roles sincronizados mediante RPC.
+- Horario Capitanes A sincronizado con 53 bloques y versión `2026-07-28-04`.
+- Progreso individual de tareas preparado en `academic_task_progress`.
+- La sesión válida permanece almacenada durante pérdidas temporales de red.
 
-Los roles se modifican desde el panel del administrador general y se reflejan
-en los demás dispositivos al volver a ingresar o actualizar la sesión.
+## Actualización
+
+La migración de base correspondiente está en `supabase-v268-migration.sql`. Ya fue aplicada al proyecto conectado; el archivo se incluye como respaldo técnico.
