@@ -1951,3 +1951,35 @@ loadAcademicDashboard=async function loadAcademicDashboardV268(){
 };
 
 window.addEventListener('online',()=>{flushAcademicTaskQueue().then(()=>{if(state?.view==='online'&&academicSession){validateAcademicLocalSession().then(()=>render())}})});
+
+
+/* =========================================================
+   Agenda Policial Online v2.6.9 — sesión estable
+   ========================================================= */
+validateAcademicLocalSession=async function validateAcademicSessionV269(){
+  if(!academicSession)return;
+  if(onlineConfigured()){
+    if(!academicRemoteTokenIsValid(academicSession.session_token)){academicSession=null;localStorage.removeItem(ACADEMIC_SESSION_STORAGE);return}
+    if(!navigator.onLine){academicSession.offline_cached=true;localStorage.setItem(ACADEMIC_SESSION_STORAGE,JSON.stringify(academicSession));return}
+    try{
+      const refreshed=await academicRPC('academic_refresh_session',{p_token:String(academicSession.session_token)}),user=Array.isArray(refreshed)?refreshed[0]:refreshed;
+      if(!user?.session_token||user.module_enabled===false){academicSession=null;localStorage.removeItem(ACADEMIC_SESSION_STORAGE);return}
+      academicSession={...academicSession,...user,offline_cached:false,sync_error:false,last_validated_at:new Date().toISOString()};localStorage.setItem(ACADEMIC_SESSION_STORAGE,JSON.stringify(academicSession));return;
+    }catch(error){
+      console.warn('No se pudo renovar la sesión; se conserva localmente:',error);
+      academicSession.offline_cached=true;academicSession.sync_error=true;localStorage.setItem(ACADEMIC_SESSION_STORAGE,JSON.stringify(academicSession));return;
+    }
+  }
+  if(!String(academicSession.session_token||'').startsWith('local:')){academicSession=null;localStorage.removeItem(ACADEMIC_SESSION_STORAGE);return}
+  const users=await academicLocalUsers(),user=users.find(item=>String(item.id)===String(academicSession.user_id));
+  if(!user?.active){academicSession=null;localStorage.removeItem(ACADEMIC_SESSION_STORAGE);return}
+  academicSession.full_name=user.full_name;academicSession.role=user.role;localStorage.setItem(ACADEMIC_SESSION_STORAGE,JSON.stringify(academicSession));
+};
+academicLogin=async function academicLoginV269(){
+  const ci=$('#academicCi')?.value.trim(),phone=$('#academicPhone')?.value.trim();if(!ci||!phone)return toast('Ingrese usuario y contraseña');
+  try{
+    let user=onlineConfigured()?await academicRPC('academic_login',{p_ci:ci,p_phone:phone}):await academicLocalLogin(ci,phone);if(Array.isArray(user))user=user[0];
+    if(!user?.session_token)return toast('Usuario o contraseña incorrectos, o acceso inactivo');
+    academicSession={...user,offline_cached:false,sync_error:false,last_validated_at:new Date().toISOString()};academicTab='panel';localStorage.setItem(ACADEMIC_SESSION_STORAGE,JSON.stringify(academicSession));toast('Acceso académico habilitado');render();setTimeout(()=>{if(academicTab==='panel')loadAcademicDashboard()},0);
+  }catch(error){console.error(error);toast(academicIsNetworkError(error)?'Sin conexión. Intente nuevamente cuando tenga internet':'No fue posible validar las credenciales')}
+};

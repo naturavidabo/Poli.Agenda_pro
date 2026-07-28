@@ -1,0 +1,9 @@
+AGENDA POLICIAL v2.6.9
+
+1. Se corrigió el horario exactamente según la fotografía oficial.
+2. Solo son HORA NO LECTIVA: lunes, martes, jueves y viernes de 11:50 a 12:35.
+3. Miércoles 11:50–12:35 y 12:35–13:20 continúan como HORA LECTIVA.
+4. Las horas lectivas muestran materia, código CCP, HORA LECTIVA y docente.
+5. Se corrigió el cierre inmediato del Área Académica después del ingreso.
+6. La sesión se conserva ante fallas temporales de internet o del servidor.
+7. Se mantienen activación, clave secundaria, biblioteca, tareas y datos locales.

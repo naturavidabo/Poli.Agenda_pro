@@ -1,5 +1,5 @@
 {
-  "catalog_version": "2026-07-28-v268",
+  "catalog_version": "2026-07-28-v269",
   "horarios": [
     {
       "id": "capitanes-a-2026-2",
@@ -8,7 +8,7 @@
       "orden": 1,
       "metadatos": {
         "id": "horario-capitanes-a-sucre-2026-2-oficial",
-        "template_version": "2026-07-28-04",
+        "template_version": "2026-07-28-05",
         "nombre": "Horario oficial — Segundo semestre 2026",
         "institucion": "Escuela Superior de Policías — Filial Sucre",
         "curso": "Curso de Capacitación Policial",
@@ -19,7 +19,7 @@
         "duracion": "19 semanas",
         "vigente": true,
         "actualizado": "2026-07-28",
-        "descripcion": "Nivel Capitanes, Paralelo A, turno mañana, segundo semestre 2026. Hora mística únicamente el lunes; martes a viernes Organización y control. Los bloques 11:50–12:35 son horarios no lectivos y no generan actividad.",
+        "descripcion": "Horario oficial del Paralelo A. Solo son no lectivos los bloques expresamente marcados: lunes, martes, jueves y viernes de 11:50 a 12:35. El miércoles de 11:50 a 12:35 es HORA LECTIVA.",
         "catalog_id": "capitanes-a-2026-2"
       },
       "entradas": [
@@ -34,7 +34,7 @@
           "codigo": "",
           "lugar": "",
           "uniforme": "",
-          "observacion": ""
+          "observacion": "Actividad institucional"
         },
         {
           "id": "lu-0715-organizacin-y-control",
@@ -60,7 +60,7 @@
           "codigo": "",
           "lugar": "",
           "uniforme": "",
-          "observacion": ""
+          "observacion": "Actividad institucional"
         },
         {
           "id": "ma-0715-organizacin-y-control",
@@ -86,7 +86,7 @@
           "codigo": "",
           "lugar": "",
           "uniforme": "",
-          "observacion": ""
+          "observacion": "Actividad institucional"
         },
         {
           "id": "mi-0715-organizacin-y-control",
@@ -112,7 +112,7 @@
           "codigo": "",
           "lugar": "",
           "uniforme": "",
-          "observacion": ""
+          "observacion": "Actividad institucional"
         },
         {
           "id": "ju-0715-organizacin-y-control",
@@ -138,7 +138,7 @@
           "codigo": "",
           "lugar": "",
           "uniforme": "",
-          "observacion": ""
+          "observacion": "Actividad institucional"
         },
         {
           "id": "vi-0715-organizacin-y-control",
@@ -164,7 +164,7 @@
           "codigo": "CCP-01",
           "lugar": "",
           "uniforme": "",
-          "observacion": "CCP-01 · Clase programada"
+          "observacion": "CCP-01 · HORA LECTIVA"
         },
         {
           "id": "ma-0730-procedimientos-especiales",
@@ -177,7 +177,7 @@
           "codigo": "CCP-02",
           "lugar": "",
           "uniforme": "",
-          "observacion": "CCP-02 · Clase programada"
+          "observacion": "CCP-02 · HORA LECTIVA"
         },
         {
           "id": "mi-0730-auditora-gubernamental",
@@ -190,7 +190,7 @@
           "codigo": "CCP-06",
           "lugar": "",
           "uniforme": "",
-          "observacion": "CCP-06 · Clase programada"
+          "observacion": "CCP-06 · HORA LECTIVA"
         },
         {
           "id": "ju-0730-inteligencia-estratgica",
@@ -203,7 +203,7 @@
           "codigo": "CCP-04",
           "lugar": "",
           "uniforme": "",
-          "observacion": "CCP-04 · Clase programada"
+          "observacion": "CCP-04 · HORA LECTIVA"
         },
         {
           "id": "vi-0730-ciencia-poltica",
@@ -216,7 +216,7 @@
           "codigo": "CCP-05",
           "lugar": "",
           "uniforme": "",
-          "observacion": "CCP-05 · Clase programada"
+          "observacion": "CCP-05 · HORA LECTIVA"
         },
         {
           "id": "lu-0815-planificacin-estratgica",
@@ -229,7 +229,7 @@
           "codigo": "CCP-01",
           "lugar": "",
           "uniforme": "",
-          "observacion": "CCP-01 · Clase programada"
+          "observacion": "CCP-01 · HORA LECTIVA"
         },
         {
           "id": "ma-0815-procedimientos-especiales",
@@ -242,7 +242,7 @@
           "codigo": "CCP-02",
           "lugar": "",
           "uniforme": "",
-          "observacion": "CCP-02 · Clase programada"
+          "observacion": "CCP-02 · HORA LECTIVA"
         },
         {
           "id": "mi-0815-auditora-gubernamental",
@@ -255,7 +255,7 @@
           "codigo": "CCP-06",
           "lugar": "",
           "uniforme": "",
-          "observacion": "CCP-06 · Clase programada"
+          "observacion": "CCP-06 · HORA LECTIVA"
         },
         {
           "id": "ju-0815-inteligencia-estratgica",
@@ -268,7 +268,7 @@
           "codigo": "CCP-04",
           "lugar": "",
           "uniforme": "",
-          "observacion": "CCP-04 · Clase programada"
+          "observacion": "CCP-04 · HORA LECTIVA"
         },
         {
           "id": "vi-0815-ciencia-poltica",
@@ -281,7 +281,7 @@
           "codigo": "CCP-05",
           "lugar": "",
           "uniforme": "",
-          "observacion": "CCP-05 · Clase programada"
+          "observacion": "CCP-05 · HORA LECTIVA"
         },
         {
           "id": "lu-0900-descanso-25-minutos",
@@ -359,7 +359,7 @@
           "codigo": "CCP-03",
           "lugar": "",
           "uniforme": "",
-          "observacion": "CCP-03 · Clase programada"
+          "observacion": "CCP-03 · HORA LECTIVA"
         },
         {
           "id": "ma-0925-procedimientos-especiales",
@@ -372,7 +372,7 @@
           "codigo": "CCP-02",
           "lugar": "",
           "uniforme": "",
-          "observacion": "CCP-02 · Clase programada"
+          "observacion": "CCP-02 · HORA LECTIVA"
         },
         {
           "id": "mi-0925-planificacin-estratgica",
@@ -385,7 +385,7 @@
           "codigo": "CCP-01",
           "lugar": "",
           "uniforme": "",
-          "observacion": "CCP-01 · Clase programada"
+          "observacion": "CCP-01 · HORA LECTIVA"
         },
         {
           "id": "ju-0925-inteligencia-estratgica",
@@ -398,7 +398,7 @@
           "codigo": "CCP-04",
           "lugar": "",
           "uniforme": "",
-          "observacion": "CCP-04 · Clase programada"
+          "observacion": "CCP-04 · HORA LECTIVA"
         },
         {
           "id": "vi-0925-ciencia-poltica",
@@ -411,7 +411,7 @@
           "codigo": "CCP-05",
           "lugar": "",
           "uniforme": "",
-          "observacion": "CCP-05 · Clase programada"
+          "observacion": "CCP-05 · HORA LECTIVA"
         },
         {
           "id": "lu-1010-administracin-general",
@@ -424,7 +424,7 @@
           "codigo": "CCP-03",
           "lugar": "",
           "uniforme": "",
-          "observacion": "CCP-03 · Clase programada"
+          "observacion": "CCP-03 · HORA LECTIVA"
         },
         {
           "id": "ma-1010-procedimientos-especiales",
@@ -437,7 +437,7 @@
           "codigo": "CCP-02",
           "lugar": "",
           "uniforme": "",
-          "observacion": "CCP-02 · Clase programada"
+          "observacion": "CCP-02 · HORA LECTIVA"
         },
         {
           "id": "mi-1010-planificacin-estratgica",
@@ -450,7 +450,7 @@
           "codigo": "CCP-01",
           "lugar": "",
           "uniforme": "",
-          "observacion": "CCP-01 · Clase programada"
+          "observacion": "CCP-01 · HORA LECTIVA"
         },
         {
           "id": "ju-1010-inteligencia-estratgica",
@@ -463,7 +463,7 @@
           "codigo": "CCP-04",
           "lugar": "",
           "uniforme": "",
-          "observacion": "CCP-04 · Clase programada"
+          "observacion": "CCP-04 · HORA LECTIVA"
         },
         {
           "id": "vi-1010-ciencia-poltica",
@@ -476,7 +476,7 @@
           "codigo": "CCP-05",
           "lugar": "",
           "uniforme": "",
-          "observacion": "CCP-05 · Clase programada"
+          "observacion": "CCP-05 · HORA LECTIVA"
         },
         {
           "id": "lu-1055-descanso-10-minutos",
@@ -554,7 +554,7 @@
           "codigo": "CCP-03",
           "lugar": "",
           "uniforme": "",
-          "observacion": "CCP-03 · Clase programada"
+          "observacion": "CCP-03 · HORA LECTIVA"
         },
         {
           "id": "ma-1105-ciencia-poltica",
@@ -567,7 +567,7 @@
           "codigo": "CCP-05",
           "lugar": "",
           "uniforme": "",
-          "observacion": "CCP-05 · Clase programada"
+          "observacion": "CCP-05 · HORA LECTIVA"
         },
         {
           "id": "mi-1105-metodologa-de-investigacin",
@@ -580,7 +580,7 @@
           "codigo": "CCP-07",
           "lugar": "",
           "uniforme": "",
-          "observacion": "CCP-07 · Clase programada"
+          "observacion": "CCP-07 · HORA LECTIVA"
         },
         {
           "id": "ju-1105-procedimientos-especiales",
@@ -593,7 +593,7 @@
           "codigo": "CCP-02",
           "lugar": "",
           "uniforme": "",
-          "observacion": "CCP-02 · Clase programada"
+          "observacion": "CCP-02 · HORA LECTIVA"
         },
         {
           "id": "vi-1105-auditora-gubernamental",
@@ -606,7 +606,7 @@
           "codigo": "CCP-06",
           "lugar": "",
           "uniforme": "",
-          "observacion": "CCP-06 · Clase programada"
+          "observacion": "CCP-06 · HORA LECTIVA"
         },
         {
           "id": "lu-1150-administracin-general",
@@ -645,13 +645,11 @@
           "fin": "12:35",
           "materia": "Metodología de Investigación",
           "docente": "Ing. Ronald Gonzales Soto",
-          "tipo": "no_lectiva",
+          "tipo": "clase",
           "codigo": "CCP-07",
           "lugar": "",
           "uniforme": "",
-          "observacion": "HORARIO NO LECTIVO · NO SE PASAN CLASES",
-          "estado": "no_lectiva",
-          "es_no_lectiva": true
+          "observacion": "CCP-07 · HORA LECTIVA"
         },
         {
           "id": "ju-1150-procedimientos-especiales",
@@ -694,7 +692,7 @@
           "codigo": "CCP-07",
           "lugar": "",
           "uniforme": "",
-          "observacion": "CCP-07 · Clase programada"
+          "observacion": "CCP-07 · HORA LECTIVA"
         },
         {
           "id": "lu-1400-acondicionamiento-fsico",
@@ -707,7 +705,7 @@
           "codigo": "CCP-09",
           "lugar": "",
           "uniforme": "",
-          "observacion": "CCP-09 · Una vez por semana"
+          "observacion": "CCP-09 · HORA LECTIVA"
         },
         {
           "id": "ju-1400-tiro-policial",
@@ -720,7 +718,7 @@
           "codigo": "CCP-08",
           "lugar": "",
           "uniforme": "",
-          "observacion": "CCP-08 · Una vez por semana"
+          "observacion": "CCP-08 · HORA LECTIVA"
         }
       ],
       "fuente_visual": "assets/horario-segundo-semestre-2026.png"
@@ -728,7 +726,7 @@
   ],
   "metadatos": {
     "id": "horario-capitanes-a-sucre-2026-2-oficial",
-    "template_version": "2026-07-27-03",
+    "template_version": "2026-07-28-05",
     "nombre": "Horario oficial — Segundo semestre 2026",
     "institucion": "Escuela Superior de Policías — Filial Sucre",
     "curso": "Curso de Capacitación Policial",
@@ -738,8 +736,8 @@
     "periodo": "Segundo semestre · Modalidad presencial · Gestión 2026",
     "duracion": "19 semanas",
     "vigente": true,
-    "actualizado": "2026-07-27",
-    "descripcion": "Nivel Capitanes, Paralelo A, turno mañana, segundo semestre 2026. Horario oficial verificado y sincronizado automáticamente en la versión 2.6.5.",
+    "actualizado": "2026-07-28",
+    "descripcion": "Horario oficial del Paralelo A. Solo son no lectivos los bloques expresamente marcados: lunes, martes, jueves y viernes de 11:50 a 12:35. El miércoles de 11:50 a 12:35 es HORA LECTIVA.",
     "catalog_id": "capitanes-a-2026-2"
   },
   "entradas": [
@@ -754,7 +752,7 @@
       "codigo": "",
       "lugar": "",
       "uniforme": "",
-      "observacion": ""
+      "observacion": "Actividad institucional"
     },
     {
       "id": "lu-0715-organizacin-y-control",
@@ -774,13 +772,13 @@
       "dia": "Martes",
       "inicio": "06:45",
       "fin": "07:15",
-      "materia": "Hora mística",
+      "materia": "Organización y control",
       "docente": "",
       "tipo": "formacion",
       "codigo": "",
       "lugar": "",
       "uniforme": "",
-      "observacion": ""
+      "observacion": "Actividad institucional"
     },
     {
       "id": "ma-0715-organizacin-y-control",
@@ -800,13 +798,13 @@
       "dia": "Miércoles",
       "inicio": "06:45",
       "fin": "07:15",
-      "materia": "Hora mística",
+      "materia": "Organización y control",
       "docente": "",
       "tipo": "formacion",
       "codigo": "",
       "lugar": "",
       "uniforme": "",
-      "observacion": ""
+      "observacion": "Actividad institucional"
     },
     {
       "id": "mi-0715-organizacin-y-control",
@@ -826,13 +824,13 @@
       "dia": "Jueves",
       "inicio": "06:45",
       "fin": "07:15",
-      "materia": "Hora mística",
+      "materia": "Organización y control",
       "docente": "",
       "tipo": "formacion",
       "codigo": "",
       "lugar": "",
       "uniforme": "",
-      "observacion": ""
+      "observacion": "Actividad institucional"
     },
     {
       "id": "ju-0715-organizacin-y-control",
@@ -852,13 +850,13 @@
       "dia": "Viernes",
       "inicio": "06:45",
       "fin": "07:15",
-      "materia": "Hora mística",
+      "materia": "Organización y control",
       "docente": "",
       "tipo": "formacion",
       "codigo": "",
       "lugar": "",
       "uniforme": "",
-      "observacion": ""
+      "observacion": "Actividad institucional"
     },
     {
       "id": "vi-0715-organizacin-y-control",
@@ -884,7 +882,7 @@
       "codigo": "CCP-01",
       "lugar": "",
       "uniforme": "",
-      "observacion": "CCP-01 · Clase programada"
+      "observacion": "CCP-01 · HORA LECTIVA"
     },
     {
       "id": "ma-0730-procedimientos-especiales",
@@ -897,7 +895,7 @@
       "codigo": "CCP-02",
       "lugar": "",
       "uniforme": "",
-      "observacion": "CCP-02 · Clase programada"
+      "observacion": "CCP-02 · HORA LECTIVA"
     },
     {
       "id": "mi-0730-auditora-gubernamental",
@@ -910,7 +908,7 @@
       "codigo": "CCP-06",
       "lugar": "",
       "uniforme": "",
-      "observacion": "CCP-06 · Clase programada"
+      "observacion": "CCP-06 · HORA LECTIVA"
     },
     {
       "id": "ju-0730-inteligencia-estratgica",
@@ -923,7 +921,7 @@
       "codigo": "CCP-04",
       "lugar": "",
       "uniforme": "",
-      "observacion": "CCP-04 · Clase programada"
+      "observacion": "CCP-04 · HORA LECTIVA"
     },
     {
       "id": "vi-0730-ciencia-poltica",
@@ -936,7 +934,7 @@
       "codigo": "CCP-05",
       "lugar": "",
       "uniforme": "",
-      "observacion": "CCP-05 · Clase programada"
+      "observacion": "CCP-05 · HORA LECTIVA"
     },
     {
       "id": "lu-0815-planificacin-estratgica",
@@ -949,7 +947,7 @@
       "codigo": "CCP-01",
       "lugar": "",
       "uniforme": "",
-      "observacion": "CCP-01 · Clase programada"
+      "observacion": "CCP-01 · HORA LECTIVA"
     },
     {
       "id": "ma-0815-procedimientos-especiales",
@@ -962,7 +960,7 @@
       "codigo": "CCP-02",
       "lugar": "",
       "uniforme": "",
-      "observacion": "CCP-02 · Clase programada"
+      "observacion": "CCP-02 · HORA LECTIVA"
     },
     {
       "id": "mi-0815-auditora-gubernamental",
@@ -975,7 +973,7 @@
       "codigo": "CCP-06",
       "lugar": "",
       "uniforme": "",
-      "observacion": "CCP-06 · Clase programada"
+      "observacion": "CCP-06 · HORA LECTIVA"
     },
     {
       "id": "ju-0815-inteligencia-estratgica",
@@ -988,7 +986,7 @@
       "codigo": "CCP-04",
       "lugar": "",
       "uniforme": "",
-      "observacion": "CCP-04 · Clase programada"
+      "observacion": "CCP-04 · HORA LECTIVA"
     },
     {
       "id": "vi-0815-ciencia-poltica",
@@ -1001,7 +999,7 @@
       "codigo": "CCP-05",
       "lugar": "",
       "uniforme": "",
-      "observacion": "CCP-05 · Clase programada"
+      "observacion": "CCP-05 · HORA LECTIVA"
     },
     {
       "id": "lu-0900-descanso-25-minutos",
@@ -1079,7 +1077,7 @@
       "codigo": "CCP-03",
       "lugar": "",
       "uniforme": "",
-      "observacion": "CCP-03 · Clase programada"
+      "observacion": "CCP-03 · HORA LECTIVA"
     },
     {
       "id": "ma-0925-procedimientos-especiales",
@@ -1092,7 +1090,7 @@
       "codigo": "CCP-02",
       "lugar": "",
       "uniforme": "",
-      "observacion": "CCP-02 · Clase programada"
+      "observacion": "CCP-02 · HORA LECTIVA"
     },
     {
       "id": "mi-0925-planificacin-estratgica",
@@ -1105,7 +1103,7 @@
       "codigo": "CCP-01",
       "lugar": "",
       "uniforme": "",
-      "observacion": "CCP-01 · Clase programada"
+      "observacion": "CCP-01 · HORA LECTIVA"
     },
     {
       "id": "ju-0925-inteligencia-estratgica",
@@ -1118,7 +1116,7 @@
       "codigo": "CCP-04",
       "lugar": "",
       "uniforme": "",
-      "observacion": "CCP-04 · Clase programada"
+      "observacion": "CCP-04 · HORA LECTIVA"
     },
     {
       "id": "vi-0925-ciencia-poltica",
@@ -1131,7 +1129,7 @@
       "codigo": "CCP-05",
       "lugar": "",
       "uniforme": "",
-      "observacion": "CCP-05 · Clase programada"
+      "observacion": "CCP-05 · HORA LECTIVA"
     },
     {
       "id": "lu-1010-administracin-general",
@@ -1144,7 +1142,7 @@
       "codigo": "CCP-03",
       "lugar": "",
       "uniforme": "",
-      "observacion": "CCP-03 · Clase programada"
+      "observacion": "CCP-03 · HORA LECTIVA"
     },
     {
       "id": "ma-1010-procedimientos-especiales",
@@ -1157,7 +1155,7 @@
       "codigo": "CCP-02",
       "lugar": "",
       "uniforme": "",
-      "observacion": "CCP-02 · Clase programada"
+      "observacion": "CCP-02 · HORA LECTIVA"
     },
     {
       "id": "mi-1010-planificacin-estratgica",
@@ -1170,7 +1168,7 @@
       "codigo": "CCP-01",
       "lugar": "",
       "uniforme": "",
-      "observacion": "CCP-01 · Clase programada"
+      "observacion": "CCP-01 · HORA LECTIVA"
     },
     {
       "id": "ju-1010-inteligencia-estratgica",
@@ -1183,7 +1181,7 @@
       "codigo": "CCP-04",
       "lugar": "",
       "uniforme": "",
-      "observacion": "CCP-04 · Clase programada"
+      "observacion": "CCP-04 · HORA LECTIVA"
     },
     {
       "id": "vi-1010-ciencia-poltica",
@@ -1196,7 +1194,7 @@
       "codigo": "CCP-05",
       "lugar": "",
       "uniforme": "",
-      "observacion": "CCP-05 · Clase programada"
+      "observacion": "CCP-05 · HORA LECTIVA"
     },
     {
       "id": "lu-1055-descanso-10-minutos",
@@ -1274,7 +1272,7 @@
       "codigo": "CCP-03",
       "lugar": "",
       "uniforme": "",
-      "observacion": "CCP-03 · Clase programada"
+      "observacion": "CCP-03 · HORA LECTIVA"
     },
     {
       "id": "ma-1105-ciencia-poltica",
@@ -1287,7 +1285,7 @@
       "codigo": "CCP-05",
       "lugar": "",
       "uniforme": "",
-      "observacion": "CCP-05 · Clase programada"
+      "observacion": "CCP-05 · HORA LECTIVA"
     },
     {
       "id": "mi-1105-metodologa-de-investigacin",
@@ -1300,7 +1298,7 @@
       "codigo": "CCP-07",
       "lugar": "",
       "uniforme": "",
-      "observacion": "CCP-07 · Clase programada"
+      "observacion": "CCP-07 · HORA LECTIVA"
     },
     {
       "id": "ju-1105-procedimientos-especiales",
@@ -1313,7 +1311,7 @@
       "codigo": "CCP-02",
       "lugar": "",
       "uniforme": "",
-      "observacion": "CCP-02 · Clase programada"
+      "observacion": "CCP-02 · HORA LECTIVA"
     },
     {
       "id": "vi-1105-auditora-gubernamental",
@@ -1326,7 +1324,7 @@
       "codigo": "CCP-06",
       "lugar": "",
       "uniforme": "",
-      "observacion": "CCP-06 · Clase programada"
+      "observacion": "CCP-06 · HORA LECTIVA"
     },
     {
       "id": "lu-1150-administracin-general",
@@ -1335,11 +1333,13 @@
       "fin": "12:35",
       "materia": "Administración General",
       "docente": "Lic. Claudia Flores Márquez",
-      "tipo": "clase",
+      "tipo": "no_lectiva",
       "codigo": "CCP-03",
       "lugar": "",
       "uniforme": "",
-      "observacion": "CCP-03 · Clase programada"
+      "observacion": "HORARIO NO LECTIVO · NO SE PASAN CLASES",
+      "estado": "no_lectiva",
+      "es_no_lectiva": true
     },
     {
       "id": "ma-1150-ciencia-poltica",
@@ -1348,11 +1348,13 @@
       "fin": "12:35",
       "materia": "Ciencia Política",
       "docente": "Lic. María Méndez Mamani",
-      "tipo": "clase",
+      "tipo": "no_lectiva",
       "codigo": "CCP-05",
       "lugar": "",
       "uniforme": "",
-      "observacion": "CCP-05 · Clase programada"
+      "observacion": "HORARIO NO LECTIVO · NO SE PASAN CLASES",
+      "estado": "no_lectiva",
+      "es_no_lectiva": true
     },
     {
       "id": "mi-1150-metodologa-de-investigacin",
@@ -1365,7 +1367,7 @@
       "codigo": "CCP-07",
       "lugar": "",
       "uniforme": "",
-      "observacion": "CCP-07 · Clase programada"
+      "observacion": "CCP-07 · HORA LECTIVA"
     },
     {
       "id": "ju-1150-procedimientos-especiales",
@@ -1374,11 +1376,13 @@
       "fin": "12:35",
       "materia": "Procedimientos Especiales",
       "docente": "Cnl. DESP. Juan M. Quinteros Portillo",
-      "tipo": "clase",
+      "tipo": "no_lectiva",
       "codigo": "CCP-02",
       "lugar": "",
       "uniforme": "",
-      "observacion": "CCP-02 · Clase programada"
+      "observacion": "HORARIO NO LECTIVO · NO SE PASAN CLASES",
+      "estado": "no_lectiva",
+      "es_no_lectiva": true
     },
     {
       "id": "vi-1150-auditora-gubernamental",
@@ -1387,11 +1391,13 @@
       "fin": "12:35",
       "materia": "Auditoría Gubernamental",
       "docente": "Lic. Shirley Velásquez Miranda",
-      "tipo": "clase",
+      "tipo": "no_lectiva",
       "codigo": "CCP-06",
       "lugar": "",
       "uniforme": "",
-      "observacion": "CCP-06 · Clase programada"
+      "observacion": "HORARIO NO LECTIVO · NO SE PASAN CLASES",
+      "estado": "no_lectiva",
+      "es_no_lectiva": true
     },
     {
       "id": "mi-1235-metodologa-de-investigacin",
@@ -1404,7 +1410,7 @@
       "codigo": "CCP-07",
       "lugar": "",
       "uniforme": "",
-      "observacion": "CCP-07 · Clase programada"
+      "observacion": "CCP-07 · HORA LECTIVA"
     },
     {
       "id": "lu-1400-acondicionamiento-fsico",
@@ -1417,7 +1423,7 @@
       "codigo": "CCP-09",
       "lugar": "",
       "uniforme": "",
-      "observacion": "CCP-09 · Una vez por semana"
+      "observacion": "CCP-09 · HORA LECTIVA"
     },
     {
       "id": "ju-1400-tiro-policial",
@@ -1430,7 +1436,7 @@
       "codigo": "CCP-08",
       "lugar": "",
       "uniforme": "",
-      "observacion": "CCP-08 · Una vez por semana"
+      "observacion": "CCP-08 · HORA LECTIVA"
     }
   ],
   "fuente_visual": "assets/horario-segundo-semestre-2026.png"

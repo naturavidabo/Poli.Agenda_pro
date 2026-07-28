@@ -1,4 +1,4 @@
-const APP_VERSION='2.6.8';
+const APP_VERSION='2.6.9';
 const BUILD_DATE='2026-07-28';
 const ACTIVATION_CODE='271261';
 const SECONDARY_ACTIVATION_CODE='2026JINETES';
@@ -221,7 +221,7 @@ window.addEventListener('DOMContentLoaded',init);
 /* =========================================================
    Agenda Policial v2.6.8 — estabilización de horario y agenda
    ========================================================= */
-const SCHEDULE_DATA_VERSION='2026-07-28-04';
+const SCHEDULE_DATA_VERSION='2026-07-28-05';
 const DATABASE_DATA_VERSION='agenda-db-2';
 
 const SUBJECT_VISUALS={
@@ -387,4 +387,86 @@ openNoteForm=function(id=null){
   showModal(`<button class="icon-btn close" onclick="closeModal()">×</button><h2>${id?'Editar':'Nueva'} nota</h2><p class="subtle">Bloc de notas policial. Escriba libremente; se puede editar después.</p><form id="noteForm" class="note-editor-form">${buildForm([{name:'title',label:'Título'},{name:'category',label:'Carpeta / categoría'},{name:'text',label:'Texto',type:'textarea'}],n)}<div class="form-actions note-actions"><button class="btn" type="submit">Guardar</button>${id&&!n.archived?`<button class="btn secondary" type="button" onclick="archiveNote('${id}')">Archivar</button>`:''}${id&&n.archived?`<button class="btn secondary" type="button" onclick="restoreNote('${id}');closeModal()">Restaurar</button>`:''}<button class="btn ghost" type="button" onclick="closeModal()">Cancelar</button></div></form>`);
   const textArea=$('#noteForm textarea[name="text"]');if(textArea)textArea.classList.add('note-textarea');
   $('#noteForm').onsubmit=async e=>{e.preventDefault();const data=formData(e.target);if(id)Object.assign(n,data,{updated:new Date().toISOString()});else state.notes.push({...data,id:uid(),created:new Date().toISOString(),updated:new Date().toISOString(),archived:false});await save();closeModal();openNotes();toast('Nota guardada')};
+};
+
+
+/* =========================================================
+   Agenda Policial v2.6.9 — horario lectivo exacto
+   Solo anula las celdas que la fuente marca HORA NO LECTIVA.
+   ========================================================= */
+function isOfficialNonLectiveSlotV269(b){
+  if(!b||String(state.selectedScheduleId||'capitanes-a-2026-2')!=='capitanes-a-2026-2')return false;
+  const day=normalize(b.dia||'');
+  return b.inicio==='11:50'&&b.fin==='12:35'&&['lunes','martes','jueves','viernes'].includes(day);
+}
+function isOfficialWednesdayLectiveSlotV269(b){
+  if(!b||String(state.selectedScheduleId||'capitanes-a-2026-2')!=='capitanes-a-2026-2')return false;
+  return normalize(b.dia||'')==='miercoles'&&b.inicio==='11:50'&&b.fin==='12:35';
+}
+isNonLectiveBlock=function isNonLectiveBlockV269(b){
+  if(!b)return false;
+  if(isOfficialWednesdayLectiveSlotV269(b))return false;
+  if(isOfficialNonLectiveSlotV269(b))return true;
+  if(b.es_no_lectiva===true||b.no_lectiva===true)return true;
+  const text=normalize(`${b.tipo||''} ${b.estado||''} ${b.observacion||''}`);
+  return text.includes('no lectiva')||text.includes('no se pasan clases');
+};
+canonicalScheduleEntry=function canonicalScheduleEntryV269(entry){
+  const e={...entry},day=normalize(e.dia||''),isCapA=String(state.selectedScheduleId||'capitanes-a-2026-2')==='capitanes-a-2026-2';
+  if(isCapA&&e.inicio==='06:45'&&e.fin==='07:15'){
+    if(day==='lunes'){e.materia='Hora mística';e.tipo='formacion';e.observacion='Actividad institucional'}
+    else if(['martes','miercoles','jueves','viernes'].includes(day)){e.materia='Organización y control';e.tipo='formacion';e.observacion='Actividad institucional'}
+    delete e.estado;delete e.es_no_lectiva;delete e.no_lectiva;
+  }else if(isCapA&&isOfficialNonLectiveSlotV269(e)){
+    e.tipo='no_lectiva';e.estado='no_lectiva';e.es_no_lectiva=true;e.observacion='HORARIO NO LECTIVO · NO SE PASAN CLASES';
+  }else if(isCapA&&isOfficialWednesdayLectiveSlotV269(e)){
+    e.tipo='clase';delete e.estado;delete e.es_no_lectiva;delete e.no_lectiva;
+    e.observacion=`${e.codigo?e.codigo+' · ':''}HORA LECTIVA`;
+  }else if(isCapA&&e.tipo==='clase'){
+    e.observacion=`${e.codigo?e.codigo+' · ':''}HORA LECTIVA`;
+  }
+  return e;
+};
+normalizeScheduleEntry=function normalizeScheduleEntryV269(e){
+  return canonicalScheduleEntry({...e,id:e.id||uid(),dia:normDayWord(e.dia)||normalize(e.dia||'lunes'),inicio:e.inicio||'',fin:e.fin||'',materia:e.materia||e.actividad||'',docente:e.docente||e.instructor||'',tipo:e.tipo||'clase',lugar:e.lugar||'',uniforme:e.uniforme||'',observacion:e.observacion||''});
+};
+scheduleHasOfficialSignature=function scheduleHasOfficialSignatureV269(){
+  const blocks=(state.scheduleBlocks||[]).map(canonicalScheduleEntry);
+  const has=(day,start,end,subject)=>blocks.some(b=>normalize(b.dia)===normalize(day)&&b.inicio===start&&b.fin===end&&normalize(b.materia||'')===normalize(subject));
+  const nonLective=blocks.filter(isNonLectiveBlock).length;
+  const wed=blocks.find(b=>normalize(b.dia)==='miercoles'&&b.inicio==='11:50'&&b.fin==='12:35');
+  return blocks.length===53&&has('lunes','06:45','07:15','Hora mística')&&has('martes','06:45','07:15','Organización y control')&&has('viernes','06:45','07:15','Organización y control')&&nonLective===4&&Boolean(wed)&&!isNonLectiveBlock(wed)&&has('lunes','14:00','16:00','Acondicionamiento físico')&&has('jueves','14:00','16:00','Tiro policial');
+};
+ensureScheduleTemplate=function ensureScheduleTemplateV269(){
+  let changed=false;const active=activeScheduleCatalog();if(!active.length)return false;
+  state.settings=state.settings||{};
+  if(!state.selectedScheduleId||!scheduleTemplateById(state.selectedScheduleId)){state.selectedScheduleId=active[0].id;changed=true}
+  const template=currentScheduleTemplate(),expected=template?.metadatos?.template_version||docs.horario?.catalog_version||SCHEDULE_DATA_VERSION;
+  const installed=state.settings.scheduleVersion||state.scheduleTemplateVersion||'';
+  const mustRefresh=isPlaceholderSchedule()||isLegacyIncorrectSchedule()||!scheduleHasOfficialSignature()||state.scheduleSource!=='catalog'||installed!==expected||state.scheduleMeta?.catalog_id!==template?.id;
+  if(mustRefresh)changed=applyCatalogSchedule(template,Boolean(state.scheduleBlocks?.length),'Migración selectiva del horario oficial v2.6.9')||changed;
+  else if(template){state.scheduleBlocks=(state.scheduleBlocks||[]).map(normalizeScheduleEntry);state.scheduleMeta=scheduleTemplateMeta(template);state.scheduleTemplateVersion=expected}
+  if(state.settings.appVersion!==APP_VERSION){state.settings.appVersion=APP_VERSION;changed=true}
+  if(state.settings.scheduleVersion!==expected){state.settings.scheduleVersion=expected;changed=true}
+  if(state.settings.databaseVersion!==DATABASE_DATA_VERSION){state.settings.databaseVersion=DATABASE_DATA_VERSION;changed=true}
+  if(state.settings.scheduleMigration!=='2026-07-28-v269'){state.settings.scheduleMigration='2026-07-28-v269';changed=true}
+  return changed;
+};
+dailyBlockCard=function dailyBlockCardV269(b){
+  b=canonicalScheduleEntry(b);const non=isNonLectiveBlock(b),cls=non?'non-lective':/descanso/i.test(b.materia||'')?'break':/(hora mística|hora mistica|organización y control|organizacion y control|parte)/i.test(b.materia||'')?'formation':'class',style=subjectStyleAttr(b.materia||'');
+  if(non)return `<div class="daily-block non-lective clickable" ${style} onclick="openScheduleBlockForm('${b.id}')"><div class="time-badge">${esc(b.inicio)}<span>${esc(b.fin)}</span></div><div><span class="non-lective-label">HORA NO LECTIVA</span><b class="non-lective-subject">${esc(b.materia||'Bloque figurativo')}</b><p>${esc(b.codigo||'')} · NO SE PASAN CLASES</p><small>${esc(b.docente||'')}</small></div></div>`;
+  return `<div class="daily-block ${cls} subject-coded clickable" ${style} onclick="openScheduleBlockForm('${b.id}')"><div class="time-badge">${esc(b.inicio)}<span>${esc(b.fin)}</span></div><div><b>${esc(b.materia||'Actividad')}</b>${b.tipo==='clase'?`<span class="lective-label">${esc(b.codigo||'')} · HORA LECTIVA</span>`:''}<p>${esc(b.docente||b.instructor||(/descanso/i.test(b.materia||'')?'':'Docente / instructor pendiente'))} ${teacherIndicator(b.docente||b.instructor)}</p>${b.observacion&&!/hora lectiva/i.test(b.observacion)?`<small>${esc(b.observacion)}</small>`:''}</div></div>`;
+};
+scheduleTableRow=function scheduleTableRowV269(r){
+  const cells=scheduleDays().map(day=>{let b=findScheduleCell(day,r.inicio,r.fin);if(b)b=canonicalScheduleEntry(b);const non=b&&isNonLectiveBlock(b),isBreak=b&&/descanso/i.test(b.materia||''),isSpecial=b&&/(parte|hora mística|hora mistica|organización y control|organizacion y control)/i.test(b.materia||''),cls=non?'non-lective':isBreak?'break':isSpecial?'special':b?'filled':'empty',style=b?subjectStyleAttr(b.materia||''):'';
+    return `<td class="schedule-cell ${cls}" ${style} onclick="openScheduleCell('${day}','${r.inicio}','${r.fin}')">${b?(non?`<div class="non-lective-label">HORA NO LECTIVA</div><div class="cell-subject non-lective-subject">${esc(b.materia||'')}</div><div class="cell-meta">${esc(b.codigo||'')} · NO SE PASAN CLASES</div><div class="cell-teacher">${esc(b.docente||b.instructor||'')}</div>`:`<div class="cell-subject">${esc(b.materia||'')}</div>${b.tipo==='clase'?`<div class="cell-meta lective">${esc(b.codigo||'')} · HORA LECTIVA</div>`:''}<div class="cell-teacher">${esc(b.docente||b.instructor||(/descanso/i.test(b.materia||'')?'':'Docente / instructor pendiente'))}</div>`):`<div class="cell-empty">Toque para llenar</div><div class="cell-teacher">Docente / instructor</div>`}</td>`}).join('');
+  return `<tr><th class="time-col">${esc(r.inicio)}<br><span>${esc(r.fin)}</span></th>${cells}</tr>`;
+};
+openClassDetail=function openClassDetailV269(id){
+  let b=(state.scheduleBlocks||[]).find(x=>x.id===id);if(!b)return;b=canonicalScheduleEntry(b);const non=isNonLectiveBlock(b);
+  showModal(`<h2>${esc(b.materia||'Actividad')}</h2><p><b>${esc(b.dia)}</b> · ${esc(b.inicio)} - ${esc(b.fin)}</p>${non?`<div class="non-lective-detail"><b>HORA NO LECTIVA</b><span>NO SE PASAN CLASES</span><p>${esc(b.codigo||'')} · ${esc(b.docente||'')}</p></div>`:`${b.tipo==='clase'?`<p><span class="lective-label">${esc(b.codigo||'')} · HORA LECTIVA</span></p>`:''}<p><b>Docente:</b> ${esc(b.docente||'')}</p><p><b>Lugar:</b> ${esc(b.lugar||'')}</p>${b.observacion&&!/hora lectiva/i.test(b.observacion)?`<p>${esc(b.observacion)}</p>`:''}`}<button class="btn" onclick="closeModal();openScheduleBlockForm('${b.id}')">Editar</button>`);
+};
+openReferenceScheduleImage=function openReferenceScheduleImageV269(){
+  const template=currentScheduleTemplate(),src=(state.scheduleMeta?.fuente_visual||template?.fuente_visual||docs.horario?.fuente_visual||'assets/horario-segundo-semestre-2026.png');
+  showModal(`<h2>Imagen de referencia del horario</h2><div class="schedule-reference-notice"><b>Tabla digital verificada</b><span>Las HORA LECTIVA permanecen como clases normales. Solo se anulan los bloques expresamente rotulados HORA NO LECTIVA: lunes, martes, jueves y viernes de 11:50 a 12:35.</span></div><img class="image-preview schedule-reference-image" src="./${esc(src)}" alt="Imagen de referencia del horario"><div class="row wrap"><button class="btn" onclick="restoreBaseSchedule()">Restaurar horario oficial</button><button class="btn secondary" onclick="closeModal()">Cerrar</button></div>`);
 };

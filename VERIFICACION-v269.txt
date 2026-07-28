@@ -1,0 +1,65 @@
+AGENDA POLICIAL v2.6.9 — VERIFICACIÓN TÉCNICA
+Fecha: 28 de julio de 2026
+Versión de origen: v2.6.8
+Método: actualización selectiva sobre el proyecto existente; no reconstrucción.
+
+1. CORRECCIÓN DEL HORARIO
+- Total de bloques oficiales locales: 53.
+- Lunes 06:45–07:15: Hora mística.
+- Martes a viernes 06:45–07:15: Organización y control.
+- Bloques HORA NO LECTIVA: exactamente 4.
+  · Lunes 11:50–12:35 — Administración General.
+  · Martes 11:50–12:35 — Ciencia Política.
+  · Jueves 11:50–12:35 — Procedimientos Especiales.
+  · Viernes 11:50–12:35 — Auditoría Gubernamental.
+- Miércoles 11:50–12:35 — Metodología de Investigación: HORA LECTIVA.
+- Miércoles 12:35–13:20 — Metodología de Investigación: HORA LECTIVA.
+- Las horas lectivas conservan materia, código CCP, docente y condición HORA LECTIVA.
+- Solo los cuatro bloques expresamente no lectivos son omitidos de próxima actividad,
+  cuenta regresiva, cronología y alertas.
+
+2. CORRECCIÓN DEL ACCESO ONLINE
+- Diagnóstico en registros de Supabase: academic_login respondía 200 y luego
+  academic_refresh_session respondía 400.
+- Causa identificada: referencia ambigua a la columna module_enabled dentro de la función SQL.
+- Función academic_refresh_session corregida en Supabase, calificando las columnas de la tabla.
+- Prueba de renovación sobre una sesión vigente: 1 registro devuelto correctamente.
+- La aplicación ya no fuerza una recarga inmediatamente después del ingreso.
+- El perfil se renderiza directamente y la sesión se guarda en la misma clave compatible.
+- Ante una falla temporal de red o servidor, la sesión local válida se conserva.
+- Una revocación real o respuesta válida sin sesión sí elimina el acceso.
+
+3. COMPATIBILIDAD Y DATOS
+- No se cambió la clave principal de activación.
+- Se conserva la lógica de la clave secundaria 2026jinetes.
+- No se modificaron las claves existentes de almacenamiento local.
+- No se eliminaron tareas, perfil, configuraciones, biblioteca ni documentos.
+- No se eliminaron tablas de Supabase.
+- La migración del horario reemplaza únicamente el horario obsoleto.
+- appVersion: 2.6.9.
+- scheduleVersion: 2026-07-28-05.
+- databaseVersion: agenda-db-2.
+
+4. VALIDACIONES EJECUTADAS
+- Sintaxis de app.js: correcta mediante node --check.
+- Sintaxis de online.js: correcta mediante node --check.
+- horario-base.json: JSON válido.
+- version.json: JSON válido.
+- Prueba de ejecución JavaScript en entorno VM: aprobada.
+- Primera migración de horario: aplicada.
+- Segunda ejecución de la migración: no se repite.
+- Tareas locales de prueba: conservadas tras la migración.
+- Detección de bloques no lectivos: 4.
+- Miércoles 11:50 detectado como lectivo: correcto.
+- Ningún bloque no lectivo aparece en próximas actividades: correcto.
+- Tabla semanal contiene HORA LECTIVA y HORA NO LECTIVA: correcto.
+- Sesión conservada ante error temporal simulado: correcto.
+- Ingreso sin recarga forzada: correcto.
+- Credencial interna de mantenimiento: no visible en la interfaz.
+- Registros de Supabase del horario: 53 bloques y 4 no lectivos verificados.
+- Función de renovación de sesión en Supabase: verificada.
+- Cantidad de archivos externos del proyecto: 95, menor a 100.
+
+5. LIMITACIÓN DE LA PRUEBA
+No se dispuso de un teléfono Android físico dentro del entorno de construcción.
+La instalación final debe probarse en un dispositivo antes de distribuirla masivamente.

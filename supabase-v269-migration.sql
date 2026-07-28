@@ -1,0 +1,4 @@
+-- v2.6.9: aplicada al proyecto Supabase conectado.
+-- Corrige academic_refresh_session calificando c.module_enabled y c.active.
+-- HORA NO LECTIVA: lunes, martes, jueves y viernes 11:50–12:35.
+-- Miércoles 11:50–12:35: HORA LECTIVA.
