@@ -1,8 +1,8 @@
 {
-  "version": "2.6.9",
+  "version": "2.7.0",
   "build": "2026-07-28",
   "channel": "exact-lective-schedule-session-fix",
-  "appVersion": "2.6.9",
+  "appVersion": "2.7.0",
   "scheduleVersion": "2026-07-28-05",
   "databaseVersion": "agenda-db-2"
 }

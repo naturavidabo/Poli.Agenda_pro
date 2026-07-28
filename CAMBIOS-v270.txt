@@ -1,0 +1,6 @@
+Agenda Policial v2.7.0
+- Resúmenes y material académico: permite adjuntar múltiples archivos en una sola publicación.
+- Panel online rediseñado con accesos directos por módulo y roles.
+- Navegación superior simplificada: se retira Agenda del menú principal del modo online.
+- Actividad reciente rediseñada para evitar distorsión y cortes visuales.
+- Etiquetas y ayuda mejoradas para contenido académico.

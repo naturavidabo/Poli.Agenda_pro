@@ -1983,3 +1983,385 @@ academicLogin=async function academicLoginV269(){
     academicSession={...user,offline_cached:false,sync_error:false,last_validated_at:new Date().toISOString()};academicTab='panel';localStorage.setItem(ACADEMIC_SESSION_STORAGE,JSON.stringify(academicSession));toast('Acceso académico habilitado');render();setTimeout(()=>{if(academicTab==='panel')loadAcademicDashboard()},0);
   }catch(error){console.error(error);toast(academicIsNetworkError(error)?'Sin conexión. Intente nuevamente cuando tenga internet':'No fue posible validar las credenciales')}
 };
+
+/* =========================================================
+   Agenda Policial Online v2.7.0 — resúmenes con múltiples archivos y panel pulido
+   ========================================================= */
+ACADEMIC_TYPES.resumenes.label = 'Resúmenes y material académico';
+ACADEMIC_TYPES.resumenes.help = 'Materia, tema, descripción y uno o varios archivos de apoyo.';
+
+function academicNormalizeAttachments(list) {
+  return Array.isArray(list)
+    ? list.filter(item => item && (item.url || item.file_url)).map(item => ({
+        url: item.url || item.file_url,
+        name: item.name || item.file_name || academicFileName(item.url || item.file_url),
+        type: item.type || item.file_mime || '',
+        size: item.size || item.file_size || 0
+      }))
+    : [];
+}
+
+function academicPostAttachments(post) {
+  const fields = post?.fields || {};
+  const attachments = academicNormalizeAttachments(fields.attachments);
+  if (attachments.length) return attachments;
+  if (post?.file_url) {
+    return [{
+      url: post.file_url,
+      name: post.file_name || academicFileName(post.file_url),
+      type: post.file_mime || '',
+      size: post.file_size || 0
+    }];
+  }
+  return [];
+}
+
+function academicAttachmentLinks(post) {
+  const attachments = academicPostAttachments(post);
+  if (!attachments.length) return '';
+  return `
+    <div class="academic-attachments">
+      ${attachments.map((file, index) => `
+        <a class="academic-file-link multi" href="${esc(file.url)}" target="_blank" rel="noopener">
+          <span class="file-index">${index + 1}</span>
+          <span class="file-copy">
+            <b>${esc(file.name || 'Archivo adjunto')}</b>
+            <small>${esc(file.type ? file.type.replace(/^application\//,'').replace(/^image\//,'imagen/') : 'Archivo')}</small>
+          </span>
+          <span class="file-arrow">↗</span>
+        </a>
+      `).join('')}
+    </div>
+  `;
+}
+
+async function uploadAcademicFiles(files) {
+  const entries = [];
+  for (const file of Array.from(files || [])) {
+    const url = await uploadAcademicFile(file);
+    entries.push({
+      url,
+      name: file.name || 'archivo',
+      type: file.type || '',
+      size: file.size || 0
+    });
+  }
+  return entries;
+}
+
+openAcademicPostForm = function openAcademicPostFormV270(type) {
+  const labels = ACADEMIC_TYPES[type];
+  if (!labels || !academicCanPublish()) return toast('No tiene permiso para publicar');
+
+  let fields = '';
+  let fileLabel = 'Archivo opcional';
+  let fileHelp = 'Puede adjuntar Word, PDF o imagen.';
+
+  if (type === 'formaciones') {
+    fields = `
+      <label>Tipo
+        <select name="formation_type" required>
+          <option>Formación general</option>
+          <option>Servicio extraordinario</option>
+        </select>
+      </label>
+      <div class="two-col">
+        <label>Fecha<input name="date" type="date" required value="${todayISO()}"></label>
+        <label>Lugar<input name="place" required></label>
+      </div>
+      <div class="two-col">
+        <label>Hora de control<input name="control_time" type="time" required></label>
+        <label>Hora del parte<input name="report_time" type="time" required></label>
+      </div>
+      <label>Uniforme<input name="uniform" required></label>
+      <label>Texto del comunicado<textarea name="body" rows="7" required></textarea></label>
+      <label>Observaciones<textarea name="observations" rows="3"></textarea></label>
+    `;
+  } else if (type === 'resumenes') {
+    fileLabel = 'Archivos académicos';
+    fileHelp = 'Puede seleccionar uno o varios archivos Word, PDF o imagen dentro de la misma publicación.';
+    fields = `
+      <label>Materia<input name="subject" required></label>
+      <label>Tema<input name="topic" required></label>
+      <label>Descripción del contenido<textarea name="body" rows="7" placeholder="Detalle breve del resumen, contenido académico o lista de documentos."></textarea></label>
+    `;
+  } else if (type === 'tareas') {
+    fields = `
+      <label>Materia<input name="subject" required></label>
+      <label>Título<input name="title" required></label>
+      <label>Fecha límite<input name="due_date" type="date" required></label>
+      <label>Instrucciones<textarea name="body" rows="8" required></textarea></label>
+    `;
+  } else {
+    fields = `
+      <label>Materia<input name="subject" required></label>
+      <label>Título del examen<input name="title" required></label>
+      <div class="two-col">
+        <label>Fecha<input name="date" type="date" required></label>
+        <label>Hora<input name="time" type="time" required></label>
+      </div>
+      <label>Lugar<input name="place"></label>
+      <label>Comunicado o temario<textarea name="body" rows="7"></textarea></label>
+    `;
+  }
+
+  showModal(`
+    <button class="icon-btn close" onclick="closeModal()">×</button>
+    <h2>Nueva publicación · ${labels.label}</h2>
+    <form id="academicPostForm" class="form">
+      ${fields}
+      <label>${fileLabel}
+        <input id="academicFiles" type="file" ${type === 'resumenes' ? 'multiple' : ''} accept=".doc,.docx,.pdf,image/*">
+      </label>
+      <p class="subtle">${fileHelp}</p>
+      ${!onlineConfigured() ? '<p class="subtle">En la prueba local los archivos deben ser pequeños. Con Supabase se guardarán en el almacenamiento online.</p>' : ''}
+      <div id="academicSelectedFiles" class="selected-files-note"></div>
+      <div class="form-actions">
+        <button class="btn academic-main-btn" type="submit">Publicar</button>
+        <button class="btn secondary" type="button" onclick="closeModal()">Cancelar</button>
+      </div>
+    </form>
+  `);
+  const input = $('#academicFiles');
+  const preview = $('#academicSelectedFiles');
+  if (input && preview) {
+    input.addEventListener('change', () => {
+      const files = Array.from(input.files || []);
+      preview.innerHTML = files.length
+        ? `<div class="selected-files-list">${files.map(file => `<span>${esc(file.name)}</span>`).join('')}</div>`
+        : '';
+    });
+  }
+  $('#academicPostForm').onsubmit = event => saveAcademicPost(event, type);
+};
+
+saveAcademicPost = async function saveAcademicPostV270(event, type) {
+  event.preventDefault();
+  const formData = new FormData(event.target);
+  const values = Object.fromEntries(formData.entries());
+  let title = values.title || '';
+  const body = values.body || '';
+  delete values.title;
+  delete values.body;
+
+  if (type === 'formaciones') title = `${values.formation_type || 'Formación'} · ${values.date || 'sin fecha'}`;
+  if (type === 'resumenes') title = `${values.subject || 'Resumen'} — ${values.topic || 'Tema'}`;
+
+  try {
+    const files = Array.from($('#academicFiles')?.files || []);
+    if (type !== 'resumenes' && files.length > 1) {
+      return toast('En este módulo solo se permite un archivo por publicación');
+    }
+    const attachments = await uploadAcademicFiles(files);
+    const primary = attachments[0] || null;
+    const payloadFields = { ...values };
+    if (attachments.length) payloadFields.attachments = attachments;
+
+    if (onlineConfigured()) {
+      await academicRPC('academic_create_post', {
+        p_token: academicSession.session_token,
+        p_type: type,
+        p_title: title,
+        p_body: body,
+        p_fields: payloadFields,
+        p_file_url: primary?.url || null,
+        p_file_name: primary?.name || null,
+        p_file_mime: primary?.type || null,
+        p_file_size: primary?.size || null
+      });
+    } else {
+      const posts = academicLocalPosts();
+      posts.unshift({
+        id: uid(),
+        post_type: type,
+        title,
+        body,
+        fields: payloadFields,
+        file_url: primary?.url || null,
+        file_name: primary?.name || null,
+        file_mime: primary?.type || null,
+        file_size: primary?.size || null,
+        author_name: academicSession.full_name,
+        created_at: new Date().toISOString(),
+        archived: false
+      });
+      academicSaveLocalPosts(posts);
+    }
+    closeModal();
+    await loadAcademicPosts();
+    if (academicTab === 'panel') await loadAcademicDashboard();
+    toast('Publicación guardada');
+  } catch (error) {
+    console.error(error);
+    toast(error.message || 'No se pudo guardar la publicación');
+  }
+};
+
+academicFilterOptions = function academicFilterOptionsV270(tab) {
+  return ({
+    formaciones: [['next','Próximas'],['current','Vigentes'],['previous','Anteriores'],['all','Todas']],
+    tareas: [['pending','Pendientes'],['urgent','Urgentes'],['completed','Completadas'],['all','Todas']],
+    examenes: [['upcoming','Próximos'],['past','Realizados'],['all','Todos']],
+    resumenes: [['recent','Recientes'],['file','Con archivos'],['text','Solo texto'],['all','Todos']]
+  })[tab] || [['all','Todos']];
+};
+
+academicPostMatchesFilter = function academicPostMatchesFilterV270(post) {
+  if (ACADEMIC_TYPES[academicTab] && post.post_type !== academicTab) return false;
+  const date = academicDateOnly(post), diff = academicDayDifference(date);
+  if (academicTab === 'formaciones') { if (academicFilter === 'next') return diff !== null && diff >= 0; if (academicFilter === 'current') return diff !== null && diff >= 0 && diff <= 7; if (academicFilter === 'previous') return diff !== null && diff < 0; }
+  if (academicTab === 'tareas') { const state = academicTaskState(post); if (academicFilter === 'pending') return ['pendiente','urgente'].includes(state); if (academicFilter === 'urgent') return state === 'urgente'; if (academicFilter === 'completed') return state === 'entregada'; if (academicFilter === 'expired') return state === 'vencida'; }
+  if (academicTab === 'examenes') { if (academicFilter === 'upcoming') return diff !== null && diff >= 0; if (academicFilter === 'past') return diff !== null && diff < 0; }
+  if (academicTab === 'resumenes') {
+    const attachments = academicPostAttachments(post);
+    if (academicFilter === 'recent') { const createdDiff = academicDayDifference(String(post.created_at || '').slice(0,10)); return createdDiff !== null && createdDiff >= -14; }
+    if (academicFilter === 'file') return attachments.length > 0;
+    if (academicFilter === 'text') return Boolean(post.body) && attachments.length === 0;
+  }
+  return true;
+};
+
+academicPostCard = function academicPostCardV270(post) {
+  const fields = post.fields || {};
+  const subject = fields.subject || '';
+  const visual = subjectStyleAttr(subject || post.title || post.post_type);
+  const date = academicDateOnly(post);
+  const attachments = academicPostAttachments(post);
+  let meta = '', status = '';
+  if (post.post_type === 'formaciones') {
+    const diff = academicDayDifference(date);
+    meta = `<div class="formation-meta"><span>Fecha: ${esc(fields.date || 'Sin fecha')}</span><span>Lugar: ${esc(fields.place || 'Sin lugar')}</span><span>Control: ${esc(fields.control_time || '-')}</span><span>Parte: ${esc(fields.report_time || '-')}</span></div>${fields.uniform ? `<p><b>Uniforme:</b> ${esc(fields.uniform)}</p>` : ''}${fields.observations ? `<p><b>Observaciones:</b> ${esc(fields.observations)}</p>` : ''}`;
+    status = diff === 0 ? '<span class="academic-status urgent">Hoy</span>' : diff !== null && diff > 0 ? '<span class="academic-status upcoming">Próxima</span>' : '<span class="academic-status neutral">Concluida</span>';
+  }
+  if (post.post_type === 'resumenes') {
+    meta = `<p><b>Materia:</b> ${esc(subject || 'Sin materia')} · <b>Tema:</b> ${esc(fields.topic || '')}</p>`;
+    status = attachments.length ? `<span class="academic-status file">${attachments.length} archivo${attachments.length === 1 ? '' : 's'}</span>` : '<span class="academic-status neutral">Solo texto</span>';
+  }
+  if (post.post_type === 'tareas') {
+    const taskState = academicTaskState(post);
+    meta = `<p><b>Materia:</b> ${esc(subject || 'Sin materia')} · <b>Entrega:</b> ${esc(fields.due_date || 'Sin fecha')}</p>${fields.teacher ? `<p><b>Docente:</b> ${esc(fields.teacher)}</p>` : ''}`;
+    status = `<span class="academic-status ${taskState}">${academicTaskStateLabel(taskState)}</span>`;
+  }
+  if (post.post_type === 'examenes') {
+    const diff = academicDayDifference(date);
+    meta = `<p><b>Materia:</b> ${esc(subject || 'Sin materia')} · <b>Fecha:</b> ${esc(fields.date || '')} ${esc(fields.time || '')} · <b>Lugar:</b> ${esc(fields.place || '')}</p>`;
+    status = diff !== null && diff >= 0 ? '<span class="academic-status exam">Próximo</span>' : '<span class="academic-status neutral">Realizado</span>';
+  }
+  const taskAction = post.post_type === 'tareas'
+    ? `<button class="academic-task-toggle ${academicTaskState(post) === 'entregada' ? 'done' : ''}" onclick="toggleAcademicTask('${esc(post.id)}')">${academicTaskState(post) === 'entregada' ? '✓ Entregada' : 'Marcar entregada'}</button>`
+    : '';
+  return `<article class="card academic-post subject-coded" ${visual}><div class="row between"><span class="tag">${esc(ACADEMIC_TYPES[post.post_type]?.label || post.post_type)}</span>${status}</div><h3>${esc(post.title || 'Publicación académica')}</h3>${meta}${post.body ? `<p class="academic-post-body">${esc(post.body)}</p>` : ''}${academicAttachmentLinks(post)}<div class="academic-post-footer"><small>${esc(post.author_name || '')}</small>${taskAction}</div></article>`;
+};
+
+function academicQuickModules() {
+  const items = [
+    { key: 'formaciones', label: 'Formaciones', desc: 'Comunicados, lugar y horas', icon: '🛡️', tone: 'formation' },
+    { key: 'tareas', label: 'Tareas', desc: 'Pendientes por materia', icon: '📘', tone: 'tasks' },
+    { key: 'examenes', label: 'Exámenes', desc: 'Cronograma y avisos', icon: '📝', tone: 'exams' },
+    { key: 'resumenes', label: 'Resúmenes y material académico', desc: 'Archivos y contenidos de estudio', icon: '📚', tone: 'summaries' }
+  ];
+  if (academicCanManageUsers()) items.push({ key: 'usuarios', label: 'Roles', desc: 'Integrantes y funciones', icon: '👥', tone: 'roles' });
+  return `<section class="academic-shortcuts-panel"><div class="online-section-heading compact"><div><span class="eyebrow">Acceso directo</span><h3>Módulos académicos</h3></div></div><div class="academic-shortcuts-grid">${items.map(item => `<button class="academic-shortcut-card ${item.tone}" onclick="setAcademicTab('${item.key}')"><span class="shortcut-icon">${item.icon}</span><span class="shortcut-copy"><b>${item.label}</b><small>${item.desc}</small></span><span class="shortcut-arrow">›</span></button>`).join('')}</div></section>`;
+}
+
+academicTextNav = function academicTextNavV270() {
+  return `
+    <nav class="academic-text-nav academic-text-nav-polished" aria-label="Secciones académicas">
+      <button class="${academicTab === 'panel' ? 'active' : ''}" onclick="setAcademicTab('panel')">Panel</button>
+      <button class="${academicTab === 'formaciones' ? 'active' : ''}" onclick="setAcademicTab('formaciones')">Formaciones</button>
+      <button class="${academicTab === 'tareas' ? 'active' : ''}" onclick="setAcademicTab('tareas')">Tareas</button>
+      <button class="${academicTab === 'examenes' ? 'active' : ''}" onclick="setAcademicTab('examenes')">Exámenes</button>
+      <button class="${academicTab === 'resumenes' ? 'active' : ''}" onclick="setAcademicTab('resumenes')">Material académico</button>
+      ${academicCanManageUsers() ? `<button class="${academicTab === 'usuarios' ? 'active' : ''}" onclick="setAcademicTab('usuarios')">Roles</button>` : ''}
+    </nav>
+  `;
+};
+academicSubnav = function academicSubnavV270() { return academicTextNav(); };
+
+academicDashboard = function academicDashboardV270() {
+  return `
+    ${academicProfileHeader()}
+    ${academicTextNav()}
+    <section class="academic-welcome clean-welcome">
+      <div><span class="eyebrow">${academicGreeting()}</span><h2>Panel académico</h2><p id="academicTodayText">Revisando la actividad de hoy…</p></div>
+    </section>
+    <div class="academic-summary-grid" id="academicSummaryGrid">
+      ${['Formación','Tareas','Examen','Material'].map(label => `<div class="academic-summary-card loading"><strong>—</strong><b>${label}</b><small>Cargando…</small></div>`).join('')}
+    </div>
+    ${academicQuickModules()}
+    <section class="academic-today-card">
+      <div class="online-section-heading compact"><div><span class="eyebrow">Información prioritaria</span><h3>Hoy y próximos días</h3></div></div>
+      <div id="academicUpcomingList" class="academic-timeline"><div class="academic-loading-line"></div></div>
+    </section>
+    <section class="academic-recent-card">
+      <div class="online-section-heading compact"><div><span class="eyebrow">Actualizaciones</span><h3>Actividad reciente</h3></div>${academicCanPublish() ? `<button class="text-btn" onclick="openAcademicPublishMenu()">Publicar</button>` : ''}</div>
+      <div id="academicRecentList"><div class="academic-loading-line"></div></div>
+    </section>
+  `;
+};
+
+function academicRecentRow(post) {
+  const kind = academicEventKind(post);
+  const subject = academicSubjectName(post);
+  const created = String(post.created_at || '').slice(0,10);
+  return `
+    <button class="academic-recent-row polished subject-coded" ${subjectStyleAttr(subject)} onclick="setAcademicTab('${post.post_type}')">
+      <div class="recent-main">
+        <span class="recent-label">${esc(kind)}</span>
+        <b>${esc(post.title || kind)}</b>
+        <small>${esc(subject)} · ${esc(post.author_name || 'Curso')}</small>
+      </div>
+      <time>${esc(created ? fmtDate(created) : '')}</time>
+    </button>
+  `;
+}
+
+loadAcademicDashboard = async function loadAcademicDashboardV270() {
+  if (!academicSession || academicTab !== 'panel') return;
+  try {
+    await flushAcademicTaskQueue();
+    await academicSyncTaskProgress();
+    const posts = await academicFetchPosts();
+    if (academicTab !== 'panel') return;
+    const today = todayISO();
+    const formations = posts.filter(p => p.post_type === 'formaciones');
+    const tasks = posts.filter(p => p.post_type === 'tareas');
+    const exams = posts.filter(p => p.post_type === 'examenes');
+    const summaries = posts.filter(p => p.post_type === 'resumenes');
+    const future = p => academicDateOnly(p) && academicDateOnly(p) >= today;
+    const byDate = (a,b) => (academicDateObject(a)?.getTime() || Infinity) - (academicDateObject(b)?.getTime() || Infinity);
+    const nextFormation = formations.filter(future).sort(byDate)[0];
+    const pendingTasks = tasks.filter(academicTaskPending);
+    const nextExam = exams.filter(future).sort(byDate)[0];
+    const recentSummaries = summaries.filter(p => {
+      const diff = academicDayDifference(String(p.created_at || '').slice(0,10));
+      return diff !== null && diff >= -7;
+    });
+
+    const summary = $('#academicSummaryGrid');
+    if (summary) summary.innerHTML = [
+      academicDashboardSummaryCard('🛡️', nextFormation ? academicDateLabel(nextFormation) : '—', 'Próxima formación', nextFormation?.title || 'Sin publicación', 'formaciones', 'formation-tone'),
+      academicDashboardSummaryCard('📘', pendingTasks.length, 'Tareas pendientes', pendingTasks.length ? 'Revisar entregas' : 'Sin pendientes', 'tareas', pendingTasks.length ? 'task-tone' : ''),
+      academicDashboardSummaryCard('📝', nextExam ? academicDateLabel(nextExam) : '—', 'Próximo examen', nextExam?.title || 'Sin cronograma', 'examenes', 'exam-tone'),
+      academicDashboardSummaryCard('📚', recentSummaries.length, 'Material nuevo', recentSummaries.length ? 'Últimos 7 días' : 'Sin novedades', 'resumenes', 'summary-tone')
+    ].join('');
+
+    const todayItems = posts.filter(p => academicDateOnly(p) === today);
+    const todayText = $('#academicTodayText');
+    if (todayText) todayText.textContent = todayItems.length
+      ? `${todayItems.length} actividad${todayItems.length === 1 ? '' : 'es'} programada${todayItems.length === 1 ? '' : 's'} para hoy.`
+      : 'No hay actividad registrada para hoy. Revise los próximos días.';
+
+    const upcoming = posts.filter(p => ['formaciones','tareas','examenes'].includes(p.post_type) && future(p)).sort(byDate).slice(0,8);
+    const upcomingBox = $('#academicUpcomingList');
+    if (upcomingBox) upcomingBox.innerHTML = upcoming.length ? academicGroupedTimeline(upcoming) : '<div class="empty-academic-line"><p>No hay actividades próximas registradas.</p></div>';
+
+    const recent = [...posts].sort((a,b) => String(b.created_at || '').localeCompare(String(a.created_at || ''))).slice(0,6);
+    const recentBox = $('#academicRecentList');
+    if (recentBox) recentBox.innerHTML = recent.length ? recent.map(academicRecentRow).join('') : '<div class="empty-academic-line"><p>Todavía no existen publicaciones.</p></div>';
+  } catch (error) {
+    console.error(error);
+    const upcomingBox = $('#academicUpcomingList');
+    if (upcomingBox) upcomingBox.innerHTML = '<div class="empty-academic-line warning"><p>Sin conexión. Se conservará la sesión y se reintentará automáticamente.</p></div>';
+  }
+};
