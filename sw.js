@@ -1,4 +1,4 @@
-const CACHE='agenda-policial-v2.7.0';
+const CACHE='agenda-policial-v2.7.1';
 const CORE=['./','./index.html','./styles.css','./online.css','./app.js','./online.js','./manifest.webmanifest','./version.json','./icons/icon-192.png','./icons/icon-512.png','./icons/icon-maskable-512.png','./assets/escudo-policia.png','./assets/horario-segundo-semestre-2026.png','./assets/reglamento-comision-sumaria-unipol.pdf','./data/reglamento-uniformes.json','./data/reglamento-sumario-unipol.json','./data/horario-base.json','./data/biblioteca-catalogo.json','./data/academic-users.json','./data/ley-777.json','./data/ley-101.json','./data/ley-organica-policia.json','./data/ley-004.json','./data/ley-348.json'];
 
 self.addEventListener('install',event=>{

@@ -2365,3 +2365,252 @@ loadAcademicDashboard = async function loadAcademicDashboardV270() {
     if (upcomingBox) upcomingBox.innerHTML = '<div class="empty-academic-line warning"><p>Sin conexión. Se conservará la sesión y se reintentará automáticamente.</p></div>';
   }
 };
+
+/* =========================================================
+   Agenda Policial Online v2.7.1 — pulido visual final
+   ========================================================= */
+function academicVisualModules(counts = {}) {
+  const items = [
+    { key: 'formaciones', icon: '🛡️', title: 'Formaciones', desc: 'Comunicados, lugar, fecha y horas', tone: 'formation', count: counts.formaciones || 0, caption: counts.formaciones ? `${counts.formaciones} registro${counts.formaciones === 1 ? '' : 's'}` : 'Sin registros' },
+    { key: 'tareas', icon: '📘', title: 'Tareas', desc: 'Pendientes, urgentes y entregadas', tone: 'tasks', count: counts.tareas || 0, caption: counts.tareas ? `${counts.tareas} pendiente${counts.tareas === 1 ? '' : 's'}` : 'Sin pendientes' },
+    { key: 'examenes', icon: '📝', title: 'Exámenes', desc: 'Cronograma y avisos del curso', tone: 'exams', count: counts.examenes || 0, caption: counts.examenes ? `${counts.examenes} próximo${counts.examenes === 1 ? '' : 's'}` : 'Sin cronograma' },
+    { key: 'resumenes', icon: '📚', title: 'Material académico', desc: 'Resúmenes, PDFs, Word e imágenes', tone: 'summaries', count: counts.resumenes || 0, caption: counts.resumenes ? `${counts.resumenes} novedad${counts.resumenes === 1 ? '' : 'es'}` : 'Sin novedades' }
+  ];
+  if (academicCanManageUsers()) items.push({ key: 'usuarios', icon: '👥', title: 'Roles', desc: 'Integrantes y funciones', tone: 'roles', count: counts.usuarios || 0, caption: `${counts.usuarios || 0} integrante${counts.usuarios === 1 ? '' : 's'}` });
+  return `
+    <section class="academic-shortcuts-panel visual-final">
+      <div class="online-section-heading compact">
+        <div><span class="eyebrow">Acceso directo</span><h3>Módulos académicos</h3></div>
+      </div>
+      <div class="academic-shortcuts-grid polished-grid">
+        ${items.map(item => `
+          <button class="academic-shortcut-card ${item.tone} tactile" onclick="setAcademicTab('${item.key}')" aria-label="Abrir ${item.title}">
+            <span class="shortcut-icon">${item.icon}</span>
+            <span class="shortcut-copy">
+              <b>${item.title}</b>
+              <small>${item.desc}</small>
+            </span>
+            <span class="shortcut-meta">
+              <strong>${item.count}</strong>
+              <small>${item.caption}</small>
+            </span>
+          </button>
+        `).join('')}
+      </div>
+    </section>
+  `;
+}
+
+function academicMiniGuide() {
+  return `
+    <section class="academic-mini-guide">
+      <div class="guide-pill"><b>1</b><span>Revise el panel</span></div>
+      <div class="guide-pill"><b>2</b><span>Entre al módulo correspondiente</span></div>
+      <div class="guide-pill"><b>3</b><span>Use “Publicar” si tiene permiso</span></div>
+    </section>
+  `;
+}
+
+function academicRoleTone(role) {
+  const map = {
+    administrador_general: 'Administrador general',
+    encargado_curso: 'Encargado de curso',
+    administrador_academico: 'Administrador académico',
+    asistente_academico: 'Asistente académico',
+    lector: 'Lector'
+  };
+  return map[role] || academicRoleLabel(role);
+}
+
+academicProfileHeader = function academicProfileHeaderV271() {
+  const connection = academicConnectionState();
+  const name = academicDisplayName();
+  return `
+    <div class="online-profile premium-profile">
+      <div class="online-avatar premium">${esc(academicInitials(name))}</div>
+      <div class="online-profile-copy">
+        <span class="eyebrow">Área académica · Capitanes A</span>
+        <h2>${esc(name)}</h2>
+        <div class="online-profile-meta enhanced-meta">
+          <span class="role-chip">${esc(academicRoleTone(academicSession?.role))}</span>
+          <span class="sync-pill ${connection.cls}">${connection.label}</span>
+        </div>
+        <small class="profile-helper">${esc(connection.detail || 'Acceso académico disponible')}</small>
+      </div>
+      <button class="online-logout premium-logout" onclick="academicLogout()">Salir</button>
+    </div>
+  `;
+};
+
+academicTextNav = function academicTextNavV271() {
+  const items = [
+    ['panel','Panel','◦'],
+    ['formaciones','Formaciones','🛡️'],
+    ['tareas','Tareas','📘'],
+    ['examenes','Exámenes','📝'],
+    ['resumenes','Material','📚']
+  ];
+  if (academicCanManageUsers()) items.push(['usuarios','Roles','👥']);
+  return `
+    <nav class="academic-text-nav academic-text-nav-premium" aria-label="Secciones académicas">
+      ${items.map(([key,label,icon]) => `<button class="${academicTab === key ? 'active' : ''}" onclick="setAcademicTab('${key}')"><span>${icon}</span><b>${label}</b></button>`).join('')}
+    </nav>
+  `;
+};
+academicSubnav = function academicSubnavV271() { return academicTextNav(); };
+
+academicDashboard = function academicDashboardV271() {
+  return `
+    ${academicProfileHeader()}
+    ${academicTextNav()}
+    <section class="academic-welcome clean-welcome premium-hero">
+      <div>
+        <span class="eyebrow">${academicGreeting()}</span>
+        <h2>Panel académico</h2>
+        <p id="academicTodayText">Revisando la actividad de hoy…</p>
+      </div>
+      <div class="hero-side-note">
+        <b>Vista rápida</b>
+        <small>Todo el contenido del curso en un solo lugar.</small>
+      </div>
+    </section>
+    ${academicMiniGuide()}
+    <div class="academic-summary-grid" id="academicSummaryGrid">
+      ${['Formación','Tareas','Examen','Material'].map(label => `<div class="academic-summary-card loading"><strong>—</strong><b>${label}</b><small>Cargando…</small></div>`).join('')}
+    </div>
+    <div id="academicVisualModulesWrap">${academicVisualModules()}</div>
+    <section class="academic-today-card elevated-block">
+      <div class="online-section-heading compact"><div><span class="eyebrow">Información prioritaria</span><h3>Hoy y próximos días</h3></div></div>
+      <div id="academicUpcomingList" class="academic-timeline"><div class="academic-loading-line"></div></div>
+    </section>
+    <section class="academic-recent-card elevated-block">
+      <div class="online-section-heading compact"><div><span class="eyebrow">Actualizaciones</span><h3>Actividad reciente</h3></div>${academicCanPublish() ? `<button class="text-btn accent" onclick="openAcademicPublishMenu()">Publicar</button>` : ''}</div>
+      <div id="academicRecentList"><div class="academic-loading-line"></div></div>
+    </section>
+  `;
+};
+
+academicModuleView = function academicModuleViewV271() {
+  const info = ACADEMIC_TYPES[academicTab];
+  const labels = {
+    formaciones: 'Revise comunicados del curso, horas de control y hora del parte.',
+    tareas: 'Cambie entre vista general y por materia para ubicar pendientes más rápido.',
+    examenes: 'Consulte fechas, horarios, lugares y avisos de evaluación.',
+    resumenes: 'Publique texto, varios archivos y material de apoyo académico.'
+  };
+  return `
+    ${academicProfileHeader()}
+    ${academicTextNav()}
+    <div class="online-module-head refined clean-module-head premium-module-head">
+      <div class="premium-module-copy">
+        <span class="module-visual-icon">${info.icon}</span>
+        <div>
+          <span class="eyebrow">Módulo académico</span>
+          <h3>${info.label}</h3>
+          <p>${labels[academicTab] || info.help}</p>
+        </div>
+      </div>
+      ${academicCanPublish() ? `<button class="btn academic-main-btn premium-publish" onclick="openAcademicPostForm('${academicTab}')">Nueva publicación</button>` : ''}
+    </div>
+    ${academicFilterBar()}
+    <div id="academicPosts"><div class="card small"><p>Cargando contenido…</p></div></div>
+  `;
+};
+
+function academicRecentRowV271(post) {
+  const kind = academicEventKind(post);
+  const subject = academicSubjectName(post);
+  const created = String(post.created_at || '').slice(0,10);
+  return `
+    <button class="academic-recent-row polished subject-coded premium-row" ${subjectStyleAttr(subject)} onclick="setAcademicTab('${post.post_type}')">
+      <div class="recent-main premium-main">
+        <span class="recent-label">${esc(kind)}</span>
+        <b>${esc(post.title || kind)}</b>
+        <small>${esc(subject)} · ${esc(post.author_name || 'Curso')}</small>
+      </div>
+      <time>${esc(created ? fmtDate(created) : '')}</time>
+    </button>
+  `;
+}
+
+loadAcademicDashboard = async function loadAcademicDashboardV271() {
+  if (!academicSession || academicTab !== 'panel') return;
+  try {
+    await flushAcademicTaskQueue();
+    await academicSyncTaskProgress();
+    const posts = await academicFetchPosts();
+    if (academicTab !== 'panel') return;
+    const today = todayISO();
+    const formations = posts.filter(p => p.post_type === 'formaciones');
+    const tasks = posts.filter(p => p.post_type === 'tareas');
+    const exams = posts.filter(p => p.post_type === 'examenes');
+    const summaries = posts.filter(p => p.post_type === 'resumenes');
+    const future = p => academicDateOnly(p) && academicDateOnly(p) >= today;
+    const byDate = (a,b) => (academicDateObject(a)?.getTime() || Infinity) - (academicDateObject(b)?.getTime() || Infinity);
+    const nextFormation = formations.filter(future).sort(byDate)[0];
+    const pendingTasks = tasks.filter(academicTaskPending);
+    const nextExam = exams.filter(future).sort(byDate)[0];
+    const recentSummaries = summaries.filter(p => {
+      const diff = academicDayDifference(String(p.created_at || '').slice(0,10));
+      return diff !== null && diff >= -7;
+    });
+
+    const summary = $('#academicSummaryGrid');
+    if (summary) summary.innerHTML = [
+      academicDashboardSummaryCard('🛡️', nextFormation ? academicDateLabel(nextFormation) : '—', 'Próxima formación', nextFormation?.title || 'Sin publicación', 'formaciones', 'formation-tone'),
+      academicDashboardSummaryCard('📘', pendingTasks.length, 'Tareas pendientes', pendingTasks.length ? 'Revise las entregas del curso' : 'Sin pendientes', 'tareas', pendingTasks.length ? 'task-tone' : ''),
+      academicDashboardSummaryCard('📝', nextExam ? academicDateLabel(nextExam) : '—', 'Próximo examen', nextExam?.title || 'Sin cronograma', 'examenes', 'exam-tone'),
+      academicDashboardSummaryCard('📚', recentSummaries.length, 'Material nuevo', recentSummaries.length ? 'Últimos 7 días' : 'Sin novedades', 'resumenes', 'summary-tone')
+    ].join('');
+
+    const moduleWrap = $('#academicVisualModulesWrap');
+    if (moduleWrap) moduleWrap.innerHTML = academicVisualModules({
+      formaciones: formations.filter(future).length,
+      tareas: pendingTasks.length,
+      examenes: exams.filter(future).length,
+      resumenes: recentSummaries.length,
+      usuarios: academicCanManageUsers() ? (academicUsersCache.length || 0) : 0
+    });
+
+    const todayItems = posts.filter(p => academicDateOnly(p) === today);
+    const todayText = $('#academicTodayText');
+    if (todayText) todayText.textContent = todayItems.length
+      ? `${todayItems.length} actividad${todayItems.length === 1 ? '' : 'es'} programada${todayItems.length === 1 ? '' : 's'} para hoy.`
+      : 'No hay actividad registrada para hoy. Revise los próximos días.';
+
+    const upcoming = posts.filter(p => ['formaciones','tareas','examenes'].includes(p.post_type) && future(p)).sort(byDate).slice(0,8);
+    const upcomingBox = $('#academicUpcomingList');
+    if (upcomingBox) upcomingBox.innerHTML = upcoming.length ? academicGroupedTimeline(upcoming) : '<div class="empty-academic-line"><p>No hay actividades próximas registradas.</p></div>';
+
+    const recent = [...posts].sort((a,b) => String(b.created_at || '').localeCompare(String(a.created_at || ''))).slice(0,6);
+    const recentBox = $('#academicRecentList');
+    if (recentBox) recentBox.innerHTML = recent.length ? recent.map(academicRecentRowV271).join('') : '<div class="empty-academic-line"><p>Todavía no existen publicaciones.</p></div>';
+  } catch (error) {
+    console.error(error);
+    const upcomingBox = $('#academicUpcomingList');
+    if (upcomingBox) upcomingBox.innerHTML = '<div class="empty-academic-line warning"><p>Sin conexión. Se conservará la sesión y se reintentará automáticamente.</p></div>';
+  }
+};
+
+onlineLoginView = function onlineLoginViewV271() {
+  return `
+    <section class="online-page online-login-clean">
+      <div class="online-login-hero clean premium-login-hero">
+        <span class="eyebrow">Acceso reservado al curso</span>
+        <h2>Área académica online</h2>
+        <p>Ingrese con las credenciales asignadas para revisar formaciones, tareas, exámenes y material académico.</p>
+      </div>
+      <div class="card academic-login clean premium-login-card">
+        <h3>Iniciar sesión</h3>
+        <label>Usuario
+          <input id="academicCi" inputmode="numeric" autocomplete="username" placeholder="Ingrese su usuario">
+        </label>
+        <label>Contraseña
+          <input id="academicPhone" inputmode="tel" autocomplete="current-password" placeholder="Ingrese su contraseña" type="password">
+        </label>
+        <button class="btn academic-main-btn premium-login-btn" onclick="academicLogin()">Ingresar</button>
+        <p class="academic-credential-note">Use sus credenciales personales del curso.</p>
+      </div>
+    </section>
+  `;
+};

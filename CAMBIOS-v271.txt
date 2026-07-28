@@ -1,0 +1,9 @@
+Agenda Policial v2.7.1
+- Pulido visual final del modo online.
+- Panel académico más claro, táctil y visual.
+- Navegación superior premium con iconos y mejor legibilidad.
+- Tarjetas de módulos con contadores y descripciones rápidas.
+- Perfil académico y estado de conexión mejorados.
+- Panel de actividad reciente y próximos días más limpio y entendible.
+- Encabezados, botones y bloques con mejor jerarquía visual para celulares.
+- No se alteró la lógica base de activación, biblioteca ni horario.

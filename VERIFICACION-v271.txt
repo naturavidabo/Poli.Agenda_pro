@@ -1,0 +1,7 @@
+VERIFICACIÓN v2.7.1
+- Base tomada: v2.7.0 funcional.
+- JavaScript validado con node --check: app.js y online.js correctos.
+- Versiones actualizadas: app.js, index.html, version.json y sw.js.
+- Se mantuvo compatibilidad con modo offline, sesión online, biblioteca y activación.
+- No se añadieron dependencias externas.
+- Total de archivos del proyecto: 97.
