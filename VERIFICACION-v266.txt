@@ -1,0 +1,15 @@
+AGENDA POLICIAL v2.6.6 — VERIFICACIÓN
+Fecha: 2026-07-28
+Archivos externos: 90
+Límite exigido: menos de 100 archivos
+Supabase: conectado
+Proyecto: lkwrulzrulmbfypwywmo
+Nómina: 54 integrantes
+Accesos activos completos: 50
+Pendientes inactivos: 4
+Administrador general: registro 17
+Usuario de prueba: 0000 / 0000
+Roles sincronizados mediante Supabase: sí
+Publicaciones online: sí
+Subida de PDF, Word e imágenes: preparada
+Contenido offline y activación anterior: conservados

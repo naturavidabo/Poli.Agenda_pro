@@ -1,7 +1,7 @@
-/* Agenda Policial Online v2.6.5 — acceso claro, usuario de prueba y roles locales estabilizados */
+/* Agenda Policial Online v2.6.6 — conexión real con Supabase */
 const ONLINE_CFG = {
-  url: '',
-  anonKey: '',
+  url: 'https://lkwrulzrulmbfypwywmo.supabase.co',
+  anonKey: 'sb_publishable_vtek6lVCGZkmyicgAPqDMw_8EOTFrRU',
   bucket: 'academic-files'
 };
 
@@ -10,7 +10,7 @@ const ACADEMIC_USERS_STORAGE = 'agenda-academic-users-v263';
 const ACADEMIC_POSTS_STORAGE = 'agenda-academic-posts-v263';
 const ACADEMIC_SESSION_STORAGE = 'agenda-academic-session';
 const ACADEMIC_TEST_CREDENTIAL = '0000';
-const ACADEMIC_ROLE_CHANNEL = 'agenda-academic-role-sync-v265';
+const ACADEMIC_ROLE_CHANNEL = 'agenda-academic-role-sync-v266';
 
 const ACADEMIC_TYPES = {
   examenes: {
@@ -238,10 +238,7 @@ async function academicLogin() {
 
   try {
     let user;
-    const isTest = academicCredential(ci) === ACADEMIC_TEST_CREDENTIAL && academicCredential(phone) === ACADEMIC_TEST_CREDENTIAL;
-    if (isTest) {
-      user = await academicLocalLogin(ci, phone);
-    } else if (onlineConfigured()) {
+    if (onlineConfigured()) {
       user = await academicRPC('academic_login', { p_ci: ci, p_phone: phone });
       if (Array.isArray(user)) user = user[0];
     } else {
@@ -260,11 +257,15 @@ async function academicLogin() {
   }
 }
 
-function academicLogout(silent = false) {
+async function academicLogout(silent = false) {
+  const token = academicSession?.session_token;
   academicSession = null;
   academicTab = 'panel';
   localStorage.removeItem(ACADEMIC_SESSION_STORAGE);
   render();
+  if (onlineConfigured() && token) {
+    academicRPC('academic_logout', { p_token: token }).catch(() => {});
+  }
   if (!silent) toast('Sesión académica cerrada');
 }
 
@@ -649,7 +650,10 @@ async function saveAcademicPost(event, type) {
         p_title: title,
         p_body: body,
         p_fields: values,
-        p_file_url: fileUrl
+        p_file_url: fileUrl,
+        p_file_name: file?.name || null,
+        p_file_mime: file?.type || null,
+        p_file_size: file?.size || null
       });
     } else {
       const posts = academicLocalPosts();
@@ -915,13 +919,23 @@ async function importAcademicRosterFile() {
 
 async function validateAcademicLocalSession() {
   if (!academicSession) return;
-  if (academicSession.storage_mode === 'test_local' && academicSession.session_token === 'local:test-user') return;
-  if (onlineConfigured() && academicSession.storage_mode === 'local_roster') {
-    academicSession = null;
-    localStorage.removeItem(ACADEMIC_SESSION_STORAGE);
-    return;
+  if (onlineConfigured()) {
+    try {
+      const refreshed = await academicRPC('academic_refresh_session', {
+        p_token: academicSession.session_token
+      });
+      const user = Array.isArray(refreshed) ? refreshed[0] : refreshed;
+      if (!user?.session_token || user.module_enabled === false) throw new Error('Sesión inactiva');
+      academicSession = user;
+      localStorage.setItem(ACADEMIC_SESSION_STORAGE, JSON.stringify(user));
+      return;
+    } catch (error) {
+      console.warn('Sesión académica cerrada:', error);
+      academicSession = null;
+      localStorage.removeItem(ACADEMIC_SESSION_STORAGE);
+      return;
+    }
   }
-  if (onlineConfigured()) return;
   if (!String(academicSession.session_token || '').startsWith('local:')) {
     academicSession = null;
     localStorage.removeItem(ACADEMIC_SESSION_STORAGE);
@@ -957,7 +971,7 @@ window.addEventListener('DOMContentLoaded', () => {
 });
 
 /* =========================================================
-   Agenda Policial Online v2.6.5 — panel académico pulido
+   Agenda Policial Online v2.6.6 — panel académico pulido
    Inspirado en una vista rápida por pendientes y materias,
    conservando la identidad institucional de Agenda Policial.
    ========================================================= */
@@ -1578,7 +1592,7 @@ window.addEventListener('offline', () => {
 
 
 /* =========================================================
-   Agenda Policial Online v2.6.5 — interfaz clara y roles
+   Agenda Policial Online v2.6.6 — interfaz clara y roles
    ========================================================= */
 let academicRoleBus = null;
 try { academicRoleBus = 'BroadcastChannel' in window ? new BroadcastChannel(ACADEMIC_ROLE_CHANNEL) : null; } catch {}

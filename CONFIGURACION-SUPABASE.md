@@ -1,24 +1,19 @@
-# Configuración de Supabase — Agenda Policial v2.6.5
+# Supabase conectado — Agenda Policial v2.6.6
 
-1. Crear un proyecto nuevo en Supabase.
-2. Abrir SQL Editor y ejecutar `supabase-schema.sql`.
-3. Ejecutar `supabase-roster-seed.sql` para cargar la nómina inicial.
-4. En Storage, crear el bucket `academic-files`. Para la primera versión puede configurarse como público, porque `online.js` genera enlaces públicos de descarga.
-5. En `online.js`, completar únicamente:
+Proyecto conectado:
+- Project ref: `lkwrulzrulmbfypwywmo`
+- Bucket: `academic-files`
+- Acceso: C.I. como usuario y celular como contraseña.
 
-```js
-const ONLINE_CFG = {
-  url: 'https://SU-PROYECTO.supabase.co',
-  anonKey: 'SU_CLAVE_PUBLICABLE_O_ANON',
-  bucket: 'academic-files'
-};
-```
+La aplicación utiliza únicamente la URL y la clave publicable.
+Nunca se incorpora una clave secreta o `service_role`.
 
-6. No copiar la clave secreta ni `service_role` al proyecto.
-7. Publicar la carpeta en GitHub Pages y probar primero con la cuenta del administrador general.
-8. Desde Integrantes y roles, asignar encargado de curso, administrador académico y asistentes.
+Estado inicial:
+- 54 integrantes cargados.
+- 50 accesos completos y activos.
+- 4 integrantes pendientes e inactivos.
+- Mauro Cristhian Espinoza Rivera: administrador general.
+- Usuario de prueba `0000 / 0000`: lector sin permisos de modificación.
 
-El SQL incluye funciones para cerrar o reabrir el periodo académico. El cierre archiva publicaciones, desactiva a los usuarios no administradores y conserva la aplicación offline.
-
-## Nota v2.6.5
-La aplicación detecta cuando no existe conexión Supabase y trabaja en modo local. En ese modo, los cambios de rol se aplican en el mismo dispositivo y entre pestañas del mismo navegador. Para que un rol asignado aparezca automáticamente en otros celulares, debe crearse y conectarse un proyecto Supabase exclusivo para Agenda Policial usando `ONLINE_CFG.url` y `ONLINE_CFG.anonKey`.
+Los roles se modifican desde el panel del administrador general y se reflejan
+en los demás dispositivos al volver a ingresar o actualizar la sesión.
