@@ -1,14 +1,14 @@
 {
-  "catalog_version": "2026-07-28-v269",
+  "catalog_version": "2026-07-29-v274",
   "horarios": [
     {
       "id": "capitanes-a-2026-2",
-      "etiqueta": "Capitanes A",
+      "etiqueta": "Capitanes A — Turno mañana",
       "activo": true,
       "orden": 1,
       "metadatos": {
         "id": "horario-capitanes-a-sucre-2026-2-oficial",
-        "template_version": "2026-07-28-05",
+        "template_version": "2026-07-29-cap-a-01",
         "nombre": "Horario oficial — Segundo semestre 2026",
         "institucion": "Escuela Superior de Policías — Filial Sucre",
         "curso": "Curso de Capacitación Policial",
@@ -18,8 +18,8 @@
         "periodo": "Segundo semestre · Modalidad presencial · Gestión 2026",
         "duracion": "19 semanas",
         "vigente": true,
-        "actualizado": "2026-07-28",
-        "descripcion": "Horario oficial del Paralelo A. Solo son no lectivos los bloques expresamente marcados: lunes, martes, jueves y viernes de 11:50 a 12:35. El miércoles de 11:50 a 12:35 es HORA LECTIVA.",
+        "actualizado": "2026-07-29",
+        "descripcion": "Horario oficial de Capitanes A. Solo se resaltan como NO LECTIVA los cuatro bloques expresamente marcados: lunes, martes, jueves y viernes de 11:50 a 12:35. El miércoles permanece lectivo.",
         "catalog_id": "capitanes-a-2026-2"
       },
       "entradas": [
@@ -164,7 +164,8 @@
           "codigo": "CCP-01",
           "lugar": "",
           "uniforme": "",
-          "observacion": "CCP-01 · HORA LECTIVA"
+          "observacion": "CCP-01 · HORA LECTIVA",
+          "etiqueta_lectiva": "HORA LECTIVA"
         },
         {
           "id": "ma-0730-procedimientos-especiales",
@@ -177,7 +178,8 @@
           "codigo": "CCP-02",
           "lugar": "",
           "uniforme": "",
-          "observacion": "CCP-02 · HORA LECTIVA"
+          "observacion": "CCP-02 · HORA LECTIVA",
+          "etiqueta_lectiva": "HORA LECTIVA"
         },
         {
           "id": "mi-0730-auditora-gubernamental",
@@ -190,7 +192,8 @@
           "codigo": "CCP-06",
           "lugar": "",
           "uniforme": "",
-          "observacion": "CCP-06 · HORA LECTIVA"
+          "observacion": "CCP-06 · HORA LECTIVA",
+          "etiqueta_lectiva": "HORA LECTIVA"
         },
         {
           "id": "ju-0730-inteligencia-estratgica",
@@ -203,7 +206,8 @@
           "codigo": "CCP-04",
           "lugar": "",
           "uniforme": "",
-          "observacion": "CCP-04 · HORA LECTIVA"
+          "observacion": "CCP-04 · HORA LECTIVA",
+          "etiqueta_lectiva": "HORA LECTIVA"
         },
         {
           "id": "vi-0730-ciencia-poltica",
@@ -216,7 +220,8 @@
           "codigo": "CCP-05",
           "lugar": "",
           "uniforme": "",
-          "observacion": "CCP-05 · HORA LECTIVA"
+          "observacion": "CCP-05 · HORA LECTIVA",
+          "etiqueta_lectiva": "HORA LECTIVA"
         },
         {
           "id": "lu-0815-planificacin-estratgica",
@@ -229,7 +234,8 @@
           "codigo": "CCP-01",
           "lugar": "",
           "uniforme": "",
-          "observacion": "CCP-01 · HORA LECTIVA"
+          "observacion": "CCP-01 · HORA LECTIVA",
+          "etiqueta_lectiva": "HORA LECTIVA"
         },
         {
           "id": "ma-0815-procedimientos-especiales",
@@ -242,7 +248,8 @@
           "codigo": "CCP-02",
           "lugar": "",
           "uniforme": "",
-          "observacion": "CCP-02 · HORA LECTIVA"
+          "observacion": "CCP-02 · HORA LECTIVA",
+          "etiqueta_lectiva": "HORA LECTIVA"
         },
         {
           "id": "mi-0815-auditora-gubernamental",
@@ -255,7 +262,8 @@
           "codigo": "CCP-06",
           "lugar": "",
           "uniforme": "",
-          "observacion": "CCP-06 · HORA LECTIVA"
+          "observacion": "CCP-06 · HORA LECTIVA",
+          "etiqueta_lectiva": "HORA LECTIVA"
         },
         {
           "id": "ju-0815-inteligencia-estratgica",
@@ -268,7 +276,8 @@
           "codigo": "CCP-04",
           "lugar": "",
           "uniforme": "",
-          "observacion": "CCP-04 · HORA LECTIVA"
+          "observacion": "CCP-04 · HORA LECTIVA",
+          "etiqueta_lectiva": "HORA LECTIVA"
         },
         {
           "id": "vi-0815-ciencia-poltica",
@@ -281,7 +290,8 @@
           "codigo": "CCP-05",
           "lugar": "",
           "uniforme": "",
-          "observacion": "CCP-05 · HORA LECTIVA"
+          "observacion": "CCP-05 · HORA LECTIVA",
+          "etiqueta_lectiva": "HORA LECTIVA"
         },
         {
           "id": "lu-0900-descanso-25-minutos",
@@ -359,7 +369,8 @@
           "codigo": "CCP-03",
           "lugar": "",
           "uniforme": "",
-          "observacion": "CCP-03 · HORA LECTIVA"
+          "observacion": "CCP-03 · HORA LECTIVA",
+          "etiqueta_lectiva": "HORA LECTIVA"
         },
         {
           "id": "ma-0925-procedimientos-especiales",
@@ -372,7 +383,8 @@
           "codigo": "CCP-02",
           "lugar": "",
           "uniforme": "",
-          "observacion": "CCP-02 · HORA LECTIVA"
+          "observacion": "CCP-02 · HORA LECTIVA",
+          "etiqueta_lectiva": "HORA LECTIVA"
         },
         {
           "id": "mi-0925-planificacin-estratgica",
@@ -385,7 +397,8 @@
           "codigo": "CCP-01",
           "lugar": "",
           "uniforme": "",
-          "observacion": "CCP-01 · HORA LECTIVA"
+          "observacion": "CCP-01 · HORA LECTIVA",
+          "etiqueta_lectiva": "HORA LECTIVA"
         },
         {
           "id": "ju-0925-inteligencia-estratgica",
@@ -398,7 +411,8 @@
           "codigo": "CCP-04",
           "lugar": "",
           "uniforme": "",
-          "observacion": "CCP-04 · HORA LECTIVA"
+          "observacion": "CCP-04 · HORA LECTIVA",
+          "etiqueta_lectiva": "HORA LECTIVA"
         },
         {
           "id": "vi-0925-ciencia-poltica",
@@ -411,7 +425,8 @@
           "codigo": "CCP-05",
           "lugar": "",
           "uniforme": "",
-          "observacion": "CCP-05 · HORA LECTIVA"
+          "observacion": "CCP-05 · HORA LECTIVA",
+          "etiqueta_lectiva": "HORA LECTIVA"
         },
         {
           "id": "lu-1010-administracin-general",
@@ -424,7 +439,8 @@
           "codigo": "CCP-03",
           "lugar": "",
           "uniforme": "",
-          "observacion": "CCP-03 · HORA LECTIVA"
+          "observacion": "CCP-03 · HORA LECTIVA",
+          "etiqueta_lectiva": "HORA LECTIVA"
         },
         {
           "id": "ma-1010-procedimientos-especiales",
@@ -437,7 +453,8 @@
           "codigo": "CCP-02",
           "lugar": "",
           "uniforme": "",
-          "observacion": "CCP-02 · HORA LECTIVA"
+          "observacion": "CCP-02 · HORA LECTIVA",
+          "etiqueta_lectiva": "HORA LECTIVA"
         },
         {
           "id": "mi-1010-planificacin-estratgica",
@@ -450,7 +467,8 @@
           "codigo": "CCP-01",
           "lugar": "",
           "uniforme": "",
-          "observacion": "CCP-01 · HORA LECTIVA"
+          "observacion": "CCP-01 · HORA LECTIVA",
+          "etiqueta_lectiva": "HORA LECTIVA"
         },
         {
           "id": "ju-1010-inteligencia-estratgica",
@@ -463,7 +481,8 @@
           "codigo": "CCP-04",
           "lugar": "",
           "uniforme": "",
-          "observacion": "CCP-04 · HORA LECTIVA"
+          "observacion": "CCP-04 · HORA LECTIVA",
+          "etiqueta_lectiva": "HORA LECTIVA"
         },
         {
           "id": "vi-1010-ciencia-poltica",
@@ -476,7 +495,8 @@
           "codigo": "CCP-05",
           "lugar": "",
           "uniforme": "",
-          "observacion": "CCP-05 · HORA LECTIVA"
+          "observacion": "CCP-05 · HORA LECTIVA",
+          "etiqueta_lectiva": "HORA LECTIVA"
         },
         {
           "id": "lu-1055-descanso-10-minutos",
@@ -554,7 +574,8 @@
           "codigo": "CCP-03",
           "lugar": "",
           "uniforme": "",
-          "observacion": "CCP-03 · HORA LECTIVA"
+          "observacion": "CCP-03 · HORA LECTIVA",
+          "etiqueta_lectiva": "HORA LECTIVA"
         },
         {
           "id": "ma-1105-ciencia-poltica",
@@ -567,7 +588,8 @@
           "codigo": "CCP-05",
           "lugar": "",
           "uniforme": "",
-          "observacion": "CCP-05 · HORA LECTIVA"
+          "observacion": "CCP-05 · HORA LECTIVA",
+          "etiqueta_lectiva": "HORA LECTIVA"
         },
         {
           "id": "mi-1105-metodologa-de-investigacin",
@@ -580,7 +602,8 @@
           "codigo": "CCP-07",
           "lugar": "",
           "uniforme": "",
-          "observacion": "CCP-07 · HORA LECTIVA"
+          "observacion": "CCP-07 · HORA LECTIVA",
+          "etiqueta_lectiva": "HORA LECTIVA"
         },
         {
           "id": "ju-1105-procedimientos-especiales",
@@ -593,7 +616,8 @@
           "codigo": "CCP-02",
           "lugar": "",
           "uniforme": "",
-          "observacion": "CCP-02 · HORA LECTIVA"
+          "observacion": "CCP-02 · HORA LECTIVA",
+          "etiqueta_lectiva": "HORA LECTIVA"
         },
         {
           "id": "vi-1105-auditora-gubernamental",
@@ -606,7 +630,8 @@
           "codigo": "CCP-06",
           "lugar": "",
           "uniforme": "",
-          "observacion": "CCP-06 · HORA LECTIVA"
+          "observacion": "CCP-06 · HORA LECTIVA",
+          "etiqueta_lectiva": "HORA LECTIVA"
         },
         {
           "id": "lu-1150-administracin-general",
@@ -619,9 +644,10 @@
           "codigo": "CCP-03",
           "lugar": "",
           "uniforme": "",
-          "observacion": "HORARIO NO LECTIVO · NO SE PASAN CLASES",
+          "observacion": "CCP-03 · HORA NO LECTIVA",
           "estado": "no_lectiva",
-          "es_no_lectiva": true
+          "es_no_lectiva": true,
+          "etiqueta_no_lectiva": "HORA NO LECTIVA"
         },
         {
           "id": "ma-1150-ciencia-poltica",
@@ -634,9 +660,10 @@
           "codigo": "CCP-05",
           "lugar": "",
           "uniforme": "",
-          "observacion": "HORARIO NO LECTIVO · NO SE PASAN CLASES",
+          "observacion": "CCP-05 · HORA NO LECTIVA",
           "estado": "no_lectiva",
-          "es_no_lectiva": true
+          "es_no_lectiva": true,
+          "etiqueta_no_lectiva": "HORA NO LECTIVA"
         },
         {
           "id": "mi-1150-metodologa-de-investigacin",
@@ -649,7 +676,8 @@
           "codigo": "CCP-07",
           "lugar": "",
           "uniforme": "",
-          "observacion": "CCP-07 · HORA LECTIVA"
+          "observacion": "CCP-07 · HORA LECTIVA",
+          "etiqueta_lectiva": "HORA LECTIVA"
         },
         {
           "id": "ju-1150-procedimientos-especiales",
@@ -662,9 +690,10 @@
           "codigo": "CCP-02",
           "lugar": "",
           "uniforme": "",
-          "observacion": "HORARIO NO LECTIVO · NO SE PASAN CLASES",
+          "observacion": "CCP-02 · HORA NO LECTIVA",
           "estado": "no_lectiva",
-          "es_no_lectiva": true
+          "es_no_lectiva": true,
+          "etiqueta_no_lectiva": "HORA NO LECTIVA"
         },
         {
           "id": "vi-1150-auditora-gubernamental",
@@ -677,9 +706,10 @@
           "codigo": "CCP-06",
           "lugar": "",
           "uniforme": "",
-          "observacion": "HORARIO NO LECTIVO · NO SE PASAN CLASES",
+          "observacion": "CCP-06 · HORA NO LECTIVA",
           "estado": "no_lectiva",
-          "es_no_lectiva": true
+          "es_no_lectiva": true,
+          "etiqueta_no_lectiva": "HORA NO LECTIVA"
         },
         {
           "id": "mi-1235-metodologa-de-investigacin",
@@ -692,7 +722,8 @@
           "codigo": "CCP-07",
           "lugar": "",
           "uniforme": "",
-          "observacion": "CCP-07 · HORA LECTIVA"
+          "observacion": "CCP-07 · HORA LECTIVA",
+          "etiqueta_lectiva": "HORA LECTIVA"
         },
         {
           "id": "lu-1400-acondicionamiento-fsico",
@@ -705,7 +736,8 @@
           "codigo": "CCP-09",
           "lugar": "",
           "uniforme": "",
-          "observacion": "CCP-09 · HORA LECTIVA"
+          "observacion": "CCP-09 · HORA LECTIVA",
+          "etiqueta_lectiva": "HORA LECTIVA"
         },
         {
           "id": "ju-1400-tiro-policial",
@@ -718,15 +750,2144 @@
           "codigo": "CCP-08",
           "lugar": "",
           "uniforme": "",
-          "observacion": "CCP-08 · HORA LECTIVA"
+          "observacion": "CCP-08 · HORA LECTIVA",
+          "etiqueta_lectiva": "HORA LECTIVA"
         }
       ],
       "fuente_visual": "assets/horario-segundo-semestre-2026.png"
+    },
+    {
+      "id": "capitanes-b-2026-2",
+      "etiqueta": "Capitanes B — Turno tarde",
+      "activo": true,
+      "orden": 2,
+      "fuente_visual": "assets/horario-capitanes-b-2026.jpg",
+      "metadatos": {
+        "id": "horario-capitanes-b-2026-2-oficial",
+        "template_version": "2026-07-29-capitanes-b-2026-2-01",
+        "nombre": "Horario oficial — Capitanes B — Turno tarde",
+        "institucion": "Escuela Superior de Policías — Filial Sucre",
+        "curso": "Curso de Capacitación Policial",
+        "paralelo": "B",
+        "turno": "Tarde",
+        "nivel": "Capitanes",
+        "periodo": "Segundo semestre · Modalidad presencial · Gestión 2026",
+        "duracion": "19 semanas",
+        "vigente": true,
+        "actualizado": "2026-07-29",
+        "descripcion": "Horario oficial del Paralelo B. Los bloques de 18:50 a 19:35 son no lectivos únicamente el lunes, martes, jueves y viernes.",
+        "catalog_id": "capitanes-b-2026-2",
+        "fuente_visual": "assets/horario-capitanes-b-2026.jpg"
+      },
+      "entradas": [
+        {
+          "id": "lu-0645-hora-mistica",
+          "dia": "Lunes",
+          "inicio": "06:45",
+          "fin": "07:15",
+          "materia": "Hora mística",
+          "docente": "",
+          "tipo": "formacion",
+          "codigo": "",
+          "lugar": "",
+          "uniforme": "",
+          "observacion": ""
+        },
+        {
+          "id": "lu-1415-organizacion-y-control",
+          "dia": "Lunes",
+          "inicio": "14:15",
+          "fin": "14:30",
+          "materia": "Organización y control",
+          "docente": "",
+          "tipo": "formacion",
+          "codigo": "",
+          "lugar": "",
+          "uniforme": "",
+          "observacion": ""
+        },
+        {
+          "id": "ma-1415-organizacion-y-control",
+          "dia": "Martes",
+          "inicio": "14:15",
+          "fin": "14:30",
+          "materia": "Organización y control",
+          "docente": "",
+          "tipo": "formacion",
+          "codigo": "",
+          "lugar": "",
+          "uniforme": "",
+          "observacion": ""
+        },
+        {
+          "id": "mi-1415-organizacion-y-control",
+          "dia": "Miércoles",
+          "inicio": "14:15",
+          "fin": "14:30",
+          "materia": "Organización y control",
+          "docente": "",
+          "tipo": "formacion",
+          "codigo": "",
+          "lugar": "",
+          "uniforme": "",
+          "observacion": ""
+        },
+        {
+          "id": "ju-1415-organizacion-y-control",
+          "dia": "Jueves",
+          "inicio": "14:15",
+          "fin": "14:30",
+          "materia": "Organización y control",
+          "docente": "",
+          "tipo": "formacion",
+          "codigo": "",
+          "lugar": "",
+          "uniforme": "",
+          "observacion": ""
+        },
+        {
+          "id": "vi-1415-organizacion-y-control",
+          "dia": "Viernes",
+          "inicio": "14:15",
+          "fin": "14:30",
+          "materia": "Organización y control",
+          "docente": "",
+          "tipo": "formacion",
+          "codigo": "",
+          "lugar": "",
+          "uniforme": "",
+          "observacion": ""
+        },
+        {
+          "id": "lu-1430-planificacion-estrategica",
+          "dia": "Lunes",
+          "inicio": "14:30",
+          "fin": "15:15",
+          "materia": "Planificación Estratégica",
+          "docente": "Lic. Jhoel Montero",
+          "tipo": "clase",
+          "codigo": "CCP-01",
+          "lugar": "",
+          "uniforme": "",
+          "observacion": "CCP-01 · HORA LECTIVA",
+          "etiqueta_lectiva": "HORA LECTIVA"
+        },
+        {
+          "id": "ma-1430-procedimientos-especiales",
+          "dia": "Martes",
+          "inicio": "14:30",
+          "fin": "15:15",
+          "materia": "Procedimientos Especiales",
+          "docente": "Cnl. DESP. Juan M. Quinteros Portillo",
+          "tipo": "clase",
+          "codigo": "CCP-02",
+          "lugar": "",
+          "uniforme": "",
+          "observacion": "CCP-02 · HORA LECTIVA",
+          "etiqueta_lectiva": "HORA LECTIVA"
+        },
+        {
+          "id": "mi-1430-auditoria-gubernamental",
+          "dia": "Miércoles",
+          "inicio": "14:30",
+          "fin": "15:15",
+          "materia": "Auditoría Gubernamental",
+          "docente": "Lic. Shirley Velásquez Miranda",
+          "tipo": "clase",
+          "codigo": "CCP-06",
+          "lugar": "",
+          "uniforme": "",
+          "observacion": "CCP-06 · HORA LECTIVA",
+          "etiqueta_lectiva": "HORA LECTIVA"
+        },
+        {
+          "id": "ju-1430-inteligencia-estrategica",
+          "dia": "Jueves",
+          "inicio": "14:30",
+          "fin": "15:15",
+          "materia": "Inteligencia Estratégica",
+          "docente": "My. DIGP. Marcos Herrera Torrez",
+          "tipo": "clase",
+          "codigo": "CCP-04",
+          "lugar": "",
+          "uniforme": "",
+          "observacion": "CCP-04 · HORA LECTIVA",
+          "etiqueta_lectiva": "HORA LECTIVA"
+        },
+        {
+          "id": "vi-1430-ciencia-politica",
+          "dia": "Viernes",
+          "inicio": "14:30",
+          "fin": "15:15",
+          "materia": "Ciencia Política",
+          "docente": "Lic. María Méndez Mamani",
+          "tipo": "clase",
+          "codigo": "CCP-05",
+          "lugar": "",
+          "uniforme": "",
+          "observacion": "CCP-05 · HORA LECTIVA",
+          "etiqueta_lectiva": "HORA LECTIVA"
+        },
+        {
+          "id": "lu-1515-planificacion-estrategica",
+          "dia": "Lunes",
+          "inicio": "15:15",
+          "fin": "16:00",
+          "materia": "Planificación Estratégica",
+          "docente": "Lic. Jhoel Montero",
+          "tipo": "clase",
+          "codigo": "CCP-01",
+          "lugar": "",
+          "uniforme": "",
+          "observacion": "CCP-01 · HORA LECTIVA",
+          "etiqueta_lectiva": "HORA LECTIVA"
+        },
+        {
+          "id": "ma-1515-procedimientos-especiales",
+          "dia": "Martes",
+          "inicio": "15:15",
+          "fin": "16:00",
+          "materia": "Procedimientos Especiales",
+          "docente": "Cnl. DESP. Juan M. Quinteros Portillo",
+          "tipo": "clase",
+          "codigo": "CCP-02",
+          "lugar": "",
+          "uniforme": "",
+          "observacion": "CCP-02 · HORA LECTIVA",
+          "etiqueta_lectiva": "HORA LECTIVA"
+        },
+        {
+          "id": "mi-1515-auditoria-gubernamental",
+          "dia": "Miércoles",
+          "inicio": "15:15",
+          "fin": "16:00",
+          "materia": "Auditoría Gubernamental",
+          "docente": "Lic. Shirley Velásquez Miranda",
+          "tipo": "clase",
+          "codigo": "CCP-06",
+          "lugar": "",
+          "uniforme": "",
+          "observacion": "CCP-06 · HORA LECTIVA",
+          "etiqueta_lectiva": "HORA LECTIVA"
+        },
+        {
+          "id": "ju-1515-inteligencia-estrategica",
+          "dia": "Jueves",
+          "inicio": "15:15",
+          "fin": "16:00",
+          "materia": "Inteligencia Estratégica",
+          "docente": "My. DIGP. Marcos Herrera Torrez",
+          "tipo": "clase",
+          "codigo": "CCP-04",
+          "lugar": "",
+          "uniforme": "",
+          "observacion": "CCP-04 · HORA LECTIVA",
+          "etiqueta_lectiva": "HORA LECTIVA"
+        },
+        {
+          "id": "vi-1515-ciencia-politica",
+          "dia": "Viernes",
+          "inicio": "15:15",
+          "fin": "16:00",
+          "materia": "Ciencia Política",
+          "docente": "Lic. María Méndez Mamani",
+          "tipo": "clase",
+          "codigo": "CCP-05",
+          "lugar": "",
+          "uniforme": "",
+          "observacion": "CCP-05 · HORA LECTIVA",
+          "etiqueta_lectiva": "HORA LECTIVA"
+        },
+        {
+          "id": "lu-1600-descanso-25-minutos",
+          "dia": "Lunes",
+          "inicio": "16:00",
+          "fin": "16:25",
+          "materia": "Descanso — 25 minutos",
+          "docente": "",
+          "tipo": "descanso",
+          "codigo": "",
+          "lugar": "",
+          "uniforme": "",
+          "observacion": ""
+        },
+        {
+          "id": "ma-1600-descanso-25-minutos",
+          "dia": "Martes",
+          "inicio": "16:00",
+          "fin": "16:25",
+          "materia": "Descanso — 25 minutos",
+          "docente": "",
+          "tipo": "descanso",
+          "codigo": "",
+          "lugar": "",
+          "uniforme": "",
+          "observacion": ""
+        },
+        {
+          "id": "mi-1600-descanso-25-minutos",
+          "dia": "Miércoles",
+          "inicio": "16:00",
+          "fin": "16:25",
+          "materia": "Descanso — 25 minutos",
+          "docente": "",
+          "tipo": "descanso",
+          "codigo": "",
+          "lugar": "",
+          "uniforme": "",
+          "observacion": ""
+        },
+        {
+          "id": "ju-1600-descanso-25-minutos",
+          "dia": "Jueves",
+          "inicio": "16:00",
+          "fin": "16:25",
+          "materia": "Descanso — 25 minutos",
+          "docente": "",
+          "tipo": "descanso",
+          "codigo": "",
+          "lugar": "",
+          "uniforme": "",
+          "observacion": ""
+        },
+        {
+          "id": "vi-1600-descanso-25-minutos",
+          "dia": "Viernes",
+          "inicio": "16:00",
+          "fin": "16:25",
+          "materia": "Descanso — 25 minutos",
+          "docente": "",
+          "tipo": "descanso",
+          "codigo": "",
+          "lugar": "",
+          "uniforme": "",
+          "observacion": ""
+        },
+        {
+          "id": "lu-1625-administracion-general",
+          "dia": "Lunes",
+          "inicio": "16:25",
+          "fin": "17:10",
+          "materia": "Administración General",
+          "docente": "Lic. Claudia Flores Márquez",
+          "tipo": "clase",
+          "codigo": "CCP-03",
+          "lugar": "",
+          "uniforme": "",
+          "observacion": "CCP-03 · HORA LECTIVA",
+          "etiqueta_lectiva": "HORA LECTIVA"
+        },
+        {
+          "id": "ma-1625-procedimientos-especiales",
+          "dia": "Martes",
+          "inicio": "16:25",
+          "fin": "17:10",
+          "materia": "Procedimientos Especiales",
+          "docente": "Cnl. DESP. Juan M. Quinteros Portillo",
+          "tipo": "clase",
+          "codigo": "CCP-02",
+          "lugar": "",
+          "uniforme": "",
+          "observacion": "CCP-02 · HORA LECTIVA",
+          "etiqueta_lectiva": "HORA LECTIVA"
+        },
+        {
+          "id": "mi-1625-planificacion-estrategica",
+          "dia": "Miércoles",
+          "inicio": "16:25",
+          "fin": "17:10",
+          "materia": "Planificación Estratégica",
+          "docente": "Lic. Jhoel Montero",
+          "tipo": "clase",
+          "codigo": "CCP-01",
+          "lugar": "",
+          "uniforme": "",
+          "observacion": "CCP-01 · HORA LECTIVA",
+          "etiqueta_lectiva": "HORA LECTIVA"
+        },
+        {
+          "id": "ju-1625-inteligencia-estrategica",
+          "dia": "Jueves",
+          "inicio": "16:25",
+          "fin": "17:10",
+          "materia": "Inteligencia Estratégica",
+          "docente": "My. DIGP. Marcos Herrera Torrez",
+          "tipo": "clase",
+          "codigo": "CCP-04",
+          "lugar": "",
+          "uniforme": "",
+          "observacion": "CCP-04 · HORA LECTIVA",
+          "etiqueta_lectiva": "HORA LECTIVA"
+        },
+        {
+          "id": "vi-1625-ciencia-politica",
+          "dia": "Viernes",
+          "inicio": "16:25",
+          "fin": "17:10",
+          "materia": "Ciencia Política",
+          "docente": "Lic. María Méndez Mamani",
+          "tipo": "clase",
+          "codigo": "CCP-05",
+          "lugar": "",
+          "uniforme": "",
+          "observacion": "CCP-05 · HORA LECTIVA",
+          "etiqueta_lectiva": "HORA LECTIVA"
+        },
+        {
+          "id": "lu-1710-administracion-general",
+          "dia": "Lunes",
+          "inicio": "17:10",
+          "fin": "17:55",
+          "materia": "Administración General",
+          "docente": "Lic. Claudia Flores Márquez",
+          "tipo": "clase",
+          "codigo": "CCP-03",
+          "lugar": "",
+          "uniforme": "",
+          "observacion": "CCP-03 · HORA LECTIVA",
+          "etiqueta_lectiva": "HORA LECTIVA"
+        },
+        {
+          "id": "ma-1710-procedimientos-especiales",
+          "dia": "Martes",
+          "inicio": "17:10",
+          "fin": "17:55",
+          "materia": "Procedimientos Especiales",
+          "docente": "Cnl. DESP. Juan M. Quinteros Portillo",
+          "tipo": "clase",
+          "codigo": "CCP-02",
+          "lugar": "",
+          "uniforme": "",
+          "observacion": "CCP-02 · HORA LECTIVA",
+          "etiqueta_lectiva": "HORA LECTIVA"
+        },
+        {
+          "id": "mi-1710-planificacion-estrategica",
+          "dia": "Miércoles",
+          "inicio": "17:10",
+          "fin": "17:55",
+          "materia": "Planificación Estratégica",
+          "docente": "Lic. Jhoel Montero",
+          "tipo": "clase",
+          "codigo": "CCP-01",
+          "lugar": "",
+          "uniforme": "",
+          "observacion": "CCP-01 · HORA LECTIVA",
+          "etiqueta_lectiva": "HORA LECTIVA"
+        },
+        {
+          "id": "ju-1710-inteligencia-estrategica",
+          "dia": "Jueves",
+          "inicio": "17:10",
+          "fin": "17:55",
+          "materia": "Inteligencia Estratégica",
+          "docente": "My. DIGP. Marcos Herrera Torrez",
+          "tipo": "clase",
+          "codigo": "CCP-04",
+          "lugar": "",
+          "uniforme": "",
+          "observacion": "CCP-04 · HORA LECTIVA",
+          "etiqueta_lectiva": "HORA LECTIVA"
+        },
+        {
+          "id": "vi-1710-ciencia-politica",
+          "dia": "Viernes",
+          "inicio": "17:10",
+          "fin": "17:55",
+          "materia": "Ciencia Política",
+          "docente": "Lic. María Méndez Mamani",
+          "tipo": "clase",
+          "codigo": "CCP-05",
+          "lugar": "",
+          "uniforme": "",
+          "observacion": "CCP-05 · HORA LECTIVA",
+          "etiqueta_lectiva": "HORA LECTIVA"
+        },
+        {
+          "id": "lu-1755-descanso-10-minutos",
+          "dia": "Lunes",
+          "inicio": "17:55",
+          "fin": "18:05",
+          "materia": "Descanso — 10 minutos",
+          "docente": "",
+          "tipo": "descanso",
+          "codigo": "",
+          "lugar": "",
+          "uniforme": "",
+          "observacion": ""
+        },
+        {
+          "id": "ma-1755-descanso-10-minutos",
+          "dia": "Martes",
+          "inicio": "17:55",
+          "fin": "18:05",
+          "materia": "Descanso — 10 minutos",
+          "docente": "",
+          "tipo": "descanso",
+          "codigo": "",
+          "lugar": "",
+          "uniforme": "",
+          "observacion": ""
+        },
+        {
+          "id": "mi-1755-descanso-10-minutos",
+          "dia": "Miércoles",
+          "inicio": "17:55",
+          "fin": "18:05",
+          "materia": "Descanso — 10 minutos",
+          "docente": "",
+          "tipo": "descanso",
+          "codigo": "",
+          "lugar": "",
+          "uniforme": "",
+          "observacion": ""
+        },
+        {
+          "id": "ju-1755-descanso-10-minutos",
+          "dia": "Jueves",
+          "inicio": "17:55",
+          "fin": "18:05",
+          "materia": "Descanso — 10 minutos",
+          "docente": "",
+          "tipo": "descanso",
+          "codigo": "",
+          "lugar": "",
+          "uniforme": "",
+          "observacion": ""
+        },
+        {
+          "id": "vi-1755-descanso-10-minutos",
+          "dia": "Viernes",
+          "inicio": "17:55",
+          "fin": "18:05",
+          "materia": "Descanso — 10 minutos",
+          "docente": "",
+          "tipo": "descanso",
+          "codigo": "",
+          "lugar": "",
+          "uniforme": "",
+          "observacion": ""
+        },
+        {
+          "id": "lu-1805-administracion-general",
+          "dia": "Lunes",
+          "inicio": "18:05",
+          "fin": "18:50",
+          "materia": "Administración General",
+          "docente": "Lic. Claudia Flores Márquez",
+          "tipo": "clase",
+          "codigo": "CCP-03",
+          "lugar": "",
+          "uniforme": "",
+          "observacion": "CCP-03 · HORA LECTIVA",
+          "etiqueta_lectiva": "HORA LECTIVA"
+        },
+        {
+          "id": "ma-1805-ciencia-politica",
+          "dia": "Martes",
+          "inicio": "18:05",
+          "fin": "18:50",
+          "materia": "Ciencia Política",
+          "docente": "Lic. María Méndez Mamani",
+          "tipo": "clase",
+          "codigo": "CCP-05",
+          "lugar": "",
+          "uniforme": "",
+          "observacion": "CCP-05 · HORA LECTIVA",
+          "etiqueta_lectiva": "HORA LECTIVA"
+        },
+        {
+          "id": "mi-1805-metodologia-de-investigacion",
+          "dia": "Miércoles",
+          "inicio": "18:05",
+          "fin": "18:50",
+          "materia": "Metodología de Investigación",
+          "docente": "Ing. Ronald Gonzales Soto",
+          "tipo": "clase",
+          "codigo": "CCP-07",
+          "lugar": "",
+          "uniforme": "",
+          "observacion": "CCP-07 · HORA LECTIVA",
+          "etiqueta_lectiva": "HORA LECTIVA"
+        },
+        {
+          "id": "ju-1805-procedimientos-especiales",
+          "dia": "Jueves",
+          "inicio": "18:05",
+          "fin": "18:50",
+          "materia": "Procedimientos Especiales",
+          "docente": "Cnl. DESP. Juan M. Quinteros Portillo",
+          "tipo": "clase",
+          "codigo": "CCP-02",
+          "lugar": "",
+          "uniforme": "",
+          "observacion": "CCP-02 · HORA LECTIVA",
+          "etiqueta_lectiva": "HORA LECTIVA"
+        },
+        {
+          "id": "vi-1805-auditoria-gubernamental",
+          "dia": "Viernes",
+          "inicio": "18:05",
+          "fin": "18:50",
+          "materia": "Auditoría Gubernamental",
+          "docente": "Lic. Shirley Velásquez Miranda",
+          "tipo": "clase",
+          "codigo": "CCP-06",
+          "lugar": "",
+          "uniforme": "",
+          "observacion": "CCP-06 · HORA LECTIVA",
+          "etiqueta_lectiva": "HORA LECTIVA"
+        },
+        {
+          "id": "lu-1850-administracion-general",
+          "dia": "Lunes",
+          "inicio": "18:50",
+          "fin": "19:35",
+          "materia": "Administración General",
+          "docente": "Lic. Claudia Flores Márquez",
+          "tipo": "no_lectiva",
+          "codigo": "CCP-03",
+          "lugar": "",
+          "uniforme": "",
+          "observacion": "CCP-03 · HORA NO LECTIVA",
+          "etiqueta_lectiva": "HORA LECTIVA",
+          "etiqueta_no_lectiva": "HORA NO LECTIVA",
+          "estado": "no_lectiva",
+          "es_no_lectiva": true
+        },
+        {
+          "id": "ma-1850-ciencia-politica",
+          "dia": "Martes",
+          "inicio": "18:50",
+          "fin": "19:35",
+          "materia": "Ciencia Política",
+          "docente": "Lic. María Méndez Mamani",
+          "tipo": "no_lectiva",
+          "codigo": "CCP-05",
+          "lugar": "",
+          "uniforme": "",
+          "observacion": "CCP-05 · HORA NO LECTIVA",
+          "etiqueta_lectiva": "HORA LECTIVA",
+          "etiqueta_no_lectiva": "HORA NO LECTIVA",
+          "estado": "no_lectiva",
+          "es_no_lectiva": true
+        },
+        {
+          "id": "mi-1850-metodologia-de-investigacion",
+          "dia": "Miércoles",
+          "inicio": "18:50",
+          "fin": "19:35",
+          "materia": "Metodología de Investigación",
+          "docente": "Ing. Ronald Gonzales Soto",
+          "tipo": "clase",
+          "codigo": "CCP-07",
+          "lugar": "",
+          "uniforme": "",
+          "observacion": "CCP-07 · HORA LECTIVA",
+          "etiqueta_lectiva": "HORA LECTIVA",
+          "etiqueta_no_lectiva": "HORA NO LECTIVA"
+        },
+        {
+          "id": "ju-1850-procedimientos-especiales",
+          "dia": "Jueves",
+          "inicio": "18:50",
+          "fin": "19:35",
+          "materia": "Procedimientos Especiales",
+          "docente": "Cnl. DESP. Juan M. Quinteros Portillo",
+          "tipo": "no_lectiva",
+          "codigo": "CCP-02",
+          "lugar": "",
+          "uniforme": "",
+          "observacion": "CCP-02 · HORA NO LECTIVA",
+          "etiqueta_lectiva": "HORA LECTIVA",
+          "etiqueta_no_lectiva": "HORA NO LECTIVA",
+          "estado": "no_lectiva",
+          "es_no_lectiva": true
+        },
+        {
+          "id": "vi-1850-auditoria-gubernamental",
+          "dia": "Viernes",
+          "inicio": "18:50",
+          "fin": "19:35",
+          "materia": "Auditoría Gubernamental",
+          "docente": "Lic. Shirley Velásquez Miranda",
+          "tipo": "no_lectiva",
+          "codigo": "CCP-06",
+          "lugar": "",
+          "uniforme": "",
+          "observacion": "CCP-06 · HORA NO LECTIVA",
+          "etiqueta_lectiva": "HORA LECTIVA",
+          "etiqueta_no_lectiva": "HORA NO LECTIVA",
+          "estado": "no_lectiva",
+          "es_no_lectiva": true
+        },
+        {
+          "id": "mi-1935-metodologia-de-investigacion",
+          "dia": "Miércoles",
+          "inicio": "19:35",
+          "fin": "20:20",
+          "materia": "Metodología de Investigación",
+          "docente": "Ing. Ronald Gonzales Soto",
+          "tipo": "clase",
+          "codigo": "CCP-07",
+          "lugar": "",
+          "uniforme": "",
+          "observacion": "CCP-07 · HORA LECTIVA",
+          "etiqueta_lectiva": "HORA LECTIVA"
+        },
+        {
+          "id": "ju-0900-tiro-policial",
+          "dia": "Jueves",
+          "inicio": "09:00",
+          "fin": "11:00",
+          "materia": "Tiro Policial",
+          "docente": "Tncl. DEAP. Juan C. Encinas Rueda",
+          "tipo": "actividad",
+          "codigo": "CCP-08",
+          "lugar": "",
+          "uniforme": "",
+          "observacion": "Una vez por semana"
+        },
+        {
+          "id": "vi-0900-acondicionamiento-fisico",
+          "dia": "Viernes",
+          "inicio": "09:00",
+          "fin": "11:00",
+          "materia": "Acondicionamiento Físico",
+          "docente": "Lic. Freddy Gardeazabal Caballero",
+          "tipo": "actividad",
+          "codigo": "CCP-09",
+          "lugar": "",
+          "uniforme": "",
+          "observacion": "Una vez por semana"
+        }
+      ]
+    },
+    {
+      "id": "sargento-segundo-a-2026-2",
+      "etiqueta": "Sargento Segundo A — Turno mañana",
+      "activo": true,
+      "orden": 3,
+      "fuente_visual": "assets/horario-sargento-segundo-a-2026.jpg",
+      "metadatos": {
+        "id": "horario-sargento-segundo-a-2026-2-oficial",
+        "template_version": "2026-07-29-sargento-segundo-a-2026-2-01",
+        "nombre": "Horario oficial — Sargento Segundo A — Turno mañana",
+        "institucion": "Escuela Superior de Policías — Filial Sucre",
+        "curso": "Diplomado en Investigación Policial",
+        "paralelo": "A",
+        "turno": "Mañana",
+        "nivel": "Sargento Segundo",
+        "periodo": "Segundo semestre · Modalidad presencial · Gestión 2026",
+        "duracion": "19 semanas",
+        "vigente": true,
+        "actualizado": "2026-07-29",
+        "descripcion": "Horario oficial de Sargento Segundo A. Se conservan como no lectivos solo los bloques expresamente rotulados en la fuente, incluida Perfilación Criminal del viernes de 10:10 a 10:55.",
+        "catalog_id": "sargento-segundo-a-2026-2",
+        "fuente_visual": "assets/horario-sargento-segundo-a-2026.jpg"
+      },
+      "entradas": [
+        {
+          "id": "lu-0645-hora-mistica",
+          "dia": "Lunes",
+          "inicio": "06:45",
+          "fin": "07:15",
+          "materia": "Hora mística",
+          "docente": "",
+          "tipo": "formacion",
+          "codigo": "",
+          "lugar": "",
+          "uniforme": "",
+          "observacion": ""
+        },
+        {
+          "id": "lu-0715-organizacion-y-control",
+          "dia": "Lunes",
+          "inicio": "07:15",
+          "fin": "07:30",
+          "materia": "Organización y control",
+          "docente": "",
+          "tipo": "formacion",
+          "codigo": "",
+          "lugar": "",
+          "uniforme": "",
+          "observacion": ""
+        },
+        {
+          "id": "ma-0715-organizacion-y-control",
+          "dia": "Martes",
+          "inicio": "07:15",
+          "fin": "07:30",
+          "materia": "Organización y control",
+          "docente": "",
+          "tipo": "formacion",
+          "codigo": "",
+          "lugar": "",
+          "uniforme": "",
+          "observacion": ""
+        },
+        {
+          "id": "mi-0715-organizacion-y-control",
+          "dia": "Miércoles",
+          "inicio": "07:15",
+          "fin": "07:30",
+          "materia": "Organización y control",
+          "docente": "",
+          "tipo": "formacion",
+          "codigo": "",
+          "lugar": "",
+          "uniforme": "",
+          "observacion": ""
+        },
+        {
+          "id": "ju-0715-organizacion-y-control",
+          "dia": "Jueves",
+          "inicio": "07:15",
+          "fin": "07:30",
+          "materia": "Organización y control",
+          "docente": "",
+          "tipo": "formacion",
+          "codigo": "",
+          "lugar": "",
+          "uniforme": "",
+          "observacion": ""
+        },
+        {
+          "id": "vi-0715-organizacion-y-control",
+          "dia": "Viernes",
+          "inicio": "07:15",
+          "fin": "07:30",
+          "materia": "Organización y control",
+          "docente": "",
+          "tipo": "formacion",
+          "codigo": "",
+          "lugar": "",
+          "uniforme": "",
+          "observacion": ""
+        },
+        {
+          "id": "lu-0730-victimologia",
+          "dia": "Lunes",
+          "inicio": "07:30",
+          "fin": "08:15",
+          "materia": "Victimología",
+          "docente": "Lic. María D. Lahor Urriolagoitia",
+          "tipo": "clase",
+          "codigo": "DEIP-06",
+          "lugar": "",
+          "uniforme": "",
+          "observacion": "DEIP-06 · CLASE LECTIVA",
+          "etiqueta_lectiva": "CLASE LECTIVA"
+        },
+        {
+          "id": "ma-0730-criminalistica-general-y-de-campo",
+          "dia": "Martes",
+          "inicio": "07:30",
+          "fin": "08:15",
+          "materia": "Criminalística General y de Campo",
+          "docente": "Cnl. MSc. Cad. Víctor H. Alarcón Lagos",
+          "tipo": "clase",
+          "codigo": "DEIP-02",
+          "lugar": "",
+          "uniforme": "",
+          "observacion": "DEIP-02 · CLASE LECTIVA",
+          "etiqueta_lectiva": "CLASE LECTIVA"
+        },
+        {
+          "id": "mi-0730-disciplinas-criminalisticas",
+          "dia": "Miércoles",
+          "inicio": "07:30",
+          "fin": "08:15",
+          "materia": "Disciplinas Criminalísticas",
+          "docente": "Cnl. MSc. Víctor Medina Flores",
+          "tipo": "clase",
+          "codigo": "DEIP-03",
+          "lugar": "",
+          "uniforme": "",
+          "observacion": "DEIP-03 · CLASE LECTIVA",
+          "etiqueta_lectiva": "CLASE LECTIVA"
+        },
+        {
+          "id": "ju-0730-psicologia-criminal-y-forense",
+          "dia": "Jueves",
+          "inicio": "07:30",
+          "fin": "08:15",
+          "materia": "Psicología Criminal y Forense",
+          "docente": "Lic. MSc. Sofía Estrada Gonzales",
+          "tipo": "clase",
+          "codigo": "DEIP-04",
+          "lugar": "",
+          "uniforme": "",
+          "observacion": "DEIP-04 · CLASE LECTIVA",
+          "etiqueta_lectiva": "CLASE LECTIVA"
+        },
+        {
+          "id": "vi-0730-perfilacion-criminal",
+          "dia": "Viernes",
+          "inicio": "07:30",
+          "fin": "08:15",
+          "materia": "Perfilación Criminal",
+          "docente": "Cnl. MSc. José L. Assaf Irahola",
+          "tipo": "clase",
+          "codigo": "DEIP-05",
+          "lugar": "",
+          "uniforme": "",
+          "observacion": "DEIP-05 · CLASE LECTIVA",
+          "etiqueta_lectiva": "CLASE LECTIVA"
+        },
+        {
+          "id": "lu-0815-victimologia",
+          "dia": "Lunes",
+          "inicio": "08:15",
+          "fin": "09:00",
+          "materia": "Victimología",
+          "docente": "Lic. María D. Lahor Urriolagoitia",
+          "tipo": "clase",
+          "codigo": "DEIP-06",
+          "lugar": "",
+          "uniforme": "",
+          "observacion": "DEIP-06 · CLASE LECTIVA",
+          "etiqueta_lectiva": "CLASE LECTIVA"
+        },
+        {
+          "id": "ma-0815-criminalistica-general-y-de-campo",
+          "dia": "Martes",
+          "inicio": "08:15",
+          "fin": "09:00",
+          "materia": "Criminalística General y de Campo",
+          "docente": "Cnl. MSc. Cad. Víctor H. Alarcón Lagos",
+          "tipo": "clase",
+          "codigo": "DEIP-02",
+          "lugar": "",
+          "uniforme": "",
+          "observacion": "DEIP-02 · CLASE LECTIVA",
+          "etiqueta_lectiva": "CLASE LECTIVA"
+        },
+        {
+          "id": "mi-0815-disciplinas-criminalisticas",
+          "dia": "Miércoles",
+          "inicio": "08:15",
+          "fin": "09:00",
+          "materia": "Disciplinas Criminalísticas",
+          "docente": "Cnl. MSc. Víctor Medina Flores",
+          "tipo": "clase",
+          "codigo": "DEIP-03",
+          "lugar": "",
+          "uniforme": "",
+          "observacion": "DEIP-03 · CLASE LECTIVA",
+          "etiqueta_lectiva": "CLASE LECTIVA"
+        },
+        {
+          "id": "ju-0815-psicologia-criminal-y-forense",
+          "dia": "Jueves",
+          "inicio": "08:15",
+          "fin": "09:00",
+          "materia": "Psicología Criminal y Forense",
+          "docente": "Lic. MSc. Sofía Estrada Gonzales",
+          "tipo": "clase",
+          "codigo": "DEIP-04",
+          "lugar": "",
+          "uniforme": "",
+          "observacion": "DEIP-04 · CLASE LECTIVA",
+          "etiqueta_lectiva": "CLASE LECTIVA"
+        },
+        {
+          "id": "vi-0815-perfilacion-criminal",
+          "dia": "Viernes",
+          "inicio": "08:15",
+          "fin": "09:00",
+          "materia": "Perfilación Criminal",
+          "docente": "Cnl. MSc. José L. Assaf Irahola",
+          "tipo": "clase",
+          "codigo": "DEIP-05",
+          "lugar": "",
+          "uniforme": "",
+          "observacion": "DEIP-05 · CLASE LECTIVA",
+          "etiqueta_lectiva": "CLASE LECTIVA"
+        },
+        {
+          "id": "lu-0900-descanso-25-minutos",
+          "dia": "Lunes",
+          "inicio": "09:00",
+          "fin": "09:25",
+          "materia": "Descanso — 25 minutos",
+          "docente": "",
+          "tipo": "descanso",
+          "codigo": "",
+          "lugar": "",
+          "uniforme": "",
+          "observacion": ""
+        },
+        {
+          "id": "ma-0900-descanso-25-minutos",
+          "dia": "Martes",
+          "inicio": "09:00",
+          "fin": "09:25",
+          "materia": "Descanso — 25 minutos",
+          "docente": "",
+          "tipo": "descanso",
+          "codigo": "",
+          "lugar": "",
+          "uniforme": "",
+          "observacion": ""
+        },
+        {
+          "id": "mi-0900-descanso-25-minutos",
+          "dia": "Miércoles",
+          "inicio": "09:00",
+          "fin": "09:25",
+          "materia": "Descanso — 25 minutos",
+          "docente": "",
+          "tipo": "descanso",
+          "codigo": "",
+          "lugar": "",
+          "uniforme": "",
+          "observacion": ""
+        },
+        {
+          "id": "ju-0900-descanso-25-minutos",
+          "dia": "Jueves",
+          "inicio": "09:00",
+          "fin": "09:25",
+          "materia": "Descanso — 25 minutos",
+          "docente": "",
+          "tipo": "descanso",
+          "codigo": "",
+          "lugar": "",
+          "uniforme": "",
+          "observacion": ""
+        },
+        {
+          "id": "vi-0900-descanso-25-minutos",
+          "dia": "Viernes",
+          "inicio": "09:00",
+          "fin": "09:25",
+          "materia": "Descanso — 25 minutos",
+          "docente": "",
+          "tipo": "descanso",
+          "codigo": "",
+          "lugar": "",
+          "uniforme": "",
+          "observacion": ""
+        },
+        {
+          "id": "lu-0925-perfilacion-criminal",
+          "dia": "Lunes",
+          "inicio": "09:25",
+          "fin": "10:10",
+          "materia": "Perfilación Criminal",
+          "docente": "Cnl. MSc. José L. Assaf Irahola",
+          "tipo": "clase",
+          "codigo": "DEIP-05",
+          "lugar": "",
+          "uniforme": "",
+          "observacion": "DEIP-05 · CLASE LECTIVA",
+          "etiqueta_lectiva": "CLASE LECTIVA"
+        },
+        {
+          "id": "ma-0925-investigacion-criminal",
+          "dia": "Martes",
+          "inicio": "09:25",
+          "fin": "10:10",
+          "materia": "Investigación Criminal",
+          "docente": "Cnl. MSc. Cad. Américo Vera Cuéllar",
+          "tipo": "clase",
+          "codigo": "DEIP-01",
+          "lugar": "",
+          "uniforme": "",
+          "observacion": "DEIP-01 · CLASE LECTIVA",
+          "etiqueta_lectiva": "CLASE LECTIVA"
+        },
+        {
+          "id": "mi-0925-disciplinas-criminalisticas",
+          "dia": "Miércoles",
+          "inicio": "09:25",
+          "fin": "10:10",
+          "materia": "Disciplinas Criminalísticas",
+          "docente": "Cnl. MSc. Víctor Medina Flores",
+          "tipo": "clase",
+          "codigo": "DEIP-03",
+          "lugar": "",
+          "uniforme": "",
+          "observacion": "DEIP-03 · CLASE LECTIVA",
+          "etiqueta_lectiva": "CLASE LECTIVA"
+        },
+        {
+          "id": "ju-0925-criminalistica-general-y-de-campo",
+          "dia": "Jueves",
+          "inicio": "09:25",
+          "fin": "10:10",
+          "materia": "Criminalística General y de Campo",
+          "docente": "Cnl. MSc. Cad. Víctor H. Alarcón Lagos",
+          "tipo": "clase",
+          "codigo": "DEIP-02",
+          "lugar": "",
+          "uniforme": "",
+          "observacion": "DEIP-02 · CLASE LECTIVA",
+          "etiqueta_lectiva": "CLASE LECTIVA"
+        },
+        {
+          "id": "vi-0925-perfilacion-criminal",
+          "dia": "Viernes",
+          "inicio": "09:25",
+          "fin": "10:10",
+          "materia": "Perfilación Criminal",
+          "docente": "Cnl. MSc. José L. Assaf Irahola",
+          "tipo": "clase",
+          "codigo": "DEIP-05",
+          "lugar": "",
+          "uniforme": "",
+          "observacion": "DEIP-05 · CLASE LECTIVA",
+          "etiqueta_lectiva": "CLASE LECTIVA"
+        },
+        {
+          "id": "lu-1010-perfilacion-criminal",
+          "dia": "Lunes",
+          "inicio": "10:10",
+          "fin": "10:55",
+          "materia": "Perfilación Criminal",
+          "docente": "Cnl. MSc. José L. Assaf Irahola",
+          "tipo": "clase",
+          "codigo": "DEIP-05",
+          "lugar": "",
+          "uniforme": "",
+          "observacion": "DEIP-05 · CLASE LECTIVA",
+          "etiqueta_lectiva": "CLASE LECTIVA",
+          "etiqueta_no_lectiva": "CLASE NO LECTIVA"
+        },
+        {
+          "id": "ma-1010-investigacion-criminal",
+          "dia": "Martes",
+          "inicio": "10:10",
+          "fin": "10:55",
+          "materia": "Investigación Criminal",
+          "docente": "Cnl. MSc. Cad. Américo Vera Cuéllar",
+          "tipo": "clase",
+          "codigo": "DEIP-01",
+          "lugar": "",
+          "uniforme": "",
+          "observacion": "DEIP-01 · CLASE LECTIVA",
+          "etiqueta_lectiva": "CLASE LECTIVA",
+          "etiqueta_no_lectiva": "CLASE NO LECTIVA"
+        },
+        {
+          "id": "mi-1010-disciplinas-criminalisticas",
+          "dia": "Miércoles",
+          "inicio": "10:10",
+          "fin": "10:55",
+          "materia": "Disciplinas Criminalísticas",
+          "docente": "Cnl. MSc. Víctor Medina Flores",
+          "tipo": "clase",
+          "codigo": "DEIP-03",
+          "lugar": "",
+          "uniforme": "",
+          "observacion": "DEIP-03 · CLASE LECTIVA",
+          "etiqueta_lectiva": "CLASE LECTIVA",
+          "etiqueta_no_lectiva": "CLASE NO LECTIVA"
+        },
+        {
+          "id": "ju-1010-criminalistica-general-y-de-campo",
+          "dia": "Jueves",
+          "inicio": "10:10",
+          "fin": "10:55",
+          "materia": "Criminalística General y de Campo",
+          "docente": "Cnl. MSc. Cad. Víctor H. Alarcón Lagos",
+          "tipo": "clase",
+          "codigo": "DEIP-02",
+          "lugar": "",
+          "uniforme": "",
+          "observacion": "DEIP-02 · CLASE LECTIVA",
+          "etiqueta_lectiva": "CLASE LECTIVA",
+          "etiqueta_no_lectiva": "CLASE NO LECTIVA"
+        },
+        {
+          "id": "vi-1010-perfilacion-criminal",
+          "dia": "Viernes",
+          "inicio": "10:10",
+          "fin": "10:55",
+          "materia": "Perfilación Criminal",
+          "docente": "Cnl. MSc. José L. Assaf Irahola",
+          "tipo": "no_lectiva",
+          "codigo": "DEIP-05",
+          "lugar": "",
+          "uniforme": "",
+          "observacion": "DEIP-05 · CLASE NO LECTIVA",
+          "etiqueta_lectiva": "CLASE LECTIVA",
+          "etiqueta_no_lectiva": "CLASE NO LECTIVA",
+          "estado": "no_lectiva",
+          "es_no_lectiva": true
+        },
+        {
+          "id": "lu-1055-descanso-10-minutos",
+          "dia": "Lunes",
+          "inicio": "10:55",
+          "fin": "11:05",
+          "materia": "Descanso — 10 minutos",
+          "docente": "",
+          "tipo": "descanso",
+          "codigo": "",
+          "lugar": "",
+          "uniforme": "",
+          "observacion": ""
+        },
+        {
+          "id": "ma-1055-descanso-10-minutos",
+          "dia": "Martes",
+          "inicio": "10:55",
+          "fin": "11:05",
+          "materia": "Descanso — 10 minutos",
+          "docente": "",
+          "tipo": "descanso",
+          "codigo": "",
+          "lugar": "",
+          "uniforme": "",
+          "observacion": ""
+        },
+        {
+          "id": "mi-1055-descanso-10-minutos",
+          "dia": "Miércoles",
+          "inicio": "10:55",
+          "fin": "11:05",
+          "materia": "Descanso — 10 minutos",
+          "docente": "",
+          "tipo": "descanso",
+          "codigo": "",
+          "lugar": "",
+          "uniforme": "",
+          "observacion": ""
+        },
+        {
+          "id": "ju-1055-descanso-10-minutos",
+          "dia": "Jueves",
+          "inicio": "10:55",
+          "fin": "11:05",
+          "materia": "Descanso — 10 minutos",
+          "docente": "",
+          "tipo": "descanso",
+          "codigo": "",
+          "lugar": "",
+          "uniforme": "",
+          "observacion": ""
+        },
+        {
+          "id": "vi-1055-descanso-10-minutos",
+          "dia": "Viernes",
+          "inicio": "10:55",
+          "fin": "11:05",
+          "materia": "Descanso — 10 minutos",
+          "docente": "",
+          "tipo": "descanso",
+          "codigo": "",
+          "lugar": "",
+          "uniforme": "",
+          "observacion": ""
+        },
+        {
+          "id": "lu-1105-psicologia-criminal-y-forense",
+          "dia": "Lunes",
+          "inicio": "11:05",
+          "fin": "11:50",
+          "materia": "Psicología Criminal y Forense",
+          "docente": "Lic. MSc. Sofía Estrada Gonzales",
+          "tipo": "clase",
+          "codigo": "DEIP-04",
+          "lugar": "",
+          "uniforme": "",
+          "observacion": "DEIP-04 · CLASE LECTIVA",
+          "etiqueta_lectiva": "CLASE LECTIVA"
+        },
+        {
+          "id": "ma-1105-victimologia",
+          "dia": "Martes",
+          "inicio": "11:05",
+          "fin": "11:50",
+          "materia": "Victimología",
+          "docente": "Lic. María D. Lahor Urriolagoitia",
+          "tipo": "clase",
+          "codigo": "DEIP-06",
+          "lugar": "",
+          "uniforme": "",
+          "observacion": "DEIP-06 · CLASE LECTIVA",
+          "etiqueta_lectiva": "CLASE LECTIVA"
+        },
+        {
+          "id": "mi-1105-metodologia-de-investigacion",
+          "dia": "Miércoles",
+          "inicio": "11:05",
+          "fin": "11:50",
+          "materia": "Metodología de Investigación",
+          "docente": "Lic. María A. Ordoñez Flores",
+          "tipo": "clase",
+          "codigo": "DEIP-07",
+          "lugar": "",
+          "uniforme": "",
+          "observacion": "DEIP-07 · CLASE LECTIVA",
+          "etiqueta_lectiva": "CLASE LECTIVA"
+        },
+        {
+          "id": "ju-1105-criminalistica-general-y-de-campo",
+          "dia": "Jueves",
+          "inicio": "11:05",
+          "fin": "11:50",
+          "materia": "Criminalística General y de Campo",
+          "docente": "Cnl. MSc. Cad. Víctor H. Alarcón Lagos",
+          "tipo": "clase",
+          "codigo": "DEIP-02",
+          "lugar": "",
+          "uniforme": "",
+          "observacion": "DEIP-02 · CLASE LECTIVA",
+          "etiqueta_lectiva": "CLASE LECTIVA"
+        },
+        {
+          "id": "vi-1105-investigacion-criminal",
+          "dia": "Viernes",
+          "inicio": "11:05",
+          "fin": "11:50",
+          "materia": "Investigación Criminal",
+          "docente": "Cnl. MSc. Cad. Américo Vera Cuéllar",
+          "tipo": "clase",
+          "codigo": "DEIP-01",
+          "lugar": "",
+          "uniforme": "",
+          "observacion": "DEIP-01 · CLASE LECTIVA",
+          "etiqueta_lectiva": "CLASE LECTIVA"
+        },
+        {
+          "id": "lu-1150-psicologia-criminal-y-forense",
+          "dia": "Lunes",
+          "inicio": "11:50",
+          "fin": "12:35",
+          "materia": "Psicología Criminal y Forense",
+          "docente": "Lic. MSc. Sofía Estrada Gonzales",
+          "tipo": "no_lectiva",
+          "codigo": "DEIP-04",
+          "lugar": "",
+          "uniforme": "",
+          "observacion": "DEIP-04 · CLASE NO LECTIVA",
+          "etiqueta_lectiva": "CLASE LECTIVA",
+          "etiqueta_no_lectiva": "CLASE NO LECTIVA",
+          "estado": "no_lectiva",
+          "es_no_lectiva": true
+        },
+        {
+          "id": "ma-1150-victimologia",
+          "dia": "Martes",
+          "inicio": "11:50",
+          "fin": "12:35",
+          "materia": "Victimología",
+          "docente": "Lic. María D. Lahor Urriolagoitia",
+          "tipo": "no_lectiva",
+          "codigo": "DEIP-06",
+          "lugar": "",
+          "uniforme": "",
+          "observacion": "DEIP-06 · CLASE NO LECTIVA",
+          "etiqueta_lectiva": "CLASE LECTIVA",
+          "etiqueta_no_lectiva": "CLASE NO LECTIVA",
+          "estado": "no_lectiva",
+          "es_no_lectiva": true
+        },
+        {
+          "id": "mi-1150-metodologia-de-investigacion",
+          "dia": "Miércoles",
+          "inicio": "11:50",
+          "fin": "12:35",
+          "materia": "Metodología de Investigación",
+          "docente": "Lic. María A. Ordoñez Flores",
+          "tipo": "clase",
+          "codigo": "DEIP-07",
+          "lugar": "",
+          "uniforme": "",
+          "observacion": "DEIP-07 · CLASE LECTIVA",
+          "etiqueta_lectiva": "CLASE LECTIVA",
+          "etiqueta_no_lectiva": "CLASE NO LECTIVA"
+        },
+        {
+          "id": "ju-1150-criminalistica-general-y-de-campo",
+          "dia": "Jueves",
+          "inicio": "11:50",
+          "fin": "12:35",
+          "materia": "Criminalística General y de Campo",
+          "docente": "Cnl. MSc. Cad. Víctor H. Alarcón Lagos",
+          "tipo": "no_lectiva",
+          "codigo": "DEIP-02",
+          "lugar": "",
+          "uniforme": "",
+          "observacion": "DEIP-02 · CLASE NO LECTIVA",
+          "etiqueta_lectiva": "CLASE LECTIVA",
+          "etiqueta_no_lectiva": "CLASE NO LECTIVA",
+          "estado": "no_lectiva",
+          "es_no_lectiva": true
+        },
+        {
+          "id": "vi-1150-investigacion-criminal",
+          "dia": "Viernes",
+          "inicio": "11:50",
+          "fin": "12:35",
+          "materia": "Investigación Criminal",
+          "docente": "Cnl. MSc. Cad. Américo Vera Cuéllar",
+          "tipo": "no_lectiva",
+          "codigo": "DEIP-01",
+          "lugar": "",
+          "uniforme": "",
+          "observacion": "DEIP-01 · CLASE NO LECTIVA",
+          "etiqueta_lectiva": "CLASE LECTIVA",
+          "etiqueta_no_lectiva": "CLASE NO LECTIVA",
+          "estado": "no_lectiva",
+          "es_no_lectiva": true
+        },
+        {
+          "id": "mi-1235-metodologia-de-investigacion",
+          "dia": "Miércoles",
+          "inicio": "12:35",
+          "fin": "13:20",
+          "materia": "Metodología de Investigación",
+          "docente": "Lic. María A. Ordoñez Flores",
+          "tipo": "clase",
+          "codigo": "DEIP-07",
+          "lugar": "",
+          "uniforme": "",
+          "observacion": "DEIP-07 · CLASE LECTIVA",
+          "etiqueta_lectiva": "CLASE LECTIVA"
+        },
+        {
+          "id": "vi-1330-tiro-policial",
+          "dia": "Viernes",
+          "inicio": "13:30",
+          "fin": "15:30",
+          "materia": "Tiro Policial",
+          "docente": "My. Erick Humberto Vargas Zambrana",
+          "tipo": "actividad",
+          "codigo": "DEIP-08",
+          "lugar": "",
+          "uniforme": "",
+          "observacion": "Una vez por semana"
+        },
+        {
+          "id": "mi-1600-acondicionamiento-fisico",
+          "dia": "Miércoles",
+          "inicio": "16:00",
+          "fin": "18:00",
+          "materia": "Acondicionamiento Físico",
+          "docente": "Lic. Eloy Enrique Alala Ledezma",
+          "tipo": "actividad",
+          "codigo": "DEIP-09",
+          "lugar": "",
+          "uniforme": "",
+          "observacion": "Una vez por semana"
+        }
+      ]
+    },
+    {
+      "id": "suboficial-segundo-f-2026-2",
+      "etiqueta": "Suboficial Segundo F — Turno tarde",
+      "activo": true,
+      "orden": 4,
+      "fuente_visual": "assets/horario-suboficial-segundo-f-2026.jpg",
+      "metadatos": {
+        "id": "horario-suboficial-segundo-f-2026-2-oficial",
+        "template_version": "2026-07-29-suboficial-segundo-f-2026-2-01",
+        "nombre": "Horario oficial — Suboficial Segundo F — Turno tarde",
+        "institucion": "Escuela Superior de Policías — Filial Sucre",
+        "curso": "Diplomado en Administración Policial",
+        "paralelo": "F",
+        "turno": "Tarde",
+        "nivel": "Suboficial Segundo",
+        "periodo": "Segundo semestre · Modalidad presencial · Gestión 2026",
+        "duracion": "19 semanas",
+        "vigente": true,
+        "actualizado": "2026-07-29",
+        "descripcion": "Horario oficial de Suboficial Segundo F. Solo los cuatro bloques finales expresamente marcados son no lectivos; Metodología de Investigación del miércoles permanece lectiva.",
+        "catalog_id": "suboficial-segundo-f-2026-2",
+        "fuente_visual": "assets/horario-suboficial-segundo-f-2026.jpg"
+      },
+      "entradas": [
+        {
+          "id": "lu-0645-hora-mistica",
+          "dia": "Lunes",
+          "inicio": "06:45",
+          "fin": "07:15",
+          "materia": "Hora mística",
+          "docente": "",
+          "tipo": "formacion",
+          "codigo": "",
+          "lugar": "",
+          "uniforme": "",
+          "observacion": ""
+        },
+        {
+          "id": "lu-1415-organizacion-y-control",
+          "dia": "Lunes",
+          "inicio": "14:15",
+          "fin": "14:30",
+          "materia": "Organización y control",
+          "docente": "",
+          "tipo": "formacion",
+          "codigo": "",
+          "lugar": "",
+          "uniforme": "",
+          "observacion": ""
+        },
+        {
+          "id": "ma-1415-organizacion-y-control",
+          "dia": "Martes",
+          "inicio": "14:15",
+          "fin": "14:30",
+          "materia": "Organización y control",
+          "docente": "",
+          "tipo": "formacion",
+          "codigo": "",
+          "lugar": "",
+          "uniforme": "",
+          "observacion": ""
+        },
+        {
+          "id": "mi-1415-organizacion-y-control",
+          "dia": "Miércoles",
+          "inicio": "14:15",
+          "fin": "14:30",
+          "materia": "Organización y control",
+          "docente": "",
+          "tipo": "formacion",
+          "codigo": "",
+          "lugar": "",
+          "uniforme": "",
+          "observacion": ""
+        },
+        {
+          "id": "ju-1415-organizacion-y-control",
+          "dia": "Jueves",
+          "inicio": "14:15",
+          "fin": "14:30",
+          "materia": "Organización y control",
+          "docente": "",
+          "tipo": "formacion",
+          "codigo": "",
+          "lugar": "",
+          "uniforme": "",
+          "observacion": ""
+        },
+        {
+          "id": "vi-1415-organizacion-y-control",
+          "dia": "Viernes",
+          "inicio": "14:15",
+          "fin": "14:30",
+          "materia": "Organización y control",
+          "docente": "",
+          "tipo": "formacion",
+          "codigo": "",
+          "lugar": "",
+          "uniforme": "",
+          "observacion": ""
+        },
+        {
+          "id": "lu-1430-gestion-policial",
+          "dia": "Lunes",
+          "inicio": "14:30",
+          "fin": "15:15",
+          "materia": "Gestión Policial",
+          "docente": "Sof. 2do. Lic. Robeto Caba Mamani",
+          "tipo": "clase",
+          "codigo": "DAP-05",
+          "lugar": "",
+          "uniforme": "",
+          "observacion": "DAP-05 · HORA LECTIVA",
+          "etiqueta_lectiva": "HORA LECTIVA"
+        },
+        {
+          "id": "ma-1430-administracion-de-recursos-humanos",
+          "dia": "Martes",
+          "inicio": "14:30",
+          "fin": "15:15",
+          "materia": "Administración de Recursos Humanos",
+          "docente": "Cnl. MSc. Cad. Marcelo V. Gomez Z.",
+          "tipo": "clase",
+          "codigo": "DAP-03",
+          "lugar": "",
+          "uniforme": "",
+          "observacion": "DAP-03 · HORA LECTIVA",
+          "etiqueta_lectiva": "HORA LECTIVA"
+        },
+        {
+          "id": "mi-1430-administracion-policial-y-doctrina-de-esta",
+          "dia": "Miércoles",
+          "inicio": "14:30",
+          "fin": "15:15",
+          "materia": "Administración Policial y Doctrina de Estado Mayor",
+          "docente": "Tcnl. DAEP Osvaldo Fortun Barba",
+          "tipo": "clase",
+          "codigo": "DAP-01",
+          "lugar": "",
+          "uniforme": "",
+          "observacion": "DAP-01 · HORA LECTIVA",
+          "etiqueta_lectiva": "HORA LECTIVA"
+        },
+        {
+          "id": "ju-1430-administracion-de-recursos-humanos",
+          "dia": "Jueves",
+          "inicio": "14:30",
+          "fin": "15:15",
+          "materia": "Administración de Recursos Humanos",
+          "docente": "Cnl. MSc. Cad. Marcelo V. Gomez Z.",
+          "tipo": "clase",
+          "codigo": "DAP-03",
+          "lugar": "",
+          "uniforme": "",
+          "observacion": "DAP-03 · HORA LECTIVA",
+          "etiqueta_lectiva": "HORA LECTIVA"
+        },
+        {
+          "id": "vi-1430-preparacion-de-proyectos-institucionales",
+          "dia": "Viernes",
+          "inicio": "14:30",
+          "fin": "15:15",
+          "materia": "Preparación de Proyectos Institucionales",
+          "docente": "Cnl. MSc. Cad. Miguel Valdivia Teran",
+          "tipo": "clase",
+          "codigo": "DAP-04",
+          "lugar": "",
+          "uniforme": "",
+          "observacion": "DAP-04 · HORA LECTIVA",
+          "etiqueta_lectiva": "HORA LECTIVA"
+        },
+        {
+          "id": "lu-1515-gestion-policial",
+          "dia": "Lunes",
+          "inicio": "15:15",
+          "fin": "16:00",
+          "materia": "Gestión Policial",
+          "docente": "Sof. 2do. Lic. Robeto Caba Mamani",
+          "tipo": "clase",
+          "codigo": "DAP-05",
+          "lugar": "",
+          "uniforme": "",
+          "observacion": "DAP-05 · HORA LECTIVA",
+          "etiqueta_lectiva": "HORA LECTIVA"
+        },
+        {
+          "id": "ma-1515-administracion-de-recursos-humanos",
+          "dia": "Martes",
+          "inicio": "15:15",
+          "fin": "16:00",
+          "materia": "Administración de Recursos Humanos",
+          "docente": "Cnl. MSc. Cad. Marcelo V. Gomez Z.",
+          "tipo": "clase",
+          "codigo": "DAP-03",
+          "lugar": "",
+          "uniforme": "",
+          "observacion": "DAP-03 · HORA LECTIVA",
+          "etiqueta_lectiva": "HORA LECTIVA"
+        },
+        {
+          "id": "mi-1515-administracion-policial-y-doctrina-de-esta",
+          "dia": "Miércoles",
+          "inicio": "15:15",
+          "fin": "16:00",
+          "materia": "Administración Policial y Doctrina de Estado Mayor",
+          "docente": "Tcnl. DAEP Osvaldo Fortun Barba",
+          "tipo": "clase",
+          "codigo": "DAP-01",
+          "lugar": "",
+          "uniforme": "",
+          "observacion": "DAP-01 · HORA LECTIVA",
+          "etiqueta_lectiva": "HORA LECTIVA"
+        },
+        {
+          "id": "ju-1515-administracion-de-recursos-humanos",
+          "dia": "Jueves",
+          "inicio": "15:15",
+          "fin": "16:00",
+          "materia": "Administración de Recursos Humanos",
+          "docente": "Cnl. MSc. Cad. Marcelo V. Gomez Z.",
+          "tipo": "clase",
+          "codigo": "DAP-03",
+          "lugar": "",
+          "uniforme": "",
+          "observacion": "DAP-03 · HORA LECTIVA",
+          "etiqueta_lectiva": "HORA LECTIVA"
+        },
+        {
+          "id": "vi-1515-preparacion-de-proyectos-institucionales",
+          "dia": "Viernes",
+          "inicio": "15:15",
+          "fin": "16:00",
+          "materia": "Preparación de Proyectos Institucionales",
+          "docente": "Cnl. MSc. Cad. Miguel Valdivia Teran",
+          "tipo": "clase",
+          "codigo": "DAP-04",
+          "lugar": "",
+          "uniforme": "",
+          "observacion": "DAP-04 · HORA LECTIVA",
+          "etiqueta_lectiva": "HORA LECTIVA"
+        },
+        {
+          "id": "lu-1600-descanso-25-minutos",
+          "dia": "Lunes",
+          "inicio": "16:00",
+          "fin": "16:25",
+          "materia": "Descanso — 25 minutos",
+          "docente": "",
+          "tipo": "descanso",
+          "codigo": "",
+          "lugar": "",
+          "uniforme": "",
+          "observacion": ""
+        },
+        {
+          "id": "ma-1600-descanso-25-minutos",
+          "dia": "Martes",
+          "inicio": "16:00",
+          "fin": "16:25",
+          "materia": "Descanso — 25 minutos",
+          "docente": "",
+          "tipo": "descanso",
+          "codigo": "",
+          "lugar": "",
+          "uniforme": "",
+          "observacion": ""
+        },
+        {
+          "id": "mi-1600-descanso-25-minutos",
+          "dia": "Miércoles",
+          "inicio": "16:00",
+          "fin": "16:25",
+          "materia": "Descanso — 25 minutos",
+          "docente": "",
+          "tipo": "descanso",
+          "codigo": "",
+          "lugar": "",
+          "uniforme": "",
+          "observacion": ""
+        },
+        {
+          "id": "ju-1600-descanso-25-minutos",
+          "dia": "Jueves",
+          "inicio": "16:00",
+          "fin": "16:25",
+          "materia": "Descanso — 25 minutos",
+          "docente": "",
+          "tipo": "descanso",
+          "codigo": "",
+          "lugar": "",
+          "uniforme": "",
+          "observacion": ""
+        },
+        {
+          "id": "vi-1600-descanso-25-minutos",
+          "dia": "Viernes",
+          "inicio": "16:00",
+          "fin": "16:25",
+          "materia": "Descanso — 25 minutos",
+          "docente": "",
+          "tipo": "descanso",
+          "codigo": "",
+          "lugar": "",
+          "uniforme": "",
+          "observacion": ""
+        },
+        {
+          "id": "lu-1625-administracion-policial-y-doctrina-de-esta",
+          "dia": "Lunes",
+          "inicio": "16:25",
+          "fin": "17:10",
+          "materia": "Administración Policial y Doctrina de Estado Mayor",
+          "docente": "Tcnl. DAEP Osvaldo Fortun Barba",
+          "tipo": "clase",
+          "codigo": "DAP-01",
+          "lugar": "",
+          "uniforme": "",
+          "observacion": "DAP-01 · HORA LECTIVA",
+          "etiqueta_lectiva": "HORA LECTIVA"
+        },
+        {
+          "id": "ma-1625-sistemas-organizacionales",
+          "dia": "Martes",
+          "inicio": "16:25",
+          "fin": "17:10",
+          "materia": "Sistemas Organizacionales",
+          "docente": "Lic. Jhoselyn P. Mollo Martinez",
+          "tipo": "clase",
+          "codigo": "DAP-02",
+          "lugar": "",
+          "uniforme": "",
+          "observacion": "DAP-02 · HORA LECTIVA",
+          "etiqueta_lectiva": "HORA LECTIVA"
+        },
+        {
+          "id": "mi-1625-gestion-policial",
+          "dia": "Miércoles",
+          "inicio": "16:25",
+          "fin": "17:10",
+          "materia": "Gestión Policial",
+          "docente": "Sof. 2do. Lic. Robeto Caba Mamani",
+          "tipo": "clase",
+          "codigo": "DAP-05",
+          "lugar": "",
+          "uniforme": "",
+          "observacion": "DAP-05 · HORA LECTIVA",
+          "etiqueta_lectiva": "HORA LECTIVA"
+        },
+        {
+          "id": "ju-1625-sistemas-organizacionales",
+          "dia": "Jueves",
+          "inicio": "16:25",
+          "fin": "17:10",
+          "materia": "Sistemas Organizacionales",
+          "docente": "Lic. Jhoselyn P. Mollo Martinez",
+          "tipo": "clase",
+          "codigo": "DAP-02",
+          "lugar": "",
+          "uniforme": "",
+          "observacion": "DAP-02 · HORA LECTIVA",
+          "etiqueta_lectiva": "HORA LECTIVA"
+        },
+        {
+          "id": "vi-1625-preparacion-de-proyectos-institucionales",
+          "dia": "Viernes",
+          "inicio": "16:25",
+          "fin": "17:10",
+          "materia": "Preparación de Proyectos Institucionales",
+          "docente": "Cnl. MSc. Cad. Miguel Valdivia Teran",
+          "tipo": "clase",
+          "codigo": "DAP-04",
+          "lugar": "",
+          "uniforme": "",
+          "observacion": "DAP-04 · HORA LECTIVA",
+          "etiqueta_lectiva": "HORA LECTIVA"
+        },
+        {
+          "id": "lu-1710-administracion-policial-y-doctrina-de-esta",
+          "dia": "Lunes",
+          "inicio": "17:10",
+          "fin": "17:55",
+          "materia": "Administración Policial y Doctrina de Estado Mayor",
+          "docente": "Tcnl. DAEP Osvaldo Fortun Barba",
+          "tipo": "clase",
+          "codigo": "DAP-01",
+          "lugar": "",
+          "uniforme": "",
+          "observacion": "DAP-01 · HORA LECTIVA",
+          "etiqueta_lectiva": "HORA LECTIVA"
+        },
+        {
+          "id": "ma-1710-sistemas-organizacionales",
+          "dia": "Martes",
+          "inicio": "17:10",
+          "fin": "17:55",
+          "materia": "Sistemas Organizacionales",
+          "docente": "Lic. Jhoselyn P. Mollo Martinez",
+          "tipo": "clase",
+          "codigo": "DAP-02",
+          "lugar": "",
+          "uniforme": "",
+          "observacion": "DAP-02 · HORA LECTIVA",
+          "etiqueta_lectiva": "HORA LECTIVA"
+        },
+        {
+          "id": "mi-1710-gestion-policial",
+          "dia": "Miércoles",
+          "inicio": "17:10",
+          "fin": "17:55",
+          "materia": "Gestión Policial",
+          "docente": "Sof. 2do. Lic. Robeto Caba Mamani",
+          "tipo": "clase",
+          "codigo": "DAP-05",
+          "lugar": "",
+          "uniforme": "",
+          "observacion": "DAP-05 · HORA LECTIVA",
+          "etiqueta_lectiva": "HORA LECTIVA"
+        },
+        {
+          "id": "ju-1710-sistemas-organizacionales",
+          "dia": "Jueves",
+          "inicio": "17:10",
+          "fin": "17:55",
+          "materia": "Sistemas Organizacionales",
+          "docente": "Lic. Jhoselyn P. Mollo Martinez",
+          "tipo": "clase",
+          "codigo": "DAP-02",
+          "lugar": "",
+          "uniforme": "",
+          "observacion": "DAP-02 · HORA LECTIVA",
+          "etiqueta_lectiva": "HORA LECTIVA"
+        },
+        {
+          "id": "vi-1710-gestion-policial",
+          "dia": "Viernes",
+          "inicio": "17:10",
+          "fin": "17:55",
+          "materia": "Gestión Policial",
+          "docente": "Sof. 2do. Lic. Robeto Caba Mamani",
+          "tipo": "clase",
+          "codigo": "DAP-05",
+          "lugar": "",
+          "uniforme": "",
+          "observacion": "DAP-05 · HORA LECTIVA",
+          "etiqueta_lectiva": "HORA LECTIVA"
+        },
+        {
+          "id": "lu-1755-descanso-10-minutos",
+          "dia": "Lunes",
+          "inicio": "17:55",
+          "fin": "18:05",
+          "materia": "Descanso — 10 minutos",
+          "docente": "",
+          "tipo": "descanso",
+          "codigo": "",
+          "lugar": "",
+          "uniforme": "",
+          "observacion": ""
+        },
+        {
+          "id": "ma-1755-descanso-10-minutos",
+          "dia": "Martes",
+          "inicio": "17:55",
+          "fin": "18:05",
+          "materia": "Descanso — 10 minutos",
+          "docente": "",
+          "tipo": "descanso",
+          "codigo": "",
+          "lugar": "",
+          "uniforme": "",
+          "observacion": ""
+        },
+        {
+          "id": "mi-1755-descanso-10-minutos",
+          "dia": "Miércoles",
+          "inicio": "17:55",
+          "fin": "18:05",
+          "materia": "Descanso — 10 minutos",
+          "docente": "",
+          "tipo": "descanso",
+          "codigo": "",
+          "lugar": "",
+          "uniforme": "",
+          "observacion": ""
+        },
+        {
+          "id": "ju-1755-descanso-10-minutos",
+          "dia": "Jueves",
+          "inicio": "17:55",
+          "fin": "18:05",
+          "materia": "Descanso — 10 minutos",
+          "docente": "",
+          "tipo": "descanso",
+          "codigo": "",
+          "lugar": "",
+          "uniforme": "",
+          "observacion": ""
+        },
+        {
+          "id": "vi-1755-descanso-10-minutos",
+          "dia": "Viernes",
+          "inicio": "17:55",
+          "fin": "18:05",
+          "materia": "Descanso — 10 minutos",
+          "docente": "",
+          "tipo": "descanso",
+          "codigo": "",
+          "lugar": "",
+          "uniforme": "",
+          "observacion": ""
+        },
+        {
+          "id": "lu-1805-administracion-policial-y-doctrina-de-esta",
+          "dia": "Lunes",
+          "inicio": "18:05",
+          "fin": "18:50",
+          "materia": "Administración Policial y Doctrina de Estado Mayor",
+          "docente": "Tcnl. DAEP Osvaldo Fortun Barba",
+          "tipo": "clase",
+          "codigo": "DAP-01",
+          "lugar": "",
+          "uniforme": "",
+          "observacion": "DAP-01 · HORA LECTIVA",
+          "etiqueta_lectiva": "HORA LECTIVA"
+        },
+        {
+          "id": "ma-1805-sistemas-organizacionales",
+          "dia": "Martes",
+          "inicio": "18:05",
+          "fin": "18:50",
+          "materia": "Sistemas Organizacionales",
+          "docente": "Lic. Jhoselyn P. Mollo Martinez",
+          "tipo": "clase",
+          "codigo": "DAP-02",
+          "lugar": "",
+          "uniforme": "",
+          "observacion": "DAP-02 · HORA LECTIVA",
+          "etiqueta_lectiva": "HORA LECTIVA"
+        },
+        {
+          "id": "mi-1805-metodologia-de-investigacion",
+          "dia": "Miércoles",
+          "inicio": "18:05",
+          "fin": "18:50",
+          "materia": "Metodología de Investigación",
+          "docente": "Lic. Graciela Mamani Torrez",
+          "tipo": "clase",
+          "codigo": "DAP-06",
+          "lugar": "",
+          "uniforme": "",
+          "observacion": "DAP-06 · HORA LECTIVA",
+          "etiqueta_lectiva": "HORA LECTIVA"
+        },
+        {
+          "id": "ju-1805-preparacion-de-proyectos-institucionales",
+          "dia": "Jueves",
+          "inicio": "18:05",
+          "fin": "18:50",
+          "materia": "Preparación de Proyectos Institucionales",
+          "docente": "Cnl. MSc. Cad. Miguel Valdivia Teran",
+          "tipo": "clase",
+          "codigo": "DAP-04",
+          "lugar": "",
+          "uniforme": "",
+          "observacion": "DAP-04 · HORA LECTIVA",
+          "etiqueta_lectiva": "HORA LECTIVA"
+        },
+        {
+          "id": "vi-1805-gestion-policial",
+          "dia": "Viernes",
+          "inicio": "18:05",
+          "fin": "18:50",
+          "materia": "Gestión Policial",
+          "docente": "Sof. 2do. Lic. Robeto Caba Mamani",
+          "tipo": "clase",
+          "codigo": "DAP-05",
+          "lugar": "",
+          "uniforme": "",
+          "observacion": "DAP-05 · HORA LECTIVA",
+          "etiqueta_lectiva": "HORA LECTIVA"
+        },
+        {
+          "id": "lu-1850-administracion-policial-y-doctrina-de-esta",
+          "dia": "Lunes",
+          "inicio": "18:50",
+          "fin": "19:35",
+          "materia": "Administración Policial y Doctrina de Estado Mayor",
+          "docente": "Tcnl. DAEP Osvaldo Fortun Barba",
+          "tipo": "no_lectiva",
+          "codigo": "DAP-01",
+          "lugar": "",
+          "uniforme": "",
+          "observacion": "DAP-01 · HORA NO LECTIVA",
+          "etiqueta_lectiva": "HORA LECTIVA",
+          "etiqueta_no_lectiva": "HORA NO LECTIVA",
+          "estado": "no_lectiva",
+          "es_no_lectiva": true
+        },
+        {
+          "id": "ma-1850-sistemas-organizacionales",
+          "dia": "Martes",
+          "inicio": "18:50",
+          "fin": "19:35",
+          "materia": "Sistemas Organizacionales",
+          "docente": "Lic. Jhoselyn P. Mollo Martinez",
+          "tipo": "no_lectiva",
+          "codigo": "DAP-02",
+          "lugar": "",
+          "uniforme": "",
+          "observacion": "DAP-02 · HORA NO LECTIVA",
+          "etiqueta_lectiva": "HORA LECTIVA",
+          "etiqueta_no_lectiva": "HORA NO LECTIVA",
+          "estado": "no_lectiva",
+          "es_no_lectiva": true
+        },
+        {
+          "id": "mi-1850-metodologia-de-investigacion",
+          "dia": "Miércoles",
+          "inicio": "18:50",
+          "fin": "19:35",
+          "materia": "Metodología de Investigación",
+          "docente": "Lic. Graciela Mamani Torrez",
+          "tipo": "clase",
+          "codigo": "DAP-06",
+          "lugar": "",
+          "uniforme": "",
+          "observacion": "DAP-06 · HORA LECTIVA",
+          "etiqueta_lectiva": "HORA LECTIVA",
+          "etiqueta_no_lectiva": "HORA NO LECTIVA"
+        },
+        {
+          "id": "ju-1850-preparacion-de-proyectos-institucionales",
+          "dia": "Jueves",
+          "inicio": "18:50",
+          "fin": "19:35",
+          "materia": "Preparación de Proyectos Institucionales",
+          "docente": "Cnl. MSc. Cad. Miguel Valdivia Teran",
+          "tipo": "no_lectiva",
+          "codigo": "DAP-04",
+          "lugar": "",
+          "uniforme": "",
+          "observacion": "DAP-04 · HORA NO LECTIVA",
+          "etiqueta_lectiva": "HORA LECTIVA",
+          "etiqueta_no_lectiva": "HORA NO LECTIVA",
+          "estado": "no_lectiva",
+          "es_no_lectiva": true
+        },
+        {
+          "id": "vi-1850-administracion-de-recursos-humanos",
+          "dia": "Viernes",
+          "inicio": "18:50",
+          "fin": "19:35",
+          "materia": "Administración de Recursos Humanos",
+          "docente": "Cnl. MSc. Cad. Marcelo V. Gomez Z.",
+          "tipo": "no_lectiva",
+          "codigo": "DAP-03",
+          "lugar": "",
+          "uniforme": "",
+          "observacion": "DAP-03 · HORA NO LECTIVA",
+          "etiqueta_lectiva": "HORA LECTIVA",
+          "etiqueta_no_lectiva": "HORA NO LECTIVA",
+          "estado": "no_lectiva",
+          "es_no_lectiva": true
+        },
+        {
+          "id": "mi-1935-metodologia-de-investigacion",
+          "dia": "Miércoles",
+          "inicio": "19:35",
+          "fin": "20:20",
+          "materia": "Metodología de Investigación",
+          "docente": "Lic. Graciela Mamani Torrez",
+          "tipo": "clase",
+          "codigo": "DAP-06",
+          "lugar": "",
+          "uniforme": "",
+          "observacion": "DAP-06 · HORA LECTIVA",
+          "etiqueta_lectiva": "HORA LECTIVA"
+        },
+        {
+          "id": "ma-0700-acondicionamiento-fisico",
+          "dia": "Martes",
+          "inicio": "07:00",
+          "fin": "09:00",
+          "materia": "Acondicionamiento Físico",
+          "docente": "Lic. Renzol Eyzaguirre Lira",
+          "tipo": "actividad",
+          "codigo": "DAP-09",
+          "lugar": "",
+          "uniforme": "",
+          "observacion": "Una vez por semana"
+        },
+        {
+          "id": "mi-0700-tiro-policial",
+          "dia": "Miércoles",
+          "inicio": "07:00",
+          "fin": "09:00",
+          "materia": "Tiro Policial",
+          "docente": "Tcnl. DEAP Omar P. Flores Evia",
+          "tipo": "actividad",
+          "codigo": "DAP-07",
+          "lugar": "",
+          "uniforme": "",
+          "observacion": "Una vez por semana"
+        }
+      ]
     }
   ],
   "metadatos": {
     "id": "horario-capitanes-a-sucre-2026-2-oficial",
-    "template_version": "2026-07-28-05",
+    "template_version": "2026-07-29-cap-a-01",
     "nombre": "Horario oficial — Segundo semestre 2026",
     "institucion": "Escuela Superior de Policías — Filial Sucre",
     "curso": "Curso de Capacitación Policial",
@@ -736,13 +2897,13 @@
     "periodo": "Segundo semestre · Modalidad presencial · Gestión 2026",
     "duracion": "19 semanas",
     "vigente": true,
-    "actualizado": "2026-07-28",
-    "descripcion": "Horario oficial del Paralelo A. Solo son no lectivos los bloques expresamente marcados: lunes, martes, jueves y viernes de 11:50 a 12:35. El miércoles de 11:50 a 12:35 es HORA LECTIVA.",
+    "actualizado": "2026-07-29",
+    "descripcion": "Horario oficial de Capitanes A. Solo se resaltan como NO LECTIVA los cuatro bloques expresamente marcados: lunes, martes, jueves y viernes de 11:50 a 12:35. El miércoles permanece lectivo.",
     "catalog_id": "capitanes-a-2026-2"
   },
   "entradas": [
     {
-      "id": "lu-0645-hora-mstica",
+      "id": "lu-0645-hora-mistica",
       "dia": "Lunes",
       "inicio": "06:45",
       "fin": "07:15",
@@ -768,7 +2929,7 @@
       "observacion": ""
     },
     {
-      "id": "ma-0645-hora-mstica",
+      "id": "ma-0645-organizacion-control",
       "dia": "Martes",
       "inicio": "06:45",
       "fin": "07:15",
@@ -794,7 +2955,7 @@
       "observacion": ""
     },
     {
-      "id": "mi-0645-hora-mstica",
+      "id": "mi-0645-organizacion-control",
       "dia": "Miércoles",
       "inicio": "06:45",
       "fin": "07:15",
@@ -820,7 +2981,7 @@
       "observacion": ""
     },
     {
-      "id": "ju-0645-hora-mstica",
+      "id": "ju-0645-organizacion-control",
       "dia": "Jueves",
       "inicio": "06:45",
       "fin": "07:15",
@@ -846,7 +3007,7 @@
       "observacion": ""
     },
     {
-      "id": "vi-0645-hora-mstica",
+      "id": "vi-0645-organizacion-control",
       "dia": "Viernes",
       "inicio": "06:45",
       "fin": "07:15",
@@ -882,7 +3043,8 @@
       "codigo": "CCP-01",
       "lugar": "",
       "uniforme": "",
-      "observacion": "CCP-01 · HORA LECTIVA"
+      "observacion": "CCP-01 · HORA LECTIVA",
+      "etiqueta_lectiva": "HORA LECTIVA"
     },
     {
       "id": "ma-0730-procedimientos-especiales",
@@ -895,7 +3057,8 @@
       "codigo": "CCP-02",
       "lugar": "",
       "uniforme": "",
-      "observacion": "CCP-02 · HORA LECTIVA"
+      "observacion": "CCP-02 · HORA LECTIVA",
+      "etiqueta_lectiva": "HORA LECTIVA"
     },
     {
       "id": "mi-0730-auditora-gubernamental",
@@ -908,7 +3071,8 @@
       "codigo": "CCP-06",
       "lugar": "",
       "uniforme": "",
-      "observacion": "CCP-06 · HORA LECTIVA"
+      "observacion": "CCP-06 · HORA LECTIVA",
+      "etiqueta_lectiva": "HORA LECTIVA"
     },
     {
       "id": "ju-0730-inteligencia-estratgica",
@@ -921,7 +3085,8 @@
       "codigo": "CCP-04",
       "lugar": "",
       "uniforme": "",
-      "observacion": "CCP-04 · HORA LECTIVA"
+      "observacion": "CCP-04 · HORA LECTIVA",
+      "etiqueta_lectiva": "HORA LECTIVA"
     },
     {
       "id": "vi-0730-ciencia-poltica",
@@ -934,7 +3099,8 @@
       "codigo": "CCP-05",
       "lugar": "",
       "uniforme": "",
-      "observacion": "CCP-05 · HORA LECTIVA"
+      "observacion": "CCP-05 · HORA LECTIVA",
+      "etiqueta_lectiva": "HORA LECTIVA"
     },
     {
       "id": "lu-0815-planificacin-estratgica",
@@ -947,7 +3113,8 @@
       "codigo": "CCP-01",
       "lugar": "",
       "uniforme": "",
-      "observacion": "CCP-01 · HORA LECTIVA"
+      "observacion": "CCP-01 · HORA LECTIVA",
+      "etiqueta_lectiva": "HORA LECTIVA"
     },
     {
       "id": "ma-0815-procedimientos-especiales",
@@ -960,7 +3127,8 @@
       "codigo": "CCP-02",
       "lugar": "",
       "uniforme": "",
-      "observacion": "CCP-02 · HORA LECTIVA"
+      "observacion": "CCP-02 · HORA LECTIVA",
+      "etiqueta_lectiva": "HORA LECTIVA"
     },
     {
       "id": "mi-0815-auditora-gubernamental",
@@ -973,7 +3141,8 @@
       "codigo": "CCP-06",
       "lugar": "",
       "uniforme": "",
-      "observacion": "CCP-06 · HORA LECTIVA"
+      "observacion": "CCP-06 · HORA LECTIVA",
+      "etiqueta_lectiva": "HORA LECTIVA"
     },
     {
       "id": "ju-0815-inteligencia-estratgica",
@@ -986,7 +3155,8 @@
       "codigo": "CCP-04",
       "lugar": "",
       "uniforme": "",
-      "observacion": "CCP-04 · HORA LECTIVA"
+      "observacion": "CCP-04 · HORA LECTIVA",
+      "etiqueta_lectiva": "HORA LECTIVA"
     },
     {
       "id": "vi-0815-ciencia-poltica",
@@ -999,7 +3169,8 @@
       "codigo": "CCP-05",
       "lugar": "",
       "uniforme": "",
-      "observacion": "CCP-05 · HORA LECTIVA"
+      "observacion": "CCP-05 · HORA LECTIVA",
+      "etiqueta_lectiva": "HORA LECTIVA"
     },
     {
       "id": "lu-0900-descanso-25-minutos",
@@ -1077,7 +3248,8 @@
       "codigo": "CCP-03",
       "lugar": "",
       "uniforme": "",
-      "observacion": "CCP-03 · HORA LECTIVA"
+      "observacion": "CCP-03 · HORA LECTIVA",
+      "etiqueta_lectiva": "HORA LECTIVA"
     },
     {
       "id": "ma-0925-procedimientos-especiales",
@@ -1090,7 +3262,8 @@
       "codigo": "CCP-02",
       "lugar": "",
       "uniforme": "",
-      "observacion": "CCP-02 · HORA LECTIVA"
+      "observacion": "CCP-02 · HORA LECTIVA",
+      "etiqueta_lectiva": "HORA LECTIVA"
     },
     {
       "id": "mi-0925-planificacin-estratgica",
@@ -1103,7 +3276,8 @@
       "codigo": "CCP-01",
       "lugar": "",
       "uniforme": "",
-      "observacion": "CCP-01 · HORA LECTIVA"
+      "observacion": "CCP-01 · HORA LECTIVA",
+      "etiqueta_lectiva": "HORA LECTIVA"
     },
     {
       "id": "ju-0925-inteligencia-estratgica",
@@ -1116,7 +3290,8 @@
       "codigo": "CCP-04",
       "lugar": "",
       "uniforme": "",
-      "observacion": "CCP-04 · HORA LECTIVA"
+      "observacion": "CCP-04 · HORA LECTIVA",
+      "etiqueta_lectiva": "HORA LECTIVA"
     },
     {
       "id": "vi-0925-ciencia-poltica",
@@ -1129,7 +3304,8 @@
       "codigo": "CCP-05",
       "lugar": "",
       "uniforme": "",
-      "observacion": "CCP-05 · HORA LECTIVA"
+      "observacion": "CCP-05 · HORA LECTIVA",
+      "etiqueta_lectiva": "HORA LECTIVA"
     },
     {
       "id": "lu-1010-administracin-general",
@@ -1142,7 +3318,8 @@
       "codigo": "CCP-03",
       "lugar": "",
       "uniforme": "",
-      "observacion": "CCP-03 · HORA LECTIVA"
+      "observacion": "CCP-03 · HORA LECTIVA",
+      "etiqueta_lectiva": "HORA LECTIVA"
     },
     {
       "id": "ma-1010-procedimientos-especiales",
@@ -1155,7 +3332,8 @@
       "codigo": "CCP-02",
       "lugar": "",
       "uniforme": "",
-      "observacion": "CCP-02 · HORA LECTIVA"
+      "observacion": "CCP-02 · HORA LECTIVA",
+      "etiqueta_lectiva": "HORA LECTIVA"
     },
     {
       "id": "mi-1010-planificacin-estratgica",
@@ -1168,7 +3346,8 @@
       "codigo": "CCP-01",
       "lugar": "",
       "uniforme": "",
-      "observacion": "CCP-01 · HORA LECTIVA"
+      "observacion": "CCP-01 · HORA LECTIVA",
+      "etiqueta_lectiva": "HORA LECTIVA"
     },
     {
       "id": "ju-1010-inteligencia-estratgica",
@@ -1181,7 +3360,8 @@
       "codigo": "CCP-04",
       "lugar": "",
       "uniforme": "",
-      "observacion": "CCP-04 · HORA LECTIVA"
+      "observacion": "CCP-04 · HORA LECTIVA",
+      "etiqueta_lectiva": "HORA LECTIVA"
     },
     {
       "id": "vi-1010-ciencia-poltica",
@@ -1194,7 +3374,8 @@
       "codigo": "CCP-05",
       "lugar": "",
       "uniforme": "",
-      "observacion": "CCP-05 · HORA LECTIVA"
+      "observacion": "CCP-05 · HORA LECTIVA",
+      "etiqueta_lectiva": "HORA LECTIVA"
     },
     {
       "id": "lu-1055-descanso-10-minutos",
@@ -1272,7 +3453,8 @@
       "codigo": "CCP-03",
       "lugar": "",
       "uniforme": "",
-      "observacion": "CCP-03 · HORA LECTIVA"
+      "observacion": "CCP-03 · HORA LECTIVA",
+      "etiqueta_lectiva": "HORA LECTIVA"
     },
     {
       "id": "ma-1105-ciencia-poltica",
@@ -1285,7 +3467,8 @@
       "codigo": "CCP-05",
       "lugar": "",
       "uniforme": "",
-      "observacion": "CCP-05 · HORA LECTIVA"
+      "observacion": "CCP-05 · HORA LECTIVA",
+      "etiqueta_lectiva": "HORA LECTIVA"
     },
     {
       "id": "mi-1105-metodologa-de-investigacin",
@@ -1298,7 +3481,8 @@
       "codigo": "CCP-07",
       "lugar": "",
       "uniforme": "",
-      "observacion": "CCP-07 · HORA LECTIVA"
+      "observacion": "CCP-07 · HORA LECTIVA",
+      "etiqueta_lectiva": "HORA LECTIVA"
     },
     {
       "id": "ju-1105-procedimientos-especiales",
@@ -1311,7 +3495,8 @@
       "codigo": "CCP-02",
       "lugar": "",
       "uniforme": "",
-      "observacion": "CCP-02 · HORA LECTIVA"
+      "observacion": "CCP-02 · HORA LECTIVA",
+      "etiqueta_lectiva": "HORA LECTIVA"
     },
     {
       "id": "vi-1105-auditora-gubernamental",
@@ -1324,7 +3509,8 @@
       "codigo": "CCP-06",
       "lugar": "",
       "uniforme": "",
-      "observacion": "CCP-06 · HORA LECTIVA"
+      "observacion": "CCP-06 · HORA LECTIVA",
+      "etiqueta_lectiva": "HORA LECTIVA"
     },
     {
       "id": "lu-1150-administracin-general",
@@ -1337,9 +3523,10 @@
       "codigo": "CCP-03",
       "lugar": "",
       "uniforme": "",
-      "observacion": "HORARIO NO LECTIVO · NO SE PASAN CLASES",
+      "observacion": "CCP-03 · HORA NO LECTIVA",
       "estado": "no_lectiva",
-      "es_no_lectiva": true
+      "es_no_lectiva": true,
+      "etiqueta_no_lectiva": "HORA NO LECTIVA"
     },
     {
       "id": "ma-1150-ciencia-poltica",
@@ -1352,9 +3539,10 @@
       "codigo": "CCP-05",
       "lugar": "",
       "uniforme": "",
-      "observacion": "HORARIO NO LECTIVO · NO SE PASAN CLASES",
+      "observacion": "CCP-05 · HORA NO LECTIVA",
       "estado": "no_lectiva",
-      "es_no_lectiva": true
+      "es_no_lectiva": true,
+      "etiqueta_no_lectiva": "HORA NO LECTIVA"
     },
     {
       "id": "mi-1150-metodologa-de-investigacin",
@@ -1367,7 +3555,8 @@
       "codigo": "CCP-07",
       "lugar": "",
       "uniforme": "",
-      "observacion": "CCP-07 · HORA LECTIVA"
+      "observacion": "CCP-07 · HORA LECTIVA",
+      "etiqueta_lectiva": "HORA LECTIVA"
     },
     {
       "id": "ju-1150-procedimientos-especiales",
@@ -1380,9 +3569,10 @@
       "codigo": "CCP-02",
       "lugar": "",
       "uniforme": "",
-      "observacion": "HORARIO NO LECTIVO · NO SE PASAN CLASES",
+      "observacion": "CCP-02 · HORA NO LECTIVA",
       "estado": "no_lectiva",
-      "es_no_lectiva": true
+      "es_no_lectiva": true,
+      "etiqueta_no_lectiva": "HORA NO LECTIVA"
     },
     {
       "id": "vi-1150-auditora-gubernamental",
@@ -1395,9 +3585,10 @@
       "codigo": "CCP-06",
       "lugar": "",
       "uniforme": "",
-      "observacion": "HORARIO NO LECTIVO · NO SE PASAN CLASES",
+      "observacion": "CCP-06 · HORA NO LECTIVA",
       "estado": "no_lectiva",
-      "es_no_lectiva": true
+      "es_no_lectiva": true,
+      "etiqueta_no_lectiva": "HORA NO LECTIVA"
     },
     {
       "id": "mi-1235-metodologa-de-investigacin",
@@ -1410,7 +3601,8 @@
       "codigo": "CCP-07",
       "lugar": "",
       "uniforme": "",
-      "observacion": "CCP-07 · HORA LECTIVA"
+      "observacion": "CCP-07 · HORA LECTIVA",
+      "etiqueta_lectiva": "HORA LECTIVA"
     },
     {
       "id": "lu-1400-acondicionamiento-fsico",
@@ -1423,7 +3615,8 @@
       "codigo": "CCP-09",
       "lugar": "",
       "uniforme": "",
-      "observacion": "CCP-09 · HORA LECTIVA"
+      "observacion": "CCP-09 · HORA LECTIVA",
+      "etiqueta_lectiva": "HORA LECTIVA"
     },
     {
       "id": "ju-1400-tiro-policial",
@@ -1436,7 +3629,8 @@
       "codigo": "CCP-08",
       "lugar": "",
       "uniforme": "",
-      "observacion": "CCP-08 · HORA LECTIVA"
+      "observacion": "CCP-08 · HORA LECTIVA",
+      "etiqueta_lectiva": "HORA LECTIVA"
     }
   ],
   "fuente_visual": "assets/horario-segundo-semestre-2026.png"

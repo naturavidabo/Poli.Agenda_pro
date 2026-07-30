@@ -96,3 +96,7 @@ body{background:linear-gradient(180deg,#e9efe5 0%,#f9faf5 38%,#edf3ea 100%)}
 .lective-label{display:inline-flex;width:max-content;max-width:100%;margin:5px 0 2px;padding:3px 7px;border:1px solid #cbd9d0;border-radius:999px;background:var(--subject-soft,#f4f7f5);color:#40534a;font-size:.64rem;font-weight:900;letter-spacing:.035em;text-transform:uppercase}
 .schedule-cell.non-lective .cell-meta{color:#9a3412;font-weight:900}
 @media(max-width:520px){.cell-meta{font-size:.61rem}.lective-label{font-size:.59rem;padding:3px 6px}}
+
+
+/* Agenda Policial v2.7.4 — horarios multicurso */
+.schedule-cell.no-data{cursor:default;background:#fbfcfb}.schedule-cell.no-data:hover{box-shadow:none}.schedule-cell.has-data{cursor:pointer}.schedule-picker-clean select{font-weight:900}.schedule-table .non-lective-label{font-size:10px;letter-spacing:.025em}.daily-block.non-lective .non-lective-label{display:inline-flex;width:max-content}.schedule-table .cell-empty{min-height:42px}.schedule-title-strip span{white-space:nowrap}.schedule-meta-clean .schedule-inline-note{margin-top:12px}

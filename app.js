@@ -1,5 +1,5 @@
-const APP_VERSION='2.7.1';
-const BUILD_DATE='2026-07-28';
+const APP_VERSION='2.7.4';
+const BUILD_DATE='2026-07-29';
 const ACTIVATION_CODE='271261';
 const SECONDARY_ACTIVATION_CODE='2026JINETES';
 const SECONDARY_ACTIVATION_EXPIRES='2026-08-30T23:59:59-04:00';
@@ -469,4 +469,170 @@ openClassDetail=function openClassDetailV269(id){
 openReferenceScheduleImage=function openReferenceScheduleImageV269(){
   const template=currentScheduleTemplate(),src=(state.scheduleMeta?.fuente_visual||template?.fuente_visual||docs.horario?.fuente_visual||'assets/horario-segundo-semestre-2026.png');
   showModal(`<h2>Imagen de referencia del horario</h2><div class="schedule-reference-notice"><b>Tabla digital verificada</b><span>Las HORA LECTIVA permanecen como clases normales. Solo se anulan los bloques expresamente rotulados HORA NO LECTIVA: lunes, martes, jueves y viernes de 11:50 a 12:35.</span></div><img class="image-preview schedule-reference-image" src="./${esc(src)}" alt="Imagen de referencia del horario"><div class="row wrap"><button class="btn" onclick="restoreBaseSchedule()">Restaurar horario oficial</button><button class="btn secondary" onclick="closeModal()">Cerrar</button></div>`);
+};
+
+
+/* =========================================================
+   Agenda Policial v2.7.3 — pulido de horario offline
+   Selector por curso, sin carga de imagen local y vista simplificada.
+   ========================================================= */
+renderHorario=function renderHorarioV273(){
+  const meta=state.scheduleMeta||scheduleTemplateMeta()||{};
+  const view=state.scheduleView||'dia';
+  const active=activeScheduleCatalog();
+  const selected=state.selectedScheduleId||active[0]?.id||'';
+  return `<section><div class="row between wrap"><h2 class="section-title">Horario académico</h2><div class="row wrap"><button class="btn secondary" onclick="openReferenceScheduleImage()">Ver referencia</button><button class="btn modern-action" onclick="restoreBaseSchedule()">Restaurar horario</button></div></div><div class="schedule-picker card schedule-picker-clean"><label><span>Elige tu horario</span><select id="scheduleProfileSelect" onchange="selectScheduleProfile(this.value)">${active.map(item=>`<option value="${esc(item.id)}" ${String(selected)===String(item.id)?'selected':''}>${esc(item.etiqueta||item.id)}</option>`).join('')}</select></label><small>El cambio de curso o paralelo se realiza desde las opciones oficiales incluidas en cada actualización de la app.</small></div><div class="schedule-meta-card card schedule-meta-clean"><h3>${esc(meta.institucion||'Escuela Superior de Policías — Filial Sucre')}</h3><p><b>${esc(meta.curso||'Curso académico')}</b>${meta.paralelo?` · Paralelo ${esc(meta.paralelo)}`:''}${meta.turno?` · Turno ${esc(meta.turno)}`:''}</p><p>${esc(meta.nivel||'Nivel')} ${meta.periodo?` · ${esc(meta.periodo)}`:''}</p><div class="row between wrap schedule-view-row"><div class="schedule-switch"><button class="${view==='dia'?'active':''}" onclick="setScheduleView('dia')">Día</button><button class="${view==='semana'?'active':''}" onclick="setScheduleView('semana')">Semana</button></div><span class="schedule-auto-badge">Horario oficial incluido</span></div><div class="schedule-reference-notice schedule-inline-note"><b>Actualización por versión</b><span>La app usa horarios oficiales incluidos en la actualización. Se retiró la carga manual de imágenes para evitar botones sin función.</span></div></div>${view==='semana'?renderWeeklySchedule():renderDailySchedule()}</section>`;
+};
+
+scheduleTableRow=function scheduleTableRowV273(r){
+  const cells=scheduleDays().map(day=>{let b=findScheduleCell(day,r.inicio,r.fin);if(b)b=canonicalScheduleEntry(b);const non=b&&isNonLectiveBlock(b),isBreak=b&&/descanso/i.test(b.materia||''),isSpecial=b&&/(parte|hora mística|hora mistica|organización y control|organizacion y control)/i.test(b.materia||''),cls=non?'non-lective':isBreak?'break':isSpecial?'special':b?'filled':'empty',style=b?subjectStyleAttr(b.materia||''):'';
+    const click=b?`onclick="openClassDetail('${b.id}')"`:'';
+    return `<td class="schedule-cell ${cls} ${b?'has-data':'no-data'}" ${style} ${click}>${b?(non?`<div class="non-lective-label">HORA NO LECTIVA</div><div class="cell-subject non-lective-subject">${esc(b.materia||'')}</div><div class="cell-meta">${esc(b.codigo||'')} · NO SE PASAN CLASES</div><div class="cell-teacher">${esc(b.docente||b.instructor||'')}</div>`:`<div class="cell-subject">${esc(b.materia||'')}</div>${b.tipo==='clase'?`<div class="cell-meta lective">${esc(b.codigo||'')} · HORA LECTIVA</div>`:''}<div class="cell-teacher">${esc(b.docente||b.instructor||(/descanso/i.test(b.materia||'')?'':'Docente / instructor pendiente'))}</div>`):`<div class="cell-empty">&nbsp;</div>`}</td>`}).join('');
+  return `<tr><th class="time-col">${esc(r.inicio)}<br><span>${esc(r.fin)}</span></th>${cells}</tr>`;
+};
+
+openScheduleCell=function openScheduleCellV273(day,inicio,fin){
+  const b=findScheduleCell(day,inicio,fin);
+  if(!b)return;
+  openClassDetail(b.id);
+};
+chooseScheduleFile=function chooseScheduleFileV273(){toast('La carga manual de imágenes fue desactivada. Los horarios se incorporan mediante actualizaciones oficiales.');};
+takeSchedulePhoto=function takeSchedulePhotoV273(){toast('La carga manual de imágenes fue desactivada. Los horarios se incorporan mediante actualizaciones oficiales.');};
+loadScheduleImage=function loadScheduleImageV273(){toast('Esta versión ya no usa carga manual de imágenes para el horario.');};
+openScheduleAnalyzer=function openScheduleAnalyzerV273(){toast('El análisis manual de imágenes fue retirado para simplificar el horario oficial.');};
+openScheduleMetaForm=function openScheduleMetaFormV273(){toast('Los datos generales del horario se actualizan junto con la versión oficial de la aplicación.');};
+
+
+/* =========================================================
+   Agenda Policial v2.7.4 — catálogo multicurso de horarios
+   ========================================================= */
+Object.assign(SUBJECT_VISUALS,{
+  'victimologia':{accent:'#347b8a',soft:'#eaf5f7'},
+  'criminalistica general y de campo':{accent:'#8b7547',soft:'#f7f2e8'},
+  'disciplinas criminalisticas':{accent:'#527b5f',soft:'#edf5ef'},
+  'psicologia criminal y forense':{accent:'#a66b29',soft:'#fbf1e5'},
+  'perfilacion criminal':{accent:'#8c6079',soft:'#f7edf3'},
+  'investigacion criminal':{accent:'#71698b',soft:'#f0eef6'},
+  'gestion policial':{accent:'#397d9b',soft:'#eaf4f8'},
+  'administracion de recursos humanos':{accent:'#758257',soft:'#f1f4ea'},
+  'administracion policial y doctrina de estado mayor':{accent:'#5f7180',soft:'#edf1f4'},
+  'sistemas organizacionales':{accent:'#9a4d3f',soft:'#f9ece9'},
+  'preparacion de proyectos institucionales':{accent:'#9a7441',soft:'#f8f1e7'}
+});
+
+function scheduleLectiveLabelV274(block){
+  return block?.etiqueta_lectiva || 'HORA LECTIVA';
+}
+function scheduleNonLectiveLabelV274(block){
+  return block?.etiqueta_no_lectiva || 'HORA NO LECTIVA';
+}
+function scheduleEntryComparableV274(block){
+  const b=normalizeScheduleEntry(block);
+  return [
+    normalize(b.dia||''),b.inicio||'',b.fin||'',normalize(b.materia||''),
+    normalize(b.docente||''),b.tipo||'',b.codigo||''
+  ].join('|');
+}
+function scheduleMatchesTemplateV274(template){
+  if(!template?.entradas?.length)return false;
+  const installed=(state.scheduleBlocks||[]).map(scheduleEntryComparableV274).sort();
+  const expected=template.entradas.map(scheduleEntryComparableV274).sort();
+  return installed.length===expected.length&&installed.every((value,index)=>value===expected[index]);
+}
+scheduleHasOfficialSignature=function scheduleHasOfficialSignatureV274(){
+  return scheduleMatchesTemplateV274(currentScheduleTemplate());
+};
+scheduleRows=function scheduleRowsV274(){
+  const keys=new Set();
+  (state.scheduleBlocks||[]).forEach(block=>{
+    if(block.inicio&&block.fin)keys.add(`${block.inicio}-${block.fin}`);
+  });
+  return [...keys]
+    .sort((a,b)=>minutes(a.split('-')[0])-minutes(b.split('-')[0])||minutes(a.split('-')[1])-minutes(b.split('-')[1]))
+    .map(key=>{const [inicio,fin]=key.split('-');return {inicio,fin}});
+};
+ensureScheduleTemplate=function ensureScheduleTemplateV274(){
+  let changed=false;
+  const active=activeScheduleCatalog();
+  if(!active.length)return false;
+  state.settings=state.settings||{};
+  state.settings.scheduleVersionsByCourse=state.settings.scheduleVersionsByCourse||{};
+  if(!state.selectedScheduleId||!scheduleTemplateById(state.selectedScheduleId)){
+    state.selectedScheduleId=active[0].id;
+    changed=true;
+  }
+  const template=currentScheduleTemplate();
+  const expected=template?.metadatos?.template_version||docs.horario?.catalog_version||'';
+  const installed=state.settings.scheduleVersionsByCourse[template.id]||state.scheduleTemplateVersion||'';
+  const mustRefresh=isPlaceholderSchedule()||state.scheduleSource!=='catalog'||
+    state.scheduleMeta?.catalog_id!==template.id||installed!==expected||
+    !scheduleMatchesTemplateV274(template);
+  if(mustRefresh){
+    changed=applyCatalogSchedule(template,Boolean(state.scheduleBlocks?.length),'Actualización oficial del horario seleccionado')||changed;
+  }else{
+    state.scheduleBlocks=(state.scheduleBlocks||[]).map(normalizeScheduleEntry);
+    state.scheduleMeta=scheduleTemplateMeta(template);
+    state.scheduleTemplateVersion=expected;
+  }
+  state.settings.scheduleVersionsByCourse[template.id]=expected;
+  if(state.settings.appVersion!==APP_VERSION){state.settings.appVersion=APP_VERSION;changed=true}
+  if(state.settings.scheduleVersion!==docs.horario?.catalog_version){state.settings.scheduleVersion=docs.horario?.catalog_version;changed=true}
+  if(state.settings.scheduleMigration!=='2026-07-29-v274'){state.settings.scheduleMigration='2026-07-29-v274';changed=true}
+  return changed;
+};
+selectScheduleProfile=async function selectScheduleProfileV274(id){
+  const template=scheduleTemplateById(id);
+  if(!template)return toast('Ese horario no está activo');
+  const expected=template?.metadatos?.template_version||docs.horario?.catalog_version||'';
+  if(String(state.selectedScheduleId)===String(template.id)&&state.scheduleTemplateVersion===expected){
+    return toast('Ese horario ya está seleccionado');
+  }
+  applyCatalogSchedule(template,true,`Cambio de horario a ${template.etiqueta||template.id}`);
+  state.settings=state.settings||{};
+  state.settings.scheduleVersionsByCourse=state.settings.scheduleVersionsByCourse||{};
+  state.settings.scheduleVersionsByCourse[template.id]=expected;
+  state.settings.scheduleVersion=docs.horario?.catalog_version||expected;
+  state.selectedDay=currentDayKey();
+  await save();
+  render();
+  toast(`Horario activo: ${template.etiqueta||'seleccionado'}`);
+};
+restoreBaseSchedule=async function restoreBaseScheduleV274(){
+  const template=currentScheduleTemplate();
+  if(!template)return toast('No hay horario oficial activo');
+  if(!confirm(`Se restaurará el horario oficial de ${template.etiqueta||'la opción seleccionada'}. ¿Continuar?`))return;
+  applyCatalogSchedule(template,true,'Restauración del horario oficial seleccionado');
+  state.settings=state.settings||{};
+  state.settings.scheduleVersionsByCourse=state.settings.scheduleVersionsByCourse||{};
+  state.settings.scheduleVersionsByCourse[template.id]=template.metadatos?.template_version||'';
+  await save();render();toast('Horario oficial restaurado');
+};
+dailyBlockCard=function dailyBlockCardV274(block){
+  const b=canonicalScheduleEntry(block);
+  const non=isNonLectiveBlock(b);
+  const isBreak=/descanso/i.test(b.materia||'');
+  const cls=non?'non-lective':isBreak?'break':/(hora mística|hora mistica|organización y control|organizacion y control|parte)/i.test(b.materia||'')?'formation':'class';
+  const style=subjectStyleAttr(b.materia||'');
+  if(non)return `<div class="daily-block non-lective clickable" ${style} onclick="openClassDetail('${b.id}')"><div class="time-badge">${esc(b.inicio)}<span>${esc(b.fin)}</span></div><div><span class="non-lective-label">${esc(scheduleNonLectiveLabelV274(b))}</span><b class="non-lective-subject">${esc(b.materia||'Actividad')}</b>${b.codigo?`<p>${esc(b.codigo)}</p>`:''}<small>${esc(b.docente||'')}</small></div></div>`;
+  return `<div class="daily-block ${cls} subject-coded clickable" ${style} onclick="openClassDetail('${b.id}')"><div class="time-badge">${esc(b.inicio)}<span>${esc(b.fin)}</span></div><div><b>${esc(b.materia||'Actividad')}</b>${b.tipo==='clase'?`<span class="lective-label">${esc(b.codigo||'')} · ${esc(scheduleLectiveLabelV274(b))}</span>`:''}<p>${esc(b.docente||b.instructor||'')}</p>${b.observacion&&!/(hora|clase) lectiva/i.test(b.observacion)?`<small>${esc(b.observacion)}</small>`:''}</div></div>`;
+};
+scheduleTableRow=function scheduleTableRowV274(row){
+  const cells=scheduleDays().map(day=>{
+    let b=findScheduleCell(day,row.inicio,row.fin);
+    if(b)b=canonicalScheduleEntry(b);
+    const non=b&&isNonLectiveBlock(b);
+    const isBreak=b&&/descanso/i.test(b.materia||'');
+    const isSpecial=b&&/(hora mística|hora mistica|organización y control|organizacion y control|parte)/i.test(b.materia||'');
+    const cls=non?'non-lective':isBreak?'break':isSpecial?'special':b?'filled':'empty';
+    const style=b?subjectStyleAttr(b.materia||''):'';
+    return `<td class="schedule-cell ${cls} ${b?'has-data':'no-data'}" ${style} ${b?`onclick="openClassDetail('${b.id}')"`:''}>${b?(non?`<div class="non-lective-label">${esc(scheduleNonLectiveLabelV274(b))}</div><div class="cell-subject non-lective-subject">${esc(b.materia||'')}</div>${b.codigo?`<div class="cell-meta">${esc(b.codigo)}</div>`:''}<div class="cell-teacher">${esc(b.docente||b.instructor||'')}</div>`:`<div class="cell-subject">${esc(b.materia||'')}</div>${b.tipo==='clase'?`<div class="cell-meta lective">${esc(b.codigo||'')} · ${esc(scheduleLectiveLabelV274(b))}</div>`:''}<div class="cell-teacher">${esc(b.docente||b.instructor||'')}</div>`):`<div class="cell-empty">&nbsp;</div>`}</td>`;
+  }).join('');
+  return `<tr><th class="time-col">${esc(row.inicio)}<br><span>${esc(row.fin)}</span></th>${cells}</tr>`;
+};
+openClassDetail=function openClassDetailV274(id){
+  let b=(state.scheduleBlocks||[]).find(item=>item.id===id);
+  if(!b)return;
+  b=canonicalScheduleEntry(b);
+  const non=isNonLectiveBlock(b);
+  showModal(`<button class="icon-btn close" onclick="closeModal()">×</button><h2>${esc(b.materia||'Actividad')}</h2><p><b>${esc(dayLabel(normalize(b.dia||'')))}</b> · ${esc(b.inicio)} - ${esc(b.fin)}</p>${non?`<div class="non-lective-detail"><b>${esc(scheduleNonLectiveLabelV274(b))}</b>${b.codigo?`<span>${esc(b.codigo)}</span>`:''}<p>${esc(b.docente||'')}</p></div>`:`${b.tipo==='clase'?`<p><span class="lective-label">${esc(b.codigo||'')} · ${esc(scheduleLectiveLabelV274(b))}</span></p>`:''}${b.docente?`<p><b>Docente:</b> ${esc(b.docente)}</p>`:''}${b.lugar?`<p><b>Lugar:</b> ${esc(b.lugar)}</p>`:''}${b.observacion&&!/(hora|clase) lectiva/i.test(b.observacion)?`<p>${esc(b.observacion)}</p>`:''}`}<button class="btn secondary" onclick="closeModal()">Cerrar</button>`);
 };

@@ -1,8 +1,8 @@
 {
-  "version": "2.7.1",
-  "build": "2026-07-28",
-  "channel": "exact-lective-schedule-session-fix",
-  "appVersion": "2.7.1",
-  "scheduleVersion": "2026-07-28-05",
+  "version": "2.7.4",
+  "build": "2026-07-29",
+  "channel": "multicourse-offline-schedules",
+  "appVersion": "2.7.4",
+  "scheduleVersion": "2026-07-29-v274",
   "databaseVersion": "agenda-db-2"
 }

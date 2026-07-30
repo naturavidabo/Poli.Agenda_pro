@@ -1,0 +1,20 @@
+VERIFICACIÓN Agenda Policial v2.7.4
+
+Archivos del proyecto: 96 (límite: 100).
+index.html: restaurado y no vacío.
+app.js: sintaxis válida.
+online.js: sintaxis válida.
+Catálogo JSON: válido.
+
+- Capitanes A — Turno mañana: 53 bloques; 4 no lectivos.
+- Capitanes B — Turno tarde: 49 bloques; 4 no lectivos.
+- Sargento Segundo A — Turno mañana: 49 bloques; 5 no lectivos.
+- Suboficial Segundo F — Turno tarde: 49 bloques; 4 no lectivos.
+
+Reglas verificadas
+- Hora mística solamente el lunes.
+- Celdas vacías sin actividad y sin botones de edición.
+- Materia y docente completos en todas las clases y no lectivas.
+- No lectivas conservadas en la tabla y excluidas de actividad real.
+- Cambio de curso actualiza state.scheduleBlocks y reconstruye el inicio y la cronología.
+- Activación, biblioteca y sesión online no fueron eliminadas.

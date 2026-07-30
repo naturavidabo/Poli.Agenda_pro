@@ -1,0 +1,5 @@
+-- Migration already applied to project lkwrulzrulmbfypwywmo
+-- Adds role-specific publishing permissions, author_id in post reads,
+-- controlled archiving, and removes anonymous direct uploads.
+-- File uploads are handled by the academic-upload Edge Function
+-- after validating the application's academic session.

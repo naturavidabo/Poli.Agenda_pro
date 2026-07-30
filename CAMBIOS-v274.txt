@@ -1,0 +1,19 @@
+Agenda Policial v2.7.4 — Horarios multicurso
+
+Horarios incorporados
+- Capitanes A — Turno mañana.
+- Capitanes B — Turno tarde.
+- Sargento Segundo A — Turno mañana.
+- Suboficial Segundo F — Turno tarde.
+
+Mejoras
+- Selector oficial de curso/paralelo dentro del horario offline.
+- Cambio inmediato de tabla, inicio, próxima actividad y cronología.
+- Horarios cargados desde el catálogo de la versión, sin importar imágenes manualmente.
+- Filas semanales generadas únicamente con horarios reales del curso seleccionado.
+- Celdas verdaderamente vacías permanecen vacías y no se cuentan.
+- Las celdas no lectivas conservan materia, código y docente, resaltando únicamente su condición.
+- Los bloques no lectivos permanecen excluidos de próxima actividad, cuenta regresiva y cronología.
+- Las etiquetas CLASE LECTIVA/CLASE NO LECTIVA del horario de Sargento Segundo se conservaron según la fuente.
+- Imágenes de referencia incorporadas y disponibles sin conexión.
+- Se restauró el archivo index.html completo; la versión anterior tenía ese archivo vacío.
