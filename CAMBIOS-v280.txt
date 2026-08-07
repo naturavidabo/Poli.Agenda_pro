@@ -1,0 +1,15 @@
+AGENDA POLICIAL v2.8.0 — ESTABILIZACIÓN Y SEGURIDAD
+
+- Banco de Preguntas: tablas internas cerradas al acceso directo; uso mediante RPC con sesión.
+- Nómina pública saneada: C.I., celulares y roles reales ya no viajan en el paquete.
+- Administración de usuarios: C.I. y celular editables desde la app y guardados en Supabase.
+- Indicadores de adopción: verde = ya ingresó; amarillo = nunca ingresó; gris = datos incompletos.
+- Resumen de uso: total, porcentaje que ya ingresó, sin ingreso y pendientes.
+- Detalle por usuario: primer ingreso, último ingreso y cantidad de accesos.
+- Validación de C.I. y celular duplicados mediante RPC v2.8.
+- Service Worker más seguro: una versión incompleta no sustituye a la versión estable.
+- Limpieza total coherente: elimina también sesión y cachés académicos locales.
+- Restauración JSON con validación básica de estructura.
+- Peticiones de lectura concurrentes deduplicadas para reducir llamadas repetidas.
+- Compatible con bancos CSV: pregunta;A;B;C;D;correcta;explicacion.
+- Se mantienen activación, biblioteca, horarios, cursos y roles existentes.

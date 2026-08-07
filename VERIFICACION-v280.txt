@@ -1,0 +1,17 @@
+VERIFICACIÓN PREVIA — AGENDA POLICIAL v2.8.0
+
+[ ] APP_VERSION, version.json, index y Service Worker en 2.8.0
+[ ] JavaScript sin errores de sintaxis
+[ ] Archivos esenciales del Service Worker presentes
+[ ] Paquete con menos de 100 archivos
+[ ] data/academic-users.json sin C.I. ni celulares reales
+[ ] No existe supabase-roster-seed.sql en el paquete público
+[ ] Banco CSV mantiene formato pregunta;A;B;C;D;correcta;explicacion
+[ ] RPC v2.8 de usuarios desplegadas y RPC anteriores conservadas
+[ ] RLS habilitado y acceso directo revocado en tablas del Banco
+[ ] Cuatro integrantes incompletos permanecen editables desde Nómina
+[ ] Indicadores verde/amarillo/gris cargan desde auditoría real
+[ ] C.I. y celular duplicados son rechazados
+[ ] Actualización limpia no borra activación ni datos
+[ ] Borrar todos los datos elimina también sesión académica local
+[ ] Activación principal y temporal mantienen comportamiento previo

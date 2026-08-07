@@ -1,4 +1,4 @@
-/* Agenda Policial Online v2.6.8 — conexión real con Supabase */
+/* Agenda Policial Online v2.8.0 — conexión real con Supabase */
 const ONLINE_CFG = {
   url: 'https://lkwrulzrulmbfypwywmo.supabase.co',
   anonKey: 'sb_publishable_vtek6lVCGZkmyicgAPqDMw_8EOTFrRU',
@@ -49,6 +49,11 @@ let academicRosterCache = null;
 
 function onlineConfigured() {
   return Boolean(ONLINE_CFG.url && ONLINE_CFG.anonKey);
+}
+
+// v2.8: las credenciales académicas viven únicamente en Supabase.
+if (onlineConfigured()) {
+  try { localStorage.removeItem(ACADEMIC_USERS_STORAGE); localStorage.removeItem('agenda-demo-users'); } catch {}
 }
 
 function academicCredential(value) {
@@ -262,7 +267,7 @@ async function academicLogin() {
 
   // Recarga limpia para evitar que restos de la interfaz anterior interrumpan el ingreso.
   setTimeout(() => {
-    location.replace(`./index.html?online=1&v=2.6.8&r=${Date.now()}`);
+    location.replace(`./index.html?online=1&v=${APP_VERSION}&r=${Date.now()}`);
   }, 180);
 }
 
@@ -692,14 +697,37 @@ async function loadAcademicUsers() {
   const list = $('#academicUsersList');
   if (!list || !academicCanManageUsers()) return;
   try {
-    academicUsersCache = onlineConfigured()
-      ? await academicRPC('academic_get_users', { p_token: academicSession.session_token })
-      : await academicLocalUsers();
-    renderAcademicUsers(academicUsersCache);
+    if (onlineConfigured()) {
+      try {
+        academicUsersCache = await academicRPC('academic_get_users_v280', { p_token: academicSession.session_token });
+      } catch (error) {
+        if (!/academic_get_users_v280|function.*not found|404/i.test(String(error?.message || error))) throw error;
+        academicUsersCache = await academicRPC('academic_get_users', { p_token: academicSession.session_token });
+      }
+    } else {
+      academicUsersCache = await academicLocalUsers();
+    }
+    renderAcademicUsers(Array.isArray(academicUsersCache) ? academicUsersCache : []);
   } catch (error) {
     console.error(error);
     list.innerHTML = '<div class="card warn-card"><p>No fue posible cargar la nómina.</p></div>';
   }
+}
+
+function academicAccessDateV280(value) {
+  if (!value) return '';
+  const date = new Date(value);
+  if (Number.isNaN(date.getTime())) return String(value);
+  return date.toLocaleString('es-BO', { day:'2-digit', month:'2-digit', year:'numeric', hour:'2-digit', minute:'2-digit' });
+}
+
+function academicUsageStateV280(user) {
+  const ready = user.access_ready !== undefined ? Boolean(user.access_ready) : Boolean(user.ci && user.phone);
+  if (!ready) return { key:'pending', label:'Datos incompletos', detail:'Falta carnet o celular' };
+  if (user.has_logged_in || Number(user.login_count || 0) > 0) {
+    return { key:'used', label:'Ya ingresó', detail:user.last_login_at ? `Último ingreso: ${academicAccessDateV280(user.last_login_at)}` : 'Ya utilizó el panel online' };
+  }
+  return { key:'unused', label:'Sin ingreso', detail:'Acceso configurado · nunca ingresó' };
 }
 
 function renderAcademicUsers(users) {
@@ -707,28 +735,31 @@ function renderAcademicUsers(users) {
   const summary = $('#academicUsersSummary');
   if (!list || !summary) return;
 
-  const active = users.filter(user => user.active).length;
-  const ready = users.filter(user => user.ci && user.phone).length;
-  const pending = users.filter(user => !user.ci || !user.phone).length;
+  const total = users.length;
+  const ready = users.filter(user => user.access_ready !== undefined ? user.access_ready : (user.ci && user.phone)).length;
+  const used = users.filter(user => (user.has_logged_in || Number(user.login_count || 0) > 0) && (user.access_ready !== false)).length;
+  const pending = users.filter(user => !(user.access_ready !== undefined ? user.access_ready : (user.ci && user.phone))).length;
+  const unused = Math.max(ready - used, 0);
+  const usagePct = total ? Math.round((used / total) * 100) : 0;
   summary.innerHTML = `
-    <div><b>${users.length}</b><span>Integrantes</span></div>
-    <div><b>${ready}</b><span>Con acceso completo</span></div>
-    <div><b>${pending}</b><span>Pendientes</span></div>
-    <div><b>${active}</b><span>Activos</span></div>
+    <div><b>${total}</b><span>Integrantes</span></div>
+    <div><b>${used} · ${usagePct}%</b><span>Ya ingresaron</span></div>
+    <div><b>${unused}</b><span>Sin ingreso</span></div>
+    <div><b>${pending}</b><span>Datos incompletos</span></div>
   `;
 
   list.innerHTML = users.length ? `
     <div class="academic-user-list">
       ${users.map(user => {
-        const accessState = user.ci && user.phone ? 'Acceso configurado' : 'Falta carnet o celular';
+        const usage = academicUsageStateV280(user);
         const issue = user.data_status === 'revisar' ? ' · Verificar dato' : '';
-        const search = normalize(`${user.full_name || ''} ${user.department || ''} ${user.ci || ''}`);
+        const search = normalize(`${user.full_name || ''} ${user.department || ''} ${user.ci || ''} ${usage.label}`);
         return `
-          <button class="academic-user-row" data-role="${esc(user.role)}" data-search="${esc(search)}" onclick="openAcademicUserForm('${esc(user.id)}')">
+          <button class="academic-user-row" data-role="${esc(user.role)}" data-usage="${usage.key}" data-search="${esc(search)}" onclick="openAcademicUserForm('${esc(user.id)}')">
             <span class="user-number">${esc(user.roster_number || '—')}</span>
             <span class="user-main">
-              <b>${esc(user.full_name)}</b>
-              <small>${esc(user.department || 'Sin departamento')} · ${accessState}${issue}</small>
+              <b><span class="user-usage-dot ${usage.key}" title="${esc(usage.label)}" aria-label="${esc(usage.label)}"></span>${esc(user.full_name)}</b>
+              <small>${esc(user.department || 'Sin departamento')} · ${esc(usage.detail)}${issue}</small>
             </span>
             <span class="user-role ${esc(user.role)}">${esc(academicRoleLabel(user.role))}</span>
             <span class="user-state ${user.active ? 'on' : 'off'}">${user.active ? 'Activo' : 'Inactivo'}</span>
@@ -752,13 +783,22 @@ function filterAcademicUsers() {
 function openAcademicUserForm(id = '') {
   const user = id
     ? academicUsersCache.find(item => String(item.id) === String(id))
-    : { id: '', roster_number: '', full_name: '', department: '', ci: '', phone: '', role: 'lector', active: false };
+    : { id:'', roster_number:'', full_name:'', department:'', ci:'', phone:'', role:'lector', active:false, access_ready:false, has_logged_in:false, login_count:0 };
   if (!user) return;
 
   const isSelf = String(user.id) === String(academicSession.user_id);
+  const usage = academicUsageStateV280(user);
+  const accessInfo = id ? `
+    <div class="academic-access-detail ${usage.key}">
+      <div><span class="user-usage-dot ${usage.key}"></span><b>${esc(usage.label)}</b></div>
+      <small>Primer ingreso: ${esc(user.first_login_at ? academicAccessDateV280(user.first_login_at) : 'Sin registro')}</small>
+      <small>Último ingreso: ${esc(user.last_login_at ? academicAccessDateV280(user.last_login_at) : 'Sin registro')}</small>
+      <small>Cantidad de ingresos: ${Number(user.login_count || 0)}</small>
+    </div>` : '';
   showModal(`
     <button class="icon-btn close" onclick="closeModal()">×</button>
     <h2>${id ? 'Editar integrante' : 'Agregar integrante'}</h2>
+    ${accessInfo}
     <form id="academicUserForm" class="form">
       <div class="two-col">
         <label>N.º de lista<input name="roster_number" inputmode="numeric" value="${esc(user.roster_number || '')}"></label>
@@ -766,9 +806,10 @@ function openAcademicUserForm(id = '') {
       </div>
       <label>Apellidos y nombres<input name="full_name" required value="${esc(user.full_name || '')}"></label>
       <div class="two-col">
-        <label>Número de carnet<input name="ci" inputmode="numeric" value="${esc(user.ci || '')}"></label>
-        <label>Número de celular<input name="phone" inputmode="tel" value="${esc(user.phone || '')}"></label>
+        <label>Número de carnet<input name="ci" inputmode="numeric" autocomplete="off" value="${esc(user.ci || '')}"></label>
+        <label>Número de celular<input name="phone" inputmode="tel" autocomplete="off" value="${esc(user.phone || '')}"></label>
       </div>
+      <p class="subtle">El C.I. y celular se guardan únicamente en Supabase y se utilizan para el acceso online.</p>
       <label>Rol
         <select name="role" ${isSelf ? 'disabled' : ''}>
           ${['administrador_general', ...ACADEMIC_ROLES].map(role => `
@@ -779,7 +820,7 @@ function openAcademicUserForm(id = '') {
       ${isSelf ? '<input type="hidden" name="role" value="administrador_general"><p class="subtle">Su cuenta permanece como administrador general.</p>' : ''}
       <label class="check-line"><input name="active" type="checkbox" ${user.active ? 'checked' : ''}> Acceso académico activo</label>
       <div class="form-actions">
-        <button class="btn academic-main-btn" type="submit">Guardar</button>
+        <button class="btn academic-main-btn" type="submit">Guardar cambios</button>
         <button class="btn secondary" type="button" onclick="closeModal()">Cancelar</button>
       </div>
     </form>
@@ -789,12 +830,17 @@ function openAcademicUserForm(id = '') {
 
 async function saveAcademicUser(event, id) {
   event.preventDefault();
+  const submit = event.submitter || event.target.querySelector('button[type="submit"]');
+  if (submit) submit.disabled = true;
   const formData = new FormData(event.target);
   const data = Object.fromEntries(formData.entries());
   data.active = formData.has('active');
   data.roster_number = data.roster_number ? Number(data.roster_number) : null;
-  data.ci = String(data.ci || '').trim();
-  data.phone = String(data.phone || '').trim();
+  data.ci = academicCredential(data.ci || '');
+  data.phone = academicCredential(data.phone || '');
+  if (!String(data.full_name || '').trim()) { if (submit) submit.disabled=false; return toast('Ingrese apellidos y nombres'); }
+  if (data.ci && data.ci.length < 4) { if (submit) submit.disabled=false; return toast('Revise el número de carnet'); }
+  if (data.phone && data.phone.length < 7) { if (submit) submit.disabled=false; return toast('Revise el número de celular'); }
   if (data.active && (!data.ci || !data.phone)) {
     data.active = false;
     toast('El acceso queda inactivo hasta completar carnet y celular');
@@ -803,28 +849,26 @@ async function saveAcademicUser(event, id) {
   try {
     if (onlineConfigured()) {
       if (id) {
-        await academicRPC('academic_update_user', {
-          p_token: academicSession.session_token,
-          p_user_id: id,
-          p_roster_number: data.roster_number,
-          p_full_name: data.full_name,
-          p_department: data.department,
-          p_ci: data.ci || null,
-          p_phone: data.phone || null,
-          p_role: data.role,
-          p_active: data.active
-        });
+        const payload = {
+          p_token:academicSession.session_token,p_user_id:id,p_roster_number:data.roster_number,
+          p_full_name:data.full_name,p_department:data.department,p_ci:data.ci||null,p_phone:data.phone||null,
+          p_role:data.role,p_active:data.active
+        };
+        try { await academicRPC('academic_update_user_v280', payload); }
+        catch (error) {
+          if (!/academic_update_user_v280|function.*not found|404/i.test(String(error?.message || error))) throw error;
+          await academicRPC('academic_update_user', payload);
+        }
       } else {
-        await academicRPC('academic_create_user', {
-          p_token: academicSession.session_token,
-          p_roster_number: data.roster_number,
-          p_full_name: data.full_name,
-          p_department: data.department,
-          p_ci: data.ci || null,
-          p_phone: data.phone || null,
-          p_role: data.role,
-          p_active: data.active
-        });
+        const payload = {
+          p_token:academicSession.session_token,p_roster_number:data.roster_number,p_full_name:data.full_name,
+          p_department:data.department,p_ci:data.ci||null,p_phone:data.phone||null,p_role:data.role,p_active:data.active
+        };
+        try { await academicRPC('academic_create_user_v280', payload); }
+        catch (error) {
+          if (!/academic_create_user_v280|function.*not found|404/i.test(String(error?.message || error))) throw error;
+          await academicRPC('academic_create_user', payload);
+        }
       }
     } else {
       const users = await academicLocalUsers();
@@ -834,17 +878,20 @@ async function saveAcademicUser(event, id) {
         if (user.role === 'administrador_general') data.role = 'administrador_general';
         Object.assign(user, data);
       } else {
-        users.push({ ...data, id: uid(), data_status: data.ci && data.phone ? 'completo' : 'pendiente' });
+        users.push({ ...data, id:uid(), data_status:data.ci && data.phone ? 'completo' : 'pendiente' });
       }
       academicSaveLocalUsers(users);
       notifyAcademicRoleChange(id || '', data);
     }
     closeModal();
-    loadAcademicUsers();
-    toast('Integrante actualizado');
+    await loadAcademicUsers();
+    toast('Integrante actualizado correctamente');
   } catch (error) {
     console.error(error);
-    toast('No se pudo actualizar el integrante');
+    const msg = typeof academicFriendlyError === 'function' ? academicFriendlyError(error,'No se pudo actualizar el integrante') : String(error?.message || 'No se pudo actualizar el integrante');
+    toast(msg.replace(/^.*?message\"?:\s*\"?/i,'').replace(/[\"}]+$/,''));
+  } finally {
+    if (submit) submit.disabled = false;
   }
 }
 
@@ -1808,15 +1855,23 @@ function academicCacheKey(type){return `${academicSession?.course_code||'curso'}
 function academicCachedPosts(type){return academicPostCache()[academicCacheKey(type)]?.rows||[]}
 function academicStorePosts(type,rows){const cache=academicPostCache();cache[academicCacheKey(type)]={rows:Array.isArray(rows)?rows:[],saved_at:new Date().toISOString()};saveAcademicPostCache(cache)}
 
-academicRPC=async function academicRPCV268(fn,body={}){
-  const controller=new AbortController();const timer=setTimeout(()=>controller.abort(),15000);
-  try{
-    const response=await fetch(`${ONLINE_CFG.url}/rest/v1/rpc/${fn}`,{method:'POST',headers:academicHeaders(),body:JSON.stringify(body),signal:controller.signal});
-    const text=await response.text();
-    if(!response.ok){const error=new Error(text||`Error ${response.status}`);error.status=response.status;throw error}
-    return text?JSON.parse(text):null;
-  }catch(error){if(error?.name==='AbortError'){const timeout=new Error('Tiempo de conexión agotado');timeout.code='NETWORK_ERROR';throw timeout}throw error}
-  finally{clearTimeout(timer)}
+const academicRPCInflightV280=new Map();
+academicRPC=async function academicRPCV280(fn,body={}){
+  const dedupeFns=new Set(['academic_get_posts','academic_get_task_progress','academic_get_my_courses','academic_bank_list','academic_get_users_v280']);
+  const key=dedupeFns.has(fn)?`${fn}:${JSON.stringify(body)}`:'';
+  if(key&&academicRPCInflightV280.has(key))return academicRPCInflightV280.get(key);
+  const request=(async()=>{
+    const controller=new AbortController();const timer=setTimeout(()=>controller.abort(),15000);
+    try{
+      const response=await fetch(`${ONLINE_CFG.url}/rest/v1/rpc/${fn}`,{method:'POST',headers:academicHeaders(),body:JSON.stringify(body),signal:controller.signal,cache:'no-store'});
+      const text=await response.text();
+      if(!response.ok){const error=new Error(text||`Error ${response.status}`);error.status=response.status;throw error}
+      return text?JSON.parse(text):null;
+    }catch(error){if(error?.name==='AbortError'){const timeout=new Error('Tiempo de conexión agotado');timeout.code='NETWORK_ERROR';throw timeout}throw error}
+    finally{clearTimeout(timer)}
+  })();
+  if(key){academicRPCInflightV280.set(key,request);request.finally(()=>academicRPCInflightV280.delete(key)).catch(()=>{});}
+  return request;
 };
 
 validateAcademicLocalSession=async function validateAcademicSessionV268(){
@@ -1843,7 +1898,7 @@ academicLogin=async function academicLoginV268(){
   try{
     let user=onlineConfigured()?await academicRPC('academic_login',{p_ci:ci,p_phone:phone}):await academicLocalLogin(ci,phone);if(Array.isArray(user))user=user[0];
     if(!user?.session_token)return toast('Usuario o contraseña incorrectos, o acceso inactivo');
-    academicSession={...user,offline_cached:false,last_validated_at:new Date().toISOString()};academicTab='panel';localStorage.setItem(ACADEMIC_SESSION_STORAGE,JSON.stringify(academicSession));toast('Acceso académico habilitado');setTimeout(()=>location.replace(`./index.html?online=1&v=2.6.8&r=${Date.now()}`),120);
+    academicSession={...user,offline_cached:false,last_validated_at:new Date().toISOString()};academicTab='panel';localStorage.setItem(ACADEMIC_SESSION_STORAGE,JSON.stringify(academicSession));toast('Acceso académico habilitado');setTimeout(()=>location.replace(`./index.html?online=1&v=${APP_VERSION}&r=${Date.now()}`),120);
   }catch(error){console.error(error);toast(academicIsNetworkError(error)?'Sin conexión. Intente nuevamente cuando tenga internet':'No fue posible validar las credenciales')}
 };
 
@@ -4681,7 +4736,7 @@ academicPostCard = function academicPostCardV278(post) {
 
 
 /* =========================================================
-   Agenda Policial Online v2.7.9 — Banco de preguntas
+   Agenda Policial Online v2.8.0 — Banco de preguntas
    ========================================================= */
 const ACADEMIC_BANK_CACHE_V279 = 'agenda-question-banks-v279';
 let academicBankRowsV279 = [];
@@ -4951,6 +5006,7 @@ function academicRenderBankImportPreviewV279(bankId){
 }
 async function commitAcademicBankImportV279(bankId){
   if(!academicBankImportRowsV279.length)return toast('No hay preguntas listas para importar');
+  if(academicBankImportRowsV279.length>500&&!confirm(`Se detectaron ${academicBankImportRowsV279.length} preguntas. Por seguridad se importarán las primeras 500. ¿Continuar?`))return;
   const rows=academicBankImportRowsV279.slice(0,500);
   try{const count=await academicRPCWithRetryV275('academic_bank_import_questions',{p_token:academicSession.session_token,p_bank_id:bankId,p_rows:rows},2);closeModal();await loadAcademicBanksV279();toast(`${Number(count||0)} preguntas importadas`);setTimeout(()=>openAcademicBankManageV279(bankId),50)}catch(error){console.error(error);toast(academicFriendlyError(error,'No se pudieron importar las preguntas'))}
 }

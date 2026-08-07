@@ -17,7 +17,7 @@
     <p>Esta pantalla limpia solamente el caché y el Service Worker de Agenda Policial. No borra sus notas, tareas, horario ni activación local.</p>
     <div id="log" class="log">Preparando limpieza...</div>
     <button class="btn" onclick="repair()">Reparar y abrir Agenda Policial</button>
-    <a class="btn secondary" href="./index.html?v=2.4.2">Abrir sin reparar</a>
+    <a class="btn secondary" href="./index.html?v=2.8.0">Abrir sin reparar</a>
   </div>
   <script>
     const log=document.getElementById('log');
@@ -37,7 +37,7 @@
           add('Service Worker reiniciado: '+regs.length);
         }
         add('Abriendo versión nueva...');
-        setTimeout(()=>location.replace('./index.html?v=2.4.2&reset='+Date.now()),600);
+        setTimeout(()=>location.replace('./index.html?v=2.8.0&reset='+Date.now()),600);
       }catch(e){
         add('Error: '+e.message);
       }

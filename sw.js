@@ -1,10 +1,13 @@
-const CACHE='agenda-policial-v2.7.9';
-const CORE=['./','./index.html','./styles.css','./online.css','./app.js','./online.js','./manifest.webmanifest','./version.json','./icons/icon-192.png','./icons/icon-512.png','./icons/icon-maskable-512.png','./assets/escudo-policia.png','./assets/horario-segundo-semestre-2026.png','./assets/rol-examenes-primer-parcial-2026.jpg','./assets/horario-suboficial-segundo-f-2026.jpg','./assets/horario-sargento-segundo-a-2026.jpg','./assets/horario-capitanes-b-2026.jpg','./assets/reglamento-comision-sumaria-unipol.pdf','./data/reglamento-uniformes.json','./data/reglamento-sumario-unipol.json','./data/horario-base.json','./data/biblioteca-catalogo.json','./data/academic-users.json','./data/ley-777.json','./data/ley-101.json','./data/ley-organica-policia.json','./data/ley-004.json','./data/ley-348.json'];
+const CACHE='agenda-policial-v2.8.0';
+const CORE_REQUIRED=['./','./index.html','./styles.css','./online.css','./app.js','./online.js','./manifest.webmanifest','./version.json','./icons/icon-192.png','./icons/icon-512.png','./icons/icon-maskable-512.png','./assets/escudo-policia.png'];
+const CORE_OPTIONAL=['./assets/horario-segundo-semestre-2026.png','./assets/rol-examenes-primer-parcial-2026.jpg','./assets/horario-suboficial-segundo-f-2026.jpg','./assets/horario-sargento-segundo-a-2026.jpg','./assets/horario-capitanes-b-2026.jpg','./assets/reglamento-comision-sumaria-unipol.pdf','./data/reglamento-uniformes.json','./data/reglamento-sumario-unipol.json','./data/horario-base.json','./data/biblioteca-catalogo.json','./data/academic-users.json','./data/ley-777.json','./data/ley-101.json','./data/ley-organica-policia.json','./data/ley-004.json','./data/ley-348.json'];
 
 self.addEventListener('install',event=>{
   event.waitUntil((async()=>{
     const cache=await caches.open(CACHE);
-    await Promise.allSettled(CORE.map(url=>cache.add(url)));
+    // Si falta un archivo esencial, la versión nueva NO reemplaza a la estable anterior.
+    await cache.addAll(CORE_REQUIRED);
+    await Promise.allSettled(CORE_OPTIONAL.map(url=>cache.add(url)));
     await self.skipWaiting();
   })());
 });
@@ -27,8 +30,7 @@ self.addEventListener('message',event=>{
 async function networkFirst(request){
   try{
     const response=await fetch(request,{cache:'no-store'});
-    const cache=await caches.open(CACHE);
-    cache.put(request,response.clone()).catch(()=>{});
+    if(response&&response.ok){const cache=await caches.open(CACHE);cache.put(request,response.clone()).catch(()=>{});}
     return response;
   }catch(error){
     const cached=await caches.match(request);
@@ -41,8 +43,7 @@ async function cacheFirst(request){
   if(cached) return cached;
   try{
     const response=await fetch(request);
-    const cache=await caches.open(CACHE);
-    cache.put(request,response.clone()).catch(()=>{});
+    if(response&&response.ok){const cache=await caches.open(CACHE);cache.put(request,response.clone()).catch(()=>{});}
     return response;
   }catch(error){
     return (await caches.match('./index.html')) || Response.error();
@@ -54,9 +55,6 @@ self.addEventListener('fetch',event=>{
   const url=new URL(event.request.url);
   const path=url.pathname;
   const isCore=path.endsWith('/')||path.endsWith('/index.html')||path.endsWith('/app.js')||path.endsWith('/online.js')||path.endsWith('/styles.css')||path.endsWith('/online.css')||path.endsWith('/manifest.webmanifest')||path.endsWith('/version.json')||path.endsWith('/sw.js');
-  if(event.request.mode==='navigate'||isCore){
-    event.respondWith(networkFirst(event.request));
-    return;
-  }
+  if(event.request.mode==='navigate'||isCore){event.respondWith(networkFirst(event.request));return;}
   event.respondWith(cacheFirst(event.request));
 });

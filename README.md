@@ -1,4 +1,4 @@
-# Agenda Policial v2.6.8
+# Agenda Policial v2.8.0
 
 Aplicación PWA institucional con biblioteca normativa offline y área académica online opcional.
 
@@ -56,3 +56,12 @@ El archivo `supabase-v268-migration.sql` documenta las modificaciones de esta ve
 ## Publicación
 
 El proyecto se mantiene por debajo de 100 archivos y puede publicarse en GitHub Pages. Se debe subir el contenido de la carpeta raíz del ZIP, conservando la estructura de archivos.
+
+
+## v2.8.0 — estabilización y seguridad
+
+- El Banco de Preguntas se opera por RPC; sus tablas internas no quedan expuestas directamente al cliente.
+- La nómina estática del paquete no contiene C.I., celulares ni roles reales. Esos datos se administran desde la aplicación y se guardan en Supabase.
+- El administrador general ve indicadores de adopción online: verde (ya ingresó), amarillo (sin ingreso) y gris (datos incompletos), además de primer/último ingreso y cantidad de accesos.
+- El formato CSV del Banco de Preguntas se mantiene: `pregunta;A;B;C;D;correcta;explicacion`.
+- La actualización PWA exige que los archivos esenciales estén completos antes de reemplazar la versión estable anterior.

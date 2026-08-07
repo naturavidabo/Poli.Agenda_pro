@@ -1,6 +1,6 @@
 # Fuentes normativas incorporadas
 
-Agenda Policial v2.6.5 incluye copias locales en PDF y versiones estructuradas para búsqueda interna. Los documentos se incorporaron desde portales institucionales bolivianos y se conservan como archivos independientes dentro de `assets/`.
+Agenda Policial v2.8.0 incluye copias locales en PDF y versiones estructuradas para búsqueda interna. Los documentos se incorporaron desde portales institucionales bolivianos y se conservan como archivos independientes dentro de `assets/`.
 
 - Ley N.º 777 — Sistema de Planificación Integral del Estado: Ministerio de Planificación del Desarrollo.
 - Ley N.º 101 — Ley del Régimen Disciplinario de la Policía Boliviana: Ministerio de Gobierno.
