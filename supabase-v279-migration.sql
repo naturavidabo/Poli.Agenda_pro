@@ -1,0 +1,10 @@
+-- Agenda Policial v2.7.9 — Banco de preguntas online
+-- Migraciones aplicadas al proyecto Supabase:
+-- academic_question_banks
+-- academic_bank_questions
+-- academic_bank_attempts
+-- academic_bank_attempt_items (con instantánea de cada pregunta por intento)
+-- academic_bank_answers
+-- RPC de creación, edición, importación, publicación, intentos, respuestas e historial.
+-- Las respuestas correctas no se incluyen al iniciar una evaluación.
+-- En modo estudio la corrección se devuelve solo después de contestar.

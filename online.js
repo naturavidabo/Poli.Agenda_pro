@@ -3042,3 +3042,1988 @@ academicVisualModules=function academicVisualModulesV273(counts={}){
   if(academicCanManageUsers())items.push({ key:'usuarios', icon:'👥', title:'Roles', desc:'Funciones del curso y accesos.', tone:'roles', count:0, caption:'Administración' });
   return `<section class="academic-visual-modules compact-visual-modules">${items.map(item=>`<button class="academic-shortcut-card tactile olive-card ${item.tone}" onclick="setAcademicTab('${item.key}')"><span class="shortcut-icon">${item.icon}</span><span class="shortcut-main"><b>${item.title}</b><small>${item.desc}</small></span><span class="shortcut-meta"><strong>${item.count||'•'}</strong><small>${item.caption}</small></span></button>`).join('')}</section>`;
 };
+
+
+/* =========================================================
+   Agenda Policial Online v2.7.5 — persistencia documental
+   La respuesta del servidor nunca se oculta por una falla de caché local.
+   ========================================================= */
+const ACADEMIC_DURABLE_CACHE_PREFIX = 'academic-post-cache-v275:';
+const academicPostMemoryV275 = new Map();
+let academicLastSyncErrorV275 = null;
+let academicLastSyncAtV275 = null;
+
+function academicDurableKeyV275(type) {
+  return `${ACADEMIC_DURABLE_CACHE_PREFIX}${academicSession?.course_code || 'curso'}:${type || 'all'}`;
+}
+function academicSafeLocalReadV275(type) {
+  try {
+    const raw = localStorage.getItem(academicDurableKeyV275(type));
+    const parsed = raw ? JSON.parse(raw) : null;
+    return Array.isArray(parsed?.rows) ? parsed.rows : [];
+  } catch (error) {
+    console.warn('Caché local no legible:', error);
+    return [];
+  }
+}
+function academicSafeLocalWriteV275(type, rows) {
+  try {
+    localStorage.setItem(academicDurableKeyV275(type), JSON.stringify({
+      rows: Array.isArray(rows) ? rows : [],
+      saved_at: new Date().toISOString()
+    }));
+    return true;
+  } catch (error) {
+    // Una cuota llena nunca debe convertir una lectura exitosa del servidor en error.
+    console.warn('Caché local llena; se conserva IndexedDB y memoria:', error);
+    try { localStorage.removeItem(ACADEMIC_POST_CACHE_STORAGE); } catch {}
+    return false;
+  }
+}
+async function academicReadDurableCacheV275(type) {
+  const key = academicDurableKeyV275(type);
+  if (academicPostMemoryV275.has(key)) return academicPostMemoryV275.get(key);
+  try {
+    const saved = await store.get(key);
+    if (Array.isArray(saved?.rows)) {
+      academicPostMemoryV275.set(key, saved.rows);
+      return saved.rows;
+    }
+  } catch (error) {
+    console.warn('IndexedDB no disponible para caché académica:', error);
+  }
+  let local = academicSafeLocalReadV275(type);
+  if (!local.length) {
+    try {
+      const legacy = academicPostCache()[academicCacheKey(type)]?.rows;
+      if (Array.isArray(legacy) && legacy.length) {
+        local = legacy;
+        try { await store.set(key, { rows: legacy, saved_at: new Date().toISOString(), migrated_from: 'legacy' }); } catch {}
+      }
+    } catch (error) { console.warn('No se pudo migrar la caché anterior:', error); }
+  }
+  academicPostMemoryV275.set(key, local);
+  return local;
+}
+async function academicWriteDurableCacheV275(type, rows) {
+  const safeRows = Array.isArray(rows) ? rows : [];
+  const key = academicDurableKeyV275(type);
+  academicPostMemoryV275.set(key, safeRows);
+  const value = { rows: safeRows, saved_at: new Date().toISOString() };
+  try { await store.set(key, value); } catch (error) { console.warn('No se pudo guardar caché en IndexedDB:', error); }
+  academicSafeLocalWriteV275(type, safeRows);
+  return safeRows;
+}
+async function academicMergeDurablePostV275(type, post) {
+  if (!post?.id) return;
+  const current = await academicReadDurableCacheV275(type);
+  const rows = [post, ...current.filter(item => String(item.id) !== String(post.id))]
+    .sort((a,b) => String(b.created_at || '').localeCompare(String(a.created_at || '')));
+  await academicWriteDurableCacheV275(type, rows);
+}
+async function academicRPCWithRetryV275(fn, body = {}, attempts = 2) {
+  let lastError;
+  for (let attempt = 1; attempt <= attempts; attempt += 1) {
+    try { return await academicRPC(fn, body); }
+    catch (error) {
+      lastError = error;
+      if (!academicIsNetworkError(error) || attempt === attempts) break;
+      await new Promise(resolve => setTimeout(resolve, 450 * attempt));
+    }
+  }
+  throw lastError;
+}
+academicStorePosts = function academicStorePostsV275(type, rows) {
+  // Compatibilidad con llamadas antiguas. No arroja errores por cuota.
+  academicWriteDurableCacheV275(type, rows).catch(error => console.warn(error));
+  return rows;
+};
+academicCachedPosts = function academicCachedPostsV275(type) {
+  const key = academicDurableKeyV275(type);
+  return academicPostMemoryV275.get(key) || academicSafeLocalReadV275(type);
+};
+academicFetchPosts = async function academicFetchPostsV275(type = null) {
+  if (!onlineConfigured()) {
+    return academicLocalPosts().filter(post => !post.archived && (!type || post.post_type === type));
+  }
+  if (!type) {
+    const all = [];
+    for (const key of Object.keys(ACADEMIC_TYPES)) all.push(...await academicFetchPosts(key));
+    return all;
+  }
+
+  let serverError = null;
+  if (navigator.onLine) {
+    try {
+      const rows = await academicRPCWithRetryV275('academic_get_posts', {
+        p_token: academicSession.session_token,
+        p_type: type
+      }, 2);
+      const list = Array.isArray(rows) ? rows : [];
+      academicLastSyncErrorV275 = null;
+      academicLastSyncAtV275 = new Date().toISOString();
+      // La lista se devuelve aunque IndexedDB/localStorage fallen.
+      academicWriteDurableCacheV275(type, list).catch(error => console.warn(error));
+      return list;
+    } catch (error) {
+      serverError = error;
+      academicLastSyncErrorV275 = error;
+      console.error('Fallo de sincronización académica:', error);
+    }
+  }
+
+  const cached = await academicReadDurableCacheV275(type);
+  if (cached.length) return cached;
+  if (serverError) throw serverError;
+  return [];
+};
+function academicSyncStateV275() {
+  if (!navigator.onLine) return { cls:'offline', label:'Sin conexión', detail:'Mostrando copia guardada en el dispositivo.' };
+  if (academicLastSyncErrorV275) return { cls:'warning', label:'Reintentar', detail:'El servidor conserva la información; falta actualizar esta pantalla.' };
+  return { cls:'online', label:'Sincronizado', detail: academicLastSyncAtV275 ? `Última revisión: ${new Date(academicLastSyncAtV275).toLocaleTimeString('es-BO',{hour:'2-digit',minute:'2-digit'})}` : 'Conectado al servidor académico.' };
+}
+function academicSyncBannerV275() {
+  const state = academicSyncStateV275();
+  return `<div class="academic-sync-banner ${state.cls}"><div><b>${state.label}</b><small>${state.detail}</small></div><button onclick="retryAcademicSyncV275()">Actualizar</button></div>`;
+}
+async function retryAcademicSyncV275() {
+  academicLastSyncErrorV275 = null;
+  const box = $('#academicPosts');
+  if (box) box.innerHTML = '<div class="card small"><p>Actualizando contenido…</p></div>';
+  await loadAcademicPosts();
+}
+loadAcademicPosts = async function loadAcademicPostsV275() {
+  const box = $('#academicPosts');
+  if (!box || !academicSession || !ACADEMIC_TYPES[academicTab]) return;
+  try {
+    if (academicTab === 'tareas') { await flushAcademicTaskQueue(); await academicSyncTaskProgress(); }
+    const rows = await academicFetchPosts(academicTab);
+    const posts = rows.filter(academicPostMatchesFilter).sort(academicPostSort);
+    const banner = academicSyncBannerV275();
+    if (academicViewMode === 'subject' && ['tareas','examenes','resumenes'].includes(academicTab)) {
+      box.innerHTML = banner + (posts.length ? academicGroupedPosts(posts) : '<div class="card small empty-online"><p>No existen publicaciones con este filtro.</p></div>');
+      return;
+    }
+    box.innerHTML = banner + (posts.length ? posts.map(academicPostCard).join('') : '<div class="card small empty-online"><p>No existen publicaciones con este filtro.</p></div>');
+  } catch (error) {
+    console.error(error);
+    const cached = await academicReadDurableCacheV275(academicTab);
+    const visible = cached.filter(academicPostMatchesFilter).sort(academicPostSort);
+    box.innerHTML = academicSyncBannerV275() + (visible.length
+      ? visible.map(academicPostCard).join('')
+      : '<div class="card small warn-card"><p>No se pudo actualizar esta pantalla. La documentación guardada en el servidor no fue eliminada.</p><button class="btn secondary" onclick="retryAcademicSyncV275()">Reintentar sincronización</button></div>');
+  }
+};
+
+saveAcademicPost = async function saveAcademicPostV275(event, type) {
+  event.preventDefault();
+  const form = event.currentTarget;
+  if (form.dataset.submitting === '1') return;
+  if (!academicCanPublishType(type)) return toast('Su rol no tiene permiso para publicar en este módulo');
+  if (onlineConfigured() && !navigator.onLine) return toast('Necesita conexión para publicar');
+
+  const submit = event.submitter || form.querySelector('button[type="submit"]');
+  form.dataset.submitting = '1';
+  if (submit) { submit.disabled = true; submit.dataset.originalText = submit.textContent; submit.textContent = 'Guardando…'; }
+
+  try {
+    const formData = new FormData(form);
+    const values = Object.fromEntries(formData.entries());
+    let title = values.title || '';
+    const body = String(values.body || '').trim();
+    delete values.title; delete values.body;
+    if (type === 'formaciones') title = `${values.formation_type || 'Formación'} · ${values.date || 'sin fecha'}`;
+    if (type === 'resumenes') title = `${values.subject || 'Resumen'} — ${values.topic || 'Tema'}`;
+
+    const files = academicValidateFiles($('#academicFiles')?.files || [], type);
+    if (type === 'resumenes' && !body && !files.length) throw new Error('Agregue una descripción o al menos un archivo académico');
+
+    const attachments = await uploadAcademicFiles(files, type);
+    const primary = attachments[0] || null;
+    const payloadFields = { ...values };
+    if (attachments.length) payloadFields.attachments = attachments;
+
+    if (onlineConfigured()) {
+      const created = await academicRPCWithRetryV275('academic_create_post', {
+        p_token: academicSession.session_token,
+        p_type: type,
+        p_title: title,
+        p_body: body,
+        p_fields: payloadFields,
+        p_file_url: primary?.url || null,
+        p_file_name: primary?.name || null,
+        p_file_mime: primary?.type || null,
+        p_file_size: primary?.size || null
+      }, 2);
+      const postId = typeof created === 'string' ? created : created?.id || created;
+      if (!postId) throw new Error('El servidor no confirmó el identificador de la publicación');
+
+      let confirmedPost = null;
+      try {
+        const verified = await academicRPCWithRetryV275('academic_get_post', {
+          p_token: academicSession.session_token,
+          p_post_id: postId
+        }, 2);
+        confirmedPost = Array.isArray(verified) ? verified[0] : verified;
+      } catch (verifyError) {
+        console.warn('Publicación creada; verificación diferida:', verifyError);
+      }
+      if (!confirmedPost) {
+        confirmedPost = {
+          id: postId, post_type: type, title, body, fields: payloadFields,
+          file_url: primary?.url || null, file_name: primary?.name || null,
+          file_mime: primary?.type || null, file_size: primary?.size || null,
+          author_id: academicSession.user_id, author_name: academicSession.full_name,
+          created_at: new Date().toISOString(), updated_at: new Date().toISOString(),
+          sync_pending: true
+        };
+      }
+      await academicMergeDurablePostV275(type, confirmedPost);
+      academicLastSyncErrorV275 = null;
+      academicLastSyncAtV275 = new Date().toISOString();
+    } else {
+      const posts = academicLocalPosts();
+      const localPost = {
+        id: uid(), post_type:type, title, body, fields:payloadFields,
+        file_url:primary?.url||null, file_name:primary?.name||null,
+        file_mime:primary?.type||null, file_size:primary?.size||null,
+        author_id:academicSession.user_id, author_name:academicSession.full_name,
+        created_at:new Date().toISOString(), updated_at:new Date().toISOString(), archived:false
+      };
+      posts.unshift(localPost); academicSaveLocalPosts(posts);
+      await academicMergeDurablePostV275(type, localPost);
+    }
+
+    closeModal();
+    await loadAcademicPosts();
+    toast('Publicación confirmada y guardada');
+  } catch (error) {
+    console.error(error);
+    toast(academicFriendlyError(error, 'No se pudo confirmar la publicación'));
+  } finally {
+    form.dataset.submitting = '0';
+    if (submit) { submit.disabled = false; submit.textContent = submit.dataset.originalText || 'Publicar'; }
+  }
+};
+
+async function academicRecoverAllContentV275() {
+  if (!academicSession || !onlineConfigured() || !navigator.onLine) return;
+  for (const type of Object.keys(ACADEMIC_TYPES)) {
+    try { await academicFetchPosts(type); } catch (error) { console.warn(`Recuperación ${type}:`, error); }
+  }
+}
+window.addEventListener('online', () => academicRecoverAllContentV275());
+window.addEventListener('DOMContentLoaded', () => setTimeout(() => academicRecoverAllContentV275(), 1000));
+
+
+/* =========================================================
+   Agenda Policial Online v2.7.6 — mensajes inteligentes
+   Análisis local de comunicados y llenado asistido de formularios.
+   ========================================================= */
+const ACADEMIC_SMART_PARSER_VERSION_V276 = 'agenda-smart-bo-1.0';
+const ACADEMIC_DRAFT_STORAGE_V276 = 'agenda-academic-drafts-v276';
+let academicSmartCandidatesV276 = [];
+let academicDraftTimerV276 = null;
+
+function academicSmartCleanTextV276(value) {
+  return String(value || '')
+    .replace(/\r/g, '\n')
+    .replace(/\u00a0/g, ' ')
+    .replace(/^\s*\[\d{1,2}[\/-]\d{1,2}[\/-]\d{2,4}[^\]]*\]\s*[^:\n]{1,50}:\s*/gm, '')
+    .replace(/^\s*\d{1,2}:\d{2}\s*[-–]\s*[^:\n]{1,50}:\s*/gm, '')
+    .replace(/[ \t]+\n/g, '\n')
+    .replace(/\n{3,}/g, '\n\n')
+    .trim();
+}
+
+function academicSmartNormalizeV276(value) {
+  return String(value || '').normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase();
+}
+
+function academicSmartSplitV276(text) {
+  const clean = academicSmartCleanTextV276(text);
+  if (!clean) return [];
+  const explicit = clean.split(/\n\s*(?:---+|={3,}|mensaje\s+\d+\s*:?)\s*\n/i).map(item => item.trim()).filter(Boolean);
+  return explicit.length ? explicit : [clean];
+}
+
+function academicSmartISODateV276(date) {
+  const year = date.getFullYear();
+  const month = String(date.getMonth() + 1).padStart(2, '0');
+  const day = String(date.getDate()).padStart(2, '0');
+  return `${year}-${month}-${day}`;
+}
+
+function academicSmartDateV276(text) {
+  const raw = academicSmartNormalizeV276(text);
+  const now = new Date();
+  const addDays = days => {
+    const date = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+    date.setDate(date.getDate() + days);
+    return academicSmartISODateV276(date);
+  };
+  if (/\bpasado\s+manana\b/.test(raw)) return addDays(2);
+  if (/\bmanana\b/.test(raw)) return addDays(1);
+  if (/\bhoy\b/.test(raw)) return addDays(0);
+
+  let match = raw.match(/\b(20\d{2})[-\/](\d{1,2})[-\/](\d{1,2})\b/);
+  if (match) return `${match[1]}-${String(match[2]).padStart(2,'0')}-${String(match[3]).padStart(2,'0')}`;
+
+  match = raw.match(/\b(\d{1,2})[\/-](\d{1,2})(?:[\/-](\d{2,4}))?\b/);
+  if (match) {
+    let year = match[3] ? Number(match[3]) : now.getFullYear();
+    if (year < 100) year += 2000;
+    const date = new Date(year, Number(match[2]) - 1, Number(match[1]));
+    if (!Number.isNaN(date.getTime())) return academicSmartISODateV276(date);
+  }
+
+  const months = {
+    enero:0, febrero:1, marzo:2, abril:3, mayo:4, junio:5,
+    julio:6, agosto:7, septiembre:8, setiembre:8, octubre:9,
+    noviembre:10, diciembre:11
+  };
+  match = raw.match(/\b(\d{1,2})\s+de\s+(enero|febrero|marzo|abril|mayo|junio|julio|agosto|septiembre|setiembre|octubre|noviembre|diciembre)(?:\s+de\s+(20\d{2}))?\b/);
+  if (match) {
+    const year = match[3] ? Number(match[3]) : now.getFullYear();
+    return academicSmartISODateV276(new Date(year, months[match[2]], Number(match[1])));
+  }
+
+  const weekdays = { domingo:0, lunes:1, martes:2, miercoles:3, jueves:4, viernes:5, sabado:6 };
+  for (const [word, target] of Object.entries(weekdays)) {
+    if (new RegExp(`\\b${word}\\b`).test(raw)) {
+      const current = now.getDay();
+      let difference = (target - current + 7) % 7;
+      if (/proxim[oa]/.test(raw) && difference === 0) difference = 7;
+      return addDays(difference);
+    }
+  }
+  return '';
+}
+
+function academicSmartTimeV276(value) {
+  const raw = String(value || '').trim().toLowerCase().replace(/\s/g,'');
+  let hours, minutes;
+  let match = raw.match(/^(\d{1,2})[:.](\d{2})(am|pm)?$/);
+  if (match) {
+    hours = Number(match[1]); minutes = Number(match[2]);
+    if (match[3] === 'pm' && hours < 12) hours += 12;
+    if (match[3] === 'am' && hours === 12) hours = 0;
+  } else {
+    match = raw.match(/^(\d{1,2})(am|pm)$/);
+    if (match) {
+      hours = Number(match[1]); minutes = 0;
+      if (match[2] === 'pm' && hours < 12) hours += 12;
+      if (match[2] === 'am' && hours === 12) hours = 0;
+    }
+  }
+  if (!Number.isInteger(hours) || !Number.isInteger(minutes) || hours > 23 || minutes > 59) return '';
+  return `${String(hours).padStart(2,'0')}:${String(minutes).padStart(2,'0')}`;
+}
+
+function academicSmartLabeledValueV276(text, labels) {
+  const lines = String(text || '').split('\n');
+  const normalizedLabels = labels.map(academicSmartNormalizeV276);
+  for (const line of lines) {
+    const normalizedLine = academicSmartNormalizeV276(line);
+    for (const label of normalizedLabels) {
+      const index = normalizedLine.indexOf(label);
+      if (index >= 0) {
+        const originalIndex = line.toLowerCase().indexOf(line.toLowerCase().slice(index, index + label.length));
+        const after = line.slice(Math.max(0, originalIndex) + label.length).replace(/^\s*[:\-–]\s*/, '').trim();
+        if (after) return after;
+      }
+    }
+  }
+  const escaped = labels.map(label => label.replace(/[.*+?^${}()|[\]\\]/g,'\\$&')).join('|');
+  const regex = new RegExp(`(?:${escaped})\\s*(?:[:\\-–]|es)?\\s*([^\\n.;]+)`, 'i');
+  return String(text || '').match(regex)?.[1]?.trim() || '';
+}
+
+function academicSmartLabeledTimeV276(text, labels) {
+  const escaped = labels.map(label => label.replace(/[.*+?^${}()|[\]\\]/g,'\\$&')).join('|');
+  const regex = new RegExp(`(?:${escaped})\\s*(?:a\\s*horas?|hrs?\\.?|h\\.?|[:\\-–])?\\s*(\\d{1,2}(?:[:.]\\d{2})\\s*(?:am|pm)?)`, 'i');
+  const match = String(text || '').match(regex);
+  return academicSmartTimeV276(match?.[1] || '');
+}
+
+function academicSmartTimesV276(text) {
+  const matches = [...String(text || '').matchAll(/\b(?:[01]?\d|2[0-3])[:.][0-5]\d\s*(?:am|pm)?\b/gi)];
+  return [...new Set(matches.map(match => academicSmartTimeV276(match[0])).filter(Boolean))];
+}
+
+function academicSmartSubjectsV276() {
+  const defaultSubjects = [
+    'Planificación Estratégica','Procedimientos Especiales','Auditoría Gubernamental',
+    'Inteligencia Estratégica','Ciencia Política','Administración General',
+    'Metodología de Investigación','Victimología','Criminalística General y de Campo',
+    'Disciplinas Criminalísticas','Psicología Criminal y Forense','Perfilación Criminal',
+    'Investigación Criminal','Gestión Policial','Administración de Recursos Humanos',
+    'Administración Policial y Doctrina de Estado Mayor','Sistemas Organizacionales',
+    'Preparación de Proyectos Institucionales','Acondicionamiento Físico','Tiro Policial'
+  ];
+  const scheduled = Array.isArray(globalThis.state?.scheduleBlocks)
+    ? globalThis.state.scheduleBlocks.map(item => item?.materia).filter(Boolean)
+    : [];
+  return [...new Set([...scheduled, ...defaultSubjects])];
+}
+
+function academicSmartSubjectV276(text) {
+  const explicit = academicSmartLabeledValueV276(text, ['materia','asignatura']);
+  if (explicit) return explicit.replace(/[.;,]+$/,'').trim();
+  const normalized = academicSmartNormalizeV276(text);
+  return academicSmartSubjectsV276()
+    .sort((a,b) => b.length - a.length)
+    .find(subject => normalized.includes(academicSmartNormalizeV276(subject))) || '';
+}
+
+function academicSmartTeacherV276(text, subject) {
+  const explicit = academicSmartLabeledValueV276(text, ['docente','instructor','facilitador']);
+  if (explicit) return explicit.replace(/[.;]+$/,'').trim();
+  if (subject && Array.isArray(globalThis.state?.scheduleBlocks)) {
+    const found = globalThis.state.scheduleBlocks.find(item =>
+      academicSmartNormalizeV276(item?.materia) === academicSmartNormalizeV276(subject) &&
+      (item?.docente || item?.instructor)
+    );
+    if (found) return found.docente || found.instructor || '';
+  }
+  return '';
+}
+
+function academicSmartDetectTypeV276(text, forcedType = '') {
+  if (ACADEMIC_TYPES[forcedType]) return forcedType;
+  const normalized = academicSmartNormalizeV276(text);
+  const scores = {
+    formaciones: ['formacion','servicio extraordinario','hora de control','hora del parte','uniforme','revista','parte policial'],
+    tareas: ['tarea','trabajo practico','actividad','entregar','fecha limite','plazo','presentar','exposicion'],
+    examenes: ['examen','evaluacion','prueba','parcial','temario','oral','escrito'],
+    resumenes: ['resumen','material academico','documento','archivo','pdf','word','diapositiva','lectura']
+  };
+  let best = 'resumenes', bestScore = 0;
+  for (const [type, words] of Object.entries(scores)) {
+    const score = words.reduce((sum, word) => sum + (normalized.includes(word) ? 1 : 0), 0);
+    if (score > bestScore) { best = type; bestScore = score; }
+  }
+  return best;
+}
+
+function academicSmartTitleV276(text, type, subject) {
+  const explicit = academicSmartLabeledValueV276(text, ['titulo','tema','asunto']);
+  if (explicit) return explicit.replace(/[.;]+$/,'').trim().slice(0,120);
+  const line = String(text || '').split('\n')
+    .map(item => item.trim())
+    .find(item => item && !/^(fecha|hora|lugar|materia|docente|uniforme|control|parte)\s*:/i.test(item));
+  if (line && line.length <= 120) return line.replace(/^[-•]\s*/,'').trim();
+  const defaults = {
+    tareas: subject ? `Tarea de ${subject}` : 'Nueva tarea',
+    examenes: subject ? `Examen de ${subject}` : 'Nuevo examen',
+    resumenes: subject ? `Material de ${subject}` : 'Material académico',
+    formaciones: 'Formación general'
+  };
+  return defaults[type] || 'Publicación académica';
+}
+
+function academicSmartRequiredV276(type) {
+  return ({
+    formaciones: ['date','place','control_time','report_time','uniform'],
+    tareas: ['subject','title','due_date','body'],
+    examenes: ['subject','title','date','time'],
+    resumenes: ['subject','topic']
+  })[type] || [];
+}
+
+function academicSmartAnalyzeOneV276(message, forcedType = '') {
+  const text = academicSmartCleanTextV276(message);
+  const type = academicSmartDetectTypeV276(text, forcedType);
+  const subject = academicSmartSubjectV276(text);
+  const teacher = academicSmartTeacherV276(text, subject);
+  const date = academicSmartDateV276(text);
+  const times = academicSmartTimesV276(text);
+  const place = academicSmartLabeledValueV276(text, ['lugar','punto de reunion','ubicacion','aula','salon']);
+  const uniform = academicSmartLabeledValueV276(text, ['uniforme','tenida']);
+  const title = academicSmartTitleV276(text, type, subject);
+  const priority = /\b(urgente|sin falta|ultimo plazo|obligatorio|prioritario)\b/i.test(text) ? 'urgente' : 'pendiente';
+
+  const fields = { source_text:text, subject, teacher };
+  let body = text;
+  if (type === 'formaciones') {
+    fields.formation_type = /servicio\s+extraordinario/i.test(text) ? 'Servicio extraordinario' : 'Formación general';
+    fields.date = date;
+    fields.place = place;
+    fields.control_time = academicSmartLabeledTimeV276(text, ['hora de control','control']) || times[0] || '';
+    fields.report_time = academicSmartLabeledTimeV276(text, ['hora del parte','parte']) || times[1] || '';
+    fields.uniform = uniform;
+    fields.observations = academicSmartLabeledValueV276(text, ['observaciones','observacion']);
+  } else if (type === 'tareas') {
+    fields.title = title;
+    fields.due_date = date;
+    fields.priority = priority;
+  } else if (type === 'examenes') {
+    fields.title = title;
+    fields.date = date;
+    fields.time = academicSmartLabeledTimeV276(text, ['hora','inicio']) || times[0] || '';
+    fields.place = place;
+  } else {
+    fields.topic = academicSmartLabeledValueV276(text, ['tema','asunto']) || title;
+  }
+
+  const required = academicSmartRequiredV276(type);
+  const missing = required.filter(key => !String(key === 'body' ? body : fields[key] || '').trim());
+  const detected = required.length - missing.length;
+  const confidence = Math.max(20, Math.min(100, Math.round((detected / Math.max(required.length,1)) * 82 + (subject ? 8 : 0) + (date ? 5 : 0) + (teacher ? 5 : 0))));
+  const warnings = missing.map(key => ({
+    date:'Falta la fecha', place:'Falta el lugar', control_time:'Falta la hora de control',
+    report_time:'Falta la hora del parte', uniform:'Falta el uniforme',
+    subject:'Falta la materia', title:'Falta el título', due_date:'Falta la fecha límite',
+    body:'Falta el contenido', time:'Falta la hora', topic:'Falta el tema'
+  })[key] || `Falta ${key}`);
+
+  return {
+    type, title, body, fields, confidence, warnings,
+    parser_version: ACADEMIC_SMART_PARSER_VERSION_V276
+  };
+}
+
+function academicAnalyzeTextV276(text, forcedType = '') {
+  return academicSmartSplitV276(text).map(message => academicSmartAnalyzeOneV276(message, forcedType));
+}
+
+function academicSmartTypeLabelV276(type) {
+  return ACADEMIC_TYPES[type]?.label || type;
+}
+
+function academicSmartDateTimeLabelV276(candidate) {
+  const fields = candidate.fields || {};
+  const date = fields.date || fields.due_date || '';
+  const time = fields.time || fields.control_time || '';
+  return [date, time].filter(Boolean).join(' · ') || 'Por completar';
+}
+
+function academicSmartPreviewV276(candidates, mode = 'global') {
+  if (!candidates.length) return '<div class="smart-empty">Pegue un mensaje y presione “Analizar”.</div>';
+  return `
+    <div class="smart-analysis-summary">
+      <b>${candidates.length} registro${candidates.length === 1 ? '' : 's'} detectado${candidates.length === 1 ? '' : 's'}</b>
+      <small>Revise los datos antes de publicar.</small>
+    </div>
+    <div class="smart-table-wrap">
+      <table class="smart-table">
+        <thead><tr><th>Tipo</th><th>Materia / título</th><th>Fecha y hora</th><th>Análisis</th><th></th></tr></thead>
+        <tbody>
+          ${candidates.map((candidate,index) => `
+            <tr>
+              <td data-label="Tipo"><span class="smart-type">${esc(academicSmartTypeLabelV276(candidate.type))}</span></td>
+              <td data-label="Contenido"><b>${esc(candidate.fields.subject || candidate.title || 'Por completar')}</b><small>${esc(candidate.title || '')}</small></td>
+              <td data-label="Fecha">${esc(academicSmartDateTimeLabelV276(candidate))}</td>
+              <td data-label="Análisis">
+                <span class="smart-confidence ${candidate.confidence >= 80 ? 'high' : candidate.confidence >= 55 ? 'medium' : 'low'}">${candidate.confidence}%</span>
+                ${candidate.warnings.length ? `<small>${esc(candidate.warnings.join(' · '))}</small>` : '<small>Datos principales detectados</small>'}
+              </td>
+              <td><button type="button" class="smart-use-btn" onclick="${mode === 'form' ? `academicApplySmartCandidateV276(${index})` : `academicOpenCandidateFormV276(${index})`}">Usar</button></td>
+            </tr>
+          `).join('')}
+        </tbody>
+      </table>
+    </div>
+  `;
+}
+
+function academicDraftKeyV276(type) {
+  return `${academicSession?.user_id || 'local'}:${academicSession?.course_code || 'course'}:${type}`;
+}
+function academicReadDraftsV276() {
+  try { return JSON.parse(localStorage.getItem(ACADEMIC_DRAFT_STORAGE_V276) || '{}'); } catch { return {}; }
+}
+function academicReadDraftV276(type) {
+  return academicReadDraftsV276()[academicDraftKeyV276(type)] || null;
+}
+function academicSaveDraftV276(type, form) {
+  if (!form) return;
+  const drafts = academicReadDraftsV276();
+  const values = Object.fromEntries(new FormData(form).entries());
+  delete values.file;
+  drafts[academicDraftKeyV276(type)] = {
+    values,
+    source_text: $('#academicSmartText')?.value || '',
+    smart_meta: form.dataset.smartMeta || '',
+    client_request_id: form.dataset.clientRequestId || '',
+    saved_at: new Date().toISOString()
+  };
+  try { localStorage.setItem(ACADEMIC_DRAFT_STORAGE_V276, JSON.stringify(drafts)); } catch (error) { console.warn('Borrador:', error); }
+}
+function academicClearDraftV276(type) {
+  const drafts = academicReadDraftsV276();
+  delete drafts[academicDraftKeyV276(type)];
+  try { localStorage.setItem(ACADEMIC_DRAFT_STORAGE_V276, JSON.stringify(drafts)); } catch {}
+}
+function academicScheduleDraftV276(type, form) {
+  clearTimeout(academicDraftTimerV276);
+  academicDraftTimerV276 = setTimeout(() => academicSaveDraftV276(type, form), 250);
+}
+function academicRequestIdV276() {
+  if (globalThis.crypto?.randomUUID) return crypto.randomUUID();
+  return `req-${Date.now()}-${Math.random().toString(36).slice(2)}`;
+}
+function academicValueV276(value) { return esc(String(value || '')); }
+
+function academicSmartPanelV276(type, sourceText = '') {
+  return `
+    <section class="smart-composer">
+      <div class="smart-composer-head">
+        <div><span class="eyebrow">Llenado asistido</span><h3>Mensaje inteligente</h3></div>
+        <span class="smart-local-chip">Análisis local</span>
+      </div>
+      <p>Puede pegar un comunicado de WhatsApp o texto académico. La aplicación detectará materia, fecha, hora, lugar y otros datos.</p>
+      <textarea id="academicSmartText" rows="6" placeholder="Pegue aquí el mensaje completo…">${academicValueV276(sourceText)}</textarea>
+      <div class="smart-actions">
+        <button type="button" class="btn smart-analyze-btn" onclick="academicAnalyzeMessageInFormV276('${type}')">Analizar mensaje</button>
+        <button type="button" class="btn secondary" onclick="academicClearSmartMessageV276()">Limpiar</button>
+      </div>
+      <div id="academicSmartPreview"></div>
+    </section>
+  `;
+}
+
+function academicFieldsForTypeV276(type, data = {}) {
+  const fields = data.fields || data.values || data || {};
+  const body = data.body ?? fields.body ?? '';
+  const title = data.title ?? fields.title ?? '';
+  const teacher = fields.teacher || '';
+  if (type === 'formaciones') {
+    return `
+      <label>Tipo
+        <select name="formation_type" required>
+          <option ${fields.formation_type === 'Formación general' ? 'selected' : ''}>Formación general</option>
+          <option ${fields.formation_type === 'Servicio extraordinario' ? 'selected' : ''}>Servicio extraordinario</option>
+        </select>
+      </label>
+      <div class="two-col">
+        <label>Fecha<input name="date" type="date" required value="${academicValueV276(fields.date || todayISO())}"></label>
+        <label>Lugar<input name="place" required value="${academicValueV276(fields.place)}"></label>
+      </div>
+      <div class="two-col">
+        <label>Hora de control<input name="control_time" type="time" required value="${academicValueV276(fields.control_time)}"></label>
+        <label>Hora del parte<input name="report_time" type="time" required value="${academicValueV276(fields.report_time)}"></label>
+      </div>
+      <label>Uniforme<input name="uniform" required value="${academicValueV276(fields.uniform)}"></label>
+      <label>Texto del comunicado<textarea name="body" rows="7" required>${academicValueV276(body)}</textarea></label>
+      <label>Observaciones<textarea name="observations" rows="3">${academicValueV276(fields.observations)}</textarea></label>
+    `;
+  }
+  if (type === 'resumenes') {
+    return `
+      <label>Materia<input name="subject" required value="${academicValueV276(fields.subject)}"></label>
+      <label>Docente o responsable<input name="teacher" value="${academicValueV276(teacher)}"></label>
+      <label>Tema<input name="topic" required value="${academicValueV276(fields.topic || title)}"></label>
+      <label>Descripción del contenido<textarea name="body" rows="7" placeholder="Detalle breve del resumen, contenido académico o lista de documentos.">${academicValueV276(body)}</textarea></label>
+    `;
+  }
+  if (type === 'tareas') {
+    return `
+      <label>Materia<input name="subject" required value="${academicValueV276(fields.subject)}"></label>
+      <label>Docente<input name="teacher" value="${academicValueV276(teacher)}"></label>
+      <label>Título<input name="title" required value="${academicValueV276(title)}"></label>
+      <div class="two-col">
+        <label>Fecha límite<input name="due_date" type="date" required value="${academicValueV276(fields.due_date)}"></label>
+        <label>Prioridad
+          <select name="priority">
+            <option value="pendiente" ${fields.priority !== 'urgente' ? 'selected' : ''}>Normal</option>
+            <option value="urgente" ${fields.priority === 'urgente' ? 'selected' : ''}>Urgente</option>
+          </select>
+        </label>
+      </div>
+      <label>Instrucciones<textarea name="body" rows="8" required>${academicValueV276(body)}</textarea></label>
+    `;
+  }
+  return `
+    <label>Materia<input name="subject" required value="${academicValueV276(fields.subject)}"></label>
+    <label>Docente<input name="teacher" value="${academicValueV276(teacher)}"></label>
+    <label>Título del examen<input name="title" required value="${academicValueV276(title)}"></label>
+    <div class="two-col">
+      <label>Fecha<input name="date" type="date" required value="${academicValueV276(fields.date)}"></label>
+      <label>Hora<input name="time" type="time" required value="${academicValueV276(fields.time)}"></label>
+    </div>
+    <label>Lugar<input name="place" value="${academicValueV276(fields.place)}"></label>
+    <label>Comunicado o temario<textarea name="body" rows="7">${academicValueV276(body)}</textarea></label>
+  `;
+}
+
+openAcademicPostForm = function openAcademicPostFormV276(type, candidate = null) {
+  const labels = ACADEMIC_TYPES[type];
+  if (!labels || !academicCanPublishType(type)) return toast('Su rol no tiene permiso para publicar en este módulo');
+  if (onlineConfigured() && !navigator.onLine) return toast('Necesita conexión para publicar contenido online');
+
+  const draft = !candidate ? academicReadDraftV276(type) : null;
+  const prefill = candidate || (draft ? { values:draft.values, source_text:draft.source_text } : {});
+  const fileLabel = type === 'resumenes' ? 'Archivos académicos' : 'Archivo opcional';
+  const fileHelp = type === 'resumenes'
+    ? 'Puede seleccionar hasta 8 archivos Word, PDF o imagen dentro de la misma publicación.'
+    : 'Puede adjuntar un archivo Word, PDF o imagen.';
+
+  showModal(`
+    <button class="icon-btn close" onclick="closeModal()">×</button>
+    <h2>Nueva publicación · ${labels.label}</h2>
+    ${draft && !candidate ? '<div class="draft-recovered"><b>Borrador recuperado</b><span>Se restauró el texto que estaba llenando.</span><button type="button" onclick="academicDiscardDraftV276(\''+type+'\')">Descartar</button></div>' : ''}
+    <form id="academicPostForm" class="form smart-academic-form">
+      ${academicSmartPanelV276(type, prefill.source_text || prefill.fields?.source_text || '')}
+      <div class="structured-fields-title"><span>Datos estructurados</span><small>Revise y corrija antes de publicar.</small></div>
+      ${academicFieldsForTypeV276(type, prefill)}
+      <label>${fileLabel}
+        <input id="academicFiles" type="file" ${type === 'resumenes' ? 'multiple' : ''} accept=".doc,.docx,.pdf,image/*">
+      </label>
+      <p class="subtle">${fileHelp}</p>
+      <div id="academicSelectedFiles" class="selected-files-note"></div>
+      <div class="form-actions sticky-actions">
+        <button class="btn academic-main-btn" type="submit">Publicar</button>
+        <button class="btn secondary" type="button" onclick="closeModal()">Cancelar</button>
+      </div>
+    </form>
+  `);
+
+  const form = $('#academicPostForm');
+  form.dataset.clientRequestId = draft?.client_request_id || academicRequestIdV276();
+  if (draft?.smart_meta) form.dataset.smartMeta = draft.smart_meta;
+  if (candidate) form.dataset.smartMeta = JSON.stringify(candidate);
+  form.addEventListener('input', () => academicScheduleDraftV276(type, form));
+  form.addEventListener('change', () => academicScheduleDraftV276(type, form));
+  form.onsubmit = event => saveAcademicPost(event, type);
+
+  const input = $('#academicFiles');
+  const preview = $('#academicSelectedFiles');
+  input?.addEventListener('change', () => {
+    const files = Array.from(input.files || []);
+    preview.innerHTML = files.length
+      ? `<div class="selected-files-list">${files.map(file => `<span><b>${esc(file.name)}</b><small>${Math.ceil(file.size/1024)} KB</small></span>`).join('')}</div>`
+      : '';
+  });
+
+  if (candidate) {
+    setTimeout(() => {
+      academicSmartCandidatesV276 = [candidate];
+      const previewBox = $('#academicSmartPreview');
+      if (previewBox) previewBox.innerHTML = academicSmartPreviewV276([candidate], 'form');
+    }, 0);
+  }
+};
+
+function academicDiscardDraftV276(type) {
+  academicClearDraftV276(type);
+  closeModal();
+  openAcademicPostForm(type);
+}
+function academicClearSmartMessageV276() {
+  const area = $('#academicSmartText');
+  if (area) area.value = '';
+  const preview = $('#academicSmartPreview');
+  if (preview) preview.innerHTML = '';
+}
+function academicAnalyzeMessageInFormV276(type) {
+  const text = $('#academicSmartText')?.value || '';
+  academicSmartCandidatesV276 = academicAnalyzeTextV276(text, type);
+  const preview = $('#academicSmartPreview');
+  if (preview) preview.innerHTML = academicSmartPreviewV276(academicSmartCandidatesV276, 'form');
+  if (!academicSmartCandidatesV276.length) toast('Pegue un mensaje para analizar');
+}
+function academicApplySmartCandidateV276(index) {
+  const candidate = academicSmartCandidatesV276[index];
+  const form = $('#academicPostForm');
+  if (!candidate || !form) return;
+  const values = { ...candidate.fields, title:candidate.title, body:candidate.body };
+  for (const [key,value] of Object.entries(values)) {
+    const control = form.elements.namedItem(key);
+    if (control && String(value || '').trim()) control.value = value;
+  }
+  form.dataset.smartMeta = JSON.stringify(candidate);
+  academicScheduleDraftV276(candidate.type, form);
+  const preview = $('#academicSmartPreview');
+  if (preview) preview.innerHTML = `
+    <div class="smart-applied">
+      <b>Datos aplicados al formulario</b>
+      <span>${candidate.warnings.length ? esc(candidate.warnings.join(' · ')) : 'El mensaje fue organizado correctamente. Revise antes de publicar.'}</span>
+    </div>`;
+  toast('Datos organizados. Revise el formulario');
+}
+
+function openAcademicSmartComposerV276(defaultType = '') {
+  showModal(`
+    <button class="icon-btn close" onclick="closeModal()">×</button>
+    <span class="eyebrow">Creación rápida</span>
+    <h2>Mensajes inteligentes</h2>
+    <p>Pegue uno o varios comunicados. Para analizar varios por separado, coloque una línea con <b>---</b> entre cada mensaje.</p>
+    <label class="smart-global-label">Tipo de contenido
+      <select id="academicSmartForcedType">
+        <option value="">Detectar automáticamente</option>
+        ${Object.entries(ACADEMIC_TYPES).map(([key,item]) => `<option value="${key}" ${defaultType===key?'selected':''}>${esc(item.label)}</option>`).join('')}
+      </select>
+    </label>
+    <textarea id="academicSmartGlobalText" class="smart-global-text" rows="10" placeholder="Ejemplo: Mañana formación general. Lugar: patio principal. Control 06:30, parte 06:45. Uniforme N.º 4…"></textarea>
+    <div class="smart-actions">
+      <button class="btn academic-main-btn" onclick="academicAnalyzeSmartComposerV276()">Analizar y armar tabla</button>
+      <button class="btn secondary" onclick="closeModal()">Cancelar</button>
+    </div>
+    <div id="academicSmartGlobalPreview" class="smart-global-preview"></div>
+  `);
+}
+function academicAnalyzeSmartComposerV276() {
+  const text = $('#academicSmartGlobalText')?.value || '';
+  const forced = $('#academicSmartForcedType')?.value || '';
+  academicSmartCandidatesV276 = academicAnalyzeTextV276(text, forced);
+  const box = $('#academicSmartGlobalPreview');
+  if (box) box.innerHTML = academicSmartPreviewV276(academicSmartCandidatesV276, 'global');
+  if (!academicSmartCandidatesV276.length) toast('Pegue al menos un mensaje');
+}
+function academicOpenCandidateFormV276(index) {
+  const candidate = academicSmartCandidatesV276[index];
+  if (!candidate) return;
+  closeModal();
+  openAcademicPostForm(candidate.type, candidate);
+}
+
+openAcademicPublishMenu = function openAcademicPublishMenuV276() {
+  const allowed = academicAllowedTypesForRole();
+  if (!allowed.length || academicIsTestSession()) return toast('Su rol es únicamente de lectura');
+  showModal(`
+    <button class="icon-btn close" onclick="closeModal()">×</button>
+    <span class="eyebrow">Publicación académica</span>
+    <h2>¿Qué desea publicar?</h2>
+    <button class="smart-entry-button" onclick="closeModal();openAcademicSmartComposerV276()">
+      <span>✨</span><b>Crear desde un mensaje</b><small>Analiza el texto y arma automáticamente la tabla de datos.</small>
+    </button>
+    <div class="academic-publish-grid">
+      ${allowed.map(key => {
+        const item = ACADEMIC_TYPES[key];
+        return `<button onclick="closeModal();openAcademicPostForm('${key}')"><span>${item.icon}</span><b>${item.label}</b><small>${item.help}</small></button>`;
+      }).join('')}
+    </div>
+  `);
+};
+
+academicModuleView = function academicModuleViewV276() {
+  const info = ACADEMIC_TYPES[academicTab];
+  const labels = {
+    formaciones: 'Revise comunicados del curso, horas de control y hora del parte.',
+    tareas: 'Cambie entre vista general y por materia para ubicar pendientes más rápido.',
+    examenes: 'Consulte fechas, horarios, lugares y avisos de evaluación.',
+    resumenes: 'Publique texto, varios archivos y material de apoyo académico.'
+  };
+  const canPublishHere = academicCanPublishType(academicTab);
+  return `
+    ${academicProfileHeader()}
+    ${academicTextNav()}
+    <div class="online-module-head refined clean-module-head premium-module-head">
+      <div class="premium-module-copy">
+        <span class="module-visual-icon">${info.icon}</span>
+        <div><span class="eyebrow">Módulo académico</span><h3>${info.label}</h3><p>${labels[academicTab] || info.help}</p></div>
+      </div>
+      ${canPublishHere ? `<div class="module-create-actions"><button class="btn smart-outline-btn" onclick="openAcademicSmartComposerV276('${academicTab}')">Mensaje inteligente</button><button class="btn academic-main-btn premium-publish" onclick="openAcademicPostForm('${academicTab}')">Nueva publicación</button></div>` : `<span class="module-readonly-note">Consulta habilitada</span>`}
+    </div>
+    ${academicFilterBar()}
+    <div id="academicPosts"><div class="card small"><p>Cargando contenido…</p></div></div>
+  `;
+};
+
+saveAcademicPost = async function saveAcademicPostV276(event, type) {
+  event.preventDefault();
+  const form = event.currentTarget;
+  if (form.dataset.submitting === '1') return;
+  if (!academicCanPublishType(type)) return toast('Su rol no tiene permiso para publicar en este módulo');
+  if (onlineConfigured() && !navigator.onLine) return toast('Necesita conexión para publicar');
+
+  const submit = event.submitter || form.querySelector('button[type="submit"]');
+  form.dataset.submitting = '1';
+  if (submit) { submit.disabled = true; submit.dataset.originalText = submit.textContent; submit.textContent = 'Confirmando…'; }
+
+  try {
+    const formData = new FormData(form);
+    const values = Object.fromEntries(formData.entries());
+    let title = String(values.title || '').trim();
+    const body = String(values.body || '').trim();
+    delete values.title; delete values.body;
+
+    if (type === 'formaciones') title = `${values.formation_type || 'Formación'} · ${values.date || 'sin fecha'}`;
+    if (type === 'resumenes') title = `${values.subject || 'Resumen'} — ${values.topic || 'Tema'}`;
+
+    const smartMeta = (() => { try { return JSON.parse(form.dataset.smartMeta || 'null'); } catch { return null; } })();
+    if (smartMeta) {
+      values.smart_analysis = {
+        parser_version: smartMeta.parser_version || ACADEMIC_SMART_PARSER_VERSION_V276,
+        confidence: smartMeta.confidence || 0,
+        warnings: smartMeta.warnings || [],
+        source_text: smartMeta.fields?.source_text || smartMeta.body || ''
+      };
+    }
+
+    const files = academicValidateFiles($('#academicFiles')?.files || [], type);
+    if (type === 'resumenes' && !body && !files.length) throw new Error('Agregue una descripción o al menos un archivo académico');
+
+    let attachments = [];
+    if (form.dataset.uploadedAttachments) {
+      try { attachments = JSON.parse(form.dataset.uploadedAttachments); } catch {}
+    }
+    if (!attachments.length && files.length) {
+      attachments = await uploadAcademicFiles(files, type);
+      form.dataset.uploadedAttachments = JSON.stringify(attachments);
+    }
+
+    const primary = attachments[0] || null;
+    if (attachments.length) values.attachments = attachments;
+    const clientRequestId = form.dataset.clientRequestId || academicRequestIdV276();
+    form.dataset.clientRequestId = clientRequestId;
+    academicSaveDraftV276(type, form);
+
+    let confirmedPost = null;
+    if (onlineConfigured()) {
+      try {
+        const created = await academicRPCWithRetryV275('academic_create_post_v2', {
+          p_token: academicSession.session_token,
+          p_type: type,
+          p_title: title,
+          p_body: body,
+          p_fields: values,
+          p_file_url: primary?.url || null,
+          p_file_name: primary?.name || null,
+          p_file_mime: primary?.type || null,
+          p_file_size: primary?.size || null,
+          p_client_request_id: clientRequestId
+        }, 2);
+        confirmedPost = Array.isArray(created) ? created[0] : created;
+      } catch (v2Error) {
+        if (!/academic_create_post_v2|function.*not found|404/i.test(String(v2Error?.message || v2Error))) throw v2Error;
+        const createdId = await academicRPCWithRetryV275('academic_create_post', {
+          p_token: academicSession.session_token,
+          p_type: type,
+          p_title: title,
+          p_body: body,
+          p_fields: values,
+          p_file_url: primary?.url || null,
+          p_file_name: primary?.name || null,
+          p_file_mime: primary?.type || null,
+          p_file_size: primary?.size || null
+        }, 2);
+        const verified = await academicRPCWithRetryV275('academic_get_post', {
+          p_token: academicSession.session_token,
+          p_post_id: typeof createdId === 'string' ? createdId : createdId?.id
+        }, 2);
+        confirmedPost = Array.isArray(verified) ? verified[0] : verified;
+      }
+      if (!confirmedPost?.id) throw new Error('El servidor no confirmó la publicación');
+      await academicMergeDurablePostV275(type, confirmedPost);
+      academicLastSyncErrorV275 = null;
+      academicLastSyncAtV275 = new Date().toISOString();
+    } else {
+      confirmedPost = {
+        id:uid(), post_type:type, title, body, fields:values,
+        file_url:primary?.url||null, file_name:primary?.name||null,
+        file_mime:primary?.type||null, file_size:primary?.size||null,
+        author_id:academicSession.user_id, author_name:academicSession.full_name,
+        created_at:new Date().toISOString(), updated_at:new Date().toISOString(), archived:false
+      };
+      const posts = academicLocalPosts();
+      posts.unshift(confirmedPost);
+      academicSaveLocalPosts(posts);
+      await academicMergeDurablePostV275(type, confirmedPost);
+    }
+
+    academicClearDraftV276(type);
+    closeModal();
+    await loadAcademicPosts();
+    toast('Publicación confirmada y protegida');
+  } catch (error) {
+    console.error(error);
+    academicSaveDraftV276(type, form);
+    toast(academicFriendlyError(error, 'No se pudo confirmar la publicación. El borrador quedó guardado'));
+  } finally {
+    form.dataset.submitting = '0';
+    if (submit) { submit.disabled = false; submit.textContent = submit.dataset.originalText || 'Publicar'; }
+  }
+};
+
+
+/* =========================================================
+   Agenda Policial Online v2.7.7
+   Saneamiento visual, mensajes inteligentes por módulo
+   y preparación multicurso independiente.
+   ========================================================= */
+const ACADEMIC_COURSES_CACHE_V277 = 'agenda-academic-courses-v277';
+let academicCoursesV277 = (() => {
+  try { return JSON.parse(localStorage.getItem(ACADEMIC_COURSES_CACHE_V277) || '[]'); }
+  catch { return []; }
+})();
+
+function academicCourseLabelV277() {
+  return academicSession?.course_label || academicSession?.course_name ||
+    academicCoursesV277.find(item => item.code === academicSession?.course_code)?.label ||
+    (academicSession?.course_code === 'capitanes-b-2026-2' ? 'Capitanes B' : 'Capitanes A');
+}
+function academicCourseMetaV277() {
+  const course = academicCoursesV277.find(item => item.code === academicSession?.course_code);
+  const shift = academicSession?.course_shift || course?.shift || '';
+  const parallel = academicSession?.course_parallel || course?.parallel || '';
+  return [parallel ? `Paralelo ${parallel}` : '', shift ? `Turno ${shift}` : ''].filter(Boolean).join(' · ');
+}
+function academicStoreCoursesV277(rows) {
+  academicCoursesV277 = Array.isArray(rows) ? rows : [];
+  try { localStorage.setItem(ACADEMIC_COURSES_CACHE_V277, JSON.stringify(academicCoursesV277)); } catch {}
+}
+async function academicLoadMyCoursesV277(force = false) {
+  if (!academicSession) return [];
+  if (!onlineConfigured() || !navigator.onLine) return academicCoursesV277;
+  try {
+    const rows = await academicRPC('academic_get_my_courses', { p_token: academicSession.session_token });
+    academicStoreCoursesV277(rows || []);
+    return academicCoursesV277;
+  } catch (error) {
+    if (!academicIsNetworkError(error)) console.warn('Cursos online:', error);
+    return academicCoursesV277;
+  }
+}
+function academicCanSwitchCourseV277() {
+  return academicSession?.role === 'administrador_general' && academicCoursesV277.length > 1;
+}
+
+academicLogin = async function academicLoginV277() {
+  const ci = $('#academicCi')?.value.trim();
+  const phone = $('#academicPhone')?.value.trim();
+  if (!ci || !phone) return toast('Ingrese usuario y contraseña');
+  try {
+    let user;
+    if (onlineConfigured()) {
+      try {
+        user = await academicRPC('academic_login_v2', { p_ci:ci, p_phone:phone });
+      } catch (error) {
+        if (!/academic_login_v2|function.*not found|404/i.test(String(error?.message || error))) throw error;
+        user = await academicRPC('academic_login', { p_ci:ci, p_phone:phone });
+      }
+    } else {
+      user = await academicLocalLogin(ci, phone);
+    }
+    if (Array.isArray(user)) user = user[0];
+    if (!user?.session_token) return toast('Usuario o contraseña incorrectos, o acceso inactivo');
+    academicSession = { ...user, offline_cached:false, sync_error:false, last_validated_at:new Date().toISOString() };
+    academicTab = 'panel';
+    localStorage.setItem(ACADEMIC_SESSION_STORAGE, JSON.stringify(academicSession));
+    await academicLoadMyCoursesV277(true);
+    toast(`Acceso habilitado · ${academicCourseLabelV277()}`);
+    render();
+    setTimeout(() => loadAcademicDashboard(), 0);
+  } catch (error) {
+    console.error(error);
+    toast(academicIsNetworkError(error) ? 'Sin conexión. Intente nuevamente cuando tenga internet' : academicFriendlyError(error, 'No fue posible validar las credenciales'));
+  }
+};
+
+validateAcademicLocalSession = async function validateAcademicSessionV277() {
+  if (!academicSession) return;
+  if (onlineConfigured()) {
+    if (!academicRemoteTokenIsValid(academicSession.session_token)) {
+      academicSession = null;
+      localStorage.removeItem(ACADEMIC_SESSION_STORAGE);
+      return;
+    }
+    if (!navigator.onLine) {
+      academicSession.offline_cached = true;
+      localStorage.setItem(ACADEMIC_SESSION_STORAGE, JSON.stringify(academicSession));
+      return;
+    }
+    try {
+      let refreshed;
+      try {
+        refreshed = await academicRPC('academic_refresh_session_v2', { p_token:String(academicSession.session_token) });
+      } catch (error) {
+        if (!/academic_refresh_session_v2|function.*not found|404/i.test(String(error?.message || error))) throw error;
+        refreshed = await academicRPC('academic_refresh_session', { p_token:String(academicSession.session_token) });
+      }
+      const user = Array.isArray(refreshed) ? refreshed[0] : refreshed;
+      if (!user?.session_token || user.module_enabled === false) {
+        academicSession = null;
+        localStorage.removeItem(ACADEMIC_SESSION_STORAGE);
+        return;
+      }
+      academicSession = { ...academicSession, ...user, offline_cached:false, sync_error:false, last_validated_at:new Date().toISOString() };
+      localStorage.setItem(ACADEMIC_SESSION_STORAGE, JSON.stringify(academicSession));
+      await academicLoadMyCoursesV277(true);
+      return;
+    } catch (error) {
+      console.warn('Sesión conservada temporalmente:', error);
+      academicSession.offline_cached = true;
+      academicSession.sync_error = true;
+      localStorage.setItem(ACADEMIC_SESSION_STORAGE, JSON.stringify(academicSession));
+      return;
+    }
+  }
+  const users = await academicLocalUsers();
+  const user = users.find(item => String(item.id) === String(academicSession.user_id));
+  if (!user?.active) {
+    academicSession = null;
+    localStorage.removeItem(ACADEMIC_SESSION_STORAGE);
+    return;
+  }
+  academicSession.full_name = user.full_name;
+  academicSession.role = user.role;
+  localStorage.setItem(ACADEMIC_SESSION_STORAGE, JSON.stringify(academicSession));
+};
+
+async function academicSwitchCourseV277(courseCode) {
+  if (!academicSession || !courseCode || courseCode === academicSession.course_code) return;
+  if (!navigator.onLine) return toast('Necesita conexión para cambiar el curso online');
+  const selector = $('#academicCourseSelector');
+  if (selector) selector.disabled = true;
+  try {
+    let changed = await academicRPC('academic_select_course', {
+      p_token: academicSession.session_token,
+      p_course_code: courseCode
+    });
+    if (Array.isArray(changed)) changed = changed[0];
+    if (!changed?.course_code) throw new Error('El servidor no confirmó el cambio de curso');
+    academicSession = { ...academicSession, ...changed, offline_cached:false, sync_error:false };
+    localStorage.setItem(ACADEMIC_SESSION_STORAGE, JSON.stringify(academicSession));
+    academicUsersCache = [];
+    academicFilter = academicDefaultFilter('formaciones');
+    academicTab = 'panel';
+    await academicLoadMyCoursesV277(true);
+    render();
+    setTimeout(() => loadAcademicDashboard(), 0);
+    toast(`Curso activo: ${academicCourseLabelV277()}`);
+  } catch (error) {
+    console.error(error);
+    toast(academicFriendlyError(error, 'No se pudo cambiar de curso'));
+    if (selector) selector.value = academicSession.course_code;
+  } finally {
+    if (selector) selector.disabled = false;
+  }
+}
+
+academicProfileHeader = function academicProfileHeaderV277() {
+  const connection = academicConnectionState();
+  const name = academicDisplayName();
+  const options = academicCoursesV277.length
+    ? academicCoursesV277.map(course => `<option value="${esc(course.code)}" ${course.code === academicSession?.course_code ? 'selected' : ''}>${esc(course.label)}</option>`).join('')
+    : `<option value="${esc(academicSession?.course_code || '')}">${esc(academicCourseLabelV277())}</option>`;
+  return `
+    <div class="online-profile premium-profile compact-profile v277-profile">
+      <div class="online-avatar premium compact-avatar">${esc(academicInitials(name))}</div>
+      <div class="online-profile-copy compact-copy">
+        <span class="eyebrow">Área académica online</span>
+        <h2 class="profile-name-compact" title="${esc(name)}">${esc(name)}</h2>
+        <div class="profile-course-line">
+          ${academicCanSwitchCourseV277()
+            ? `<label class="course-selector-label"><span>Curso activo</span><select id="academicCourseSelector" onchange="academicSwitchCourseV277(this.value)">${options}</select></label>`
+            : `<span class="current-course-chip">${esc(academicCourseLabelV277())}${academicCourseMetaV277() ? ` · ${esc(academicCourseMetaV277())}` : ''}</span>`}
+        </div>
+        <div class="online-profile-meta enhanced-meta">
+          <span class="role-chip">${esc(academicRoleTone(academicSession?.role))}</span>
+          <span class="sync-pill ${connection.cls}">${connection.label}</span>
+        </div>
+      </div>
+      <button class="online-logout premium-logout compact-logout" onclick="academicLogout()" aria-label="Cerrar sesión">Salir</button>
+    </div>
+  `;
+};
+
+academicTextNav = function academicTextNavV277() {
+  const items = [
+    ['panel','Panel','⌂'],
+    ['formaciones','Formaciones','🛡️'],
+    ['tareas','Tareas','📘'],
+    ['examenes','Exámenes','📝'],
+    ['resumenes','Material','📚']
+  ];
+  if (academicCanManageUsers()) items.push(['usuarios','Nómina','👥']);
+  if (academicSession?.role === 'administrador_general') items.push(['cursos','Cursos','▦']);
+  return `
+    <nav class="academic-text-nav academic-text-nav-premium olive-gold-nav v277-nav" aria-label="Secciones académicas">
+      ${items.map(([key,label,icon]) => `<button class="${academicTab === key ? 'active' : ''}" onclick="setAcademicTab('${key}')"><span>${icon}</span><b>${label}</b></button>`).join('')}
+    </nav>
+  `;
+};
+academicSubnav = function academicSubnavV277() { return academicTextNav(); };
+
+academicDashboard = function academicDashboardV277() {
+  return `
+    ${academicProfileHeader()}
+    ${academicTextNav()}
+    <section class="academic-welcome compact-panel-hero v277-dashboard-hero">
+      <div>
+        <span class="eyebrow">${academicGreeting()} · ${esc(academicCourseLabelV277())}</span>
+        <h2>Resumen académico</h2>
+        <p id="academicTodayText">Revisando la actividad de hoy…</p>
+      </div>
+    </section>
+    <div class="academic-summary-grid compact-summary-grid" id="academicSummaryGrid">
+      ${['Formación','Tareas','Examen','Material'].map(label => `<div class="academic-summary-card loading"><strong>—</strong><b>${label}</b><small>Cargando…</small></div>`).join('')}
+    </div>
+    <section class="academic-today-card elevated-block compact-online-block">
+      <div class="online-section-heading compact"><div><span class="eyebrow">Información prioritaria</span><h3>Hoy y próximos días</h3></div></div>
+      <div id="academicUpcomingList" class="academic-timeline"><div class="academic-loading-line"></div></div>
+    </section>
+    <section class="academic-recent-card elevated-block compact-online-block">
+      <div class="online-section-heading compact"><div><span class="eyebrow">Actualizaciones</span><h3>Actividad reciente</h3></div></div>
+      <div id="academicRecentList"><div class="academic-loading-line"></div></div>
+    </section>
+  `;
+};
+
+function academicNewLabelV277(type) {
+  return ({
+    formaciones:'Nueva formación',
+    tareas:'Nueva tarea',
+    examenes:'Nuevo examen',
+    resumenes:'Nuevo material'
+  })[type] || 'Nueva publicación';
+}
+function academicSmartHelpV277(type) {
+  return ({
+    formaciones:'Pegue únicamente el comunicado de formación. Se buscarán fecha, lugar, control, parte y uniforme.',
+    tareas:'Pegue únicamente la instrucción de la tarea. Se buscarán materia, docente, entrega, prioridad e indicaciones.',
+    examenes:'Pegue únicamente el aviso del examen. Se buscarán materia, fecha, hora, lugar y temario.',
+    resumenes:'Pegue únicamente el mensaje del material académico. Se buscarán materia, tema y descripción.'
+  })[type] || '';
+}
+
+academicFilterBar = function academicFilterBarV277() {
+  const options = academicFilterOptions(academicTab);
+  const supportsSubject = ['tareas','examenes','resumenes'].includes(academicTab);
+  return `
+    <div class="academic-compact-controls">
+      <label><span>Mostrar</span>
+        <select onchange="setAcademicFilter(this.value)">
+          ${options.map(([key,label]) => `<option value="${key}" ${academicFilter === key ? 'selected' : ''}>${label}</option>`).join('')}
+        </select>
+      </label>
+      ${supportsSubject ? `<div class="academic-view-switch compact-switch"><button class="${academicViewMode === 'general' ? 'active' : ''}" onclick="setAcademicViewMode('general')">General</button><button class="${academicViewMode === 'subject' ? 'active' : ''}" onclick="setAcademicViewMode('subject')">Por materia</button></div>` : ''}
+    </div>
+  `;
+};
+
+academicModuleView = function academicModuleViewV277() {
+  const info = ACADEMIC_TYPES[academicTab];
+  const descriptions = {
+    formaciones:'Comunicados, horas de control, parte, lugar y uniforme.',
+    tareas:'Trabajos, entregas y seguimiento por materia.',
+    examenes:'Fechas, horarios, lugares y temarios.',
+    resumenes:'Resúmenes, documentos y material de apoyo.'
+  };
+  const canPublishHere = academicCanPublishType(academicTab);
+  return `
+    ${academicProfileHeader()}
+    ${academicTextNav()}
+    <div class="online-module-head premium-module-head v277-module-head">
+      <div class="premium-module-copy">
+        <span class="module-visual-icon">${info.icon}</span>
+        <div><span class="eyebrow">${esc(academicCourseLabelV277())}</span><h3>${info.label}</h3><p>${descriptions[academicTab] || info.help}</p></div>
+      </div>
+      ${canPublishHere ? `<button class="btn academic-main-btn premium-publish" onclick="openAcademicPostForm('${academicTab}')">${esc(academicNewLabelV277(academicTab))}</button>` : ''}
+    </div>
+    ${academicFilterBar()}
+    <div id="academicPosts"><div class="card small"><p>Cargando contenido…</p></div></div>
+  `;
+};
+
+function academicSmartInlinePanelV277(type, sourceText = '') {
+  return `
+    <section id="academicSmartInlinePanel" class="smart-composer v277-smart-inline" hidden>
+      <div class="smart-composer-head">
+        <div><span class="eyebrow">Mensaje inteligente · ${esc(ACADEMIC_TYPES[type]?.label || '')}</span><h3>Analizar y completar</h3></div>
+        <span class="smart-local-chip">En el dispositivo</span>
+      </div>
+      <p>${esc(academicSmartHelpV277(type))}</p>
+      <textarea id="academicSmartText" rows="6" placeholder="Pegue aquí el mensaje completo…">${academicValueV276(sourceText)}</textarea>
+      <div class="smart-actions">
+        <button type="button" class="btn smart-analyze-btn" onclick="academicAnalyzeMessageInlineV277('${type}')">Analizar texto</button>
+        <button type="button" class="btn secondary" onclick="academicClearSmartMessageV276()">Limpiar</button>
+      </div>
+      <div id="academicSmartPreview"></div>
+    </section>
+  `;
+}
+function academicToggleEntryModeV277(mode) {
+  const panel = $('#academicSmartInlinePanel');
+  const manualButton = $('#academicModeManual');
+  const smartButton = $('#academicModeSmart');
+  const isSmart = mode === 'smart';
+  if (panel) panel.hidden = !isSmart;
+  manualButton?.classList.toggle('active', !isSmart);
+  smartButton?.classList.toggle('active', isSmart);
+  if (isSmart) setTimeout(() => $('#academicSmartText')?.focus(), 50);
+}
+function academicAnalyzeMessageInlineV277(type) {
+  const text = $('#academicSmartText')?.value || '';
+  academicSmartCandidatesV276 = academicAnalyzeTextV276(text, type);
+  const preview = $('#academicSmartPreview');
+  if (preview) preview.innerHTML = academicSmartPreviewV276(academicSmartCandidatesV276, 'form');
+  if (!academicSmartCandidatesV276.length) toast('Pegue un mensaje para analizar');
+}
+academicApplySmartCandidateV276 = function academicApplySmartCandidateV277(index) {
+  const candidate = academicSmartCandidatesV276[index];
+  const form = $('#academicPostForm');
+  if (!candidate || !form) return;
+  const values = { ...candidate.fields, title:candidate.title, body:candidate.body };
+  Object.entries(values).forEach(([key,value]) => {
+    const control = form.elements.namedItem(key);
+    if (control && String(value || '').trim()) control.value = value;
+  });
+  form.dataset.smartMeta = JSON.stringify(candidate);
+  academicScheduleDraftV276(candidate.type, form);
+  const preview = $('#academicSmartPreview');
+  if (preview) preview.innerHTML = `<div class="smart-applied"><b>Formulario completado</b><span>${candidate.warnings.length ? esc(candidate.warnings.join(' · ')) : 'Datos principales detectados. Revise y publique.'}</span></div>`;
+  toast('Datos organizados. Revise antes de publicar');
+};
+
+openAcademicPostForm = function openAcademicPostFormV277(type, candidate = null) {
+  const labels = ACADEMIC_TYPES[type];
+  if (!labels || !academicCanPublishType(type)) return toast('Su rol no tiene permiso para publicar en este módulo');
+  if (onlineConfigured() && !navigator.onLine) return toast('Necesita conexión para publicar contenido online');
+
+  const draft = !candidate ? academicReadDraftV276(type) : null;
+  const prefill = candidate || (draft ? { values:draft.values, source_text:draft.source_text } : {});
+  const fileLabel = type === 'resumenes' ? 'Archivos académicos' : 'Archivo opcional';
+  const fileHelp = type === 'resumenes'
+    ? 'Hasta 8 archivos Word, PDF o imagen.'
+    : 'Word, PDF o imagen.';
+
+  showModal(`
+    <button class="icon-btn close" onclick="closeModal()">×</button>
+    <div class="v277-form-heading"><span class="eyebrow">${esc(academicCourseLabelV277())}</span><h2>${esc(academicNewLabelV277(type))}</h2></div>
+    ${draft && !candidate ? `<div class="draft-recovered"><b>Borrador recuperado</b><span>Se restauró la información que estaba llenando.</span><button type="button" onclick="academicDiscardDraftV276('${type}')">Descartar</button></div>` : ''}
+    <form id="academicPostForm" class="form smart-academic-form v277-post-form">
+      <div class="entry-mode-switch" aria-label="Forma de llenado">
+        <button id="academicModeManual" type="button" class="active" onclick="academicToggleEntryModeV277('manual')">Llenado manual</button>
+        <button id="academicModeSmart" type="button" onclick="academicToggleEntryModeV277('smart')">Mensaje inteligente</button>
+      </div>
+      ${academicSmartInlinePanelV277(type, prefill.source_text || prefill.fields?.source_text || '')}
+      <div class="structured-fields-title"><span>Información de ${esc(labels.label.toLowerCase())}</span><small>Revise antes de publicar.</small></div>
+      ${academicFieldsForTypeV276(type, prefill)}
+      <label>${fileLabel}<input id="academicFiles" type="file" ${type === 'resumenes' ? 'multiple' : ''} accept=".doc,.docx,.pdf,image/*"></label>
+      <p class="subtle compact-file-help">${fileHelp}</p>
+      <div id="academicSelectedFiles" class="selected-files-note"></div>
+      <div class="form-actions sticky-actions">
+        <button class="btn academic-main-btn" type="submit">Publicar</button>
+        <button class="btn secondary" type="button" onclick="closeModal()">Cancelar</button>
+      </div>
+    </form>
+  `);
+
+  const form = $('#academicPostForm');
+  form.dataset.clientRequestId = draft?.client_request_id || academicRequestIdV276();
+  if (draft?.smart_meta) form.dataset.smartMeta = draft.smart_meta;
+  if (candidate) form.dataset.smartMeta = JSON.stringify(candidate);
+  form.addEventListener('input', () => academicScheduleDraftV276(type, form));
+  form.addEventListener('change', () => academicScheduleDraftV276(type, form));
+  form.onsubmit = event => saveAcademicPost(event, type);
+
+  const input = $('#academicFiles');
+  const preview = $('#academicSelectedFiles');
+  input?.addEventListener('change', () => {
+    const files = Array.from(input.files || []);
+    preview.innerHTML = files.length
+      ? `<div class="selected-files-list">${files.map(file => `<span><b>${esc(file.name)}</b><small>${Math.ceil(file.size/1024)} KB</small></span>`).join('')}</div>`
+      : '';
+  });
+
+  if (candidate || prefill.source_text) {
+    academicToggleEntryModeV277('smart');
+    setTimeout(() => {
+      if (candidate) {
+        academicSmartCandidatesV276 = [candidate];
+        const previewBox = $('#academicSmartPreview');
+        if (previewBox) previewBox.innerHTML = academicSmartPreviewV276([candidate], 'form');
+      }
+    }, 0);
+  }
+};
+
+openAcademicPublishMenu = function openAcademicPublishMenuV277() {
+  const allowed = academicAllowedTypesForRole();
+  if (!allowed.length || academicIsTestSession()) return toast('Su rol es únicamente de lectura');
+  showModal(`
+    <button class="icon-btn close" onclick="closeModal()">×</button>
+    <span class="eyebrow">${esc(academicCourseLabelV277())}</span>
+    <h2>Nueva publicación</h2>
+    <div class="academic-publish-grid compact-publish-grid">
+      ${allowed.map(key => {
+        const item = ACADEMIC_TYPES[key];
+        return `<button onclick="closeModal();openAcademicPostForm('${key}')"><span>${item.icon}</span><b>${esc(academicNewLabelV277(key))}</b></button>`;
+      }).join('')}
+    </div>
+  `);
+};
+
+academicUsersView = function academicUsersViewV277() {
+  return `
+    ${academicProfileHeader()}
+    ${academicTextNav()}
+    <div class="online-module-head premium-module-head v277-module-head">
+      <div class="premium-module-copy">
+        <span class="module-visual-icon">👥</span>
+        <div><span class="eyebrow">${esc(academicCourseLabelV277())}</span><h3>Nómina y roles</h3><p>Integrantes y permisos exclusivos del curso activo.</p></div>
+      </div>
+      <button class="btn academic-main-btn" onclick="openAcademicUserForm()">Agregar integrante</button>
+    </div>
+    <div class="roster-actions v277-roster-actions">
+      <label class="roster-search"><span>Buscar</span><input id="academicUserSearch" placeholder="Apellido o C.I." oninput="filterAcademicUsers()"></label>
+      <label class="roster-filter"><span>Rol</span><select id="academicRoleFilter" onchange="filterAcademicUsers()"><option value="">Todos</option><option value="encargado_curso">Encargado</option><option value="administrador_academico">Administrador académico</option><option value="asistente_academico">Asistente</option><option value="lector">Lectores</option></select></label>
+    </div>
+    <details class="compact-import-panel"><summary>Importar nómina desde CSV</summary><p>Use esta opción cuando disponga de la lista oficial con nombres, C.I. y celulares.</p><button class="btn secondary" onclick="openRosterImport()">Seleccionar archivo CSV</button></details>
+    <div id="academicUsersSummary" class="roster-summary"></div>
+    <div id="academicUsersList"><div class="card small"><p>Cargando nómina…</p></div></div>
+  `;
+};
+
+function academicCoursesViewV277() {
+  return `
+    ${academicProfileHeader()}
+    ${academicTextNav()}
+    <div class="online-module-head premium-module-head v277-module-head">
+      <div class="premium-module-copy">
+        <span class="module-visual-icon">▦</span>
+        <div><span class="eyebrow">Administración general</span><h3>Cursos online</h3><p>Espacios independientes, nóminas y contenido separado.</p></div>
+      </div>
+      <button class="btn academic-main-btn" onclick="openAcademicCourseFormV277()">Nuevo curso</button>
+    </div>
+    <div id="academicCoursesList"><div class="card small"><p>Cargando cursos…</p></div></div>
+  `;
+}
+async function loadAcademicCoursesViewV277() {
+  const box = $('#academicCoursesList');
+  if (!box || !academicSession) return;
+  try {
+    const rows = await academicRPC('academic_admin_courses', { p_token:academicSession.session_token });
+    academicStoreCoursesV277((rows || []).map(course => ({
+      ...course,
+      my_role:'administrador_general',
+      is_selected:course.code === academicSession.course_code
+    })));
+    box.innerHTML = rows?.length ? rows.map(course => {
+      const expected = Number(course.expected_members || 0);
+      const registered = Number(course.registered_members || 0);
+      const pending = Math.max(expected - registered, 0);
+      const selected = course.code === academicSession.course_code;
+      return `
+        <article class="course-admin-card ${selected ? 'selected' : ''}">
+          <div class="course-admin-main">
+            <span class="course-parallel">${esc(course.level || 'Curso')} ${course.parallel ? `· ${esc(course.parallel)}` : ''}</span>
+            <h3>${esc(course.label)}</h3>
+            <p>${esc(course.shift || '')}${course.period_name ? ` · ${esc(course.period_name)}` : ''}</p>
+          </div>
+          <div class="course-admin-stats">
+            <span><b>${registered}</b><small>registrados</small></span>
+            <span><b>${expected || '—'}</b><small>previstos</small></span>
+            <span><b>${pending}</b><small>pendientes</small></span>
+          </div>
+          <div class="course-admin-footer">
+            <span class="course-state ${course.module_enabled ? 'on' : 'off'}">${course.module_enabled ? 'Online habilitado' : 'Online cerrado'}</span>
+            ${selected ? '<span class="selected-course-label">Curso activo</span>' : `<button class="btn secondary" onclick="academicSwitchCourseV277('${esc(course.code)}')">Abrir curso</button>`}
+          </div>
+        </article>`;
+    }).join('') : '<div class="card small"><p>No existen cursos configurados.</p></div>';
+  } catch (error) {
+    console.error(error);
+    box.innerHTML = '<div class="card warn-card"><p>No fue posible consultar los cursos.</p></div>';
+  }
+}
+function academicSlugV277(value) {
+  return String(value || '').normalize('NFD').replace(/[\u0300-\u036f]/g,'').toLowerCase().replace(/[^a-z0-9]+/g,'-').replace(/^-|-$/g,'');
+}
+function openAcademicCourseFormV277() {
+  const schedules = typeof scheduleCatalog === 'function' ? scheduleCatalog() : [];
+  showModal(`
+    <button class="icon-btn close" onclick="closeModal()">×</button>
+    <span class="eyebrow">Administración general</span>
+    <h2>Crear curso online</h2>
+    <form id="academicCourseForm" class="form">
+      <label>Nombre del curso<input name="label" required placeholder="Ej.: Capitanes C"></label>
+      <div class="two-col"><label>Nivel<input name="level" required placeholder="Capitanes"></label><label>Paralelo<input name="parallel" required maxlength="8" placeholder="C"></label></div>
+      <div class="two-col"><label>Turno<select name="shift"><option>Mañana</option><option>Tarde</option><option>Noche</option><option>Mixto</option></select></label><label>Integrantes previstos<input name="expected_members" type="number" min="0" value="0"></label></div>
+      <label>Periodo<input name="period_name" value="Segundo semestre · Gestión 2026"></label>
+      <label>Horario offline relacionado<select name="schedule_catalog_id"><option value="">Sin relacionar</option>${schedules.map(item => `<option value="${esc(item.id)}">${esc(item.etiqueta || item.id)}</option>`).join('')}</select></label>
+      <div class="form-actions"><button class="btn academic-main-btn" type="submit">Crear curso</button><button class="btn secondary" type="button" onclick="closeModal()">Cancelar</button></div>
+    </form>
+  `);
+  $('#academicCourseForm').onsubmit = saveAcademicCourseV277;
+}
+async function saveAcademicCourseV277(event) {
+  event.preventDefault();
+  const form = event.currentTarget;
+  const values = Object.fromEntries(new FormData(form).entries());
+  const code = `${academicSlugV277(values.label)}-2026-2`;
+  const submit = event.submitter;
+  if (submit) { submit.disabled = true; submit.textContent = 'Creando…'; }
+  try {
+    await academicRPC('academic_create_course', {
+      p_token:academicSession.session_token,
+      p_code:code,
+      p_label:values.label,
+      p_level:values.level,
+      p_parallel:values.parallel,
+      p_shift:values.shift,
+      p_period_name:values.period_name,
+      p_expected_members:Number(values.expected_members || 0),
+      p_schedule_catalog_id:values.schedule_catalog_id || null
+    });
+    closeModal();
+    await academicLoadMyCoursesV277(true);
+    render();
+    setTimeout(() => loadAcademicCoursesViewV277(), 0);
+    toast('Curso online creado');
+  } catch (error) {
+    console.error(error);
+    toast(academicFriendlyError(error, 'No se pudo crear el curso'));
+    if (submit) { submit.disabled = false; submit.textContent = 'Crear curso'; }
+  }
+}
+
+renderOnline = function renderOnlineV277() {
+  if (!academicSession) return onlineLoginView();
+  if (academicTab === 'panel') return `<section class="online-page">${academicDashboard()}</section>`;
+  if (academicTab === 'usuarios' && academicCanManageUsers()) return `<section class="online-page">${academicUsersView()}</section>`;
+  if (academicTab === 'cursos' && academicSession?.role === 'administrador_general') return `<section class="online-page">${academicCoursesViewV277()}</section>`;
+  if (!ACADEMIC_TYPES[academicTab]) academicTab = 'panel';
+  return `<section class="online-page">${academicModuleView()}</section>`;
+};
+
+setAcademicTab = async function setAcademicTabV277(tab) {
+  academicTab = tab;
+  if (ACADEMIC_TYPES[tab]) academicFilter = academicDefaultFilter(tab);
+  render();
+  setTimeout(() => {
+    if (ACADEMIC_TYPES[tab]) loadAcademicPosts();
+    if (tab === 'usuarios') loadAcademicUsers();
+    if (tab === 'cursos') loadAcademicCoursesViewV277();
+    if (tab === 'panel') loadAcademicDashboard();
+  }, 0);
+};
+
+const _renderOnlineMulticourseV277 = render;
+render = function renderWithMulticourseV277() {
+  _renderOnlineMulticourseV277();
+  if (state.activated && state.mode && state.view === 'online' && academicSession) {
+    setTimeout(() => {
+      academicLoadMyCoursesV277().then(rows => {
+        if (rows.length > 1 && !$('#academicCourseSelector') && academicSession?.role === 'administrador_general') {
+          _renderOnlineMulticourseV277();
+        }
+      });
+      if (academicTab === 'cursos') loadAcademicCoursesViewV277();
+    }, 0);
+  }
+};
+
+
+/* =========================================================
+   Agenda Policial Online v2.7.8 — rol oficial de exámenes
+   ========================================================= */
+const ACADEMIC_EXAM_ROLE_ASSET_V278 = 'assets/rol-examenes-primer-parcial-2026.jpg';
+
+function academicExamRoleDateLabelV278(iso) {
+  if (!iso) return '';
+  const date = new Date(`${iso}T12:00:00`);
+  if (Number.isNaN(date.getTime())) return iso;
+  return date.toLocaleDateString('es-BO', { weekday:'short', day:'2-digit', month:'short' })
+    .replace('.', '');
+}
+
+function academicExamRoleScheduleV278(fields) {
+  const rows = Array.isArray(fields?.schedule) ? fields.schedule : [];
+  if (!rows.length) return '';
+  return `<div class="exam-role-schedule-v278">${rows.map(item => {
+    const subjects = Array.isArray(item.subjects) ? item.subjects : [];
+    return `<div class="exam-role-day-v278">
+      <span>${esc(academicExamRoleDateLabelV278(item.date))}</span>
+      <div>${subjects.map(subject => `<b>${esc(subject)}</b>`).join('')}</div>
+    </div>`;
+  }).join('')}</div>`;
+}
+
+function openAcademicExamRoleV278(asset = ACADEMIC_EXAM_ROLE_ASSET_V278) {
+  const safeAsset = String(asset || ACADEMIC_EXAM_ROLE_ASSET_V278);
+  showModal(`
+    <button class="icon-btn close" onclick="closeModal()">×</button>
+    <span class="eyebrow">Documento oficial</span>
+    <h2>Rol de exámenes · 1er parcial</h2>
+    <p class="subtle">La imagen se conserva como referencia oficial. Puede ampliarla directamente en el dispositivo.</p>
+    <div class="exam-role-image-wrap-v278">
+      <img src="${esc(safeAsset)}" alt="Rol oficial de exámenes del primer parcial" loading="eager">
+    </div>
+    <div class="form-actions">
+      <a class="btn academic-main-btn" href="${esc(safeAsset)}" target="_blank" rel="noopener">Abrir imagen completa</a>
+      <button class="btn secondary" type="button" onclick="closeModal()">Cerrar</button>
+    </div>
+  `);
+}
+
+const academicPostCardBeforeV278 = academicPostCard;
+academicPostCard = function academicPostCardV278(post) {
+  const fields = post?.fields || {};
+  if (post?.post_type !== 'examenes' || !fields.role_reference) {
+    return academicPostCardBeforeV278(post);
+  }
+  const asset = fields.reference_asset || ACADEMIC_EXAM_ROLE_ASSET_V278;
+  const dateRange = [fields.date, fields.end_date].filter(Boolean).join(' al ');
+  return `<article class="card academic-post exam-role-card-v278">
+    <div class="row between">
+      <span class="tag">Exámenes</span>
+      <span class="academic-status exam">Rol oficial</span>
+    </div>
+    <div class="exam-role-heading-v278">
+      <div class="exam-role-icon-v278">📝</div>
+      <div>
+        <span class="eyebrow">${esc(fields.course_label || academicCourseLabelV277())}</span>
+        <h3>${esc(post.title || 'Rol oficial de exámenes')}</h3>
+        <p>${dateRange ? `Vigencia: ${esc(dateRange)}` : 'Consulte las fechas oficiales.'}</p>
+      </div>
+    </div>
+    ${academicExamRoleScheduleV278(fields)}
+    <div class="exam-role-actions-v278">
+      <button class="btn academic-main-btn" onclick="openAcademicExamRoleV278('${esc(asset)}')">Ver rol completo</button>
+    </div>
+    <p class="exam-role-source-v278">Los horarios y docentes exactos deben verificarse en la imagen oficial.</p>
+  </article>`;
+};
+
+
+/* =========================================================
+   Agenda Policial Online v2.7.9 — Banco de preguntas
+   ========================================================= */
+const ACADEMIC_BANK_CACHE_V279 = 'agenda-question-banks-v279';
+let academicBankRowsV279 = [];
+let academicBankSearchV279 = '';
+let academicBankAdminQuestionsV279 = new Map();
+let academicBankImportRowsV279 = [];
+let academicBankActiveAttemptV279 = null;
+let academicBankAttemptIndexV279 = 0;
+let academicBankAttemptAnswersV279 = new Map();
+let academicBankSubmittingV279 = false;
+
+function academicCanManageBankV279(){
+  return ['administrador_general','administrador_academico','encargado_curso','asistente_academico'].includes(academicSession?.role) && !academicIsTestSession();
+}
+function academicBankCacheKeyV279(){
+  return `${ACADEMIC_BANK_CACHE_V279}:${academicSession?.course_code || 'curso'}`;
+}
+function academicBankStoreCacheV279(rows){
+  academicBankRowsV279 = Array.isArray(rows) ? rows : [];
+  try{ localStorage.setItem(academicBankCacheKeyV279(), JSON.stringify({rows:academicBankRowsV279,saved_at:new Date().toISOString()})); }catch{}
+}
+function academicBankReadCacheV279(){
+  try{
+    const parsed=JSON.parse(localStorage.getItem(academicBankCacheKeyV279())||'{}');
+    return Array.isArray(parsed.rows)?parsed.rows:[];
+  }catch{return []}
+}
+function academicBankModeLabelV279(mode){
+  return ({estudio:'Estudio',evaluacion:'Evaluación',mixto:'Estudio + evaluación'})[mode] || mode || 'Banco';
+}
+function academicBankStatusV279(bank){
+  if(!bank.published)return '<span class="bank-status-v279 draft">Borrador</span>';
+  return '<span class="bank-status-v279 published">Publicado</span>';
+}
+function academicBankNormalizeV279(value){
+  return String(value||'').normalize('NFD').replace(/[\u0300-\u036f]/g,'').toLowerCase();
+}
+function academicBankVisibleRowsV279(){
+  const query=academicBankNormalizeV279(academicBankSearchV279).trim();
+  if(!query)return academicBankRowsV279;
+  return academicBankRowsV279.filter(bank=>academicBankNormalizeV279([bank.subject,bank.topic,bank.title].join(' ')).includes(query));
+}
+
+academicTextNav = function academicTextNavV279(){
+  const items=[
+    ['panel','Panel','⌂'],['formaciones','Formaciones','🛡️'],['tareas','Tareas','📘'],['examenes','Exámenes','📝'],
+    ['banco','Banco','❓'],['resumenes','Material','📚']
+  ];
+  if(academicCanManageUsers())items.push(['usuarios','Nómina','👥']);
+  if(academicSession?.role==='administrador_general')items.push(['cursos','Cursos','▦']);
+  return `<nav class="academic-text-nav academic-text-nav-premium olive-gold-nav v277-nav v279-nav" aria-label="Secciones académicas">
+    ${items.map(([key,label,icon])=>`<button class="${academicTab===key?'active':''}" onclick="setAcademicTab('${key}')"><span>${icon}</span><b>${label}</b></button>`).join('')}
+  </nav>`;
+};
+academicSubnav = function academicSubnavV279(){ return academicTextNav(); };
+
+function academicBankViewV279(){
+  return `
+    ${academicProfileHeader()}
+    ${academicTextNav()}
+    <div class="online-module-head premium-module-head v277-module-head bank-head-v279">
+      <div class="premium-module-copy">
+        <span class="module-visual-icon">❓</span>
+        <div><span class="eyebrow">${esc(academicCourseLabelV277())}</span><h3>Banco de preguntas</h3><p>Práctica por materia y simulacros con resultado individual.</p></div>
+      </div>
+      ${academicCanManageBankV279()?'<button class="btn academic-main-btn" onclick="openAcademicBankFormV279()">Nuevo banco</button>':''}
+    </div>
+    <div class="bank-toolbar-v279">
+      <label><span>Buscar</span><input id="academicBankSearch" placeholder="Materia o tema" value="${esc(academicBankSearchV279)}" oninput="academicFilterBanksV279(this.value)"></label>
+      <div class="bank-toolbar-note-v279">${navigator.onLine?'Sincronizado con el curso activo':'Sin conexión · mostrando copia guardada'}</div>
+    </div>
+    <div id="academicBankListV279"><div class="card small"><p>Cargando bancos…</p></div></div>
+  `;
+}
+
+async function loadAcademicBanksV279(){
+  const box=$('#academicBankListV279');
+  if(!box||!academicSession)return;
+  try{
+    let rows=[];
+    if(onlineConfigured()&&navigator.onLine){
+      rows=await academicRPCWithRetryV275('academic_bank_list',{p_token:academicSession.session_token},2);
+      academicBankStoreCacheV279(rows||[]);
+    }else{
+      rows=academicBankReadCacheV279();
+      academicBankRowsV279=rows;
+    }
+    academicRenderBankListV279();
+  }catch(error){
+    console.error(error);
+    academicBankRowsV279=academicBankReadCacheV279();
+    academicRenderBankListV279(true);
+  }
+}
+function academicFilterBanksV279(value){
+  academicBankSearchV279=String(value||'');
+  academicRenderBankListV279();
+}
+function academicRenderBankListV279(syncError=false){
+  const box=$('#academicBankListV279'); if(!box)return;
+  const rows=academicBankVisibleRowsV279();
+  const warning=syncError?'<div class="academic-sync-banner warning"><div><b>No se pudo actualizar</b><small>Se muestra la última copia disponible.</small></div><button onclick="loadAcademicBanksV279()">Reintentar</button></div>':'';
+  if(!rows.length){
+    box.innerHTML=warning+`<div class="bank-empty-v279"><span>❓</span><b>No hay bancos de preguntas disponibles.</b><p>${academicCanManageBankV279()?'Puede crear el primer banco por materia y cargar preguntas manualmente, desde texto o CSV.':'Cuando se publique un banco para este curso aparecerá aquí.'}</p></div>`;
+    return;
+  }
+  box.innerHTML=warning+`<div class="bank-grid-v279">${rows.map(academicBankCardV279).join('')}</div>`;
+}
+function academicBankCardV279(bank){
+  const attempts=Number(bank.my_attempts||0);
+  const best=bank.my_best_score===null||bank.my_best_score===undefined?'—':`${Number(bank.my_best_score).toFixed(0)}%`;
+  const count=Number(bank.question_count||0);
+  const mode=bank.bank_mode||'mixto';
+  const disabled=!navigator.onLine?'disabled':'';
+  let action='';
+  if(bank.published){
+    if(mode==='estudio') action=`<button class="btn bank-study-btn-v279" ${disabled} onclick="startAcademicBankAttemptV279('${bank.id}','estudio')">Estudiar</button>`;
+    else if(mode==='evaluacion') action=`<button class="btn academic-main-btn" ${disabled} onclick="startAcademicBankAttemptV279('${bank.id}','evaluacion')">Simulacro</button>`;
+    else action=`<button class="btn bank-study-btn-v279" ${disabled} onclick="startAcademicBankAttemptV279('${bank.id}','estudio')">Estudiar</button><button class="btn academic-main-btn" ${disabled} onclick="startAcademicBankAttemptV279('${bank.id}','evaluacion')">Simulacro</button>`;
+  }
+  return `<article class="bank-card-v279 ${bank.published?'':'draft'}">
+    <div class="bank-card-top-v279"><span class="bank-subject-v279">${esc(bank.subject)}</span>${academicBankStatusV279(bank)}</div>
+    <h3>${esc(bank.title||bank.topic)}</h3><p>${esc(bank.topic)}</p>
+    ${bank.description?`<small class="bank-description-v279">${esc(bank.description)}</small>`:''}
+    <div class="bank-metrics-v279">
+      <span><b>${count}</b><small>preguntas</small></span><span><b>${esc(academicBankModeLabelV279(mode))}</b><small>modalidad</small></span><span><b>${best}</b><small>mejor nota</small></span>
+    </div>
+    <div class="bank-card-actions-v279">${action}${attempts?`<button class="text-btn bank-history-btn-v279" onclick="openAcademicBankHistoryV279('${bank.id}')">Historial (${attempts})</button>`:''}${academicCanManageBankV279()?`<button class="text-btn bank-manage-btn-v279" onclick="openAcademicBankManageV279('${bank.id}')">Administrar</button>`:''}</div>
+  </article>`;
+}
+
+function openAcademicBankFormV279(bankId=''){
+  const bank=academicBankRowsV279.find(item=>String(item.id)===String(bankId))||{};
+  const editing=Boolean(bank.id);
+  showModal(`<button class="icon-btn close" onclick="closeModal()">×</button>
+    <span class="eyebrow">${esc(academicCourseLabelV277())}</span><h2>${editing?'Editar banco':'Nuevo banco de preguntas'}</h2>
+    <form id="academicBankFormV279" class="form bank-form-v279">
+      <label>Materia<input name="subject" required value="${esc(bank.subject||'')}" placeholder="Ej.: Ciencia Política"></label>
+      <label>Tema<input name="topic" required value="${esc(bank.topic||'')}" placeholder="Ej.: Crisis institucional y rol del Estado"></label>
+      <label>Título<input name="title" value="${esc(bank.title||'')}" placeholder="Si queda vacío se usará el tema"></label>
+      <label>Descripción<textarea name="description" rows="3" placeholder="Indicaciones opcionales">${esc(bank.description||'')}</textarea></label>
+      <div class="two-col"><label>Modalidad<select name="bank_mode"><option value="mixto" ${bank.bank_mode==='mixto'||!bank.bank_mode?'selected':''}>Estudio + evaluación</option><option value="estudio" ${bank.bank_mode==='estudio'?'selected':''}>Solo estudio</option><option value="evaluacion" ${bank.bank_mode==='evaluacion'?'selected':''}>Solo evaluación</option></select></label><label>Aprobación mínima (%)<input name="passing_score" type="number" min="0" max="100" value="${Number(bank.passing_score??60)}"></label></div>
+      <div class="two-col"><label>Preguntas por intento<input name="questions_per_attempt" type="number" min="0" value="${Number(bank.questions_per_attempt??0)}"><small>0 = usar todas</small></label><label class="checkline-v279"><input name="shuffle_questions" type="checkbox" ${bank.shuffle_questions!==false?'checked':''}> Mezclar preguntas</label></div>
+      <div class="form-actions"><button class="btn academic-main-btn" type="submit">${editing?'Guardar cambios':'Crear banco'}</button><button class="btn secondary" type="button" onclick="closeModal()">Cancelar</button></div>
+    </form>`);
+  $('#academicBankFormV279').onsubmit=event=>saveAcademicBankFormV279(event,bank.id||'');
+}
+async function saveAcademicBankFormV279(event,bankId=''){
+  event.preventDefault(); const form=event.currentTarget; const button=event.submitter;
+  if(button){button.disabled=true;button.textContent='Guardando…'}
+  try{
+    const values=Object.fromEntries(new FormData(form).entries());
+    const payload={p_token:academicSession.session_token,p_subject:values.subject,p_topic:values.topic,p_title:values.title||'',p_description:values.description||'',p_bank_mode:values.bank_mode,p_passing_score:Number(values.passing_score||60),p_questions_per_attempt:Number(values.questions_per_attempt||0),p_shuffle_questions:Boolean(form.elements.shuffle_questions.checked)};
+    let id=bankId;
+    if(bankId){await academicRPCWithRetryV275('academic_bank_update',{...payload,p_bank_id:bankId},2)}
+    else{id=await academicRPCWithRetryV275('academic_bank_create',payload,2)}
+    closeModal(); await loadAcademicBanksV279(); toast(bankId?'Banco actualizado':'Banco creado');
+    if(id)setTimeout(()=>openAcademicBankManageV279(typeof id==='string'?id:id?.id||id),50);
+  }catch(error){console.error(error);toast(academicFriendlyError(error,'No se pudo guardar el banco'));if(button){button.disabled=false;button.textContent=bankId?'Guardar cambios':'Crear banco'}}
+}
+
+async function openAcademicBankManageV279(bankId){
+  if(!academicCanManageBankV279())return toast('No tiene permiso para administrar bancos');
+  const bank=academicBankRowsV279.find(item=>String(item.id)===String(bankId)); if(!bank)return toast('Banco no encontrado');
+  try{
+    const rows=await academicRPCWithRetryV275('academic_bank_admin_questions',{p_token:academicSession.session_token,p_bank_id:bankId},2);
+    academicBankAdminQuestionsV279.set(String(bankId),rows||[]);
+    renderAcademicBankManageV279(bank);
+  }catch(error){console.error(error);toast(academicFriendlyError(error,'No se pudieron cargar las preguntas'))}
+}
+function renderAcademicBankManageV279(bank){
+  const questions=academicBankAdminQuestionsV279.get(String(bank.id))||[];
+  showModal(`<button class="icon-btn close" onclick="closeModal()">×</button>
+    <div class="bank-manage-head-v279"><div><span class="eyebrow">${esc(bank.subject)}</span><h2>${esc(bank.title||bank.topic)}</h2><p>${esc(bank.topic)} · ${questions.length} preguntas</p></div>${academicBankStatusV279(bank)}</div>
+    <div class="bank-manage-actions-v279"><button class="btn academic-main-btn" onclick="openAcademicBankQuestionFormV279('${bank.id}')">Agregar pregunta</button><button class="btn secondary" onclick="openAcademicBankImportV279('${bank.id}')">Importar preguntas</button><button class="text-btn" onclick="closeModal();openAcademicBankFormV279('${bank.id}')">Editar datos</button></div>
+    <div class="bank-publish-strip-v279"><span>${bank.published?'Visible para el curso':'Todavía no visible para estudiantes'}</span><button class="btn ${bank.published?'secondary':'academic-main-btn'}" onclick="toggleAcademicBankPublishV279('${bank.id}',${bank.published?'false':'true'})">${bank.published?'Ocultar banco':'Publicar banco'}</button></div>
+    <div class="bank-question-admin-list-v279">${questions.length?questions.map(q=>`<article><div><span>Pregunta ${q.question_order}</span><b>${esc(q.question_text)}</b><small>Correcta: ${esc(q.correct_option)}${q.explanation?' · Con explicación':''}</small></div><div><button class="icon-btn" title="Editar" onclick="openAcademicBankQuestionFormV279('${bank.id}','${q.id}')">✎</button><button class="icon-btn danger" title="Eliminar" onclick="deleteAcademicBankQuestionV279('${bank.id}','${q.id}')">×</button></div></article>`).join(''):'<div class="bank-empty-questions-v279">Todavía no hay preguntas. Puede agregarlas manualmente o importar varias de una vez.</div>'}</div>`);
+}
+async function toggleAcademicBankPublishV279(bankId,published){
+  try{await academicRPCWithRetryV275('academic_bank_publish',{p_token:academicSession.session_token,p_bank_id:bankId,p_published:Boolean(published)},2);closeModal();await loadAcademicBanksV279();toast(published?'Banco publicado':'Banco ocultado');setTimeout(()=>openAcademicBankManageV279(bankId),50)}catch(error){console.error(error);toast(academicFriendlyError(error,'No se pudo cambiar la publicación'))}
+}
+
+function openAcademicBankQuestionFormV279(bankId,questionId=''){
+  const list=academicBankAdminQuestionsV279.get(String(bankId))||[];
+  const q=list.find(item=>String(item.id)===String(questionId))||{};
+  showModal(`<button class="icon-btn close" onclick="closeModal()">×</button><span class="eyebrow">Banco de preguntas</span><h2>${q.id?'Editar pregunta':'Agregar pregunta'}</h2>
+    <form id="academicBankQuestionFormV279" class="form bank-question-form-v279">
+      <label>Pregunta<textarea name="question" rows="4" required>${esc(q.question_text||'')}</textarea></label>
+      <label>Opción A<input name="A" required value="${esc(q.option_a||'')}"></label><label>Opción B<input name="B" required value="${esc(q.option_b||'')}"></label><label>Opción C<input name="C" required value="${esc(q.option_c||'')}"></label><label>Opción D<input name="D" required value="${esc(q.option_d||'')}"></label>
+      <div class="two-col"><label>Respuesta correcta<select name="correct"><option value="A" ${q.correct_option==='A'?'selected':''}>A</option><option value="B" ${q.correct_option==='B'?'selected':''}>B</option><option value="C" ${q.correct_option==='C'?'selected':''}>C</option><option value="D" ${q.correct_option==='D'?'selected':''}>D</option></select></label><label>Explicación opcional<textarea name="explanation" rows="2">${esc(q.explanation||'')}</textarea></label></div>
+      <div class="form-actions"><button class="btn academic-main-btn" type="submit">Guardar pregunta</button><button class="btn secondary" type="button" onclick="closeModal();openAcademicBankManageV279('${bankId}')">Cancelar</button></div>
+    </form>`);
+  $('#academicBankQuestionFormV279').onsubmit=event=>saveAcademicBankQuestionV279(event,bankId,q.id||'');
+}
+async function saveAcademicBankQuestionV279(event,bankId,questionId=''){
+  event.preventDefault(); const button=event.submitter; if(button){button.disabled=true;button.textContent='Guardando…'}
+  try{
+    const values=Object.fromEntries(new FormData(event.currentTarget).entries());
+    await academicRPCWithRetryV275('academic_bank_save_question',{p_token:academicSession.session_token,p_bank_id:bankId,p_question_id:questionId||null,p_question_text:values.question,p_option_a:values.A,p_option_b:values.B,p_option_c:values.C,p_option_d:values.D,p_correct_option:values.correct,p_explanation:values.explanation||''},2);
+    closeModal();await loadAcademicBanksV279();toast('Pregunta guardada');setTimeout(()=>openAcademicBankManageV279(bankId),50);
+  }catch(error){console.error(error);toast(academicFriendlyError(error,'No se pudo guardar la pregunta'));if(button){button.disabled=false;button.textContent='Guardar pregunta'}}
+}
+async function deleteAcademicBankQuestionV279(bankId,questionId){
+  if(!confirm('¿Eliminar esta pregunta del banco?'))return;
+  try{await academicRPCWithRetryV275('academic_bank_delete_question',{p_token:academicSession.session_token,p_bank_id:bankId,p_question_id:questionId},2);closeModal();await loadAcademicBanksV279();toast('Pregunta eliminada');setTimeout(()=>openAcademicBankManageV279(bankId),50)}catch(error){console.error(error);toast(academicFriendlyError(error,'No se pudo eliminar la pregunta'))}
+}
+
+function academicBankParseTextV279(text){
+  const lines=String(text||'').replace(/\r/g,'').split('\n').map(line=>line.trim()).filter(Boolean);
+  const rows=[]; let current=null; let lastField='';
+  const push=()=>{if(current&&current.question&&current.A&&current.B&&current.C&&current.D&&current.correct)rows.push(current);current=null;lastField=''};
+  for(const line of lines){
+    let m=line.match(/^\s*(\d{1,4})[\.)-]\s+(.+)/);
+    if(m){push();current={question:m[2].trim(),A:'',B:'',C:'',D:'',correct:'',explanation:''};lastField='question';continue}
+    m=line.match(/^\s*([ABCD])[\).:\-]\s*(.+)/i);
+    if(m){if(!current)current={question:'',A:'',B:'',C:'',D:'',correct:'',explanation:''};current[m[1].toUpperCase()]=m[2].trim();lastField=m[1].toUpperCase();continue}
+    m=line.match(/^\s*(?:correcta?|respuesta(?:\s+correcta)?|correcto)\s*[:\-]\s*([ABCD])\b/i);
+    if(m){if(!current)continue;current.correct=m[1].toUpperCase();lastField='correct';continue}
+    m=line.match(/^\s*explicaci[oó]n\s*[:\-]\s*(.+)/i);
+    if(m){if(!current)continue;current.explanation=m[1].trim();lastField='explanation';continue}
+    if(!current)current={question:line,A:'',B:'',C:'',D:'',correct:'',explanation:''};
+    else if(!current.A){current.question=`${current.question} ${line}`.trim();lastField='question'}
+    else if(lastField==='explanation'||current.correct){current.explanation=`${current.explanation} ${line}`.trim();lastField='explanation'}
+  }
+  push(); return rows;
+}
+function academicCsvLineV279(line,delimiter){
+  const cells=[];let cell='';let quoted=false;
+  for(let i=0;i<line.length;i++){const ch=line[i];if(ch==='"'){if(quoted&&line[i+1]==='"'){cell+='"';i++}else quoted=!quoted}else if(ch===delimiter&&!quoted){cells.push(cell);cell=''}else cell+=ch}cells.push(cell);return cells.map(v=>v.trim());
+}
+function academicBankParseCsvV279(text){
+  const lines=String(text||'').replace(/\r/g,'').split('\n').filter(line=>line.trim());if(lines.length<2)return[];
+  const delimiter=(lines[0].match(/;/g)||[]).length>(lines[0].match(/,/g)||[]).length?';':',';
+  const headers=academicCsvLineV279(lines[0],delimiter).map(h=>academicBankNormalizeV279(h));
+  const idx=names=>headers.findIndex(h=>names.includes(h));
+  const map={question:idx(['pregunta','question']),A:idx(['a','opcion a','opcion_a']),B:idx(['b','opcion b','opcion_b']),C:idx(['c','opcion c','opcion_c']),D:idx(['d','opcion d','opcion_d']),correct:idx(['correcta','correct','respuesta','respuesta correcta']),explanation:idx(['explicacion','explanation'])};
+  return lines.slice(1).map(line=>{const c=academicCsvLineV279(line,delimiter);return{question:c[map.question]||'',A:c[map.A]||'',B:c[map.B]||'',C:c[map.C]||'',D:c[map.D]||'',correct:String(c[map.correct]||'').toUpperCase().trim(),explanation:map.explanation>=0?(c[map.explanation]||''):''}}).filter(r=>r.question&&r.A&&r.B&&r.C&&r.D&&['A','B','C','D'].includes(r.correct));
+}
+function openAcademicBankImportV279(bankId){
+  academicBankImportRowsV279=[];
+  showModal(`<button class="icon-btn close" onclick="closeModal()">×</button><span class="eyebrow">Carga rápida</span><h2>Importar preguntas</h2>
+    <p class="subtle">Puede pegar un banco con opciones A, B, C, D y “Correcta: B”, o cargar un archivo CSV/TXT.</p>
+    <textarea id="academicBankImportTextV279" class="bank-import-text-v279" rows="11" placeholder="1. Pregunta…\nA) Opción…\nB) Opción…\nC) Opción…\nD) Opción…\nCorrecta: B\nExplicación: opcional"></textarea>
+    <div class="bank-import-controls-v279"><label class="file-chip-v279">Archivo CSV/TXT<input id="academicBankImportFileV279" type="file" accept=".csv,.txt,text/csv,text/plain" onchange="academicBankReadImportFileV279(this,'${bankId}')"></label><button class="text-btn" onclick="downloadAcademicBankTemplateV279()">Plantilla CSV</button></div>
+    <div class="form-actions"><button class="btn academic-main-btn" onclick="academicBankAnalyzeImportV279('${bankId}')">Analizar preguntas</button><button class="btn secondary" onclick="closeModal();openAcademicBankManageV279('${bankId}')">Cancelar</button></div>
+    <div id="academicBankImportPreviewV279"></div>`);
+}
+async function academicBankReadImportFileV279(input,bankId){
+  const file=input?.files?.[0];if(!file)return;
+  try{
+    const text=await file.text();
+    const area=$('#academicBankImportTextV279');if(area)area.value=text;
+    academicBankImportRowsV279=file.name.toLowerCase().endsWith('.csv')?academicBankParseCsvV279(text):academicBankParseTextV279(text);
+    academicRenderBankImportPreviewV279(bankId);
+  }catch(error){toast('No se pudo leer el archivo')}
+}
+function academicBankAnalyzeImportV279(bankId){
+  const text=$('#academicBankImportTextV279')?.value||'';
+  academicBankImportRowsV279=/^\s*(pregunta|question)\s*[,;]/i.test(text)?academicBankParseCsvV279(text):academicBankParseTextV279(text);
+  academicRenderBankImportPreviewV279(bankId);
+}
+function academicRenderBankImportPreviewV279(bankId){
+  const box=$('#academicBankImportPreviewV279');if(!box)return;
+  const rows=academicBankImportRowsV279;
+  if(!rows.length){box.innerHTML='<div class="bank-import-empty-v279">No se detectaron preguntas completas. Verifique que cada una tenga A, B, C, D y respuesta correcta.</div>';return}
+  box.innerHTML=`<div class="bank-import-summary-v279"><b>${rows.length} preguntas listas</b><small>Revise antes de guardar.</small></div><div class="bank-import-preview-v279">${rows.slice(0,12).map((r,i)=>`<div><span>${i+1}</span><b>${esc(r.question)}</b><small>Correcta: ${esc(r.correct)}</small></div>`).join('')}${rows.length>12?`<p>+ ${rows.length-12} preguntas adicionales</p>`:''}</div><button class="btn academic-main-btn bank-import-save-v279" onclick="commitAcademicBankImportV279('${bankId}')">Importar ${rows.length} preguntas</button>`;
+}
+async function commitAcademicBankImportV279(bankId){
+  if(!academicBankImportRowsV279.length)return toast('No hay preguntas listas para importar');
+  const rows=academicBankImportRowsV279.slice(0,500);
+  try{const count=await academicRPCWithRetryV275('academic_bank_import_questions',{p_token:academicSession.session_token,p_bank_id:bankId,p_rows:rows},2);closeModal();await loadAcademicBanksV279();toast(`${Number(count||0)} preguntas importadas`);setTimeout(()=>openAcademicBankManageV279(bankId),50)}catch(error){console.error(error);toast(academicFriendlyError(error,'No se pudieron importar las preguntas'))}
+}
+function downloadAcademicBankTemplateV279(){
+  const csv='pregunta;A;B;C;D;correcta;explicacion\n"Escriba la pregunta";"Opción A";"Opción B";"Opción C";"Opción D";B;"Explicación opcional"\n';
+  const blob=new Blob([csv],{type:'text/csv;charset=utf-8'});const url=URL.createObjectURL(blob);const a=document.createElement('a');a.href=url;a.download='plantilla-banco-preguntas.csv';a.click();setTimeout(()=>URL.revokeObjectURL(url),1000);
+}
+
+async function startAcademicBankAttemptV279(bankId,mode){
+  if(!navigator.onLine)return toast('Necesita conexión para iniciar el cuestionario');
+  if(academicBankSubmittingV279)return;
+  academicBankSubmittingV279=true;
+  try{
+    let data=await academicRPCWithRetryV275('academic_bank_start_attempt',{p_token:academicSession.session_token,p_bank_id:bankId,p_mode:mode},2);data=Array.isArray(data)?data[0]:data;
+    if(!data?.attempt_id||!Array.isArray(data.questions)||!data.questions.length)throw new Error('El servidor no entregó las preguntas');
+    academicBankActiveAttemptV279=data;academicBankAttemptIndexV279=0;academicBankAttemptAnswersV279=new Map();renderAcademicBankAttemptV279();
+  }catch(error){console.error(error);toast(academicFriendlyError(error,'No se pudo iniciar el cuestionario'))}finally{academicBankSubmittingV279=false}
+}
+function renderAcademicBankAttemptV279(){
+  const attempt=academicBankActiveAttemptV279;if(!attempt)return;
+  const questions=attempt.questions||[];const q=questions[academicBankAttemptIndexV279];if(!q)return;
+  const answered=academicBankAttemptAnswersV279.get(String(q.id));
+  const progress=Math.round(((academicBankAttemptIndexV279+1)/questions.length)*100);
+  const optionHtml=(q.options||[]).map(opt=>{
+    let cls='';if(answered){if(opt.key===answered.selected)cls+=' selected';if(attempt.attempt_mode==='estudio'&&answered.correct_option){if(opt.key===answered.correct_option)cls+=' correct';else if(opt.key===answered.selected&&!answered.is_correct)cls+=' wrong'}}
+    return `<button class="bank-option-v279${cls}" ${answered?'disabled':''} onclick="submitAcademicBankAnswerV279('${q.id}','${opt.key}')"><span>${esc(opt.key)}</span><b>${esc(opt.text)}</b></button>`;
+  }).join('');
+  const feedback=answered&&attempt.attempt_mode==='estudio'?`<div class="bank-feedback-v279 ${answered.is_correct?'ok':'bad'}"><b>${answered.is_correct?'✓ Correcto':'✕ Incorrecto'}</b>${!answered.is_correct&&answered.correct_option?`<span>Respuesta correcta: ${esc(answered.correct_option)}</span>`:''}${answered.explanation?`<p>${esc(answered.explanation)}</p>`:''}</div>`:'';
+  showModal(`<button class="icon-btn close" onclick="closeModal()">×</button>
+    <div class="bank-attempt-head-v279"><div><span class="eyebrow">${esc(attempt.subject)} · ${attempt.attempt_mode==='estudio'?'Modo estudio':'Simulacro'}</span><h2>${esc(attempt.title)}</h2></div><span>${academicBankAttemptIndexV279+1}/${questions.length}</span></div>
+    <div class="bank-progress-v279"><i style="width:${progress}%"></i></div>
+    <section class="bank-question-v279"><span>Pregunta ${academicBankAttemptIndexV279+1}</span><h3>${esc(q.question)}</h3><div class="bank-options-v279">${optionHtml}</div>${feedback}</section>
+    <div class="bank-attempt-actions-v279">${answered?`<button class="btn academic-main-btn" onclick="academicBankNextV279()">${academicBankAttemptIndexV279===questions.length-1?'Finalizar':'Siguiente'}</button>`:'<small>Seleccione una respuesta para continuar.</small>'}</div>`);
+}
+async function submitAcademicBankAnswerV279(questionId,selected){
+  if(academicBankSubmittingV279||!academicBankActiveAttemptV279)return;
+  academicBankSubmittingV279=true;
+  try{
+    let result=await academicRPCWithRetryV275('academic_bank_submit_answer',{p_token:academicSession.session_token,p_attempt_id:academicBankActiveAttemptV279.attempt_id,p_question_id:questionId,p_selected:selected},2);result=Array.isArray(result)?result[0]:result||{};
+    academicBankAttemptAnswersV279.set(String(questionId),{selected,is_correct:result.is_correct,correct_option:result.correct_option,explanation:result.explanation||''});renderAcademicBankAttemptV279();
+  }catch(error){console.error(error);toast(academicFriendlyError(error,'No se pudo guardar la respuesta'))}finally{academicBankSubmittingV279=false}
+}
+function academicBankNextV279(){
+  const questions=academicBankActiveAttemptV279?.questions||[];
+  if(academicBankAttemptIndexV279<questions.length-1){academicBankAttemptIndexV279+=1;renderAcademicBankAttemptV279();return}
+  finishAcademicBankAttemptV279();
+}
+async function finishAcademicBankAttemptV279(){
+  if(!academicBankActiveAttemptV279||academicBankSubmittingV279)return;academicBankSubmittingV279=true;
+  try{
+    let result=await academicRPCWithRetryV275('academic_bank_finish_attempt',{p_token:academicSession.session_token,p_attempt_id:academicBankActiveAttemptV279.attempt_id},2);result=Array.isArray(result)?result[0]:result;
+    const passed=Boolean(result?.passed);const score=Number(result?.score||0);const bankId=academicBankActiveAttemptV279.bank_id;
+    showModal(`<button class="icon-btn close" onclick="closeModal();loadAcademicBanksV279()">×</button><div class="bank-result-v279 ${passed?'passed':'failed'}"><span>${passed?'✓':'!'}</span><h2>${passed?'APROBADO':'NO APROBADO'}</h2><strong>${score.toFixed(0)}%</strong><p>${Number(result?.correct_count||0)} correctas de ${Number(result?.total_questions||0)} preguntas.</p><small>Nota mínima: ${Number(academicBankActiveAttemptV279.passing_score||0)}%</small></div><div class="form-actions"><button class="btn academic-main-btn" onclick="closeModal();loadAcademicBanksV279()">Volver al banco</button><button class="btn secondary" onclick="closeModal();openAcademicBankHistoryV279('${bankId}')">Ver historial</button></div>`);
+    academicBankActiveAttemptV279=null;academicBankAttemptAnswersV279=new Map();await loadAcademicBanksV279();
+  }catch(error){console.error(error);toast(academicFriendlyError(error,'No se pudo cerrar el intento'))}finally{academicBankSubmittingV279=false}
+}
+async function openAcademicBankHistoryV279(bankId){
+  try{
+    const rows=await academicRPCWithRetryV275('academic_bank_attempt_history',{p_token:academicSession.session_token,p_bank_id:bankId},2);
+    showModal(`<button class="icon-btn close" onclick="closeModal()">×</button><span class="eyebrow">Resultados personales</span><h2>Historial de intentos</h2><div class="bank-history-list-v279">${rows?.length?rows.map((row,i)=>`<article><span>${i+1}</span><div><b>${row.attempt_mode==='estudio'?'Estudio':'Evaluación'} · ${Number(row.score||0).toFixed(0)}%</b><small>${Number(row.correct_count||0)}/${Number(row.total_questions||0)} correctas · ${row.passed?'Aprobado':'No aprobado'}</small></div><time>${row.completed_at?new Date(row.completed_at).toLocaleDateString('es-BO'):''}</time></article>`).join(''):'<div class="bank-empty-questions-v279">Todavía no existen intentos finalizados.</div>'}</div>`);
+  }catch(error){console.error(error);toast(academicFriendlyError(error,'No se pudo cargar el historial'))}
+}
+
+renderOnline = function renderOnlineV279(){
+  if(!academicSession)return onlineLoginView();
+  if(academicTab==='panel')return `<section class="online-page">${academicDashboard()}</section>`;
+  if(academicTab==='banco')return `<section class="online-page">${academicBankViewV279()}</section>`;
+  if(academicTab==='usuarios'&&academicCanManageUsers())return `<section class="online-page">${academicUsersView()}</section>`;
+  if(academicTab==='cursos'&&academicSession?.role==='administrador_general')return `<section class="online-page">${academicCoursesViewV277()}</section>`;
+  if(!ACADEMIC_TYPES[academicTab])academicTab='panel';
+  return `<section class="online-page">${academicModuleView()}</section>`;
+};
+setAcademicTab = async function setAcademicTabV279(tab){
+  academicTab=tab;if(ACADEMIC_TYPES[tab])academicFilter=academicDefaultFilter(tab);render();
+  setTimeout(()=>{if(ACADEMIC_TYPES[tab])loadAcademicPosts();if(tab==='banco')loadAcademicBanksV279();if(tab==='usuarios')loadAcademicUsers();if(tab==='cursos')loadAcademicCoursesViewV277();if(tab==='panel')loadAcademicDashboard()},0);
+};

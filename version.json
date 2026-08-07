@@ -1,8 +1,8 @@
 {
-  "version": "2.7.4",
-  "build": "2026-07-29",
-  "channel": "multicourse-offline-schedules",
-  "appVersion": "2.7.4",
+  "version": "2.7.9",
+  "build": "2026-08-07",
+  "channel": "online-question-bank",
+  "appVersion": "2.7.9",
   "scheduleVersion": "2026-07-29-v274",
-  "databaseVersion": "agenda-db-2"
+  "databaseVersion": "agenda-db-7"
 }

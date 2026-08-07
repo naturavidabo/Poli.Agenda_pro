@@ -1,0 +1,32 @@
+VERIFICACIÓN Agenda Policial v2.7.9
+
+APLICACIÓN
+- app.js: sintaxis válida.
+- online.js: sintaxis válida.
+- Parser de texto: 2 preguntas detectadas correctamente.
+- Parser CSV: lectura verificada.
+- Versión: 2.7.9.
+- Build: 2026-08-07.
+- Archivos del proyecto: 98; límite máximo: 100.
+
+BANCO DE PREGUNTAS
+- Módulo Banco agregado al modo online.
+- Creación por materia, tema y modalidad.
+- Carga manual, texto estructurado y CSV/TXT.
+- Carga de archivo con vista previa.
+- Modo estudio con corrección posterior a cada respuesta.
+- Modo evaluación sin respuesta correcta en el contenido inicial.
+- Resultado final y criterio de aprobación.
+- Historial por usuario.
+- Bancos separados por curso seleccionado.
+
+SUPABASE
+- Esquema de bancos, preguntas, intentos, elementos de intento y respuestas activo.
+- Cada intento guarda una instantánea de sus preguntas y clave correcta.
+- Una respuesta ya registrada no se sobrescribe.
+- RPC de administración, estudio y evaluación activas.
+- Se confirmó en Supabase la existencia de las 5 tablas del módulo y de las RPC principales.
+
+LIMITACIONES
+- Validaciones de sintaxis, parser y estructura realizadas.
+- No se afirma prueba completa en un dispositivo Android físico.

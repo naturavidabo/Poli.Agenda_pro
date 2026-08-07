@@ -1,0 +1,33 @@
+Agenda Policial v2.7.9 — Banco de preguntas online
+
+NUEVO MÓDULO
+- Se agregó Banco a la barra del modo online.
+- Cada paralelo mantiene sus bancos de forma independiente.
+- Los usuarios pueden estudiar por materia/tema y realizar simulacros.
+
+CREACIÓN Y CARGA
+- Nuevo banco por materia y tema.
+- Modalidad: estudio, evaluación o ambas.
+- Nota mínima configurable.
+- Número de preguntas por intento configurable; 0 utiliza todas.
+- Mezcla opcional de preguntas.
+- Alta manual de preguntas A/B/C/D.
+- Carga masiva pegando texto estructurado.
+- Importación CSV/TXT y plantilla CSV descargable.
+- Vista previa antes de importar.
+
+ESTUDIO Y EVALUACIÓN
+- Modo estudio: muestra correcto/incorrecto y explicación después de responder.
+- Modo evaluación: no revela la respuesta correcta durante el intento.
+- Resultado final con porcentaje, correctas, aprobación y nota mínima.
+- Historial personal y mejor resultado por banco.
+
+SEGURIDAD
+- La respuesta correcta no viaja al dispositivo al iniciar un simulacro.
+- Cada intento conserva una copia de sus preguntas y respuestas correctas para evitar cambios si el banco se edita después.
+- Una respuesta ya registrada no puede cambiarse después de conocer la corrección.
+- Administradores, encargado y asistentes pueden crear bancos; lectores solo estudian/evalúan.
+
+COMPATIBILIDAD
+- Se conserva Capitanes A / Capitanes B independientes.
+- Se conserva el rol de exámenes, persistencia documental, mensajes inteligentes, biblioteca y horarios offline.
