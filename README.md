@@ -1,4 +1,4 @@
-# Agenda Policial v2.8.0
+# Agenda Policial v2.10.0
 
 Aplicación PWA institucional con biblioteca normativa offline y área académica online opcional.
 
@@ -51,14 +51,37 @@ Proyecto conectado: `lkwrulzrulmbfypwywmo`.
 
 La aplicación utiliza solo la URL y la clave publicable. Nunca debe incorporarse una clave secreta o `service_role` al repositorio.
 
-El archivo `supabase-v268-migration.sql` documenta las modificaciones de esta versión.
+Los archivos `supabase-v290-migration.sql` y `supabase-v210-migration.sql` documentan las migraciones acumulativas recientes.
 
 ## Publicación
 
 El proyecto se mantiene por debajo de 100 archivos y puede publicarse en GitHub Pages. Se debe subir el contenido de la carpeta raíz del ZIP, conservando la estructura de archivos.
 
 
-## v2.8.0 — estabilización y seguridad
+
+
+## v2.10.0 — Banco de Preguntas Mixto
+
+- Un mismo banco puede combinar **Selección múltiple**, **Verdadero/Falso**, **Relacionar conceptos** y **Completar concepto**.
+- Los bancos y preguntas A-B-C-D existentes continúan funcionando sin recarga ni conversión manual.
+- En intentos aleatorios, si existen varios tipos, se incluye al menos una pregunta de cada modalidad disponible y el resto se completa al azar.
+- Modo Estudio muestra corrección y explicación después de responder; Simulacro mantiene la solución oculta hasta finalizar.
+- Completar concepto ignora diferencias de mayúsculas, minúsculas y tildes y admite varias respuestas válidas.
+- Relacionar conceptos mezcla las correspondencias y evita reutilizar una misma opción.
+- Nueva plantilla CSV mixta; la plantilla CSV histórica sigue siendo compatible como selección múltiple.
+- La importación muestra detectadas, cargadas y rechazadas.
+
+## v2.9.0 — Lector académico DOCX/PDF
+
+- Lectura interna de archivos Word `.docx` y PDF desde el modo online.
+- PDF con vista de página integrada y navegación página anterior/siguiente.
+- Extracción de texto para lectura cómoda y lectura en voz alta mediante el motor del dispositivo.
+- Controles de pausa/continuación, anterior/siguiente, velocidad y tamaño de texto.
+- Detección de PDF escaneado: mantiene la vista interna y avisa cuando no existe texto suficiente para voz.
+- Se mantiene siempre la opción **Abrir archivo original**.
+- Pulido visual del modo online sin cambiar la ubicación de sus módulos.
+
+## v2.8.1 — estabilización y seguridad
 
 - El Banco de Preguntas se opera por RPC; sus tablas internas no quedan expuestas directamente al cliente.
 - La nómina estática del paquete no contiene C.I., celulares ni roles reales. Esos datos se administran desde la aplicación y se guardan en Supabase.

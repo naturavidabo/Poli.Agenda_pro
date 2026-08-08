@@ -1,0 +1,48 @@
+AGENDA POLICIAL v2.9.0 — VERIFICACIÓN FINAL
+Fecha de compilación: 07/08/2026
+
+1. SINTAXIS Y ARCHIVOS
+- app.js: node --check OK.
+- online.js: node --check OK.
+- sw.js: node --check OK.
+- version.json: JSON válido.
+- manifest.webmanifest: JSON válido.
+- Versión coherente en app.js, index.html, Service Worker y version.json: 2.9.0.
+- Total del proyecto: 95 archivos.
+
+2. LECTOR ACADÉMICO
+- Detección PDF: OK.
+- Detección DOCX: OK.
+- .doc antiguo no ofrece lector interno y conserva apertura original: OK.
+- Tarjetas de archivo: Leer aquí + Abrir original: OK.
+- DOCX simulado: texto recuperado y renderizado en bloques: OK.
+- PDF simulado: navegación de páginas, canvas y texto recuperado: OK.
+- PDF sin texto simulado: detectado como posible escaneo, voz deshabilitada y vista mantenida: OK.
+- Controles presentes: Escuchar, Pausar/Continuar, Anterior, Siguiente, Detener, velocidad y tamaño de texto.
+- El párrafo activo se resalta durante la lectura.
+- El cierre del lector cancela la síntesis de voz.
+- Fallback PDF: intenta vista interna nativa antes de recurrir al archivo original.
+
+3. PRIVACIDAD
+- data/academic-users.json: 54 registros visibles.
+- C.I. embebidos en nómina pública: 0.
+- Celulares embebidos en nómina pública: 0.
+- El lector procesa el documento en el navegador; no cambia el archivo original.
+
+4. BANCO DE PREGUNTAS
+- Se conserva el módulo y formato CSV existente.
+- La migración v2.9.0 incluye el hotfix reproducible de academic_bank_start_attempt.
+- Referencias bank_id calificadas por tabla para evitar ambigüedad.
+
+5. SERVICE WORKER
+- Caché: agenda-policial-v2.9.0.
+- Archivos esenciales siguen siendo obligatorios para activar una versión nueva.
+- Mammoth y PDF.js se consideran recursos opcionales; un fallo de CDN no invalida la app completa.
+- Peticiones externas ya no usan index.html como fallback erróneo.
+
+6. PRUEBA VISUAL
+- Lector DOCX probado en viewport móvil simulado de 412 x 915.
+- Controles y texto legibles, sin desbordamiento horizontal.
+
+NOTA
+La extracción DOCX usa Mammoth 1.8.0 y la lectura/render PDF usa PDF.js 3.11.174, cargados bajo demanda. La lectura en voz alta depende del motor de voz disponible en Android/iOS/navegador.

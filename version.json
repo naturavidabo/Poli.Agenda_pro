@@ -1,8 +1,8 @@
 {
-  "version": "2.8.0",
+  "version": "2.10.0",
   "build": "2026-08-07",
-  "channel": "stability-security",
-  "appVersion": "2.8.0",
+  "channel": "mixed-question-bank",
+  "appVersion": "2.10.0",
   "scheduleVersion": "2026-07-29-v274",
   "databaseVersion": "agenda-db-7"
 }

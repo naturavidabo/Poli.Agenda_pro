@@ -1,0 +1,12 @@
+AGENDA POLICIAL v2.10.0 — BANCO DE PREGUNTAS MIXTO
+
+1. Selección múltiple A/B/C/D (compatible con todos los bancos anteriores).
+2. Verdadero / Falso.
+3. Relacionar conceptos y definiciones.
+4. Completar palabra o concepto con varias respuestas aceptadas.
+5. Simulacros mixtos: garantiza presencia de cada tipo disponible cuando las preguntas se mezclan.
+6. Estudio: retroalimentación inmediata. Simulacro: respuestas correctas ocultas durante el intento.
+7. Plantilla CSV mixta y compatibilidad con CSV/TXT antiguos.
+8. Resultado de importación con detectadas, cargadas y rechazadas.
+9. Lector Académico DOCX/PDF de v2.9.0 conservado.
+10. Service Worker v2.10.0 sin toma de control automática durante instalación.

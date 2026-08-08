@@ -1,4 +1,4 @@
-/* Agenda Policial Online v2.8.0 — conexión real con Supabase */
+/* Agenda Policial Online v2.10.0 — conexión real con Supabase */
 const ONLINE_CFG = {
   url: 'https://lkwrulzrulmbfypwywmo.supabase.co',
   anonKey: 'sb_publishable_vtek6lVCGZkmyicgAPqDMw_8EOTFrRU',
@@ -4736,7 +4736,7 @@ academicPostCard = function academicPostCardV278(post) {
 
 
 /* =========================================================
-   Agenda Policial Online v2.8.0 — Banco de preguntas
+   Agenda Policial Online v2.8.1 — Banco de preguntas
    ========================================================= */
 const ACADEMIC_BANK_CACHE_V279 = 'agenda-question-banks-v279';
 let academicBankRowsV279 = [];
@@ -5083,3 +5083,624 @@ setAcademicTab = async function setAcademicTabV279(tab){
   academicTab=tab;if(ACADEMIC_TYPES[tab])academicFilter=academicDefaultFilter(tab);render();
   setTimeout(()=>{if(ACADEMIC_TYPES[tab])loadAcademicPosts();if(tab==='banco')loadAcademicBanksV279();if(tab==='usuarios')loadAcademicUsers();if(tab==='cursos')loadAcademicCoursesViewV277();if(tab==='panel')loadAcademicDashboard()},0);
 };
+
+/* =========================================================
+   Agenda Policial Online v2.9.0 — Lector académico DOCX/PDF
+   ========================================================= */
+const ACADEMIC_READER_MAMMOTH_V290='https://cdnjs.cloudflare.com/ajax/libs/mammoth/1.8.0/mammoth.browser.min.js';
+const ACADEMIC_READER_PDFJS_V290='https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js';
+const ACADEMIC_READER_PDFWORKER_V290='https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
+const academicReaderRegistryV290=new Map();
+let academicReaderRegistrySeqV290=0;
+let academicReaderStateV290={session:0,file:null,type:null,blocks:[],speechChunks:[],speechIndex:0,rate:1,pdfDoc:null,pdfPage:1,pdfPages:0,loading:false,paused:false,stopped:true};
+
+function academicReaderFileTypeV290(file){
+  const name=String(file?.name||'').toLowerCase();
+  const mime=String(file?.type||'').toLowerCase();
+  if(name.endsWith('.pdf')||mime==='application/pdf')return 'pdf';
+  if(name.endsWith('.docx')||mime.includes('wordprocessingml.document'))return 'docx';
+  return null;
+}
+function academicReaderRegisterV290(file){
+  if(academicReaderRegistryV290.size>350)academicReaderRegistryV290.clear();
+  const key=`r290_${++academicReaderRegistrySeqV290}`;
+  academicReaderRegistryV290.set(key,{...file});
+  return key;
+}
+function academicReaderIconV290(type){return type==='pdf'?'📕':type==='docx'?'📘':'📎'}
+function academicReaderTypeLabelV290(type){return type==='pdf'?'PDF':type==='docx'?'Word DOCX':'Archivo'}
+function academicReaderSizeLabelV290(bytes){
+  const size=Number(bytes||0); if(!size)return '';
+  if(size<1024)return `${size} B`;
+  if(size<1024*1024)return `${(size/1024).toFixed(0)} KB`;
+  return `${(size/(1024*1024)).toFixed(1)} MB`;
+}
+
+academicAttachmentLinks=function academicAttachmentLinksV290(post){
+  const attachments=academicPostAttachments(post);
+  if(!attachments.length)return '';
+  return `<div class="academic-attachments academic-attachments-v290">${attachments.map((file,index)=>{
+    const type=academicReaderFileTypeV290(file);
+    const key=academicReaderRegisterV290(file);
+    const size=academicReaderSizeLabelV290(file.size);
+    return `<div class="academic-file-card-v290">
+      <div class="academic-file-main-v290">
+        <span class="academic-file-icon-v290">${academicReaderIconV290(type)}</span>
+        <span class="file-copy"><b>${esc(file.name||`Archivo ${index+1}`)}</b><small>${esc(academicReaderTypeLabelV290(type))}${size?` · ${esc(size)}`:''}</small></span>
+      </div>
+      <div class="academic-file-actions-v290">
+        ${type?`<button class="academic-reader-btn-v290" type="button" onclick="openAcademicReaderV290('${key}')">📖 Leer aquí</button>`:''}
+        <a class="academic-original-btn-v290" href="${esc(file.url)}" target="_blank" rel="noopener">Abrir original ↗</a>
+      </div>
+    </div>`;
+  }).join('')}</div>`;
+};
+
+function academicLoadScriptV290(src,globalName){
+  if(globalName&&window[globalName])return Promise.resolve(window[globalName]);
+  return new Promise((resolve,reject)=>{
+    const existing=[...document.scripts].find(s=>s.src===src);
+    if(existing){
+      if(existing.dataset.loaded==='true')return resolve(globalName?window[globalName]:true);
+      existing.addEventListener('load',()=>resolve(globalName?window[globalName]:true),{once:true});
+      existing.addEventListener('error',()=>reject(new Error('No se pudo cargar el componente del lector')), {once:true});
+      return;
+    }
+    const script=document.createElement('script');
+    script.src=src; script.async=true; script.crossOrigin='anonymous';
+    script.onload=()=>{script.dataset.loaded='true';resolve(globalName?window[globalName]:true)};
+    script.onerror=()=>reject(new Error('No se pudo cargar el componente del lector'));
+    document.head.appendChild(script);
+  });
+}
+async function academicReaderDepsV290(type){
+  if(type==='docx'){
+    await academicLoadScriptV290(ACADEMIC_READER_MAMMOTH_V290,'mammoth');
+    if(!window.mammoth)throw new Error('El lector DOCX no está disponible');
+  }
+  if(type==='pdf'){
+    await academicLoadScriptV290(ACADEMIC_READER_PDFJS_V290,'pdfjsLib');
+    if(!window.pdfjsLib)throw new Error('El lector PDF no está disponible');
+    window.pdfjsLib.GlobalWorkerOptions.workerSrc=ACADEMIC_READER_PDFWORKER_V290;
+  }
+}
+function academicReaderFetchMessageV290(){
+  return navigator.onLine?'Preparando el documento…':'Buscando una copia disponible del documento…';
+}
+function academicReaderOpenShellV290(file,type){
+  showModal(`<div class="academic-reader-shell-v290">
+    <div class="academic-reader-top-v290">
+      <button class="icon-btn close academic-reader-close-v290" type="button" onclick="closeAcademicReaderV290()">×</button>
+      <div class="academic-reader-title-v290"><span>${academicReaderIconV290(type)}</span><div><small>Lector académico · ${academicReaderTypeLabelV290(type)}</small><h2>${esc(file.name||'Documento académico')}</h2></div></div>
+    </div>
+    <div id="academicReaderBodyV290" class="academic-reader-body-v290">
+      <div class="academic-reader-loading-v290"><span class="academic-reader-spinner-v290"></span><b>${academicReaderFetchMessageV290()}</b><small>El archivo original no será modificado.</small></div>
+    </div>
+  </div>`);
+  requestAnimationFrame(()=>{
+    document.querySelector('#modalRoot .modal-bg')?.classList.add('academic-reader-bg-v290');
+    document.querySelector('#modalRoot .modal')?.classList.add('academic-reader-modal-v290');
+  });
+}
+async function academicReaderFetchV290(file){
+  if(!file?.url)throw new Error('El archivo no tiene una dirección válida');
+  const response=await fetch(file.url,{cache:'default',credentials:'omit'});
+  if(!response.ok)throw new Error(`No se pudo obtener el archivo (${response.status})`);
+  return await response.arrayBuffer();
+}
+function academicReaderNormalizeBlocksV290(text,page=null){
+  const clean=String(text||'').replace(/\r/g,'').replace(/[ \t]+\n/g,'\n').replace(/\n{3,}/g,'\n\n').trim();
+  if(!clean)return [];
+  const raw=clean.split(/\n\s*\n|\n(?=[A-ZÁÉÍÓÚÑ0-9•\-])/).map(s=>s.replace(/\s+/g,' ').trim()).filter(Boolean);
+  const blocks=[];
+  for(const part of raw){
+    if(part.length<=1300){blocks.push({text:part,page});continue}
+    const sentences=part.match(/[^.!?;:]+[.!?;:]?|.+$/g)||[part];
+    let chunk='';
+    for(const sentence of sentences){
+      const candidate=(chunk+' '+sentence).trim();
+      if(candidate.length>900&&chunk){blocks.push({text:chunk,page});chunk=sentence.trim()}else chunk=candidate;
+    }
+    if(chunk)blocks.push({text:chunk,page});
+  }
+  return blocks;
+}
+function academicReaderSpeechChunksV290(blocks){
+  const chunks=[];
+  blocks.forEach((block,blockIndex)=>{
+    const text=String(block.text||'').trim(); if(!text)return;
+    const pieces=text.match(/[^.!?;:]+[.!?;:]?|.+$/g)||[text];
+    let buf='';
+    const flush=()=>{if(buf.trim()){chunks.push({text:buf.trim(),blockIndex});buf=''}};
+    for(const piece of pieces){
+      const candidate=(buf+' '+piece).trim();
+      if(candidate.length>650&&buf){flush();buf=piece.trim()}else buf=candidate;
+      if(buf.length>850)flush();
+    }
+    flush();
+  });
+  return chunks;
+}
+function academicReaderHasSpeechV290(){return 'speechSynthesis' in window&&'SpeechSynthesisUtterance' in window}
+function academicReaderControlsV290({speech=true,scan=false}={}){
+  const rate=Number(academicReaderStateV290.rate||1);
+  return `<div class="academic-reader-controls-v290">
+    <div class="academic-reader-primary-v290">
+      <button id="academicReaderPlayV290" class="btn academic-reader-play-v290" type="button" onclick="academicReaderToggleSpeechV290()" ${speech?'':'disabled'}>🔊 Escuchar</button>
+      <button class="btn secondary" type="button" onclick="academicReaderPreviousV290()" ${speech?'':'disabled'}>◀ Anterior</button>
+      <button class="btn secondary" type="button" onclick="academicReaderNextV290()" ${speech?'':'disabled'}>Siguiente ▶</button>
+      <button class="btn ghost" type="button" onclick="academicReaderStopV290()" ${speech?'':'disabled'}>■ Detener</button>
+    </div>
+    <div class="academic-reader-secondary-v290">
+      <label>Velocidad<select onchange="academicReaderSetRateV290(this.value)" ${speech?'':'disabled'}>${[.8,1,1.2,1.4,1.6].map(v=>`<option value="${v}" ${Math.abs(rate-v)<.01?'selected':''}>${v}×</option>`).join('')}</select></label>
+      <label>Tamaño<select onchange="academicReaderSetFontV290(this.value)"><option value=".95">Pequeño</option><option value="1.05" selected>Normal</option><option value="1.18">Grande</option><option value="1.32">Muy grande</option></select></label>
+      <span id="academicReaderProgressV290" class="academic-reader-progress-text-v290">Listo para leer</span>
+    </div>
+    ${scan?'<div class="academic-reader-scan-note-v290">⚠️ Este PDF parece ser escaneado. Puede verlo dentro de la aplicación, pero no contiene suficiente texto seleccionable para la lectura en voz alta.</div>':''}
+  </div>`;
+}
+function academicReaderTextHtmlV290(blocks){
+  if(!blocks.length)return '<div class="academic-reader-empty-v290"><b>No se encontró texto legible.</b><p>Puede consultar la vista del documento o abrir el archivo original.</p></div>';
+  return `<div id="academicReaderTextV290" class="academic-reader-text-v290">${blocks.map((block,index)=>`<p id="readerBlockV290_${index}" data-reader-block="${index}" onclick="academicReaderStartAtBlockV290(${index})">${esc(block.text)}</p>`).join('')}</div>`;
+}
+function academicReaderFooterV290(file){return `<div class="academic-reader-footer-v290"><a class="btn secondary" href="${esc(file.url)}" target="_blank" rel="noopener">📄 Abrir archivo original</a><small>Agenda Policial muestra una copia de lectura. El documento original permanece sin cambios.</small></div>`}
+
+async function openAcademicReaderV290(key){
+  const file=academicReaderRegistryV290.get(key);
+  const type=academicReaderFileTypeV290(file);
+  if(!file||!type)return toast('Este archivo no es compatible con el lector interno');
+  academicReaderStopV290(true);
+  const session=Date.now()+Math.random();
+  academicReaderStateV290={session,file,type,blocks:[],speechChunks:[],speechIndex:0,rate:1,pdfDoc:null,pdfPage:1,pdfPages:0,loading:true,paused:false,stopped:true};
+  academicReaderOpenShellV290(file,type);
+  try{
+    await academicReaderDepsV290(type);
+    const buffer=await academicReaderFetchV290(file);
+    if(academicReaderStateV290.session!==session)return;
+    if(type==='docx')await academicReaderLoadDocxV290(buffer,session);
+    else await academicReaderLoadPdfV290(buffer,session);
+  }catch(error){
+    console.error(error);
+    if(academicReaderStateV290.session!==session)return;
+    const body=document.getElementById('academicReaderBodyV290');
+    if(body&&type==='pdf'){
+      body.innerHTML=`<div class="academic-reader-native-v290"><div><b>Vista PDF de respaldo</b><small>El componente de lectura no pudo iniciarse, pero puede intentar ver el PDF dentro de Agenda Policial.</small></div><iframe src="${esc(file.url)}" title="${esc(file.name||'Documento PDF')}"></iframe>${academicReaderFooterV290(file)}</div>`;
+    }else if(body){
+      body.innerHTML=`<div class="academic-reader-error-v290"><span>⚠️</span><h3>No se pudo abrir este archivo dentro de la aplicación</h3><p>${esc(academicFriendlyError(error,'Compruebe su conexión e intente nuevamente.'))}</p><a class="btn academic-main-btn" href="${esc(file.url)}" target="_blank" rel="noopener">Abrir archivo original</a></div>`;
+    }
+  }finally{if(academicReaderStateV290.session===session)academicReaderStateV290.loading=false}
+}
+
+async function academicReaderLoadDocxV290(buffer,session){
+  const result=await window.mammoth.extractRawText({arrayBuffer:buffer});
+  if(academicReaderStateV290.session!==session)return;
+  const blocks=academicReaderNormalizeBlocksV290(result?.value||'');
+  academicReaderStateV290.blocks=blocks;
+  academicReaderStateV290.speechChunks=academicReaderSpeechChunksV290(blocks);
+  const canSpeak=academicReaderHasSpeechV290()&&academicReaderStateV290.speechChunks.length>0;
+  const body=document.getElementById('academicReaderBodyV290');
+  if(!body)return;
+  body.innerHTML=`${academicReaderControlsV290({speech:canSpeak})}<div class="academic-reader-doc-head-v290"><span>📘</span><div><b>Vista de lectura</b><small>${blocks.length} bloque${blocks.length===1?'':'s'} de texto recuperado${blocks.length===1?'':'s'} del Word.</small></div></div>${academicReaderTextHtmlV290(blocks)}${academicReaderFooterV290(academicReaderStateV290.file)}`;
+}
+
+function academicPdfItemsTextV290(items){
+  let out='';
+  for(const item of items||[]){
+    const value=String(item?.str||'').trim();
+    if(value)out+=(out&&!out.endsWith('\n')?' ':'')+value;
+    if(item?.hasEOL)out+='\n';
+  }
+  return out.replace(/\n[ \t]+/g,'\n').trim();
+}
+async function academicReaderLoadPdfV290(buffer,session){
+  const task=window.pdfjsLib.getDocument({data:new Uint8Array(buffer)});
+  const pdf=await task.promise;
+  if(academicReaderStateV290.session!==session){try{pdf.destroy()}catch{};return}
+  academicReaderStateV290.pdfDoc=pdf;
+  academicReaderStateV290.pdfPages=pdf.numPages;
+  academicReaderStateV290.pdfPage=1;
+  const blocks=[];
+  let chars=0;
+  for(let pageNum=1;pageNum<=pdf.numPages;pageNum++){
+    if(academicReaderStateV290.session!==session)return;
+    const loading=document.querySelector('.academic-reader-loading-v290 b');
+    if(loading)loading.textContent=`Preparando PDF · página ${pageNum} de ${pdf.numPages}`;
+    const page=await pdf.getPage(pageNum);
+    const content=await page.getTextContent();
+    const text=academicPdfItemsTextV290(content.items);
+    chars+=text.replace(/\s/g,'').length;
+    blocks.push(...academicReaderNormalizeBlocksV290(text,pageNum));
+    if(pageNum%4===0)await new Promise(resolve=>setTimeout(resolve,0));
+  }
+  academicReaderStateV290.blocks=blocks;
+  academicReaderStateV290.speechChunks=academicReaderSpeechChunksV290(blocks);
+  const scanLike=chars<Math.max(50,pdf.numPages*18);
+  const canSpeak=!scanLike&&academicReaderHasSpeechV290()&&academicReaderStateV290.speechChunks.length>0;
+  const body=document.getElementById('academicReaderBodyV290');
+  if(!body)return;
+  body.innerHTML=`${academicReaderControlsV290({speech:canSpeak,scan:scanLike})}
+    <div class="academic-reader-pdf-v290">
+      <div class="academic-reader-pdf-toolbar-v290"><button type="button" onclick="academicReaderPdfPageV290(-1)">‹</button><b id="academicReaderPdfLabelV290">Página 1 de ${pdf.numPages}</b><button type="button" onclick="academicReaderPdfPageV290(1)">›</button></div>
+      <div id="academicReaderPdfCanvasWrapV290" class="academic-reader-pdf-canvas-wrap-v290"><canvas id="academicReaderPdfCanvasV290"></canvas></div>
+    </div>
+    <div class="academic-reader-text-heading-v290"><b>Texto para lectura</b><small>${scanLike?'No se detectó texto suficiente para voz.':'Toque un párrafo para comenzar la lectura desde ese punto.'}</small></div>
+    ${academicReaderTextHtmlV290(blocks)}${academicReaderFooterV290(academicReaderStateV290.file)}`;
+  await academicReaderRenderPdfPageV290(1);
+}
+async function academicReaderRenderPdfPageV290(pageNum){
+  const pdf=academicReaderStateV290.pdfDoc;
+  if(!pdf)return;
+  const target=Math.max(1,Math.min(pdf.numPages,Number(pageNum)||1));
+  academicReaderStateV290.pdfPage=target;
+  const label=document.getElementById('academicReaderPdfLabelV290');
+  if(label)label.textContent=`Página ${target} de ${pdf.numPages}`;
+  const canvas=document.getElementById('academicReaderPdfCanvasV290');
+  const wrap=document.getElementById('academicReaderPdfCanvasWrapV290');
+  if(!canvas||!wrap)return;
+  const page=await pdf.getPage(target);
+  const base=page.getViewport({scale:1});
+  const cssWidth=Math.max(260,Math.min(wrap.clientWidth-12,760));
+  const dpr=Math.min(window.devicePixelRatio||1,2);
+  const scale=(cssWidth/base.width)*dpr;
+  const viewport=page.getViewport({scale});
+  canvas.width=Math.floor(viewport.width);canvas.height=Math.floor(viewport.height);
+  canvas.style.width=`${Math.floor(viewport.width/dpr)}px`;canvas.style.height=`${Math.floor(viewport.height/dpr)}px`;
+  const context=canvas.getContext('2d',{alpha:false});
+  context.save();context.fillStyle='#fff';context.fillRect(0,0,canvas.width,canvas.height);context.restore();
+  await page.render({canvasContext:context,viewport}).promise;
+}
+function academicReaderPdfPageV290(delta){academicReaderRenderPdfPageV290((academicReaderStateV290.pdfPage||1)+Number(delta||0)).catch(console.error)}
+
+function academicReaderPreferredVoiceV290(){
+  const voices=window.speechSynthesis?.getVoices?.()||[];
+  return voices.find(v=>/^es[-_]BO$/i.test(v.lang))||voices.find(v=>/^es[-_](419|MX|AR|ES)/i.test(v.lang))||voices.find(v=>/^es/i.test(v.lang))||null;
+}
+function academicReaderHighlightV290(blockIndex){
+  document.querySelectorAll('#academicReaderTextV290 [data-reader-block]').forEach(el=>el.classList.toggle('speaking',Number(el.dataset.readerBlock)===Number(blockIndex)));
+  const el=document.getElementById(`readerBlockV290_${blockIndex}`);
+  if(el)el.scrollIntoView({behavior:'smooth',block:'center'});
+}
+function academicReaderUpdateSpeechUiV290(){
+  const state=academicReaderStateV290;
+  const btn=document.getElementById('academicReaderPlayV290');
+  if(btn)btn.textContent=state.stopped?'🔊 Escuchar':state.paused?'▶ Continuar':'⏸ Pausar';
+  const progress=document.getElementById('academicReaderProgressV290');
+  if(progress){
+    if(state.stopped)progress.textContent='Listo para leer';
+    else if(state.paused)progress.textContent='Lectura pausada';
+    else progress.textContent=`Leyendo ${Math.min(state.speechIndex+1,state.speechChunks.length)} de ${state.speechChunks.length}`;
+  }
+}
+function academicReaderSpeakCurrentV290(){
+  const state=academicReaderStateV290;
+  if(state.stopped||state.paused)return;
+  if(!academicReaderHasSpeechV290()||!state.speechChunks.length){academicReaderStopV290();return}
+  if(state.speechIndex>=state.speechChunks.length){academicReaderStopV290();toast('Lectura finalizada');return}
+  const chunk=state.speechChunks[state.speechIndex];
+  academicReaderHighlightV290(chunk.blockIndex);
+  const utterance=new SpeechSynthesisUtterance(chunk.text);
+  utterance.lang='es-BO';utterance.rate=Number(state.rate||1);
+  const voice=academicReaderPreferredVoiceV290();if(voice)utterance.voice=voice;
+  utterance.onend=()=>{if(state.stopped||state.paused)return;state.speechIndex+=1;academicReaderUpdateSpeechUiV290();academicReaderSpeakCurrentV290()};
+  utterance.onerror=e=>{if(['canceled','interrupted'].includes(e.error))return;console.warn('TTS',e.error);academicReaderStopV290();toast('El dispositivo interrumpió la lectura en voz alta')};
+  window.speechSynthesis.cancel();
+  setTimeout(()=>{if(!state.stopped&&!state.paused)window.speechSynthesis.speak(utterance)},40);
+  academicReaderUpdateSpeechUiV290();
+}
+function academicReaderToggleSpeechV290(){
+  const state=academicReaderStateV290;
+  if(!academicReaderHasSpeechV290()||!state.speechChunks.length)return toast('La lectura en voz alta no está disponible para este archivo');
+  if(state.stopped){state.stopped=false;state.paused=false;state.speechIndex=Math.max(0,Math.min(state.speechIndex,state.speechChunks.length-1));academicReaderSpeakCurrentV290();return}
+  if(state.paused){state.paused=false;academicReaderSpeakCurrentV290();return}
+  state.paused=true;window.speechSynthesis.cancel();academicReaderUpdateSpeechUiV290();
+}
+function academicReaderStopV290(silent=false){
+  try{window.speechSynthesis?.cancel?.()}catch{}
+  const state=academicReaderStateV290;
+  state.stopped=true;state.paused=false;state.speechIndex=0;
+  document.querySelectorAll('#academicReaderTextV290 [data-reader-block]').forEach(el=>el.classList.remove('speaking'));
+  academicReaderUpdateSpeechUiV290();
+  if(!silent){};
+}
+function academicReaderStartAtBlockV290(blockIndex){
+  const state=academicReaderStateV290;
+  const index=state.speechChunks.findIndex(item=>item.blockIndex===Number(blockIndex));
+  if(index<0)return;
+  try{window.speechSynthesis?.cancel?.()}catch{}
+  state.speechIndex=index;state.stopped=false;state.paused=false;academicReaderSpeakCurrentV290();
+}
+function academicReaderPreviousV290(){
+  const state=academicReaderStateV290;if(!state.speechChunks.length)return;
+  try{window.speechSynthesis?.cancel?.()}catch{}
+  state.speechIndex=Math.max(0,state.speechIndex-1);state.stopped=false;state.paused=false;academicReaderSpeakCurrentV290();
+}
+function academicReaderNextV290(){
+  const state=academicReaderStateV290;if(!state.speechChunks.length)return;
+  try{window.speechSynthesis?.cancel?.()}catch{}
+  state.speechIndex=Math.min(state.speechChunks.length-1,state.speechIndex+1);state.stopped=false;state.paused=false;academicReaderSpeakCurrentV290();
+}
+function academicReaderSetRateV290(value){
+  const state=academicReaderStateV290;state.rate=Math.max(.6,Math.min(2,Number(value)||1));
+  if(!state.stopped&&!state.paused){try{window.speechSynthesis?.cancel?.()}catch{};academicReaderSpeakCurrentV290()}
+}
+function academicReaderSetFontV290(value){
+  const el=document.getElementById('academicReaderTextV290');if(el)el.style.setProperty('--reader-scale',String(Math.max(.8,Math.min(1.6,Number(value)||1.05))));
+}
+function closeAcademicReaderV290(){
+  academicReaderStopV290(true);
+  try{academicReaderStateV290.pdfDoc?.destroy?.()}catch{}
+  academicReaderStateV290.session=0;academicReaderStateV290.pdfDoc=null;
+  closeModal();
+}
+const closeModalBeforeV290=closeModal;
+closeModal=function closeModalV290(){
+  if(academicReaderStateV290?.session){
+    academicReaderStopV290(true);
+    try{academicReaderStateV290.pdfDoc?.destroy?.()}catch{}
+    academicReaderStateV290.session=0;academicReaderStateV290.pdfDoc=null;
+  }
+  closeModalBeforeV290();
+};
+
+/* =========================================================
+   AGENDA POLICIAL v2.10.0 — BANCO DE PREGUNTAS MIXTO
+   Tipos: selección múltiple, verdadero/falso, relacionar,
+   completar concepto. Mantiene compatibilidad con v2.9.
+   ========================================================= */
+function academicBankTypeLabelV210(type){
+  return ({multiple_choice:'Selección múltiple',true_false:'Verdadero / Falso',matching:'Relacionar conceptos',fill_blank:'Completar concepto'})[type]||'Selección múltiple';
+}
+function academicBankTypeIconV210(type){
+  return ({multiple_choice:'🔘',true_false:'✓',matching:'🔗',fill_blank:'✏️'})[type]||'🔘';
+}
+function academicBankTypeClassV210(type){return `bank-type-${String(type||'multiple_choice').replace(/_/g,'-')}-v210`}
+function academicBankQuestionTypeV210(q){return q?.question_type||q?.type||'multiple_choice'}
+function academicBankAnswerDataV210(q){
+  const raw=q?.answer_data;
+  if(raw&&typeof raw==='object')return raw;
+  if(typeof raw==='string'){try{return JSON.parse(raw)}catch{}}
+  return {};
+}
+function academicBankQuestionSummaryV210(q){
+  const type=academicBankQuestionTypeV210(q),data=academicBankAnswerDataV210(q);
+  if(type==='true_false')return `Correcta: ${data.correct===true?'Verdadero':'Falso'}`;
+  if(type==='fill_blank')return `${Array.isArray(data.answers)?data.answers.length:0} respuesta${Array.isArray(data.answers)&&data.answers.length===1?'':'s'} aceptada${Array.isArray(data.answers)&&data.answers.length===1?'':'s'}`;
+  if(type==='matching')return `${Array.isArray(data.pairs)?data.pairs.length:0} pares para relacionar`;
+  return `Correcta: ${q.correct_option||'—'}`;
+}
+function academicBankTypeBadgeV210(type){return `<span class="bank-type-badge-v210 ${academicBankTypeClassV210(type)}">${academicBankTypeIconV210(type)} ${esc(academicBankTypeLabelV210(type))}</span>`}
+
+async function openAcademicBankManageV210(bankId){
+  if(!academicCanManageBankV279())return toast('No tiene permiso para administrar bancos');
+  const bank=academicBankRowsV279.find(item=>String(item.id)===String(bankId));if(!bank)return toast('Banco no encontrado');
+  try{
+    const rows=await academicRPCWithRetryV275('academic_bank_admin_questions_v210',{p_token:academicSession.session_token,p_bank_id:bankId},2);
+    academicBankAdminQuestionsV279.set(String(bankId),rows||[]);
+    renderAcademicBankManageV210(bank);
+  }catch(error){console.error(error);toast(academicFriendlyError(error,'No se pudieron cargar las preguntas'))}
+}
+function renderAcademicBankManageV210(bank){
+  const questions=academicBankAdminQuestionsV279.get(String(bank.id))||[];
+  const counts={multiple_choice:0,true_false:0,matching:0,fill_blank:0};
+  questions.forEach(q=>{const t=academicBankQuestionTypeV210(q);counts[t]=(counts[t]||0)+1});
+  const typeChips=Object.entries(counts).filter(([,count])=>count>0).map(([type,count])=>`<span class="bank-type-count-v210 ${academicBankTypeClassV210(type)}"><b>${count}</b>${esc(academicBankTypeLabelV210(type))}</span>`).join('');
+  showModal(`<button class="icon-btn close" onclick="closeModal()">×</button>
+    <div class="bank-manage-head-v279"><div><span class="eyebrow">${esc(bank.subject)}</span><h2>${esc(bank.title||bank.topic)}</h2><p>${esc(bank.topic)} · ${questions.length} preguntas</p></div>${academicBankStatusV279(bank)}</div>
+    ${questions.length?`<div class="bank-type-counts-v210">${typeChips}</div>`:''}
+    <div class="bank-manage-actions-v279"><button class="btn academic-main-btn" onclick="openAcademicBankQuestionFormV279('${bank.id}')">Agregar pregunta</button><button class="btn secondary" onclick="openAcademicBankImportV279('${bank.id}')">Importar preguntas</button><button class="text-btn" onclick="closeModal();openAcademicBankFormV279('${bank.id}')">Editar datos</button></div>
+    <div class="bank-publish-strip-v279"><span>${bank.published?'Visible para el curso':'Todavía no visible para estudiantes'}</span><button class="btn ${bank.published?'secondary':'academic-main-btn'}" onclick="toggleAcademicBankPublishV279('${bank.id}',${bank.published?'false':'true'})">${bank.published?'Ocultar banco':'Publicar banco'}</button></div>
+    <div class="bank-question-admin-list-v279 bank-question-admin-list-v210">${questions.length?questions.map(q=>`<article><div><div class="bank-question-meta-v210"><span>Pregunta ${q.question_order}</span>${academicBankTypeBadgeV210(academicBankQuestionTypeV210(q))}</div><b>${esc(q.question_text)}</b><small>${esc(academicBankQuestionSummaryV210(q))}${q.explanation?' · Con explicación':''}</small></div><div><button class="icon-btn" title="Editar" onclick="openAcademicBankQuestionFormV279('${bank.id}','${q.id}')">✎</button><button class="icon-btn danger" title="Eliminar" onclick="deleteAcademicBankQuestionV279('${bank.id}','${q.id}')">×</button></div></article>`).join(''):'<div class="bank-empty-questions-v279">Todavía no hay preguntas. Puede mezclar selección múltiple, Verdadero/Falso, relacionar conceptos y completar.</div>'}</div>`);
+}
+
+function academicBankQuestionTypeHelpV210(type){
+  return ({
+    multiple_choice:'Una respuesta correcta entre cuatro opciones A, B, C y D.',
+    true_false:'Una afirmación que el estudiante debe identificar como Verdadera o Falsa.',
+    matching:'El estudiante relaciona cada concepto con su definición o correspondencia.',
+    fill_blank:'El estudiante escribe la palabra o concepto faltante. Se pueden registrar varias formas válidas.'
+  })[type]||'';
+}
+function academicBankQuestionTypeChangeV210(type){
+  document.querySelectorAll('[data-bank-type-panel-v210]').forEach(el=>el.hidden=el.dataset.bankTypePanelV210!==type);
+  const help=document.getElementById('bankQuestionTypeHelpV210');if(help)help.textContent=academicBankQuestionTypeHelpV210(type);
+}
+function openAcademicBankQuestionFormV210(bankId,questionId=''){
+  const list=academicBankAdminQuestionsV279.get(String(bankId))||[];
+  const q=list.find(item=>String(item.id)===String(questionId))||{};
+  const type=academicBankQuestionTypeV210(q),data=academicBankAnswerDataV210(q);
+  const pairs=Array.isArray(data.pairs)?data.pairs:[];
+  const answers=Array.isArray(data.answers)?data.answers:[];
+  const pairRows=Array.from({length:8},(_,i)=>`<div class="bank-pair-row-v210"><span>${i+1}</span><input name="pair_left_${i}" placeholder="Concepto" value="${esc(pairs[i]?.left||'')}"><span class="bank-pair-arrow-v210">↔</span><input name="pair_right_${i}" placeholder="Definición / correspondencia" value="${esc(pairs[i]?.right||'')}"></div>`).join('');
+  showModal(`<button class="icon-btn close" onclick="closeModal()">×</button><span class="eyebrow">Banco de preguntas mixto</span><h2>${q.id?'Editar pregunta':'Agregar pregunta'}</h2>
+    <form id="academicBankQuestionFormV210" class="form bank-question-form-v279 bank-question-form-v210">
+      <label>Tipo de pregunta<select name="question_type" onchange="academicBankQuestionTypeChangeV210(this.value)">
+        <option value="multiple_choice" ${type==='multiple_choice'?'selected':''}>🔘 Selección múltiple</option>
+        <option value="true_false" ${type==='true_false'?'selected':''}>✓ Verdadero / Falso</option>
+        <option value="matching" ${type==='matching'?'selected':''}>🔗 Relacionar conceptos</option>
+        <option value="fill_blank" ${type==='fill_blank'?'selected':''}>✏️ Completar concepto</option>
+      </select><small id="bankQuestionTypeHelpV210">${esc(academicBankQuestionTypeHelpV210(type))}</small></label>
+      <label>Pregunta o consigna<textarea name="question" rows="4" required placeholder="Escriba la pregunta o instrucción…">${esc(q.question_text||'')}</textarea></label>
+
+      <div data-bank-type-panel-v210="multiple_choice" ${type==='multiple_choice'?'':'hidden'} class="bank-type-panel-v210">
+        <label>Opción A<input name="A" value="${esc(type==='multiple_choice'?(q.option_a||''):'')}"></label><label>Opción B<input name="B" value="${esc(type==='multiple_choice'?(q.option_b||''):'')}"></label><label>Opción C<input name="C" value="${esc(type==='multiple_choice'?(q.option_c||''):'')}"></label><label>Opción D<input name="D" value="${esc(type==='multiple_choice'?(q.option_d||''):'')}"></label>
+        <label>Respuesta correcta<select name="correct"><option value="A" ${q.correct_option==='A'?'selected':''}>A</option><option value="B" ${q.correct_option==='B'?'selected':''}>B</option><option value="C" ${q.correct_option==='C'?'selected':''}>C</option><option value="D" ${q.correct_option==='D'?'selected':''}>D</option></select></label>
+      </div>
+
+      <div data-bank-type-panel-v210="true_false" ${type==='true_false'?'':'hidden'} class="bank-type-panel-v210 bank-tf-editor-v210">
+        <div class="bank-type-editor-note-v210">La afirmación anterior será mostrada con dos botones: <b>Verdadero</b> y <b>Falso</b>.</div>
+        <label>Respuesta correcta<select name="tf_correct"><option value="true" ${data.correct===true?'selected':''}>Verdadero</option><option value="false" ${data.correct===false?'selected':''}>Falso</option></select></label>
+      </div>
+
+      <div data-bank-type-panel-v210="matching" ${type==='matching'?'':'hidden'} class="bank-type-panel-v210">
+        <div class="bank-type-editor-note-v210">Complete al menos 2 pares. En el examen las definiciones aparecerán mezcladas.</div>
+        <div class="bank-pairs-editor-v210">${pairRows}</div>
+      </div>
+
+      <div data-bank-type-panel-v210="fill_blank" ${type==='fill_blank'?'':'hidden'} class="bank-type-panel-v210">
+        <label>Respuestas aceptadas<textarea name="fill_answers" rows="4" placeholder="Una respuesta por línea\nEj.: auditoría\nauditoria">${esc(answers.join('\n'))}</textarea><small>Mayúsculas, minúsculas y tildes no afectan la corrección. Puede registrar varias formas válidas.</small></label>
+      </div>
+
+      <label>Explicación opcional<textarea name="explanation" rows="3" placeholder="Se mostrará después de responder en Modo Estudio.">${esc(q.explanation||'')}</textarea></label>
+      <div class="form-actions"><button class="btn academic-main-btn" type="submit">Guardar pregunta</button><button class="btn secondary" type="button" onclick="closeModal();openAcademicBankManageV279('${bankId}')">Cancelar</button></div>
+    </form>`);
+  document.getElementById('academicBankQuestionFormV210').onsubmit=event=>saveAcademicBankQuestionV210(event,bankId,q.id||'');
+}
+async function saveAcademicBankQuestionV210(event,bankId,questionId=''){
+  event.preventDefault();const form=event.currentTarget,button=event.submitter;if(button){button.disabled=true;button.textContent='Guardando…'}
+  try{
+    const values=Object.fromEntries(new FormData(form).entries());
+    const type=values.question_type||'multiple_choice';let data={};
+    if(type==='true_false')data={correct:values.tf_correct==='true'};
+    else if(type==='fill_blank'){
+      const answers=String(values.fill_answers||'').split(/\n|\|/).map(v=>v.trim()).filter(Boolean);data={answers};
+    }else if(type==='matching'){
+      const pairs=[];for(let i=0;i<8;i++){const left=String(values[`pair_left_${i}`]||'').trim(),right=String(values[`pair_right_${i}`]||'').trim();if(left||right)pairs.push({left,right})}data={pairs};
+    }
+    await academicRPCWithRetryV275('academic_bank_save_question_v210',{
+      p_token:academicSession.session_token,p_bank_id:bankId,p_question_id:questionId||null,p_question_text:values.question,
+      p_question_type:type,p_option_a:values.A||'',p_option_b:values.B||'',p_option_c:values.C||'',p_option_d:values.D||'',
+      p_correct_option:values.correct||'',p_answer_data:data,p_explanation:values.explanation||''
+    },2);
+    closeModal();await loadAcademicBanksV279();toast('Pregunta guardada');setTimeout(()=>openAcademicBankManageV279(bankId),50);
+  }catch(error){console.error(error);toast(academicFriendlyError(error,'No se pudo guardar la pregunta'));if(button){button.disabled=false;button.textContent='Guardar pregunta'}}
+}
+
+function academicBankNormalizeTypeV210(value){
+  const t=academicBankNormalizeV279(value||'').replace(/[\s-]+/g,'_');
+  if(['verdadero_falso','verdaderofalso','vf','true_false','truefalse'].includes(t))return'true_false';
+  if(['relacionar','relacion','relacionar_conceptos','matching','emparejar'].includes(t))return'matching';
+  if(['completar','completar_concepto','fill_blank','fillblank','texto'].includes(t))return'fill_blank';
+  return'multiple_choice';
+}
+function academicBankParsePairsV210(value){
+  return String(value||'').split(/\|\|/).map(piece=>{const parts=piece.split(/=>|→/);return{left:String(parts.shift()||'').trim(),right:parts.join('=>').trim()}}).filter(p=>p.left&&p.right);
+}
+function academicBankParseCsvV210(text){
+  const lines=String(text||'').replace(/\r/g,'').split('\n').filter(line=>line.trim());if(lines.length<2)return[];
+  const delimiter=(lines[0].match(/;/g)||[]).length>(lines[0].match(/,/g)||[]).length?';':',';
+  const headers=academicCsvLineV279(lines[0],delimiter).map(h=>academicBankNormalizeV279(h));
+  const idx=names=>headers.findIndex(h=>names.includes(h));
+  const map={type:idx(['tipo','type','modalidad pregunta']),question:idx(['pregunta','question']),A:idx(['a','opcion a','opcion_a']),B:idx(['b','opcion b','opcion_b']),C:idx(['c','opcion c','opcion_c']),D:idx(['d','opcion d','opcion_d']),correct:idx(['correcta','correct','respuesta','respuesta correcta']),explanation:idx(['explicacion','explanation']),content:idx(['contenido','datos','content','respuestas aceptadas','pares'])};
+  return lines.slice(1).map(line=>{
+    const c=academicCsvLineV279(line,delimiter),type=map.type>=0?academicBankNormalizeTypeV210(c[map.type]):'multiple_choice';
+    const row={type,question:c[map.question]||'',A:map.A>=0?(c[map.A]||''):'',B:map.B>=0?(c[map.B]||''):'',C:map.C>=0?(c[map.C]||''):'',D:map.D>=0?(c[map.D]||''):'',correct:map.correct>=0?String(c[map.correct]||'').trim():'',explanation:map.explanation>=0?(c[map.explanation]||''):'',answer_data:{}};
+    const content=map.content>=0?(c[map.content]||''):'';
+    if(type==='true_false'){const v=academicBankNormalizeV279(row.correct);if(['verdadero','v','true','1'].includes(v))row.answer_data={correct:true};else if(['falso','f','false','0'].includes(v))row.answer_data={correct:false};else row.invalid=true}
+    else if(type==='fill_blank'){const answers=String(content||row.correct||'').split('|').map(v=>v.trim()).filter(Boolean);row.answer_data={answers};if(!answers.length)row.invalid=true}
+    else if(type==='matching'){const pairs=academicBankParsePairsV210(content);row.answer_data={pairs};if(pairs.length<2)row.invalid=true}
+    else{row.correct=row.correct.toUpperCase();if(!(row.question&&row.A&&row.B&&row.C&&row.D&&['A','B','C','D'].includes(row.correct)))row.invalid=true}
+    if(!row.question)row.invalid=true;return row;
+  }).filter(r=>!r.invalid);
+}
+function academicBankParseTextV210(text){return academicBankParseTextV279(text).map(r=>({...r,type:'multiple_choice',answer_data:{}}))}
+function openAcademicBankImportV210(bankId){
+  academicBankImportRowsV279=[];
+  showModal(`<button class="icon-btn close" onclick="closeModal()">×</button><span class="eyebrow">Carga rápida · Banco mixto</span><h2>Importar preguntas</h2>
+    <p class="subtle">Los CSV antiguos A-B-C-D siguen funcionando. La nueva plantilla permite mezclar los cuatro tipos de preguntas.</p>
+    <div class="bank-import-format-note-v210"><b>CSV mixto recomendado</b><span>Selección múltiple · Verdadero/Falso · Relacionar · Completar</span></div>
+    <textarea id="academicBankImportTextV279" class="bank-import-text-v279" rows="10" placeholder="También puede pegar preguntas A-B-C-D en el formato tradicional…"></textarea>
+    <div class="bank-import-controls-v279"><label class="file-chip-v279">Archivo CSV/TXT<input id="academicBankImportFileV279" type="file" accept=".csv,.txt,text/csv,text/plain" onchange="academicBankReadImportFileV210(this,'${bankId}')"></label><button class="text-btn" onclick="downloadAcademicBankTemplateV210()">Plantilla CSV mixta</button></div>
+    <div class="form-actions"><button class="btn academic-main-btn" onclick="academicBankAnalyzeImportV210('${bankId}')">Analizar preguntas</button><button class="btn secondary" onclick="closeModal();openAcademicBankManageV279('${bankId}')">Cancelar</button></div>
+    <div id="academicBankImportPreviewV279"></div>`);
+}
+async function academicBankReadImportFileV210(input,bankId){
+  const file=input?.files?.[0];if(!file)return;
+  try{const text=await file.text();const area=document.getElementById('academicBankImportTextV279');if(area)area.value=text;academicBankImportRowsV279=file.name.toLowerCase().endsWith('.csv')?academicBankParseCsvV210(text):academicBankParseTextV210(text);academicRenderBankImportPreviewV210(bankId)}catch(error){toast('No se pudo leer el archivo')}
+}
+function academicBankAnalyzeImportV210(bankId){
+  const text=document.getElementById('academicBankImportTextV279')?.value||'';
+  const firstLine=String(text).replace(/^\uFEFF/,'').split(/\r?\n/)[0]||'';
+  const looksCsv=/[;,]/.test(firstLine)&&/(pregunta|question)/i.test(firstLine);
+  academicBankImportRowsV279=looksCsv?academicBankParseCsvV210(text):academicBankParseTextV210(text);academicRenderBankImportPreviewV210(bankId);
+}
+function academicRenderBankImportPreviewV210(bankId){
+  const box=document.getElementById('academicBankImportPreviewV279');if(!box)return;const rows=academicBankImportRowsV279;
+  if(!rows.length){box.innerHTML='<div class="bank-import-empty-v279">No se detectaron preguntas válidas. Si usa modalidades mixtas, descargue la plantilla CSV nueva.</div>';return}
+  const counts={};rows.forEach(r=>counts[r.type]=(counts[r.type]||0)+1);
+  const chips=Object.entries(counts).map(([type,count])=>`<span class="bank-import-type-chip-v210 ${academicBankTypeClassV210(type)}"><b>${count}</b> ${esc(academicBankTypeLabelV210(type))}</span>`).join('');
+  box.innerHTML=`<div class="bank-import-summary-v279"><b>${rows.length} preguntas listas</b><small>Revise antes de guardar. Máximo 500 por importación.</small><div class="bank-import-types-v210">${chips}</div></div><div class="bank-import-preview-v279">${rows.slice(0,12).map((r,i)=>`<div><span>${i+1}</span><b>${esc(r.question)}</b><small>${esc(academicBankTypeLabelV210(r.type))}</small></div>`).join('')}${rows.length>12?`<p>+ ${rows.length-12} preguntas adicionales</p>`:''}</div><button class="btn academic-main-btn bank-import-save-v279" onclick="commitAcademicBankImportV210('${bankId}')">Importar ${Math.min(rows.length,500)} preguntas</button>`;
+}
+async function commitAcademicBankImportV210(bankId){
+  if(!academicBankImportRowsV279.length)return toast('No hay preguntas listas para importar');
+  if(academicBankImportRowsV279.length>500&&!confirm(`Se detectaron ${academicBankImportRowsV279.length} preguntas. Se importarán las primeras 500. ¿Continuar?`))return;
+  const rows=academicBankImportRowsV279.slice(0,500);
+  try{
+    const count=Number(await academicRPCWithRetryV275('academic_bank_import_questions_v210',{p_token:academicSession.session_token,p_bank_id:bankId,p_rows:rows},2)||0);
+    const rejected=Math.max(0,rows.length-count);await loadAcademicBanksV279();
+    showModal(`<button class="icon-btn close" onclick="closeModal();openAcademicBankManageV279('${bankId}')">×</button><div class="bank-import-result-v210 ${rejected?'warning':''}"><span>${rejected?'⚠️':'✅'}</span><h2>${rejected?'Importación completada con observaciones':'Importación completada'}</h2><div><b>${rows.length}</b><small>detectadas</small></div><div><b>${count}</b><small>cargadas</small></div><div><b>${rejected}</b><small>rechazadas</small></div><p>${rejected?'Revise las filas rechazadas y vuelva a importarlas. Las preguntas correctas ya quedaron guardadas.':'Todas las preguntas fueron guardadas correctamente.'}</p><button class="btn academic-main-btn" onclick="closeModal();openAcademicBankManageV279('${bankId}')">Volver al banco</button></div>`);
+  }catch(error){console.error(error);toast(academicFriendlyError(error,'No se pudieron importar las preguntas'))}
+}
+function downloadAcademicBankTemplateV210(){
+  const csv='tipo;pregunta;A;B;C;D;correcta;explicacion;contenido\n'+
+  'seleccion;"¿Cuál es la opción correcta?";"Opción A";"Opción B";"Opción C";"Opción D";B;"Explicación opcional";\n'+
+  'verdadero_falso;"La auditoría es un examen sistemático.";;;;;VERDADERO;"Explicación opcional";\n'+
+  'completar;"La ________ permite verificar el uso de recursos públicos.";;;;;;"Explicación opcional";"auditoría|auditoria"\n'+
+  'relacionar;"Relacione cada concepto con su definición.";;;;;;"Explicación opcional";"Eficacia=>Logro de objetivos||Eficiencia=>Uso adecuado de recursos"\n';
+  const blob=new Blob(['\uFEFF'+csv],{type:'text/csv;charset=utf-8'}),url=URL.createObjectURL(blob),a=document.createElement('a');a.href=url;a.download='plantilla-banco-preguntas-mixto-v210.csv';a.click();setTimeout(()=>URL.revokeObjectURL(url),1000);
+}
+
+function academicBankAttemptTypeHeaderV210(q){return `<span class="bank-attempt-type-v210 ${academicBankTypeClassV210(q.type||'multiple_choice')}">${academicBankTypeIconV210(q.type)} ${esc(academicBankTypeLabelV210(q.type))}</span>`}
+function academicBankFeedbackV210(q,answered,attempt){
+  if(!answered||attempt.attempt_mode!=='estudio')return'';
+  const ca=answered.correct_answer||{};let answer='';
+  if(q.type==='multiple_choice'&&ca.option)answer=`Respuesta correcta: ${esc(ca.option)}`;
+  else if(q.type==='true_false'&&typeof ca.value==='boolean')answer=`Respuesta correcta: ${ca.value?'Verdadero':'Falso'}`;
+  else if(q.type==='fill_blank'&&Array.isArray(ca.answers))answer=`Respuesta aceptada: ${esc(ca.answers.join(' / '))}`;
+  else if(q.type==='matching'&&Array.isArray(ca.pairs))answer=`<div class="bank-match-solution-v210">${ca.pairs.map(p=>`<span><b>${esc(p.left)}</b> → ${esc(p.right)}</span>`).join('')}</div>`;
+  return `<div class="bank-feedback-v279 ${answered.is_correct?'ok':'bad'}"><b>${answered.is_correct?'✓ Correcto':'✕ Incorrecto'}</b>${answer?`<span>${answer}</span>`:''}${answered.explanation?`<p>${esc(answered.explanation)}</p>`:''}</div>`;
+}
+function academicBankQuestionBodyV210(q,answered){
+  const type=q.type||'multiple_choice';
+  if(type==='multiple_choice'){
+    return `<div class="bank-options-v279">${(q.options||[]).map(opt=>{let cls='';if(answered){if(opt.key===answered.selected?.option)cls+=' selected';if(academicBankActiveAttemptV279.attempt_mode==='estudio'&&answered.correct_answer?.option){if(opt.key===answered.correct_answer.option)cls+=' correct';else if(opt.key===answered.selected?.option&&!answered.is_correct)cls+=' wrong'}}return `<button class="bank-option-v279${cls}" ${answered?'disabled':''} onclick="submitAcademicBankAnswerV210('${q.id}',{option:'${opt.key}'})"><span>${esc(opt.key)}</span><b>${esc(opt.text)}</b></button>`}).join('')}</div>`;
+  }
+  if(type==='true_false'){
+    return `<div class="bank-tf-options-v210">${(q.options||[]).map(opt=>{const value=opt.key==='true',selected=answered&&answered.selected?.value===value;let cls=selected?' selected':'';if(answered&&academicBankActiveAttemptV279.attempt_mode==='estudio'&&typeof answered.correct_answer?.value==='boolean'){if(answered.correct_answer.value===value)cls+=' correct';else if(selected&&!answered.is_correct)cls+=' wrong'}return `<button class="bank-tf-option-v210${cls}" ${answered?'disabled':''} onclick="submitAcademicBankAnswerV210('${q.id}',{value:${value}})"><span>${value?'V':'F'}</span><b>${esc(opt.text)}</b></button>`}).join('')}</div>`;
+  }
+  if(type==='fill_blank'){
+    const value=answered?.selected?.text||'';
+    return `<div class="bank-fill-answer-v210"><label>Escriba la palabra o concepto<input id="bankFillAnswerV210_${q.id}" value="${esc(value)}" ${answered?'disabled':''} autocomplete="off" autocapitalize="sentences" placeholder="Escriba su respuesta…"></label>${answered?'':`<button class="btn academic-main-btn" onclick="submitAcademicBankFillV210('${q.id}')">Responder</button>`}</div>`;
+  }
+  const left=Array.isArray(q.data?.left)?q.data.left:[],right=Array.isArray(q.data?.right)?q.data.right:[];
+  const selected=answered?.selected?.matches||{};
+  return `<div class="bank-matching-v210"><div class="bank-matching-note-v210">Seleccione para cada concepto la correspondencia correcta. Cada opción se utiliza una sola vez.</div>${left.map((item,i)=>`<label class="bank-match-row-v210"><span><b>${i+1}</b>${esc(item.text)}</span><select data-match-left-v210="${esc(item.id)}" ${answered?'disabled':''}><option value="">Elegir correspondencia…</option>${right.map(r=>`<option value="${esc(r.id)}" ${selected[item.id]===r.id?'selected':''}>${esc(r.text)}</option>`).join('')}</select></label>`).join('')}${answered?'':`<button class="btn academic-main-btn" onclick="submitAcademicBankMatchingV210('${q.id}')">Comprobar relaciones</button>`}</div>`;
+}
+function renderAcademicBankAttemptV210(){
+  const attempt=academicBankActiveAttemptV279;if(!attempt)return;const questions=attempt.questions||[],q=questions[academicBankAttemptIndexV279];if(!q)return;
+  q.type=q.type||'multiple_choice';const answered=academicBankAttemptAnswersV279.get(String(q.id));const progress=Math.round(((academicBankAttemptIndexV279+1)/questions.length)*100);
+  const body=academicBankQuestionBodyV210(q,answered),feedback=academicBankFeedbackV210(q,answered,attempt);
+  showModal(`<button class="icon-btn close" onclick="closeModal()">×</button>
+    <div class="bank-attempt-head-v279"><div><span class="eyebrow">${esc(attempt.subject)} · ${attempt.attempt_mode==='estudio'?'Modo estudio':'Simulacro mixto'}</span><h2>${esc(attempt.title)}</h2></div><span>${academicBankAttemptIndexV279+1}/${questions.length}</span></div>
+    <div class="bank-progress-v279"><i style="width:${progress}%"></i></div>
+    <section class="bank-question-v279 bank-question-v210"><div class="bank-question-kicker-v210"><span>Pregunta ${academicBankAttemptIndexV279+1}</span>${academicBankAttemptTypeHeaderV210(q)}</div><h3>${esc(q.question)}</h3>${body}${feedback}</section>
+    <div class="bank-attempt-actions-v279">${answered?`<button class="btn academic-main-btn" onclick="academicBankNextV279()">${academicBankAttemptIndexV279===questions.length-1?'Finalizar':'Siguiente'}</button>`:`<small>${q.type==='matching'?'Complete todas las relaciones para continuar.':q.type==='fill_blank'?'Escriba su respuesta para continuar.':'Seleccione una respuesta para continuar.'}</small>`}</div>`);
+}
+async function startAcademicBankAttemptV210(bankId,mode){
+  if(!navigator.onLine)return toast('Necesita conexión para iniciar el cuestionario');if(academicBankSubmittingV279)return;academicBankSubmittingV279=true;
+  try{let data=await academicRPCWithRetryV275('academic_bank_start_attempt_v210',{p_token:academicSession.session_token,p_bank_id:bankId,p_mode:mode},2);data=Array.isArray(data)?data[0]:data;if(!data?.attempt_id||!Array.isArray(data.questions)||!data.questions.length)throw new Error('El servidor no entregó las preguntas');academicBankActiveAttemptV279=data;academicBankAttemptIndexV279=0;academicBankAttemptAnswersV279=new Map();renderAcademicBankAttemptV210()}catch(error){console.error(error);toast(academicFriendlyError(error,'No se pudo iniciar el cuestionario'))}finally{academicBankSubmittingV279=false}
+}
+async function submitAcademicBankAnswerV210(questionId,selected){
+  if(academicBankSubmittingV279||!academicBankActiveAttemptV279)return;academicBankSubmittingV279=true;
+  try{let result=await academicRPCWithRetryV275('academic_bank_submit_answer_v210',{p_token:academicSession.session_token,p_attempt_id:academicBankActiveAttemptV279.attempt_id,p_question_id:questionId,p_selected:selected},2);result=Array.isArray(result)?result[0]:result||{};academicBankAttemptAnswersV279.set(String(questionId),{selected,is_correct:result.is_correct,correct_answer:result.correct_answer||null,explanation:result.explanation||''});renderAcademicBankAttemptV210()}catch(error){console.error(error);toast(academicFriendlyError(error,'No se pudo guardar la respuesta'))}finally{academicBankSubmittingV279=false}
+}
+function submitAcademicBankFillV210(questionId){const input=document.getElementById(`bankFillAnswerV210_${questionId}`),text=String(input?.value||'').trim();if(!text)return toast('Escriba una respuesta');submitAcademicBankAnswerV210(questionId,{text})}
+function submitAcademicBankMatchingV210(questionId){
+  const rows=[...document.querySelectorAll('[data-match-left-v210]')],matches={},used=new Set();
+  for(const row of rows){const value=row.value;if(!value)return toast('Complete todas las relaciones');if(used.has(value))return toast('Cada correspondencia debe utilizarse una sola vez');used.add(value);matches[row.dataset.matchLeftV210]=value}
+  submitAcademicBankAnswerV210(questionId,{matches});
+}
+
+// Sobrescribe solamente la capa del Banco; el resto del modo online permanece intacto.
+openAcademicBankManageV279=openAcademicBankManageV210;
+renderAcademicBankManageV279=renderAcademicBankManageV210;
+openAcademicBankQuestionFormV279=openAcademicBankQuestionFormV210;
+saveAcademicBankQuestionV279=saveAcademicBankQuestionV210;
+openAcademicBankImportV279=openAcademicBankImportV210;
+academicBankReadImportFileV279=academicBankReadImportFileV210;
+academicBankAnalyzeImportV279=academicBankAnalyzeImportV210;
+academicRenderBankImportPreviewV279=academicRenderBankImportPreviewV210;
+commitAcademicBankImportV279=commitAcademicBankImportV210;
+downloadAcademicBankTemplateV279=downloadAcademicBankTemplateV210;
+startAcademicBankAttemptV279=startAcademicBankAttemptV210;
+renderAcademicBankAttemptV279=renderAcademicBankAttemptV210;
+submitAcademicBankAnswerV279=(questionId,selected)=>submitAcademicBankAnswerV210(questionId,{option:selected});

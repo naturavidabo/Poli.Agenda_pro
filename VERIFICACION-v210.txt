@@ -1,0 +1,38 @@
+AGENDA POLICIAL v2.10.0 — VERIFICACIÓN FINAL
+
+VERSIÓN
+- app.js: 2.10.0
+- version.json: 2.10.0
+- Service Worker: agenda-policial-v2.10.0
+- index.html y reset.html: referencias 2.10.0
+
+BANCO MIXTO
+- Selección múltiple A/B/C/D: compatible con los 80 registros existentes.
+- Verdadero/Falso: validación y corrección automática.
+- Relacionar conceptos: correspondencias mezcladas con tokens aleatorios por intento.
+- Completar concepto: varias respuestas aceptadas, ignorando mayúsculas/minúsculas y tildes.
+- Simulacro mixto: al mezclar preguntas se garantiza al menos una de cada tipo disponible.
+- Estudio: devuelve corrección y explicación después de responder.
+- Evaluación: no devuelve respuestas correctas durante el intento.
+
+PRUEBA CONTROLADA EN SUPABASE
+- Banco temporal con 4 preguntas / 4 modalidades.
+- Se entregaron 4 preguntas de 4 tipos distintos.
+- Las 4 respuestas correctas fueron evaluadas correctamente.
+- Resultado: 100%.
+- No se detectaron correct_option, respuestas aceptadas ni tokens de solución en el JSON enviado al cliente.
+- La prueba se ejecutó dentro de una transacción y fue revertida.
+
+COMPATIBILIDAD Y SEGURIDAD
+- Las 80 preguntas reales existentes siguen registradas como multiple_choice.
+- RLS sigue habilitado en tablas del Banco.
+- anon no tiene SELECT/INSERT/UPDATE/DELETE directo en tablas del Banco.
+- Versiones anteriores reciben únicamente preguntas multiple_choice para evitar romper la interfaz antigua.
+
+CLIENTE
+- node --check app.js: OK
+- node --check online.js: OK
+- node --check sw.js: OK
+- Prueba aislada del parser CSV mixto: 4 filas detectadas correctamente en los 4 tipos.
+- Service Worker no toma control automáticamente al instalar; espera el flujo de actualización de la app.
+- Importación mixta en Supabase: 4/4 filas guardadas y 4/4 tipos reconocidos; prueba revertida.

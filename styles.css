@@ -100,3 +100,18 @@ body{background:linear-gradient(180deg,#e9efe5 0%,#f9faf5 38%,#edf3ea 100%)}
 
 /* Agenda Policial v2.7.4 — horarios multicurso */
 .schedule-cell.no-data{cursor:default;background:#fbfcfb}.schedule-cell.no-data:hover{box-shadow:none}.schedule-cell.has-data{cursor:pointer}.schedule-picker-clean select{font-weight:900}.schedule-table .non-lective-label{font-size:10px;letter-spacing:.025em}.daily-block.non-lective .non-lective-label{display:inline-flex;width:max-content}.schedule-table .cell-empty{min-height:42px}.schedule-title-strip span{white-space:nowrap}.schedule-meta-clean .schedule-inline-note{margin-top:12px}
+
+
+/* Agenda Policial v2.8.1 — hotfix responsivo móvil */
+html,body,#app,.app{width:100%;max-width:100%;min-width:0}
+#app,.app{overflow-x:clip}
+.top{width:100%;max-width:none}
+main{width:100%;min-width:0}
+@media (hover:none) and (pointer:coarse){
+  html,body,#app,.app{width:100%!important;max-width:100%!important;min-width:0!important}
+  .app{overflow-x:hidden}
+  .top{width:100%!important;max-width:none!important;margin:0!important}
+  main{width:100%!important;max-width:none!important;margin:0!important;padding-left:14px!important;padding-right:14px!important}
+  .bottom-nav{left:0!important;right:0!important;width:100%!important;max-width:none!important;margin:0!important;transform:none!important;border-radius:0!important}
+  .fab{right:16px!important}
+}

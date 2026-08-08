@@ -1,0 +1,29 @@
+AGENDA POLICIAL v2.9.0 — LECTOR ACADÉMICO DOCX/PDF
+
+NUEVO
+- Lector interno para documentos Word .docx y PDF publicados en el modo online.
+- Opción "Leer aquí" junto a "Abrir original".
+- PDF: vista real de página dentro de Agenda Policial, navegación anterior/siguiente y extracción de texto.
+- DOCX: vista de lectura limpia del texto del documento.
+- Lectura en voz alta con el motor de voz del dispositivo.
+- Controles: escuchar, pausar/continuar, anterior, siguiente, detener, velocidad y tamaño de texto.
+- El párrafo leído se resalta en pantalla.
+- Un toque sobre un párrafo inicia la lectura desde ese punto.
+- Detección de PDF escaneado/sin texto: el documento sigue visible, pero se avisa que no hay texto suficiente para voz.
+
+INTERFAZ ONLINE
+- Tarjetas y navegación con acabado más limpio y moderno.
+- Archivos académicos presentados como tarjetas con tipo, tamaño y dos acciones claras.
+- Se mantiene la estructura anterior para no obligar al usuario a reaprender la aplicación.
+
+COMPATIBILIDAD
+- No modifica Supabase ni los datos ya publicados.
+- No altera las credenciales ni los roles.
+- No altera Banco de Preguntas, historial, horarios, biblioteca ni activación.
+- Mantiene la opción de apertura externa de todos los archivos.
+- El lector interno se ofrece solamente para PDF y DOCX; .doc antiguo continúa con apertura original.
+
+DEPENDENCIAS DEL LECTOR
+- Mammoth 1.8.0 para extracción DOCX (BSD-2-Clause).
+- PDF.js 3.11.174 para PDF (Apache-2.0).
+- Se cargan desde CDN y el Service Worker intenta conservarlas en caché como recursos opcionales.
