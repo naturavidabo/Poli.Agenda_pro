@@ -1,4 +1,4 @@
-/* Agenda Policial Online v2.10.0 — conexión real con Supabase */
+/* Agenda Policial Online v2.11.1 — conexión real con Supabase */
 const ONLINE_CFG = {
   url: 'https://lkwrulzrulmbfypwywmo.supabase.co',
   anonKey: 'sb_publishable_vtek6lVCGZkmyicgAPqDMw_8EOTFrRU',
@@ -5704,3 +5704,149 @@ downloadAcademicBankTemplateV279=downloadAcademicBankTemplateV210;
 startAcademicBankAttemptV279=startAcademicBankAttemptV210;
 renderAcademicBankAttemptV279=renderAcademicBankAttemptV210;
 submitAcademicBankAnswerV279=(questionId,selected)=>submitAcademicBankAnswerV210(questionId,{option:selected});
+
+/* =========================================================
+   AGENDA POLICIAL v2.11.1 — MEZCLA AUTOMÁTICA
+   Convierte temporalmente bancos A/B/C/D a modalidades mixtas.
+   No duplica ni modifica las preguntas almacenadas.
+   ========================================================= */
+function renderAcademicBankManageV211(bank){
+  const questions=academicBankAdminQuestionsV279.get(String(bank.id))||[];
+  const counts={multiple_choice:0,true_false:0,matching:0,fill_blank:0};
+  questions.forEach(q=>{const t=academicBankQuestionTypeV210(q);counts[t]=(counts[t]||0)+1});
+  const typeChips=Object.entries(counts).filter(([,count])=>count>0).map(([type,count])=>`<span class="bank-type-count-v210 ${academicBankTypeClassV210(type)}"><b>${count}</b>${esc(academicBankTypeLabelV210(type))}</span>`).join('');
+  const onlyMultiple=questions.length>=2&&counts.multiple_choice===questions.length;
+  const autoNote=onlyMultiple?`<div class="bank-auto-mix-note-v211"><span>⚡</span><div><b>Mezcla automática activa</b><p>No necesita convertir estas ${questions.length} preguntas manualmente. Al iniciar Estudio o Simulacro, Agenda Policial generará temporalmente Selección múltiple, Verdadero/Falso, Completar y Relacionar usando este mismo banco.</p></div></div>`:'';
+  showModal(`<button class="icon-btn close" onclick="closeModal()">×</button>
+    <div class="bank-manage-head-v279"><div><span class="eyebrow">${esc(bank.subject)}</span><h2>${esc(bank.title||bank.topic)}</h2><p>${esc(bank.topic)} · ${questions.length} preguntas</p></div>${academicBankStatusV279(bank)}</div>
+    ${questions.length?`<div class="bank-type-counts-v210">${typeChips}</div>`:''}${autoNote}
+    <div class="bank-manage-actions-v279"><button class="btn academic-main-btn" onclick="openAcademicBankQuestionFormV279('${bank.id}')">Agregar pregunta</button><button class="btn secondary" onclick="openAcademicBankImportV279('${bank.id}')">Importar preguntas</button><button class="text-btn" onclick="closeModal();openAcademicBankFormV279('${bank.id}')">Editar datos</button></div>
+    <div class="bank-publish-strip-v279"><span>${bank.published?'Visible para el curso':'Todavía no visible para estudiantes'}</span><button class="btn ${bank.published?'secondary':'academic-main-btn'}" onclick="toggleAcademicBankPublishV279('${bank.id}',${bank.published?'false':'true'})">${bank.published?'Ocultar banco':'Publicar banco'}</button></div>
+    <div class="bank-question-admin-list-v279 bank-question-admin-list-v210">${questions.length?questions.map(q=>`<article><div><div class="bank-question-meta-v210"><span>Pregunta ${q.question_order}</span>${academicBankTypeBadgeV210(academicBankQuestionTypeV210(q))}</div><b>${esc(q.question_text)}</b><small>${esc(academicBankQuestionSummaryV210(q))}${q.explanation?' · Con explicación':''}</small></div><div><button class="icon-btn" title="Editar" onclick="openAcademicBankQuestionFormV279('${bank.id}','${q.id}')">✎</button><button class="icon-btn danger" title="Eliminar" onclick="deleteAcademicBankQuestionV279('${bank.id}','${q.id}')">×</button></div></article>`).join(''):'<div class="bank-empty-questions-v279">Todavía no hay preguntas.</div>'}</div>`);
+}
+
+function renderAcademicBankAttemptV211(){
+  const attempt=academicBankActiveAttemptV279;if(!attempt)return;const questions=attempt.questions||[],q=questions[academicBankAttemptIndexV279];if(!q)return;
+  q.type=q.type||'multiple_choice';const answered=academicBankAttemptAnswersV279.get(String(q.id));const progress=Math.round(((academicBankAttemptIndexV279+1)/questions.length)*100);
+  const body=academicBankQuestionBodyV210(q,answered),feedback=academicBankFeedbackV210(q,answered,attempt);
+  const autoBadge=attempt.auto_generated?`<span class="bank-auto-badge-v211">⚡ Mixto automático</span>`:'';
+  showModal(`<button class="icon-btn close" onclick="closeModal()">×</button>
+    <div class="bank-attempt-head-v279"><div><span class="eyebrow">${esc(attempt.subject)} · ${attempt.attempt_mode==='estudio'?'Modo estudio':'Simulacro mixto'}</span><h2>${esc(attempt.title)}</h2>${autoBadge}</div><span>${academicBankAttemptIndexV279+1}/${questions.length}</span></div>
+    <div class="bank-progress-v279"><i style="width:${progress}%"></i></div>
+    <section class="bank-question-v279 bank-question-v210"><div class="bank-question-kicker-v210"><span>Pregunta ${academicBankAttemptIndexV279+1}</span>${academicBankAttemptTypeHeaderV210(q)}</div><h3>${esc(q.question)}</h3>${body}${feedback}</section>
+    <div class="bank-attempt-actions-v279">${answered?`<button class="btn academic-main-btn" onclick="academicBankNextV279()">${academicBankAttemptIndexV279===questions.length-1?'Finalizar':'Siguiente'}</button>`:`<small>${q.type==='matching'?'Complete todas las relaciones para continuar.':q.type==='fill_blank'?'Escriba su respuesta para continuar.':'Seleccione una respuesta para continuar.'}</small>`}</div>`);
+}
+
+async function startAcademicBankAttemptV211(bankId,mode){
+  if(!navigator.onLine)return toast('Necesita conexión para iniciar el cuestionario');if(academicBankSubmittingV279)return;academicBankSubmittingV279=true;
+  try{
+    let data=await academicRPCWithRetryV275('academic_bank_start_attempt_v211',{p_token:academicSession.session_token,p_bank_id:bankId,p_mode:mode},2);
+    data=Array.isArray(data)?data[0]:data;
+    if(!data?.attempt_id||!Array.isArray(data.questions)||!data.questions.length)throw new Error('El servidor no entregó las preguntas');
+    academicBankActiveAttemptV279=data;academicBankAttemptIndexV279=0;academicBankAttemptAnswersV279=new Map();renderAcademicBankAttemptV211();
+  }catch(error){console.error(error);toast(academicFriendlyError(error,'No se pudo iniciar el cuestionario'))}finally{academicBankSubmittingV279=false}
+}
+
+renderAcademicBankManageV210=renderAcademicBankManageV211;
+renderAcademicBankManageV279=renderAcademicBankManageV211;
+renderAcademicBankAttemptV210=renderAcademicBankAttemptV211;
+renderAcademicBankAttemptV279=renderAcademicBankAttemptV211;
+startAcademicBankAttemptV210=startAcademicBankAttemptV211;
+startAcademicBankAttemptV279=startAcademicBankAttemptV211;
+
+
+/* =========================================================
+   AGENDA POLICIAL v2.11.1 — SINCRONIZACIÓN Y PUBLICACIÓN SEGURA
+   - Refresco visible del Banco para lectores y administradores.
+   - Confirmación antes de ocultar un banco publicado.
+   - Refresco al volver a la app si el Banco está abierto.
+   ========================================================= */
+let academicBankRefreshingV2111=false;
+let academicBankLastSyncV2111=null;
+let academicBankVisibilityTimerV2111=0;
+
+function academicBankSyncLabelV2111(){
+  if(!navigator.onLine)return 'Sin conexión · mostrando copia guardada';
+  if(!academicBankLastSyncV2111)return 'Sincronizado con el curso activo';
+  try{return `Actualizado ${new Date(academicBankLastSyncV2111).toLocaleTimeString('es-BO',{hour:'2-digit',minute:'2-digit'})}`}
+  catch{return 'Sincronizado con el curso activo'}
+}
+
+academicBankViewV279=function academicBankViewV2111(){
+  return `
+    ${academicProfileHeader()}
+    ${academicTextNav()}
+    <div class="online-module-head premium-module-head v277-module-head bank-head-v279">
+      <div class="premium-module-copy">
+        <span class="module-visual-icon">❓</span>
+        <div><span class="eyebrow">${esc(academicCourseLabelV277())}</span><h3>Banco de preguntas</h3><p>Práctica por materia y simulacros con resultado individual.</p></div>
+      </div>
+      ${academicCanManageBankV279()?'<button class="btn academic-main-btn" onclick="openAcademicBankFormV279()">Nuevo banco</button>':''}
+    </div>
+    <div class="bank-toolbar-v279 bank-toolbar-v2111">
+      <label><span>Buscar</span><input id="academicBankSearch" placeholder="Materia o tema" value="${esc(academicBankSearchV279)}" oninput="academicFilterBanksV279(this.value)"></label>
+      <div class="bank-sync-row-v2111"><div class="bank-toolbar-note-v279" id="academicBankSyncTextV2111">${esc(academicBankSyncLabelV2111())}</div><button class="bank-refresh-btn-v2111" id="academicBankRefreshBtnV2111" onclick="refreshAcademicBanksV2111()">↻ Actualizar</button></div>
+    </div>
+    <div id="academicBankListV279"><div class="card small"><p>Cargando bancos…</p></div></div>
+  `;
+};
+
+async function refreshAcademicBanksV2111(showToast=true){
+  if(academicBankRefreshingV2111)return;
+  if(!academicSession)return;
+  academicBankRefreshingV2111=true;
+  const btn=document.getElementById('academicBankRefreshBtnV2111');
+  const txt=document.getElementById('academicBankSyncTextV2111');
+  if(btn){btn.disabled=true;btn.textContent='↻ Actualizando…'}
+  if(txt)txt.textContent=navigator.onLine?'Consultando el curso…':'Sin conexión · mostrando copia guardada';
+  try{
+    await loadAcademicBanksV279();
+    academicBankLastSyncV2111=new Date().toISOString();
+    if(txt)txt.textContent=academicBankSyncLabelV2111();
+    if(showToast&&navigator.onLine)toast('Banco de preguntas actualizado');
+  }finally{
+    academicBankRefreshingV2111=false;
+    if(btn){btn.disabled=false;btn.textContent='↻ Actualizar'}
+  }
+}
+
+academicRenderBankListV279=function academicRenderBankListV2111(syncError=false){
+  const box=$('#academicBankListV279'); if(!box)return;
+  const rows=academicBankVisibleRowsV279();
+  const warning=syncError?'<div class="academic-sync-banner warning"><div><b>No se pudo actualizar</b><small>Se muestra la última copia disponible.</small></div><button onclick="refreshAcademicBanksV2111()">Reintentar</button></div>':'';
+  if(!rows.length){
+    box.innerHTML=warning+`<div class="bank-empty-v279"><span>❓</span><b>No hay bancos de preguntas disponibles.</b><p>${academicCanManageBankV279()?'Puede crear o publicar un banco para este curso.':'Si acaba de publicarse un banco, pulse Actualizar para sincronizarlo.'}</p><button class="btn secondary bank-empty-refresh-v2111" onclick="refreshAcademicBanksV2111()">↻ Actualizar bancos</button></div>`;
+    return;
+  }
+  box.innerHTML=warning+`<div class="bank-grid-v279">${rows.map(academicBankCardV279).join('')}</div>`;
+};
+
+const _loadAcademicBanksV2111=loadAcademicBanksV279;
+loadAcademicBanksV279=async function loadAcademicBanksV2111(){
+  await _loadAcademicBanksV2111();
+  if(navigator.onLine)academicBankLastSyncV2111=new Date().toISOString();
+  const txt=document.getElementById('academicBankSyncTextV2111');
+  if(txt)txt.textContent=academicBankSyncLabelV2111();
+};
+
+const _toggleAcademicBankPublishV2111=toggleAcademicBankPublishV279;
+toggleAcademicBankPublishV279=async function toggleAcademicBankPublishV2111(bankId,published){
+  if(!published){
+    const bank=academicBankRowsV279.find(item=>String(item.id)===String(bankId));
+    const label=bank?.title||bank?.topic||'este banco';
+    if(!confirm(`¿Ocultar “${label}”?\n\nDejará de aparecer inmediatamente para los usuarios lectores del curso.`))return;
+  }
+  return _toggleAcademicBankPublishV2111(bankId,published);
+};
+
+if(!window.__agendaBankVisibilityV2111){
+  window.__agendaBankVisibilityV2111=true;
+  document.addEventListener('visibilitychange',()=>{
+    if(document.visibilityState!=='visible'||academicTab!=='banco'||!academicSession||!navigator.onLine)return;
+    clearTimeout(academicBankVisibilityTimerV2111);
+    academicBankVisibilityTimerV2111=setTimeout(()=>refreshAcademicBanksV2111(false),350);
+  });
+  window.addEventListener('online',()=>{
+    if(academicTab==='banco'&&academicSession)setTimeout(()=>refreshAcademicBanksV2111(false),350);
+  });
+}

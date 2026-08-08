@@ -1,12 +1,20 @@
-AGENDA POLICIAL v2.10.0 — BANCO DE PREGUNTAS MIXTO
+AGENDA POLICIAL v2.11.1 — MEZCLA AUTOMÁTICA
 
-1. Selección múltiple A/B/C/D (compatible con todos los bancos anteriores).
-2. Verdadero / Falso.
-3. Relacionar conceptos y definiciones.
-4. Completar palabra o concepto con varias respuestas aceptadas.
-5. Simulacros mixtos: garantiza presencia de cada tipo disponible cuando las preguntas se mezclan.
-6. Estudio: retroalimentación inmediata. Simulacro: respuestas correctas ocultas durante el intento.
-7. Plantilla CSV mixta y compatibilidad con CSV/TXT antiguos.
-8. Resultado de importación con detectadas, cargadas y rechazadas.
-9. Lector Académico DOCX/PDF de v2.9.0 conservado.
-10. Service Worker v2.10.0 sin toma de control automática durante instalación.
+1. Los bancos históricos A/B/C/D generan modalidades mixtas automáticamente al iniciar un intento.
+2. No duplica ni modifica las preguntas originales.
+3. Para 20 preguntas: objetivo 10 selección múltiple, 4 Verdadero/Falso, 4 Completar, 2 Relacionar.
+4. Verdadero/Falso usa una respuesta propuesta correcta o distractora tomada del banco.
+5. Completar usa como respuesta válida el texto de la alternativa correcta, normalizado sin distinguir mayúsculas/tildes.
+6. Relacionar agrupa preguntas con sus respuestas correctas y mezcla las correspondencias.
+7. Si un banco ya contiene tipos mixtos creados expresamente, se conserva la lógica v2.10 sin transformación.
+8. En Simulacro las soluciones continúan protegidas en servidor.
+9. Mantiene Lector Académico DOCX/PDF y todas las funciones v2.10.
+10. Service Worker actualizado a v2.11.1.
+
+
+v2.11.1 — SINCRONIZACIÓN DEL BANCO
+- Botón Actualizar visible para lectores y administradores.
+- Refresco al volver a la aplicación o recuperar conexión.
+- Confirmación antes de ocultar un banco publicado.
+- Auditoría en Supabase para saber quién publica u oculta un banco.
+- No modifica preguntas, intentos ni material académico.

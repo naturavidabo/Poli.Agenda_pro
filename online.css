@@ -120,7 +120,7 @@
 }
 
 /* =========================================================
-   Agenda Policial Online v2.10.0 — lector académico + banco mixto
+   Agenda Policial Online v2.11.1 — lector académico + banco mixto automático
    ========================================================= */
 .online-page{background:
   radial-gradient(circle at 14% 0%,rgba(216,167,55,.07),transparent 31%),
@@ -211,3 +211,17 @@
 @media(max-width:620px){
   .bank-pair-row-v210{grid-template-columns:22px minmax(0,1fr);gap:5px}.bank-pair-row-v210 .bank-pair-arrow-v210{display:none}.bank-pair-row-v210 input:last-child{grid-column:2}.bank-tf-options-v210{grid-template-columns:1fr}.bank-match-row-v210{grid-template-columns:1fr}.bank-import-result-v210{grid-template-columns:repeat(3,1fr)}
 }
+
+/* v2.11.1 — Mezcla automática */
+.bank-auto-mix-note-v211{display:flex;gap:12px;align-items:flex-start;margin:12px 0;padding:13px 14px;border:1px solid rgba(43,116,255,.18);border-radius:16px;background:linear-gradient(135deg,rgba(43,116,255,.08),rgba(0,178,169,.07))}
+.bank-auto-mix-note-v211>span{font-size:22px;line-height:1.1}.bank-auto-mix-note-v211 b{display:block;margin-bottom:3px}.bank-auto-mix-note-v211 p{margin:0;color:var(--muted,#667085);font-size:.88rem;line-height:1.4}
+.bank-auto-badge-v211{display:inline-flex;align-items:center;gap:6px;margin-top:7px;padding:5px 9px;border-radius:999px;background:rgba(43,116,255,.09);border:1px solid rgba(43,116,255,.16);font-size:.76rem;font-weight:800;color:inherit}
+.bank-question-v210 h3{white-space:pre-line}
+
+
+/* v2.11.1 — sincronización visible del Banco */
+.bank-sync-row-v2111{display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap}
+.bank-refresh-btn-v2111{border:1px solid rgba(18,83,61,.20);background:#fff;color:#174f3b;border-radius:14px;padding:9px 13px;font:inherit;font-weight:800;cursor:pointer;white-space:nowrap}
+.bank-refresh-btn-v2111:disabled{opacity:.6;cursor:wait}
+.bank-empty-refresh-v2111{margin-top:14px}
+@media(max-width:560px){.bank-sync-row-v2111{width:100%}.bank-refresh-btn-v2111{min-height:42px}.bank-toolbar-v2111 label{width:100%}}

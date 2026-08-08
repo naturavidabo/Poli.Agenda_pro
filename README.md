@@ -1,4 +1,4 @@
-# Agenda Policial v2.10.0
+# Agenda Policial v2.11.1
 
 Aplicación PWA institucional con biblioteca normativa offline y área académica online opcional.
 
@@ -88,3 +88,7 @@ El proyecto se mantiene por debajo de 100 archivos y puede publicarse en GitHub 
 - El administrador general ve indicadores de adopción online: verde (ya ingresó), amarillo (sin ingreso) y gris (datos incompletos), además de primer/último ingreso y cantidad de accesos.
 - El formato CSV del Banco de Preguntas se mantiene: `pregunta;A;B;C;D;correcta;explicacion`.
 - La actualización PWA exige que los archivos esenciales estén completos antes de reemplazar la versión estable anterior.
+
+
+## v2.11.1 — Mezcla automática
+Los bancos históricos A/B/C/D pueden generar automáticamente intentos mixtos sin duplicar preguntas. Para un intento de 20 preguntas la distribución objetivo es 10 selección múltiple, 4 Verdadero/Falso, 4 Completar y 2 Relacionar. Los bancos que ya contienen preguntas mixtas creadas manualmente conservan su lógica nativa.
