@@ -1,8 +1,8 @@
 {
-  "version": "2.11.1",
-  "build": "2026-08-07",
-  "channel": "automatic-mixed-question-bank",
-  "appVersion": "2.11.1",
+  "version": "2.12.0",
+  "build": "2026-08-10",
+  "channel": "academic-viewer-navigation",
+  "appVersion": "2.12.0",
   "scheduleVersion": "2026-07-29-v274",
   "databaseVersion": "agenda-db-7"
 }

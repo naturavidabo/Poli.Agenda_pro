@@ -1,4 +1,4 @@
-/* Agenda Policial Online v2.11.1 — conexión real con Supabase */
+/* Agenda Policial Online v2.12.0 — conexión real con Supabase */
 const ONLINE_CFG = {
   url: 'https://lkwrulzrulmbfypwywmo.supabase.co',
   anonKey: 'sb_publishable_vtek6lVCGZkmyicgAPqDMw_8EOTFrRU',
@@ -5706,7 +5706,7 @@ renderAcademicBankAttemptV279=renderAcademicBankAttemptV210;
 submitAcademicBankAnswerV279=(questionId,selected)=>submitAcademicBankAnswerV210(questionId,{option:selected});
 
 /* =========================================================
-   AGENDA POLICIAL v2.11.1 — MEZCLA AUTOMÁTICA
+   AGENDA POLICIAL v2.12.0 — MEZCLA AUTOMÁTICA
    Convierte temporalmente bancos A/B/C/D a modalidades mixtas.
    No duplica ni modifica las preguntas almacenadas.
    ========================================================= */
@@ -5756,7 +5756,7 @@ startAcademicBankAttemptV279=startAcademicBankAttemptV211;
 
 
 /* =========================================================
-   AGENDA POLICIAL v2.11.1 — SINCRONIZACIÓN Y PUBLICACIÓN SEGURA
+   AGENDA POLICIAL v2.12.0 — SINCRONIZACIÓN Y PUBLICACIÓN SEGURA
    - Refresco visible del Banco para lectores y administradores.
    - Confirmación antes de ocultar un banco publicado.
    - Refresco al volver a la app si el Banco está abierto.
@@ -5850,3 +5850,265 @@ if(!window.__agendaBankVisibilityV2111){
     if(academicTab==='banco'&&academicSession)setTimeout(()=>refreshAcademicBanksV2111(false),350);
   });
 }
+
+/* =========================================================
+   AGENDA POLICIAL v2.12.0 — VISUALIZADOR ACADÉMICO + NAVEGACIÓN COMPLETA
+   - Menú online completo sin desplazamiento horizontal.
+   - DOCX: Leer y escuchar / Ver documento / Descargar.
+   - Lector DOCX estructurado: títulos, subtítulos, listas, tablas y énfasis.
+   - Continuidad de lectura por documento.
+   - Banco: acción segura para archivar bancos obsoletos o incorrectos.
+   - No modifica autenticación, activación, usuarios, cursos ni sesiones.
+   ========================================================= */
+const ACADEMIC_DOCX_JSZIP_V212='https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js';
+const ACADEMIC_DOCX_PREVIEW_V212='https://cdn.jsdelivr.net/npm/docx-preview@0.4.0/dist/docx-preview.min.js';
+let academicDocViewerSessionV212=0;
+let academicReaderProgressTimerV212=0;
+
+function academicTextNavV212(){
+  const items=[
+    ['panel','Panel','⌂'],
+    ['formaciones','Formaciones','🛡️'],
+    ['tareas','Tareas','📘'],
+    ['examenes','Exámenes','📝'],
+    ['banco','Banco','❓'],
+    ['resumenes','Material','📚']
+  ];
+  if(academicCanManageUsers())items.push(['usuarios','Nómina','👥']);
+  if(academicSession?.role==='administrador_general')items.push(['cursos','Cursos','▦']);
+  return `<nav class="academic-text-nav academic-text-nav-premium olive-gold-nav v277-nav v279-nav academic-nav-grid-v212" aria-label="Secciones académicas">
+    ${items.map(([key,label,icon])=>`<button class="${academicTab===key?'active':''}" onclick="setAcademicTab('${key}')"><span>${icon}</span><b>${label}</b></button>`).join('')}
+  </nav>`;
+}
+academicTextNav=academicTextNavV212;
+academicSubnav=function academicSubnavV212(){return academicTextNavV212()};
+
+function academicReaderSafeHtmlV212(html){
+  const wrapper=document.createElement('div');
+  wrapper.innerHTML=String(html||'');
+  wrapper.querySelectorAll('script,style,iframe,object,embed,form,input,button,textarea,select,meta,link').forEach(el=>el.remove());
+  wrapper.querySelectorAll('*').forEach(el=>{
+    [...el.attributes].forEach(attr=>{
+      const n=attr.name.toLowerCase(),v=String(attr.value||'').trim().toLowerCase();
+      if(n.startsWith('on')||n==='srcdoc'||((n==='href'||n==='src')&&v.startsWith('javascript:')))el.removeAttribute(attr.name);
+    });
+  });
+  return wrapper;
+}
+function academicReaderPrepareStructuredV212(html){
+  const wrapper=academicReaderSafeHtmlV212(html);
+  const blocks=[];
+  const nodes=[...wrapper.querySelectorAll('h1,h2,h3,h4,h5,h6,p,li,blockquote,figcaption,td,th')];
+  nodes.forEach(node=>{
+    if(node.closest('td,th')&&node.tagName!=='TD'&&node.tagName!=='TH')return;
+    const text=String(node.textContent||'').replace(/\s+/g,' ').trim();
+    if(!text)return;
+    const index=blocks.length;
+    blocks.push({text,page:null});
+    node.dataset.readerBlock=String(index);
+    node.id=`readerBlockV290_${index}`;
+    node.classList.add('academic-reader-block-v212');
+  });
+  return {html:wrapper.innerHTML,blocks};
+}
+function academicReaderProgressKeyV212(file){
+  const raw=String(file?.url||file?.name||'documento');
+  let hash=2166136261;
+  for(let i=0;i<raw.length;i++){hash^=raw.charCodeAt(i);hash=Math.imul(hash,16777619)}
+  return `agenda-reader-pos-v212-${(hash>>>0).toString(36)}`;
+}
+function academicReaderSavePositionV212(blockIndex){
+  const file=academicReaderStateV290?.file;if(!file)return;
+  const index=Math.max(0,Number(blockIndex)||0);
+  academicReaderStateV290.lastBlockV212=index;
+  try{localStorage.setItem(academicReaderProgressKeyV212(file),JSON.stringify({block:index,at:Date.now()}))}catch{}
+}
+function academicReaderRestorePositionV212(){
+  const file=academicReaderStateV290?.file;if(!file)return;
+  try{
+    const saved=JSON.parse(localStorage.getItem(academicReaderProgressKeyV212(file))||'null');
+    if(!saved||!Number.isFinite(Number(saved.block))||Number(saved.block)<=0)return;
+    academicReaderStateV290.lastBlockV212=Number(saved.block);
+    const chunkIndex=(academicReaderStateV290.speechChunks||[]).findIndex(item=>Number(item.blockIndex)===Number(saved.block));
+    if(chunkIndex>=0)academicReaderStateV290.speechIndex=chunkIndex;
+    setTimeout(()=>document.getElementById(`readerBlockV290_${Number(saved.block)}`)?.scrollIntoView({block:'center'}),160);
+    const p=document.getElementById('academicReaderProgressV290');if(p)p.textContent=`Continuar desde el bloque ${Number(saved.block)+1}`;
+  }catch{}
+}
+function academicReaderAttachProgressV212(){
+  const body=document.getElementById('academicReaderBodyV290');if(!body)return;
+  body.addEventListener('scroll',()=>{
+    clearTimeout(academicReaderProgressTimerV212);
+    academicReaderProgressTimerV212=setTimeout(()=>{
+      const nodes=[...document.querySelectorAll('#academicReaderTextV290 [data-reader-block]')];
+      if(!nodes.length)return;
+      const top=body.getBoundingClientRect().top+Math.min(180,body.clientHeight*.22);
+      let best=nodes[0],dist=Infinity;
+      for(const node of nodes){const d=Math.abs(node.getBoundingClientRect().top-top);if(d<dist){dist=d;best=node}}
+      academicReaderSavePositionV212(Number(best.dataset.readerBlock||0));
+    },220);
+  },{passive:true});
+  academicReaderRestorePositionV212();
+}
+
+const _academicReaderHighlightV212=academicReaderHighlightV290;
+academicReaderHighlightV290=function academicReaderHighlightV212(blockIndex){
+  _academicReaderHighlightV212(blockIndex);
+  academicReaderSavePositionV212(blockIndex);
+};
+
+academicReaderLoadDocxV290=async function academicReaderLoadDocxV212(buffer,session){
+  const result=await window.mammoth.convertToHtml({arrayBuffer:buffer},{includeDefaultStyleMap:true});
+  if(academicReaderStateV290.session!==session)return;
+  let structured=academicReaderPrepareStructuredV212(result?.value||'');
+  if(!structured.blocks.length){
+    const raw=await window.mammoth.extractRawText({arrayBuffer:buffer});
+    const blocks=academicReaderNormalizeBlocksV290(raw?.value||'');
+    structured={blocks,html:blocks.map((b,i)=>`<p class="academic-reader-block-v212" id="readerBlockV290_${i}" data-reader-block="${i}">${esc(b.text)}</p>`).join('')};
+  }
+  academicReaderStateV290.blocks=structured.blocks;
+  academicReaderStateV290.speechChunks=academicReaderSpeechChunksV290(structured.blocks);
+  const canSpeak=academicReaderHasSpeechV290()&&academicReaderStateV290.speechChunks.length>0;
+  const body=document.getElementById('academicReaderBodyV290');if(!body)return;
+  body.innerHTML=`${academicReaderControlsV290({speech:canSpeak})}
+    <div class="academic-reader-doc-head-v290 academic-reader-doc-head-v212"><span>📘</span><div><b>Lectura estructurada</b><small>Títulos, subtítulos, párrafos, listas y tablas se conservan cuando el Word los contiene.</small></div></div>
+    <article id="academicReaderTextV290" class="academic-reader-text-v290 academic-reader-structured-v212">${structured.html}</article>
+    ${academicReaderFooterV290(academicReaderStateV290.file)}`;
+  const text=document.getElementById('academicReaderTextV290');
+  text?.addEventListener('click',event=>{
+    const node=event.target.closest?.('[data-reader-block]');
+    if(node)academicReaderStartAtBlockV290(Number(node.dataset.readerBlock||0));
+  });
+  academicReaderAttachProgressV212();
+};
+
+function academicDocViewerShellV212(file,type){
+  const label=type==='docx'?'Documento Word':'Documento PDF';
+  showModal(`<div class="academic-docviewer-shell-v212">
+    <header class="academic-docviewer-top-v212">
+      <div><small>Visualizador académico · ${esc(label)}</small><h2>${esc(file.name||'Documento')}</h2></div>
+      <button class="icon-btn close" onclick="closeModal()">×</button>
+    </header>
+    <div class="academic-docviewer-tools-v212"><span>Vista dentro de Agenda Policial</span><button class="btn secondary" onclick="academicDownloadFileV212ByFile('${academicReaderRegisterV290(file)}')">⬇ Descargar</button></div>
+    <div id="academicDocViewerBodyV212" class="academic-docviewer-body-v212"><div class="academic-reader-loading-v290"><span class="academic-reader-spinner-v290"></span><b>Preparando vista del documento…</b><small>El archivo original no será modificado.</small></div></div>
+  </div>`);
+  requestAnimationFrame(()=>{
+    document.querySelector('#modalRoot .modal-bg')?.classList.add('academic-reader-bg-v290');
+    document.querySelector('#modalRoot .modal')?.classList.add('academic-docviewer-modal-v212');
+  });
+}
+async function academicDocxViewerDepsV212(){
+  await academicLoadScriptV290(ACADEMIC_DOCX_JSZIP_V212,'JSZip');
+  await academicLoadScriptV290(ACADEMIC_DOCX_PREVIEW_V212,'docx');
+  if(!window.docx?.renderAsync)throw new Error('El visualizador Word no está disponible');
+}
+async function openAcademicDocumentViewerV212(key){
+  const file=academicReaderRegistryV290.get(key);const type=academicReaderFileTypeV290(file);
+  if(!file||!['docx','pdf'].includes(type))return toast('Este archivo no admite vista interna');
+  const session=Date.now()+Math.random();academicDocViewerSessionV212=session;
+  academicDocViewerShellV212(file,type);
+  const body=document.getElementById('academicDocViewerBodyV212');
+  try{
+    if(type==='pdf'){
+      if(body)body.innerHTML=`<div class="academic-docviewer-pdf-v212"><iframe src="${esc(file.url)}" title="${esc(file.name||'Documento PDF')}"></iframe></div>`;
+      return;
+    }
+    await academicDocxViewerDepsV212();
+    const buffer=await academicReaderFetchV290(file);
+    if(academicDocViewerSessionV212!==session)return;
+    if(!body)return;
+    body.innerHTML=`<div class="academic-docviewer-note-v212"><b>Vista Word</b><span>Se conserva la diagramación, páginas, tablas, imágenes y estilos compatibles con el navegador.</span></div><div id="academicDocxStylesV212"></div><div id="academicDocxCanvasV212" class="academic-docx-canvas-v212"></div>`;
+    const canvas=document.getElementById('academicDocxCanvasV212');
+    const styles=document.getElementById('academicDocxStylesV212');
+    await window.docx.renderAsync(new Uint8Array(buffer),canvas,styles,{
+      className:'agenda-docx-v212',inWrapper:true,ignoreWidth:false,ignoreHeight:false,ignoreFonts:false,
+      breakPages:true,ignoreLastRenderedPageBreak:false,renderHeaders:true,renderFooters:true,renderFootnotes:true,
+      renderEndnotes:true,useBase64URL:true,debug:false
+    });
+    const firstPage=canvas.querySelector('section');
+    if(firstPage){
+      const natural=firstPage.getBoundingClientRect().width;
+      const available=Math.max(280,body.clientWidth-24);
+      if(natural>available)canvas.style.setProperty('--docx-fit-v212',String(Math.max(.52,Math.min(1,available/natural))));
+    }
+  }catch(error){
+    console.error(error);
+    if(body)body.innerHTML=`<div class="academic-reader-error-v290"><span>⚠️</span><h3>No se pudo generar la vista interna</h3><p>${esc(academicFriendlyError(error,'Puede descargar el archivo original.'))}</p><button class="btn academic-main-btn" onclick="academicDownloadFileV212ByFile('${key}')">⬇ Descargar archivo</button></div>`;
+  }
+}
+
+async function academicDownloadFileV212ByFile(key){
+  const file=academicReaderRegistryV290.get(key);if(!file?.url)return toast('Archivo no disponible');
+  try{
+    toast('Preparando descarga…');
+    const response=await fetch(file.url,{cache:'default',credentials:'omit'});
+    if(!response.ok)throw new Error(`No se pudo descargar (${response.status})`);
+    const blob=await response.blob();const url=URL.createObjectURL(blob);
+    const a=document.createElement('a');a.href=url;a.download=file.name||'documento';a.style.display='none';document.body.appendChild(a);a.click();a.remove();
+    setTimeout(()=>URL.revokeObjectURL(url),2500);
+  }catch(error){
+    console.error(error);
+    const a=document.createElement('a');a.href=file.url;a.target='_blank';a.rel='noopener';a.download=file.name||'documento';a.click();
+  }
+}
+
+academicAttachmentLinks=function academicAttachmentLinksV212(post){
+  const attachments=academicPostAttachments(post);if(!attachments.length)return '';
+  return `<div class="academic-attachments academic-attachments-v290 academic-attachments-v212">${attachments.map((file,index)=>{
+    const type=academicReaderFileTypeV290(file);const key=academicReaderRegisterV290(file);const size=academicReaderSizeLabelV290(file.size);
+    const canInternal=['docx','pdf'].includes(type);
+    return `<div class="academic-file-card-v290 academic-file-card-v212">
+      <div class="academic-file-main-v290"><span class="academic-file-icon-v290">${academicReaderIconV290(type)}</span><span class="file-copy"><b>${esc(file.name||`Archivo ${index+1}`)}</b><small>${esc(academicReaderTypeLabelV290(type))}${size?` · ${esc(size)}`:''}</small></span></div>
+      <div class="academic-file-actions-v290 academic-file-actions-v212">
+        ${canInternal?`<button class="academic-reader-btn-v290" type="button" onclick="openAcademicReaderV290('${key}')">🔊 Leer y escuchar</button><button class="academic-view-btn-v212" type="button" onclick="openAcademicDocumentViewerV212('${key}')">👁 Ver documento</button>`:''}
+        <button class="academic-download-btn-v212" type="button" onclick="academicDownloadFileV212ByFile('${key}')">⬇ Descargar</button>
+      </div>
+    </div>`;
+  }).join('')}</div>`;
+};
+
+function renderAcademicBankManageV212(bank){
+  const questions=academicBankAdminQuestionsV279.get(String(bank.id))||[];
+  const counts={multiple_choice:0,true_false:0,matching:0,fill_blank:0};
+  questions.forEach(q=>{const t=academicBankQuestionTypeV210(q);counts[t]=(counts[t]||0)+1});
+  const typeChips=Object.entries(counts).filter(([,count])=>count>0).map(([type,count])=>`<span class="bank-type-count-v210 ${academicBankTypeClassV210(type)}"><b>${count}</b>${esc(academicBankTypeLabelV210(type))}</span>`).join('');
+  const onlyMultiple=questions.length>=2&&counts.multiple_choice===questions.length;
+  const autoNote=onlyMultiple?`<div class="bank-auto-mix-note-v211"><span>⚡</span><div><b>Mezcla automática activa</b><p>No necesita convertir estas ${questions.length} preguntas manualmente. Estudio y Simulacro pueden generar modalidades mixtas temporalmente.</p></div></div>`:'';
+  showModal(`<button class="icon-btn close" onclick="closeModal()">×</button>
+    <div class="bank-manage-head-v279"><div><span class="eyebrow">${esc(bank.subject)}</span><h2>${esc(bank.title||bank.topic)}</h2><p>${esc(bank.topic)} · ${questions.length} preguntas</p></div>${academicBankStatusV279(bank)}</div>
+    ${questions.length?`<div class="bank-type-counts-v210">${typeChips}</div>`:''}${autoNote}
+    <div class="bank-manage-actions-v279"><button class="btn academic-main-btn" onclick="openAcademicBankQuestionFormV279('${bank.id}')">Agregar pregunta</button><button class="btn secondary" onclick="openAcademicBankImportV279('${bank.id}')">Importar preguntas</button><button class="text-btn" onclick="closeModal();openAcademicBankFormV279('${bank.id}')">Editar datos</button></div>
+    <div class="bank-publish-strip-v279"><span>${bank.published?'Visible para el curso':'Todavía no visible para estudiantes'}</span><button class="btn ${bank.published?'secondary':'academic-main-btn'}" onclick="toggleAcademicBankPublishV279('${bank.id}',${bank.published?'false':'true'})">${bank.published?'Ocultar banco':'Publicar banco'}</button></div>
+    <div class="bank-archive-strip-v212"><div><b>Banco obsoleto o incorrecto</b><small>Archivar lo retira del listado normal y de los estudiantes.</small></div><button class="btn bank-archive-btn-v212" onclick="archiveAcademicBankV212('${bank.id}')">🗃 Archivar banco</button></div>
+    <div class="bank-question-admin-list-v279 bank-question-admin-list-v210">${questions.length?questions.map(q=>`<article><div><div class="bank-question-meta-v210"><span>Pregunta ${q.question_order}</span>${academicBankTypeBadgeV210(academicBankQuestionTypeV210(q))}</div><b>${esc(q.question_text)}</b><small>${esc(academicBankQuestionSummaryV210(q))}${q.explanation?' · Con explicación':''}</small></div><div><button class="icon-btn" title="Editar" onclick="openAcademicBankQuestionFormV279('${bank.id}','${q.id}')">✎</button><button class="icon-btn danger" title="Eliminar" onclick="deleteAcademicBankQuestionV279('${bank.id}','${q.id}')">×</button></div></article>`).join(''):'<div class="bank-empty-questions-v279">Todavía no hay preguntas.</div>'}</div>`);
+}
+renderAcademicBankManageV211=renderAcademicBankManageV212;
+renderAcademicBankManageV210=renderAcademicBankManageV212;
+renderAcademicBankManageV279=renderAcademicBankManageV212;
+
+async function archiveAcademicBankV212(bankId){
+  const bank=academicBankRowsV279.find(item=>String(item.id)===String(bankId));
+  if(!bank)return toast('Banco no encontrado');
+  const label=bank.title||bank.topic||'este banco';
+  if(!confirm(`¿Archivar “${label}”?\n\nSe retirará del listado normal y dejará de estar disponible para los estudiantes. Use esta opción cuando el banco esté incorrecto, duplicado u obsoleto.`))return;
+  try{
+    await academicRPCWithRetryV275('academic_bank_archive',{p_token:academicSession.session_token,p_bank_id:bankId},2);
+    closeModal();await loadAcademicBanksV279();toast('Banco archivado');
+  }catch(error){console.error(error);toast(academicFriendlyError(error,'No se pudo archivar el banco'))}
+}
+
+// v2.12: acciones coherentes también al pie del lector.
+academicReaderFooterV290=function academicReaderFooterV212(file){
+  const key=academicReaderRegisterV290(file);
+  const type=academicReaderFileTypeV290(file);
+  return `<div class="academic-reader-footer-v290 academic-reader-footer-v212">
+    ${['docx','pdf'].includes(type)?`<button class="btn secondary" type="button" onclick="openAcademicDocumentViewerV212('${key}')">👁 Ver documento</button>`:''}
+    <button class="btn secondary" type="button" onclick="academicDownloadFileV212ByFile('${key}')">⬇ Descargar</button>
+    <small>La vista de lectura facilita el estudio; “Ver documento” conserva la presentación del archivo lo más fielmente posible.</small>
+  </div>`;
+};
+const _openAcademicDocumentViewerV212Base=openAcademicDocumentViewerV212;
+openAcademicDocumentViewerV212=async function openAcademicDocumentViewerV212Safe(key){
+  if(academicReaderStateV290?.session)academicReaderStopV290(true);
+  return _openAcademicDocumentViewerV212Base(key);
+};

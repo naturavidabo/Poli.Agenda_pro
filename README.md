@@ -1,4 +1,4 @@
-# Agenda Policial v2.11.1
+# Agenda Policial v2.12.0
 
 Aplicación PWA institucional con biblioteca normativa offline y área académica online opcional.
 
@@ -90,5 +90,14 @@ El proyecto se mantiene por debajo de 100 archivos y puede publicarse en GitHub 
 - La actualización PWA exige que los archivos esenciales estén completos antes de reemplazar la versión estable anterior.
 
 
-## v2.11.1 — Mezcla automática
+## v2.12.0 — Mezcla automática
 Los bancos históricos A/B/C/D pueden generar automáticamente intentos mixtos sin duplicar preguntas. Para un intento de 20 preguntas la distribución objetivo es 10 selección múltiple, 4 Verdadero/Falso, 4 Completar y 2 Relacionar. Los bancos que ya contienen preguntas mixtas creadas manualmente conservan su lógica nativa.
+
+## v2.12.0 — Visualizador académico y navegación completa
+- Menú online en cuadrícula: Panel, Formaciones, Tareas, Exámenes, Banco y Material siempre visibles sin desplazamiento horizontal; Nómina/Cursos se añaden según permisos.
+- Documentos DOCX/PDF con tres acciones: Leer y escuchar, Ver documento y Descargar.
+- Visualizador DOCX dentro de Agenda Policial mediante docx-preview 0.4.0 (cargado solo cuando se usa), sin alterar el archivo original.
+- Lector DOCX mejorado con títulos, subtítulos, listas, tablas, negritas/cursivas compatibles y resaltado durante la voz.
+- Continuidad de lectura local por documento.
+- Administración del Banco: acción segura Archivar banco para retirar bancos incorrectos/obsoletos del curso.
+- No se modifican activación, credenciales, sesiones, cursos ni la base local de la app.

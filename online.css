@@ -120,7 +120,7 @@
 }
 
 /* =========================================================
-   Agenda Policial Online v2.11.1 — lector académico + banco mixto automático
+   Agenda Policial Online v2.12.0 — lector académico + banco mixto automático
    ========================================================= */
 .online-page{background:
   radial-gradient(circle at 14% 0%,rgba(216,167,55,.07),transparent 31%),
@@ -212,16 +212,60 @@
   .bank-pair-row-v210{grid-template-columns:22px minmax(0,1fr);gap:5px}.bank-pair-row-v210 .bank-pair-arrow-v210{display:none}.bank-pair-row-v210 input:last-child{grid-column:2}.bank-tf-options-v210{grid-template-columns:1fr}.bank-match-row-v210{grid-template-columns:1fr}.bank-import-result-v210{grid-template-columns:repeat(3,1fr)}
 }
 
-/* v2.11.1 — Mezcla automática */
+/* v2.12.0 — Mezcla automática */
 .bank-auto-mix-note-v211{display:flex;gap:12px;align-items:flex-start;margin:12px 0;padding:13px 14px;border:1px solid rgba(43,116,255,.18);border-radius:16px;background:linear-gradient(135deg,rgba(43,116,255,.08),rgba(0,178,169,.07))}
 .bank-auto-mix-note-v211>span{font-size:22px;line-height:1.1}.bank-auto-mix-note-v211 b{display:block;margin-bottom:3px}.bank-auto-mix-note-v211 p{margin:0;color:var(--muted,#667085);font-size:.88rem;line-height:1.4}
 .bank-auto-badge-v211{display:inline-flex;align-items:center;gap:6px;margin-top:7px;padding:5px 9px;border-radius:999px;background:rgba(43,116,255,.09);border:1px solid rgba(43,116,255,.16);font-size:.76rem;font-weight:800;color:inherit}
 .bank-question-v210 h3{white-space:pre-line}
 
 
-/* v2.11.1 — sincronización visible del Banco */
+/* v2.12.0 — sincronización visible del Banco */
 .bank-sync-row-v2111{display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap}
 .bank-refresh-btn-v2111{border:1px solid rgba(18,83,61,.20);background:#fff;color:#174f3b;border-radius:14px;padding:9px 13px;font:inherit;font-weight:800;cursor:pointer;white-space:nowrap}
 .bank-refresh-btn-v2111:disabled{opacity:.6;cursor:wait}
 .bank-empty-refresh-v2111{margin-top:14px}
 @media(max-width:560px){.bank-sync-row-v2111{width:100%}.bank-refresh-btn-v2111{min-height:42px}.bank-toolbar-v2111 label{width:100%}}
+
+/* =========================================================
+   Agenda Policial Online v2.12.0 — navegación completa + visualizador Word
+   ========================================================= */
+.academic-nav-grid-v212{display:grid!important;grid-template-columns:repeat(6,minmax(0,1fr));gap:7px!important;overflow:visible!important;padding:7px!important;background:rgba(255,255,255,.94)}
+.academic-nav-grid-v212 button{min-width:0!important;width:100%;min-height:58px!important;padding:8px 5px!important;display:grid!important;justify-items:center;align-content:center;gap:4px!important;white-space:normal!important;text-align:center;border-radius:13px!important}
+.academic-nav-grid-v212 button span{font-size:18px!important;line-height:1}.academic-nav-grid-v212 button b{font-size:10px!important;line-height:1.12;overflow-wrap:anywhere}
+
+.academic-file-actions-v212{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));width:100%;gap:7px;justify-content:stretch}
+.academic-file-actions-v212 button{min-height:42px;border-radius:12px;padding:8px 7px;font:inherit;font-size:9.3px;font-weight:900;line-height:1.15}
+.academic-view-btn-v212{border:1px solid #bfcfbd;background:#f8fbf7;color:#244c35}
+.academic-download-btn-v212{border:1px solid #d1c58e;background:#fffdf5;color:#5a4b16}
+.academic-file-card-v212{grid-template-columns:1fr!important;gap:9px!important}
+
+.academic-reader-structured-v212{max-width:800px;background:#fff;border:1px solid #e0e7e2;border-radius:18px;padding:clamp(14px,3vw,28px);box-shadow:0 8px 24px rgba(19,47,31,.05);display:block!important;font-size:calc(14px * var(--reader-scale));line-height:1.62;color:#26392e}
+.academic-reader-structured-v212 h1,.academic-reader-structured-v212 h2,.academic-reader-structured-v212 h3,.academic-reader-structured-v212 h4,.academic-reader-structured-v212 h5,.academic-reader-structured-v212 h6{color:#173f2b;line-height:1.25;margin:1.15em 0 .55em;font-weight:900}
+.academic-reader-structured-v212 h1{font-size:1.65em}.academic-reader-structured-v212 h2{font-size:1.42em}.academic-reader-structured-v212 h3{font-size:1.24em}.academic-reader-structured-v212 h4{font-size:1.12em}
+.academic-reader-structured-v212 p{padding:0!important;margin:.65em 0!important;background:transparent!important;border:0!important;border-radius:0!important;font-size:1em!important;line-height:1.7!important}
+.academic-reader-structured-v212 ul,.academic-reader-structured-v212 ol{padding-left:1.5em;margin:.7em 0}.academic-reader-structured-v212 li{margin:.38em 0;line-height:1.6}
+.academic-reader-structured-v212 table{width:100%;border-collapse:collapse;margin:1em 0;overflow:auto}.academic-reader-structured-v212 td,.academic-reader-structured-v212 th{border:1px solid #ced9d1;padding:7px;vertical-align:top}.academic-reader-structured-v212 th{background:#edf4ef;font-weight:900}
+.academic-reader-structured-v212 strong,.academic-reader-structured-v212 b{font-weight:900}.academic-reader-structured-v212 em,.academic-reader-structured-v212 i{font-style:italic}
+.academic-reader-structured-v212 .academic-reader-block-v212.speaking{background:#fff5c9!important;outline:2px solid #d9c15b!important;border-radius:8px!important;box-shadow:0 5px 13px rgba(107,86,18,.10)!important}
+.academic-reader-doc-head-v212 small{line-height:1.35}
+
+.academic-docviewer-modal-v212{width:100%!important;max-width:1180px!important;height:100dvh!important;max-height:100dvh!important;margin:0 auto!important;border-radius:0!important;padding:0!important;background:#e9eeeb!important;overflow:hidden!important;align-self:stretch!important}
+.academic-docviewer-shell-v212{height:100%;display:flex;flex-direction:column;min-width:0}
+.academic-docviewer-top-v212{display:flex;align-items:center;gap:10px;padding:calc(12px + env(safe-area-inset-top)) 15px 12px;background:linear-gradient(145deg,#073b26,#105f3d);color:#fff;box-shadow:0 7px 20px rgba(6,35,22,.18);z-index:3}
+.academic-docviewer-top-v212>div{min-width:0}.academic-docviewer-top-v212 small{display:block;color:#d2e6d9;font-size:9px;text-transform:uppercase;font-weight:850;letter-spacing:.05em}.academic-docviewer-top-v212 h2{margin:2px 0 0!important;color:#fff;font-size:15px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.academic-docviewer-top-v212 .close{margin-left:auto;float:none!important;background:rgba(255,255,255,.14)!important;color:#fff!important}
+.academic-docviewer-tools-v212{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:8px 12px;background:#fff;border-bottom:1px solid #d7e0da;color:#52635a;font-size:9.5px;font-weight:850}.academic-docviewer-tools-v212 .btn{min-height:34px;padding:7px 10px;font-size:9px}
+.academic-docviewer-body-v212{flex:1;overflow:auto;overscroll-behavior:contain;padding:10px;background:#dfe5e1}
+.academic-docviewer-note-v212{max-width:920px;margin:0 auto 9px;padding:9px 11px;border-radius:12px;background:#fff7d8;border:1px solid #e3d08a;color:#5d4d1c}.academic-docviewer-note-v212 b{display:block;font-size:10px}.academic-docviewer-note-v212 span{display:block;margin-top:2px;font-size:8.5px;line-height:1.4}
+.academic-docx-canvas-v212{--docx-fit-v212:1;min-width:max-content;transform-origin:top center;zoom:var(--docx-fit-v212)}
+.academic-docx-canvas-v212 .docx-wrapper{background:#dfe5e1!important;padding:10px!important}.academic-docx-canvas-v212 section{box-shadow:0 8px 22px rgba(0,0,0,.15)!important;margin-bottom:12px!important}
+.academic-docviewer-pdf-v212{height:100%;min-height:75vh}.academic-docviewer-pdf-v212 iframe{width:100%;height:100%;min-height:80vh;border:0;border-radius:12px;background:#fff}
+
+.bank-archive-strip-v212{display:flex;align-items:center;justify-content:space-between;gap:10px;margin:10px 0;padding:10px 11px;border:1px solid #ead5b9;border-radius:14px;background:#fff9f1}.bank-archive-strip-v212>div{display:grid;gap:2px}.bank-archive-strip-v212 b{font-size:10.5px;color:#65472d}.bank-archive-strip-v212 small{font-size:8.5px;line-height:1.35;color:#806c5b}.bank-archive-btn-v212{border:1px solid #cfab82!important;background:#fff!important;color:#774f31!important;white-space:nowrap;font-size:9.5px!important}
+
+@media(max-width:760px){
+  .academic-nav-grid-v212{grid-template-columns:repeat(3,minmax(0,1fr))!important}
+  .academic-file-actions-v212{grid-template-columns:1fr 1fr}.academic-file-actions-v212 .academic-download-btn-v212{grid-column:1/-1}
+  .academic-docviewer-body-v212{padding:7px}.academic-docx-canvas-v212 .docx-wrapper{padding:5px!important}
+  .bank-archive-strip-v212{align-items:stretch;flex-direction:column}.bank-archive-btn-v212{width:100%}
+}
+@media(max-width:350px){.academic-nav-grid-v212{grid-template-columns:repeat(2,minmax(0,1fr))!important}.academic-file-actions-v212{grid-template-columns:1fr}.academic-file-actions-v212 .academic-download-btn-v212{grid-column:auto}}
