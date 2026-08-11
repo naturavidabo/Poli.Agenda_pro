@@ -306,3 +306,110 @@
 .bank-attempt-subject-v2122 .bank-progress-v279 i{background:var(--subject-accent)!important}.bank-attempt-subject-v2122 .bank-question-v279{border-top:4px solid var(--subject-accent);background:linear-gradient(180deg,var(--subject-soft),#fff 24%)}.bank-attempt-subject-v2122 .bank-question-kicker-v210>span:first-child{color:var(--subject-accent)}
 @media(max-width:680px){.academic-compact-controls-v2122{grid-template-columns:1fr 1fr}.academic-compact-controls-v2122 .academic-view-switch{grid-column:1/-1}.bank-subject-filter-v2122{grid-template-columns:1fr}.subject-legend-chip-v2122{max-width:calc(50% - 3px)}.subject-legend-chip-v2122 b{font-size:7.8px}}
 @media(max-width:410px){.academic-compact-controls-v2122{grid-template-columns:1fr}.academic-compact-controls-v2122 .academic-view-switch{grid-column:auto}.subject-legend-chip-v2122{max-width:100%}}
+
+
+/* =========================================================
+   Agenda Policial v2.12.4 — Claro / Oscuro + Lectura Confort
+   ========================================================= */
+.profile-actions-v2124{display:flex;flex-direction:column;align-items:flex-end;gap:7px;margin-left:auto}
+.academic-theme-toggle-v2124{display:inline-flex;align-items:center;gap:6px;min-height:32px;padding:5px 8px;border:1px solid #d3ddd6;border-radius:999px;background:#f8fbf8;color:#315040;font:inherit;font-size:8.5px;font-weight:900;white-space:nowrap;box-shadow:0 3px 10px rgba(15,58,37,.05)}
+.academic-theme-toggle-v2124 i{position:relative;width:27px;height:15px;border-radius:999px;background:#d9e1db;box-shadow:inset 0 0 0 1px rgba(36,72,51,.08)}
+.academic-theme-toggle-v2124 i::after{content:"";position:absolute;top:2px;left:2px;width:11px;height:11px;border-radius:50%;background:#fff;box-shadow:0 1px 4px rgba(0,0,0,.20);transition:transform .2s ease}
+.academic-theme-toggle-v2124[aria-pressed="true"] i{background:#315c46}
+.academic-theme-toggle-v2124[aria-pressed="true"] i::after{transform:translateX(12px)}
+.academic-reader-comfort-v2124{display:flex;gap:8px;align-items:flex-start;margin:8px 0 0;padding:8px 10px;border-radius:12px;background:#eef5ef;color:#425a4b;border:1px solid #dce8df;font-size:8.8px;line-height:1.35}
+.academic-reader-comfort-v2124>span{font-size:15px}.academic-reader-comfort-v2124 b{display:block;color:#2d513d}.academic-reader-comfort-v2124 small{display:block;margin-top:2px;color:#65766c}
+
+/* Modo oscuro general del área académica */
+body.academic-dark-v2124{background:#08110d!important;color:#e6eee8}
+body.academic-dark-v2124 #app{background:linear-gradient(180deg,#0b1711,#101b15 48%,#0a120e)!important;color:#e6eee8}
+body.academic-dark-v2124 .online-profile,
+body.academic-dark-v2124 .online-module-head,
+body.academic-dark-v2124 .card,
+body.academic-dark-v2124 .academic-filter-bar,
+body.academic-dark-v2124 .academic-sync-banner,
+body.academic-dark-v2124 .bank-card-v279,
+body.academic-dark-v2124 .bank-filter-v279,
+body.academic-dark-v2124 .bank-empty-v279,
+body.academic-dark-v2124 .academic-subject-legend-v2122,
+body.academic-dark-v2124 .academic-device-panel-v2121,
+body.academic-dark-v2124 .academic-file-card-v290,
+body.academic-dark-v2124 .academic-file-card-v212,
+body.academic-dark-v2124 .academic-user-card,
+body.academic-dark-v2124 .academic-summary-card,
+body.academic-dark-v2124 .academic-post-card,
+body.academic-dark-v2124 .academic-recent-row{background:#142019!important;color:#e7eee9!important;border-color:#293a30!important;box-shadow:0 8px 25px rgba(0,0,0,.18)!important}
+body.academic-dark-v2124 .academic-text-nav{background:#0e1a14!important;border-color:#293a30!important}
+body.academic-dark-v2124 .academic-text-nav button{background:#142019!important;color:#dce7df!important;border-color:#314439!important}
+body.academic-dark-v2124 .academic-text-nav button.active{background:linear-gradient(145deg,#365c45,#75692d)!important;color:#fff!important}
+body.academic-dark-v2124 h1,body.academic-dark-v2124 h2,body.academic-dark-v2124 h3,body.academic-dark-v2124 h4,
+body.academic-dark-v2124 .online-profile h2,body.academic-dark-v2124 .bank-card-v279 h3,
+body.academic-dark-v2124 .academic-post-card h3{color:#f0f5f1!important}
+body.academic-dark-v2124 p,body.academic-dark-v2124 small,body.academic-dark-v2124 .muted,
+body.academic-dark-v2124 .online-profile-copy,body.academic-dark-v2124 .academic-module-copy{color:#aebcb3!important}
+body.academic-dark-v2124 input,body.academic-dark-v2124 select,body.academic-dark-v2124 textarea{background:#0f1a14!important;color:#eef4f0!important;border-color:#35473c!important}
+body.academic-dark-v2124 input::placeholder,body.academic-dark-v2124 textarea::placeholder{color:#77877d!important}
+body.academic-dark-v2124 .academic-theme-toggle-v2124{background:#18261e;color:#e8f0ea;border-color:#395044}
+body.academic-dark-v2124 .online-logout{background:#17251d!important;color:#e8f0ea!important;border-color:#3c5145!important}
+
+/* Modales y banco de preguntas */
+body.academic-dark-v2124 #modalRoot .modal{background:#101a14!important;color:#e8efe9!important}
+body.academic-dark-v2124 #modalRoot .modal-bg{background:rgba(0,0,0,.72)!important}
+body.academic-dark-v2124 .bank-question-v279,
+body.academic-dark-v2124 .bank-question-v210,
+body.academic-dark-v2124 .bank-option-v279,
+body.academic-dark-v2124 .bank-tf-option-v210,
+body.academic-dark-v2124 .bank-fill-answer-v210,
+body.academic-dark-v2124 .bank-match-row-v210,
+body.academic-dark-v2124 .bank-question-admin-list-v279 article,
+body.academic-dark-v2124 .bank-report-list-v2121 article{background:#142019!important;color:#edf3ef!important;border-color:#34463a!important}
+body.academic-dark-v2124 .bank-option-v279 b,
+body.academic-dark-v2124 .bank-question-v279 h3,
+body.academic-dark-v2124 .bank-question-v210 h3{color:#edf3ef!important}
+body.academic-dark-v2124 .bank-option-v279.correct{background:#163325!important;border-color:#4d9b69!important}
+body.academic-dark-v2124 .bank-option-v279.wrong{background:#3a1e1a!important;border-color:#a85e51!important}
+body.academic-dark-v2124 .bank-feedback-v279.ok{background:#163325!important;color:#ccebd6!important}
+body.academic-dark-v2124 .bank-feedback-v279.bad{background:#3a1e1a!important;color:#f0c5bd!important}
+
+/* Lector académico nocturno */
+body.academic-dark-v2124 .academic-reader-modal-v290,
+body.academic-dark-v2124 .academic-reader-shell-v290{background:#0b1510!important;color:#e8efe9!important}
+body.academic-dark-v2124 .academic-reader-top-v290{background:#0e2519!important;border-bottom-color:var(--subject-accent,#8aa792)!important;color:#f1f5f2!important}
+body.academic-dark-v2124 .academic-reader-controls-v290,
+body.academic-dark-v2124 .academic-reader-doc-head-v290,
+body.academic-dark-v2124 .academic-reader-footer-v290{background:#121f18!important;color:#e2ebe5!important;border-color:#2d4034!important}
+body.academic-dark-v2124 .academic-reader-structured-v212,
+body.academic-dark-v2124 .academic-reader-text-v290{background:#101a14!important;color:#e7eee9!important;border-color:#2c3e33!important}
+body.academic-dark-v2124 .academic-reader-structured-v212 h1,
+body.academic-dark-v2124 .academic-reader-structured-v212 h2,
+body.academic-dark-v2124 .academic-reader-structured-v212 h3,
+body.academic-dark-v2124 .academic-reader-structured-v212 h4,
+body.academic-dark-v2124 .academic-reader-structured-v212 h5,
+body.academic-dark-v2124 .academic-reader-structured-v212 h6{color:#f0f4f1!important}
+body.academic-dark-v2124 .academic-reader-structured-v212 td,
+body.academic-dark-v2124 .academic-reader-structured-v212 th{border-color:#405248!important;color:#e7eee9!important}
+body.academic-dark-v2124 .academic-reader-structured-v212 th{background:#1a2a20!important}
+body.academic-dark-v2124 .academic-reader-structured-v212 .academic-reader-block-v212.speaking{background:#4a431c!important;color:#fff3b3!important;outline-color:#a28d31!important}
+body.academic-dark-v2124 .academic-reader-comfort-v2124{background:#17251d;color:#bfcac3;border-color:#31463a}
+body.academic-dark-v2124 .academic-reader-comfort-v2124 b{color:#e5eee8}
+body.academic-dark-v2124 .academic-reader-comfort-v2124 small{color:#9eaca3}
+
+/* Visualizador interno: entorno y páginas en modo oscuro */
+body.academic-dark-v2124 .academic-docviewer-modal-v212,
+body.academic-dark-v2124 .academic-docviewer-body-v212{background:#08110d!important}
+body.academic-dark-v2124 .academic-docviewer-tools-v212{background:#121f18!important;color:#dce7df!important;border-color:#2f4236!important}
+body.academic-dark-v2124 .academic-docviewer-note-v212{background:#29250f!important;color:#e9dfaa!important;border-color:#645b2a!important}
+body.academic-dark-v2124 .academic-docx-canvas-v212 .docx-wrapper{background:#08110d!important}
+body.academic-dark-v2124 .academic-docx-canvas-v212 section{background:#131b16!important;color:#e8efe9!important;box-shadow:0 8px 25px rgba(0,0,0,.42)!important}
+body.academic-dark-v2124 .academic-docx-canvas-v212 section p,
+body.academic-dark-v2124 .academic-docx-canvas-v212 section span,
+body.academic-dark-v2124 .academic-docx-canvas-v212 section li,
+body.academic-dark-v2124 .academic-docx-canvas-v212 section td{color:#e8efe9}
+body.academic-dark-v2124 .academic-docviewer-pdf-v212 iframe{background:#161d19!important}
+
+@media(max-width:480px){
+  .profile-actions-v2124{gap:5px}
+  .academic-theme-toggle-v2124{font-size:7.6px;padding:4px 6px}
+  .academic-theme-toggle-v2124>span:nth-child(2){display:none}
+}
+

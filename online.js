@@ -6530,3 +6530,141 @@ renderAcademicBankAttemptV211=renderAcademicBankAttemptV279;
 // Cambiar de módulo reinicia únicamente los filtros visuales; las sesiones permanecen intactas.
 const _setAcademicTabBaseV2122=setAcademicTab;
 setAcademicTab=async function setAcademicTabV2122(tab){academicSubjectFilterV2122='all';if(tab==='banco')academicBankSubjectFilterV2122='all';return _setAcademicTabBaseV2122(tab)};
+
+
+/* =========================================================
+   AGENDA POLICIAL v2.12.4 — LECTURA CONFORT
+   - Interruptor Claro / Oscuro (sin modo automático).
+   - Preferencia local por dispositivo.
+   - Wake Lock durante lectura en voz alta.
+   - Conserva y refuerza "Continuar donde quedé".
+   - No modifica autenticación, usuarios ni Supabase.
+   ========================================================= */
+const ACADEMIC_THEME_STORAGE_V2124='agenda-academic-theme-v2124';
+let academicWakeLockV2124=null;
+let academicWakeLockWantedV2124=false;
+
+function academicThemeV2124(){
+  try{return localStorage.getItem(ACADEMIC_THEME_STORAGE_V2124)==='dark'?'dark':'light'}catch{return 'light'}
+}
+function academicApplyThemeV2124(theme,rerender=false){
+  const value=theme==='dark'?'dark':'light';
+  document.body.classList.toggle('academic-dark-v2124',value==='dark');
+  document.documentElement.dataset.academicTheme=value;
+  try{localStorage.setItem(ACADEMIC_THEME_STORAGE_V2124,value)}catch{}
+  const meta=document.querySelector('meta[name="theme-color"]');
+  if(meta)meta.setAttribute('content',value==='dark'?'#081a12':'#0a3f2a');
+  document.querySelectorAll('[data-academic-theme-toggle-v2124]').forEach(btn=>{
+    btn.setAttribute('aria-pressed',value==='dark'?'true':'false');
+    btn.title=value==='dark'?'Cambiar a modo claro':'Cambiar a modo oscuro';
+    btn.innerHTML=value==='dark'
+      ? '<span class="theme-icon-v2124">🌙</span><span>Oscuro</span><i></i>'
+      : '<span class="theme-icon-v2124">☀️</span><span>Claro</span><i></i>';
+  });
+  if(rerender && typeof render==='function')try{render()}catch{}
+}
+function academicToggleThemeV2124(){
+  academicApplyThemeV2124(academicThemeV2124()==='dark'?'light':'dark',true);
+}
+function academicThemeToggleHtmlV2124(){
+  const dark=academicThemeV2124()==='dark';
+  return `<button class="academic-theme-toggle-v2124" data-academic-theme-toggle-v2124 type="button" onclick="academicToggleThemeV2124()" aria-label="Cambiar modo claro u oscuro" aria-pressed="${dark?'true':'false'}" title="${dark?'Cambiar a modo claro':'Cambiar a modo oscuro'}"><span class="theme-icon-v2124">${dark?'🌙':'☀️'}</span><span>${dark?'Oscuro':'Claro'}</span><i></i></button>`;
+}
+academicApplyThemeV2124(academicThemeV2124(),false);
+
+const _academicProfileHeaderV2124=academicProfileHeader;
+academicProfileHeader=function academicProfileHeaderV2124(){
+  let html=_academicProfileHeaderV2124();
+  const toggle=academicThemeToggleHtmlV2124();
+  const logout=/<button class="online-logout[^"]*"[^>]*onclick="academicLogout\(\)"[^>]*>Salir<\/button>/;
+  if(logout.test(html))html=html.replace(logout,match=>`<div class="profile-actions-v2124">${toggle}${match}</div>`);
+  else html=html.replace('</div>',`${toggle}</div>`);
+  return html;
+};
+
+async function academicAcquireWakeLockV2124(){
+  academicWakeLockWantedV2124=true;
+  if(!('wakeLock' in navigator))return false;
+  try{
+    if(academicWakeLockV2124 && !academicWakeLockV2124.released)return true;
+    academicWakeLockV2124=await navigator.wakeLock.request('screen');
+    academicWakeLockV2124.addEventListener('release',()=>{academicWakeLockV2124=null},{once:true});
+    document.body.classList.add('academic-reading-awake-v2124');
+    return true;
+  }catch(error){
+    console.warn('[Agenda Policial] No fue posible mantener la pantalla activa:',error);
+    return false;
+  }
+}
+async function academicReleaseWakeLockV2124(){
+  academicWakeLockWantedV2124=false;
+  document.body.classList.remove('academic-reading-awake-v2124');
+  try{await academicWakeLockV2124?.release?.()}catch{}
+  academicWakeLockV2124=null;
+}
+document.addEventListener('visibilitychange',()=>{
+  if(document.visibilityState==='visible'&&academicWakeLockWantedV2124&&!academicReaderStateV290?.stopped&&!academicReaderStateV290?.paused){
+    academicAcquireWakeLockV2124();
+  }
+});
+
+const _academicReaderToggleSpeechV2124=academicReaderToggleSpeechV290;
+academicReaderToggleSpeechV290=function academicReaderToggleSpeechV2124(){
+  const wasStopped=!!academicReaderStateV290?.stopped;
+  const wasPaused=!!academicReaderStateV290?.paused;
+  _academicReaderToggleSpeechV2124();
+  const state=academicReaderStateV290;
+  if(state && !state.stopped && !state.paused){
+    academicAcquireWakeLockV2124();
+  }else if(!wasStopped && !wasPaused && state?.paused){
+    academicReleaseWakeLockV2124();
+  }
+};
+
+const _academicReaderSpeakCurrentV2124=academicReaderSpeakCurrentV290;
+academicReaderSpeakCurrentV290=function academicReaderSpeakCurrentV2124(){
+  if(academicReaderStateV290 && !academicReaderStateV290.stopped && !academicReaderStateV290.paused){
+    academicAcquireWakeLockV2124();
+  }
+  return _academicReaderSpeakCurrentV2124();
+};
+
+const _academicReaderStopV2124=academicReaderStopV290;
+academicReaderStopV290=function academicReaderStopV2124(silent=false){
+  const result=_academicReaderStopV2124(silent);
+  academicReleaseWakeLockV2124();
+  return result;
+};
+
+const _closeAcademicReaderV2124=closeAcademicReaderV290;
+closeAcademicReaderV290=function closeAcademicReaderV2124(){
+  academicReleaseWakeLockV2124();
+  return _closeAcademicReaderV2124();
+};
+
+const _closeModalV2124=closeModal;
+closeModal=function closeModalV2124(){
+  if(academicReaderStateV290?.session)academicReleaseWakeLockV2124();
+  return _closeModalV2124();
+};
+
+const _academicReaderControlsV2124=academicReaderControlsV290;
+academicReaderControlsV290=function academicReaderControlsV2124(opts={}){
+  const base=_academicReaderControlsV2124(opts);
+  const note=`<div class="academic-reader-comfort-v2124"><span>🔆</span><div><b>Pantalla activa durante la lectura</b><small>Mientras la voz esté reproduciendo, Agenda Policial intentará evitar que la pantalla se apague. Al pausar, detener o salir, vuelve al comportamiento normal.</small></div></div>`;
+  return base.replace('</div>',`</div>${note}`);
+};
+
+// Refuerzo de progreso: guardar el bloque actual también al pausar/salir.
+function academicReaderSaveCurrentProgressV2124(){
+  const state=academicReaderStateV290;
+  const chunk=state?.speechChunks?.[state?.speechIndex||0];
+  if(chunk && Number.isFinite(Number(chunk.blockIndex)))academicReaderSavePositionV212(Number(chunk.blockIndex));
+}
+const _academicReaderPreviousV2124=academicReaderPreviousV290;
+academicReaderPreviousV290=function(){const r=_academicReaderPreviousV2124();academicReaderSaveCurrentProgressV2124();return r};
+const _academicReaderNextV2124=academicReaderNextV290;
+academicReaderNextV290=function(){const r=_academicReaderNextV2124();academicReaderSaveCurrentProgressV2124();return r};
+
+window.addEventListener('pagehide',()=>{academicReaderSaveCurrentProgressV2124();academicReleaseWakeLockV2124()});
+

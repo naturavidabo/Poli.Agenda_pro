@@ -1,8 +1,8 @@
 {
-  "version": "2.12.2",
+  "version": "2.12.4",
   "build": "2026-08-11",
-  "channel": "academic-subject-identity",
-  "appVersion": "2.12.2",
+  "channel": "lectura-confort",
+  "appVersion": "2.12.4",
   "scheduleVersion": "2026-07-29-v274",
   "databaseVersion": "agenda-db-7"
 }
