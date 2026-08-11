@@ -1,8 +1,8 @@
 {
-  "version": "2.12.4",
+  "version": "2.12.5",
   "build": "2026-08-11",
-  "channel": "lectura-confort",
-  "appVersion": "2.12.4",
+  "channel": "lector-compacto",
+  "appVersion": "2.12.5",
   "scheduleVersion": "2026-07-29-v274",
   "databaseVersion": "agenda-db-7"
 }

@@ -6668,3 +6668,176 @@ academicReaderNextV290=function(){const r=_academicReaderNextV2124();academicRea
 
 window.addEventListener('pagehide',()=>{academicReaderSaveCurrentProgressV2124();academicReleaseWakeLockV2124()});
 
+
+
+/* =========================================================
+   AGENDA POLICIAL v2.12.5 — LECTOR COMPACTO
+   - Controles retraíbles para liberar la pantalla.
+   - Reanudación TTS más estable en Android.
+   - "Continuar donde quedé" con desplazamiento explícito.
+   ========================================================= */
+let academicReaderControlsOpenV2125=false;
+let academicReaderSpeechRunV2125=0;
+let academicReaderResumeTimerV2125=null;
+
+function academicReaderToggleControlsV2125(force){
+  const panel=document.getElementById('academicReaderAdvancedV2125');
+  const btn=document.getElementById('academicReaderControlsToggleV2125');
+  if(!panel)return;
+  const open=typeof force==='boolean'?force:panel.hidden;
+  panel.hidden=!open;
+  academicReaderControlsOpenV2125=open;
+  if(btn){
+    btn.setAttribute('aria-expanded',open?'true':'false');
+    btn.innerHTML=open?'⌃ Ocultar':'⚙️ Controles';
+  }
+}
+function academicReaderGoSavedV2125(startSpeech=false){
+  const state=academicReaderStateV290;
+  const block=Math.max(0,Number(state?.lastBlockV212)||0);
+  const el=document.getElementById(`readerBlockV290_${block}`);
+  if(el){
+    el.scrollIntoView({behavior:'smooth',block:'center'});
+    el.classList.add('resume-target-v2125');
+    setTimeout(()=>el.classList.remove('resume-target-v2125'),1200);
+  }
+  const chunkIndex=(state?.speechChunks||[]).findIndex(item=>Number(item.blockIndex)===block);
+  if(chunkIndex>=0)state.speechIndex=chunkIndex;
+  if(startSpeech && chunkIndex>=0){
+    try{window.speechSynthesis?.cancel?.()}catch{}
+    clearTimeout(academicReaderResumeTimerV2125);
+    state.stopped=false;state.paused=false;
+    academicReaderResumeTimerV2125=setTimeout(()=>academicReaderSpeakCurrentV2125(),130);
+  }
+}
+function academicReaderSavedButtonV2125(){
+  const state=academicReaderStateV290;
+  const block=Number(state?.lastBlockV212||0);
+  if(!Number.isFinite(block)||block<=0)return '';
+  return `<button id="academicReaderResumeSavedV2125" class="btn academic-reader-resume-v2125" type="button" onclick="academicReaderGoSavedV2125(false)">↪ Continuar donde quedé</button>`;
+}
+
+academicReaderControlsV290=function academicReaderControlsV2125({speech=true,scan=false}={}){
+  const rate=Number(academicReaderStateV290.rate||1);
+  return `<div class="academic-reader-controls-v290 academic-reader-controls-v2125">
+    <div class="academic-reader-compact-v2125">
+      <button id="academicReaderPlayV290" class="btn academic-reader-play-v290" type="button" onclick="academicReaderToggleSpeechV290()" ${speech?'':'disabled'}>🔊 Escuchar</button>
+      <button class="reader-mini-v2125" type="button" onclick="academicReaderPreviousV290()" ${speech?'':'disabled'} title="Anterior" aria-label="Anterior">◀</button>
+      <button class="reader-mini-v2125" type="button" onclick="academicReaderNextV290()" ${speech?'':'disabled'} title="Siguiente" aria-label="Siguiente">▶</button>
+      <button id="academicReaderControlsToggleV2125" class="reader-settings-v2125" type="button" onclick="academicReaderToggleControlsV2125()" aria-expanded="false">⚙️ Controles</button>
+      <span id="academicReaderProgressV290" class="academic-reader-progress-text-v290">Listo para leer</span>
+    </div>
+    <div id="academicReaderResumeSlotV2125" class="academic-reader-resume-slot-v2125"></div>
+    <div id="academicReaderAdvancedV2125" class="academic-reader-advanced-v2125" hidden>
+      <div class="academic-reader-nav-v2125">
+        <button class="btn secondary" type="button" onclick="academicReaderPreviousV290()" ${speech?'':'disabled'}>◀ Anterior</button>
+        <button class="btn secondary" type="button" onclick="academicReaderNextV290()" ${speech?'':'disabled'}>Siguiente ▶</button>
+        <button class="btn ghost" type="button" onclick="academicReaderStopV290()" ${speech?'':'disabled'}>■ Detener</button>
+      </div>
+      <div class="academic-reader-secondary-v290">
+        <label>Velocidad<select onchange="academicReaderSetRateV290(this.value)" ${speech?'':'disabled'}>${[.8,1,1.2,1.4,1.6].map(v=>`<option value="${v}" ${Math.abs(rate-v)<.01?'selected':''}>${v}×</option>`).join('')}</select></label>
+        <label>Tamaño<select onchange="academicReaderSetFontV290(this.value)"><option value=".95">Pequeño</option><option value="1.05" selected>Normal</option><option value="1.18">Grande</option><option value="1.32">Muy grande</option></select></label>
+      </div>
+      <div class="academic-reader-comfort-v2124"><span>🔆</span><div><b>Pantalla activa durante la lectura</b><small>Mientras la voz esté reproduciendo se intentará evitar que la pantalla se apague. Al pausar, detener o salir, vuelve al comportamiento normal.</small></div></div>
+      ${scan?'<div class="academic-reader-scan-note-v290">⚠️ Este PDF parece ser escaneado. Puede verlo dentro de la aplicación, pero no contiene suficiente texto seleccionable para la lectura en voz alta.</div>':''}
+    </div>
+  </div>`;
+};
+
+// Reanudación robusta: crea cada utterance con un identificador de ejecución.
+// Esto evita que eventos "onend" de una reproducción cancelada avancen la nueva lectura.
+function academicReaderSpeakCurrentV2125(){
+  const state=academicReaderStateV290;
+  if(state.stopped||state.paused)return;
+  if(!academicReaderHasSpeechV290()||!state.speechChunks.length){academicReaderStopV290();return}
+  if(state.speechIndex>=state.speechChunks.length){
+    try{window.speechSynthesis?.cancel?.()}catch{}
+    state.stopped=true;state.paused=false;state.speechIndex=0;
+    academicReaderUpdateSpeechUiV290();academicReleaseWakeLockV2124?.();
+    toast('Lectura finalizada');return;
+  }
+  const chunk=state.speechChunks[state.speechIndex];
+  academicReaderHighlightV290(chunk.blockIndex);
+  academicReaderSavePositionV212(chunk.blockIndex);
+  const run=++academicReaderSpeechRunV2125;
+  const utterance=new SpeechSynthesisUtterance(chunk.text);
+  utterance.lang='es-BO';utterance.rate=Number(state.rate||1);
+  const voice=academicReaderPreferredVoiceV290();if(voice)utterance.voice=voice;
+  utterance.onend=()=>{
+    if(run!==academicReaderSpeechRunV2125||state.stopped||state.paused)return;
+    state.speechIndex+=1;academicReaderUpdateSpeechUiV290();academicReaderSpeakCurrentV2125();
+  };
+  utterance.onerror=e=>{
+    if(run!==academicReaderSpeechRunV2125||['canceled','interrupted'].includes(e.error))return;
+    console.warn('TTS',e.error);
+    state.paused=true;academicReaderUpdateSpeechUiV290();academicReleaseWakeLockV2124?.();
+    toast('La lectura fue pausada por el dispositivo. Pulse Continuar.');
+  };
+  try{window.speechSynthesis.cancel()}catch{}
+  clearTimeout(academicReaderResumeTimerV2125);
+  academicReaderResumeTimerV2125=setTimeout(()=>{
+    if(run===academicReaderSpeechRunV2125&&!state.stopped&&!state.paused){
+      try{window.speechSynthesis.speak(utterance);academicAcquireWakeLockV2124?.()}catch(error){console.warn(error)}
+    }
+  },110);
+  academicReaderUpdateSpeechUiV290();
+}
+
+academicReaderSpeakCurrentV290=academicReaderSpeakCurrentV2125;
+
+academicReaderToggleSpeechV290=function academicReaderToggleSpeechV2125(){
+  const state=academicReaderStateV290;
+  if(!academicReaderHasSpeechV290()||!state.speechChunks.length)return toast('La lectura en voz alta no está disponible para este archivo');
+  academicReaderSpeechRunV2125++;
+  try{window.speechSynthesis?.cancel?.()}catch{}
+  clearTimeout(academicReaderResumeTimerV2125);
+  if(state.stopped){
+    state.stopped=false;state.paused=false;
+    state.speechIndex=Math.max(0,Math.min(state.speechIndex,state.speechChunks.length-1));
+    academicReaderSpeakCurrentV2125();return;
+  }
+  if(state.paused){
+    state.paused=false;
+    academicReaderResumeTimerV2125=setTimeout(()=>academicReaderSpeakCurrentV2125(),140);
+    academicAcquireWakeLockV2124?.();
+    academicReaderUpdateSpeechUiV290();return;
+  }
+  state.paused=true;
+  academicReaderUpdateSpeechUiV290();
+  academicReleaseWakeLockV2124?.();
+};
+
+academicReaderStopV290=function academicReaderStopV2125(silent=false){
+  academicReaderSpeechRunV2125++;
+  clearTimeout(academicReaderResumeTimerV2125);
+  try{window.speechSynthesis?.cancel?.()}catch{}
+  const state=academicReaderStateV290;
+  const chunk=state?.speechChunks?.[state?.speechIndex||0];
+  if(chunk)academicReaderSavePositionV212(Number(chunk.blockIndex)||0);
+  state.stopped=true;state.paused=false;
+  // Conservar speechIndex para que "Escuchar" pueda retomar el punto actual.
+  document.querySelectorAll('#academicReaderTextV290 [data-reader-block]').forEach(el=>el.classList.remove('speaking'));
+  academicReaderUpdateSpeechUiV290();
+  academicReleaseWakeLockV2124?.();
+};
+
+const _academicReaderAttachProgressV2125=academicReaderAttachProgressV212;
+academicReaderAttachProgressV212=function academicReaderAttachProgressV2125(){
+  _academicReaderAttachProgressV2125();
+  setTimeout(()=>{
+    const slot=document.getElementById('academicReaderResumeSlotV2125');
+    if(slot)slot.innerHTML=academicReaderSavedButtonV2125();
+  },190);
+};
+
+const _academicReaderUpdateSpeechUiV2125=academicReaderUpdateSpeechUiV290;
+academicReaderUpdateSpeechUiV290=function academicReaderUpdateSpeechUiV2125(){
+  _academicReaderUpdateSpeechUiV2125();
+  const state=academicReaderStateV290;
+  const btn=document.getElementById('academicReaderPlayV290');
+  if(btn){
+    btn.textContent=state.stopped?'🔊 Escuchar':state.paused?'▶ Continuar':'⏸ Pausar';
+    btn.classList.toggle('is-reading-v2125',!state.stopped&&!state.paused);
+  }
+};
+
