@@ -1850,7 +1850,20 @@ let academicSubjectExpanded=new Set();
 function academicDisplayName(){return academicIsTestSession()?'Administrador del sistema':(academicSession?.full_name||'Usuario')}
 function academicIsNetworkError(error){return !navigator.onLine||error?.name==='TypeError'||error?.code==='NETWORK_ERROR'||error?.status===0||/failed to fetch|network|internet|abort/i.test(String(error?.message||''))}
 function academicPostCache(){try{return JSON.parse(localStorage.getItem(ACADEMIC_POST_CACHE_STORAGE)||'{}')}catch{return {}}}
-function saveAcademicPostCache(cache){localStorage.setItem(ACADEMIC_POST_CACHE_STORAGE,JSON.stringify(cache))}
+function saveAcademicPostCache(cache){
+  try{
+    localStorage.setItem(ACADEMIC_POST_CACHE_STORAGE,JSON.stringify(cache));
+    return true;
+  }catch(error){
+    const quota=error?.name==='QuotaExceededError'||error?.name==='NS_ERROR_DOM_QUOTA_REACHED'||error?.code===22||error?.code===1014;
+    if(!quota)throw error;
+    // Este cache es solo una copia temporal de publicaciones ya guardadas en Supabase.
+    // Si el navegador se queda sin cuota, se descarta sin bloquear archivar/publicar/sincronizar.
+    try{localStorage.removeItem(ACADEMIC_POST_CACHE_STORAGE)}catch{}
+    console.warn('[Agenda Policial] Cache académico temporal descartado por límite de almacenamiento.');
+    return false;
+  }
+}
 function academicCacheKey(type){return `${academicSession?.course_code||'curso'}:${type||'all'}`}
 function academicCachedPosts(type){return academicPostCache()[academicCacheKey(type)]?.rows||[]}
 function academicStorePosts(type,rows){const cache=academicPostCache();cache[academicCacheKey(type)]={rows:Array.isArray(rows)?rows:[],saved_at:new Date().toISOString()};saveAcademicPostCache(cache)}
