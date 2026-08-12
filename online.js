@@ -5665,10 +5665,10 @@ function academicBankFeedbackV210(q,answered,attempt){
 function academicBankQuestionBodyV210(q,answered){
   const type=q.type||'multiple_choice';
   if(type==='multiple_choice'){
-    return `<div class="bank-options-v279">${(q.options||[]).map(opt=>{let cls='';if(answered){if(opt.key===answered.selected?.option)cls+=' selected';if(academicBankActiveAttemptV279.attempt_mode==='estudio'&&answered.correct_answer?.option){if(opt.key===answered.correct_answer.option)cls+=' correct';else if(opt.key===answered.selected?.option&&!answered.is_correct)cls+=' wrong'}}return `<button class="bank-option-v279${cls}" ${answered?'disabled':''} onclick="submitAcademicBankAnswerV210('${q.id}',{option:'${opt.key}'})"><span>${esc(opt.key)}</span><b>${esc(opt.text)}</b></button>`}).join('')}</div>`;
+    return `<div class="bank-options-v279">${(q.options||[]).map(opt=>{let cls='';if(answered){if(opt.key===answered.selected?.option)cls+=' selected';if(academicBankActiveAttemptV279.attempt_mode==='estudio'&&answered.correct_answer?.option){if(opt.key===answered.correct_answer.option)cls+=' correct';else if(opt.key===answered.selected?.option&&!answered.is_correct)cls+=' wrong'}}return `<button class="bank-option-v279${cls}" ${answered?'disabled':''} onclick="academicBankSelectWithFeedbackV2126(this,'${q.id}',{option:'${opt.key}'})" aria-pressed="${answered&&opt.key===answered.selected?.option?'true':'false'}"><span>${esc(opt.key)}</span><b>${esc(opt.text)}</b></button>`}).join('')}</div>`;
   }
   if(type==='true_false'){
-    return `<div class="bank-tf-options-v210">${(q.options||[]).map(opt=>{const value=opt.key==='true',selected=answered&&answered.selected?.value===value;let cls=selected?' selected':'';if(answered&&academicBankActiveAttemptV279.attempt_mode==='estudio'&&typeof answered.correct_answer?.value==='boolean'){if(answered.correct_answer.value===value)cls+=' correct';else if(selected&&!answered.is_correct)cls+=' wrong'}return `<button class="bank-tf-option-v210${cls}" ${answered?'disabled':''} onclick="submitAcademicBankAnswerV210('${q.id}',{value:${value}})"><span>${value?'V':'F'}</span><b>${esc(opt.text)}</b></button>`}).join('')}</div>`;
+    return `<div class="bank-tf-options-v210">${(q.options||[]).map(opt=>{const value=opt.key==='true',selected=answered&&answered.selected?.value===value;let cls=selected?' selected':'';if(answered&&academicBankActiveAttemptV279.attempt_mode==='estudio'&&typeof answered.correct_answer?.value==='boolean'){if(answered.correct_answer.value===value)cls+=' correct';else if(selected&&!answered.is_correct)cls+=' wrong'}return `<button class="bank-tf-option-v210${cls}" ${answered?'disabled':''} onclick="academicBankSelectWithFeedbackV2126(this,'${q.id}',{value:${value}})" aria-pressed="${selected?'true':'false'}"><span>${value?'V':'F'}</span><b>${esc(opt.text)}</b></button>`}).join('')}</div>`;
   }
   if(type==='fill_blank'){
     const value=answered?.selected?.text||'';
@@ -6841,3 +6841,29 @@ academicReaderUpdateSpeechUiV290=function academicReaderUpdateSpeechUiV2125(){
   }
 };
 
+
+
+/* =========================================================
+   AGENDA POLICIAL v2.12.6 — RESPUESTA VISUAL INMEDIATA
+   Muestra la elección antes de que termine la llamada al servidor.
+   Si la red falla, retira la marca temporal para permitir reintentar.
+   ========================================================= */
+async function academicBankSelectWithFeedbackV2126(button,questionId,selected){
+  if(academicBankSubmittingV279||!academicBankActiveAttemptV279)return;
+  const group=button?.closest?.('.bank-options-v279,.bank-tf-options-v210');
+  if(group){
+    group.querySelectorAll('.bank-option-v279,.bank-tf-option-v210').forEach(el=>{
+      el.classList.remove('pending');el.setAttribute('aria-pressed','false');
+    });
+  }
+  if(button){button.classList.add('pending');button.setAttribute('aria-pressed','true')}
+  try{
+    await submitAcademicBankAnswerV210(questionId,selected);
+  }finally{
+    // En éxito el modal se vuelve a renderizar y este botón deja de existir.
+    // Si sigue conectado y no hay respuesta guardada, fue un fallo recuperable.
+    if(button?.isConnected&&!academicBankAttemptAnswersV279.has(String(questionId))){
+      button.classList.remove('pending');button.setAttribute('aria-pressed','false');
+    }
+  }
+}

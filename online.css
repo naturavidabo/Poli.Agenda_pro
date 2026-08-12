@@ -478,3 +478,150 @@ body.academic-dark-v2124 .academic-reader-resume-v2125{
   .academic-reader-resume-v2125{min-height:32px!important}
 }
 
+
+
+/* =========================================================
+   Agenda Policial v2.12.6 — Afinado de modo oscuro / Simulacro
+   - Selección visible en dorado (incluye respuesta en envío).
+   - Mejora contraste del número de pregunta, contador y tipos.
+   - Refuerzo de opciones, ayudas y reporte dentro del modal nocturno.
+   ========================================================= */
+body.academic-dark-v2124 .bank-attempt-subject-v2122{
+  --bank-night-gold:#e3c65d;
+  --bank-night-gold-soft:#392f12;
+  --bank-night-gold-deep:#241f10;
+}
+body.academic-dark-v2124 .bank-attempt-subject-v2122 .bank-attempt-head-v279>span{
+  background:#1b2921!important;color:#f2dc83!important;border:1px solid #4c5130!important;
+  box-shadow:0 0 0 1px rgba(227,198,93,.05) inset;
+}
+body.academic-dark-v2124 .bank-attempt-subject-v2122 .bank-progress-v279{
+  height:7px;background:#d9e2dc!important;border:1px solid rgba(255,255,255,.08);
+}
+body.academic-dark-v2124 .bank-attempt-subject-v2122 .bank-progress-v279 i{
+  background:linear-gradient(90deg,#7d8b63,#d1ba5c)!important;
+}
+body.academic-dark-v2124 .bank-attempt-subject-v2122 .bank-question-v279{
+  border-top-color:#d7bc58!important;
+  border-top-color:color-mix(in srgb,var(--subject-accent,#8aa792) 42%,#e8ca61)!important;
+  box-shadow:0 8px 20px rgba(0,0,0,.13)!important;
+}
+body.academic-dark-v2124 .bank-attempt-subject-v2122 .bank-question-kicker-v210>span:first-child{
+  color:#f0d678!important;font-size:10px!important;letter-spacing:.045em!important;
+  text-shadow:0 0 10px rgba(227,198,93,.10);
+}
+body.academic-dark-v2124 .bank-attempt-subject-v2122 .bank-attempt-type-v210{
+  background:#18251e!important;color:#dfe9e2!important;border-color:#4a5b50!important;
+  font-size:8px!important;
+}
+body.academic-dark-v2124 .bank-attempt-subject-v2122 .bank-type-multiple-choice-v210{
+  background:#172332!important;color:#a9cdfb!important;border-color:#3f5f82!important;
+}
+body.academic-dark-v2124 .bank-attempt-subject-v2122 .bank-type-true-false-v210{
+  background:#14291d!important;color:#9fe0b3!important;border-color:#3c694c!important;
+}
+body.academic-dark-v2124 .bank-attempt-subject-v2122 .bank-type-matching-v210{
+  background:#312912!important;color:#efd17b!important;border-color:#6a5925!important;
+}
+body.academic-dark-v2124 .bank-attempt-subject-v2122 .bank-type-fill-blank-v210{
+  background:#271d33!important;color:#d5b8f5!important;border-color:#5b4371!important;
+}
+
+/* Estado elegido: en simulacro no revela si está bien o mal, sólo confirma la marca. */
+body.academic-dark-v2124 .bank-option-v279.selected:not(.correct):not(.wrong),
+body.academic-dark-v2124 .bank-option-v279.pending:not(.correct):not(.wrong),
+body.academic-dark-v2124 .bank-tf-option-v210.selected:not(.correct):not(.wrong),
+body.academic-dark-v2124 .bank-tf-option-v210.pending:not(.correct):not(.wrong){
+  background:linear-gradient(145deg,#3a3115,#292513)!important;
+  color:#fff2bd!important;border-color:#e0c35c!important;
+  box-shadow:0 0 0 2px rgba(224,195,92,.16),0 8px 18px rgba(0,0,0,.18)!important;
+}
+body.academic-dark-v2124 .bank-option-v279.selected:not(.correct):not(.wrong) span,
+body.academic-dark-v2124 .bank-option-v279.pending:not(.correct):not(.wrong) span,
+body.academic-dark-v2124 .bank-tf-option-v210.selected:not(.correct):not(.wrong)>span,
+body.academic-dark-v2124 .bank-tf-option-v210.pending:not(.correct):not(.wrong)>span{
+  background:#e1c45d!important;color:#182017!important;
+  box-shadow:0 0 0 2px rgba(255,244,192,.10) inset;
+}
+body.academic-dark-v2124 .bank-option-v279.selected:not(.correct):not(.wrong) b,
+body.academic-dark-v2124 .bank-option-v279.pending:not(.correct):not(.wrong) b,
+body.academic-dark-v2124 .bank-tf-option-v210.selected:not(.correct):not(.wrong) b,
+body.academic-dark-v2124 .bank-tf-option-v210.pending:not(.correct):not(.wrong) b{color:#fff4c6!important}
+body.academic-dark-v2124 .bank-option-v279.pending,
+body.academic-dark-v2124 .bank-tf-option-v210.pending{transform:translateY(-1px)}
+
+/* En modo estudio, correcto/incorrecto conserva semántica pero con contraste nocturno. */
+body.academic-dark-v2124 .bank-option-v279.correct span,
+body.academic-dark-v2124 .bank-tf-option-v210.correct>span{background:#34734b!important;color:#effaf2!important}
+body.academic-dark-v2124 .bank-option-v279.wrong span,
+body.academic-dark-v2124 .bank-tf-option-v210.wrong>span{background:#7f3b32!important;color:#fff1ee!important}
+
+body.academic-dark-v2124 .bank-attempt-subject-v2122 .bank-matching-note-v210{
+  background:#2b2716!important;color:#e7d99c!important;border-color:#5b522d!important;
+}
+body.academic-dark-v2124 .bank-attempt-subject-v2122 .bank-match-row-v210>span,
+body.academic-dark-v2124 .bank-attempt-subject-v2122 .bank-fill-answer-v210 label{color:#dbe6df!important}
+body.academic-dark-v2124 .bank-attempt-subject-v2122 .bank-match-row-v210>span>b{
+  background:#29382f!important;color:#e6eee9!important;
+}
+body.academic-dark-v2124 .bank-attempt-subject-v2122 .bank-report-inline-v2121{
+  border-top-color:#2f4136!important;
+}
+body.academic-dark-v2124 .bank-attempt-subject-v2122 .bank-report-btn-v2121{
+  color:#d5b95c!important;opacity:.92;
+}
+body.academic-dark-v2124 .bank-attempt-subject-v2122 .bank-report-btn-v2121:disabled{color:#819087!important}
+body.academic-dark-v2124 .bank-attempt-subject-v2122 .bank-attempt-actions-v279 small{color:#aebdb4!important}
+body.academic-dark-v2124 #modalRoot .bank-attempt-subject-v2122>.close{
+  background:#e4ece7!important;color:#163929!important;border:1px solid #edf3ef!important;
+}
+
+@media(max-width:480px){
+  body.academic-dark-v2124 .bank-attempt-subject-v2122 .bank-question-kicker-v210>span:first-child{font-size:9.5px!important}
+  body.academic-dark-v2124 .bank-option-v279{min-height:76px;padding:11px 10px}
+  body.academic-dark-v2124 .bank-option-v279 b{font-size:11px!important;line-height:1.42}
+}
+
+/* v2.12.6 — contraste de controles internos y banco completo en modo oscuro */
+body.academic-dark-v2124 .bank-option-v279>span,
+body.academic-dark-v2124 .bank-tf-option-v210>span{
+  background:#26362c!important;color:#dbe7df!important;border:1px solid #405348!important;
+}
+body.academic-dark-v2124 .bank-toolbar-v279,
+body.academic-dark-v2124 .bank-publish-strip-v279,
+body.academic-dark-v2124 .bank-type-panel-v210,
+body.academic-dark-v2124 .bank-import-format-note-v210,
+body.academic-dark-v2124 .bank-import-preview-v279>div,
+body.academic-dark-v2124 .file-chip-v279,
+body.academic-dark-v2124 .bank-auto-mix-note-v211{
+  background:#121f18!important;color:#e5ede8!important;border-color:#304338!important;
+}
+body.academic-dark-v2124 .bank-metrics-v279 span{
+  background:#1a2a21!important;border:1px solid #2c4034!important;
+}
+body.academic-dark-v2124 .bank-metrics-v279 b{color:#e8f0ea!important}
+body.academic-dark-v2124 .bank-metrics-v279 small,
+body.academic-dark-v2124 .bank-toolbar-note-v279,
+body.academic-dark-v2124 .bank-toolbar-v279 label span,
+body.academic-dark-v2124 .bank-publish-strip-v279 span,
+body.academic-dark-v2124 .bank-auto-mix-note-v211 p{color:#aab9b0!important}
+body.academic-dark-v2124 .bank-subject-v279{
+  background:#203329!important;color:#cfe4d6!important;border:1px solid #395145!important;
+}
+body.academic-dark-v2124 .bank-status-v279.published{background:#163325!important;color:#bfe7ca!important}
+body.academic-dark-v2124 .bank-status-v279.draft{background:#332c16!important;color:#ead58a!important}
+body.academic-dark-v2124 .bank-type-count-v210,
+body.academic-dark-v2124 .bank-type-badge-v210,
+body.academic-dark-v2124 .bank-import-type-chip-v210{
+  background:#1a2921!important;color:#dce7df!important;border-color:#3b4e43!important;
+}
+body.academic-dark-v2124 .bank-refresh-btn-v2111{
+  background:#18261e!important;color:#dce8e0!important;border-color:#3b5044!important;
+}
+body.academic-dark-v2124 .bank-import-preview-v279 span,
+body.academic-dark-v2124 .bank-pair-row-v210>span:first-child{
+  background:#293a30!important;color:#dce8e0!important;
+}
+body.academic-dark-v2124 .bank-type-editor-note-v210{
+  background:#1a2a21!important;color:#b9c7be!important;
+}
