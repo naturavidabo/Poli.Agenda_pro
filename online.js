@@ -1,4 +1,4 @@
-/* Agenda Policial Online v2.12.9 — conexión real con Supabase */
+/* Agenda Policial Online v2.13.0 — conexión real con Supabase */
 const ONLINE_CFG = {
   url: 'https://lkwrulzrulmbfypwywmo.supabase.co',
   anonKey: 'sb_publishable_vtek6lVCGZkmyicgAPqDMw_8EOTFrRU',
@@ -7370,4 +7370,204 @@ academicReaderToggleControlsV2125=function academicReaderToggleControlsV2129(for
   const panel=document.getElementById('academicReaderAdvancedV2125'),btn=document.getElementById('academicReaderControlsToggleV2125');if(!panel)return;
   const open=typeof force==='boolean'?force:panel.hidden;panel.hidden=!open;academicReaderControlsOpenV2125=open;
   if(btn){btn.setAttribute('aria-expanded',open?'true':'false');btn.innerHTML=open?'<span>⌃</span><b>Menos</b>':'<span>⋯</span><b>Más</b>'}
+};
+
+/* =========================================================
+   AGENDA POLICIAL v2.13.0 — CUADRÍCULA + DISPOSITIVOS + BANCO MÓVIL
+   - Navegación online vuelve a cuadrícula fija, sin carrusel horizontal.
+   - Selector A / B / A+B visible y explícito para publicaciones compartibles.
+   - Inventario técnico discreto de instalaciones (sin GPS ni permisos sensibles).
+   - Banco de preguntas a pantalla útil completa, tipografía mayor y acciones fijas.
+   - Contraste nocturno reforzado desde CSS.
+   ========================================================= */
+
+academicTextNav=function academicTextNavV2130(){
+  const items=[
+    ['panel','Panel','⌂'],
+    ['formaciones','Formaciones','🛡️'],
+    ['tareas','Tareas','📘'],
+    ['examenes','Rol de exámenes','📝'],
+    ['banco','Banco de preguntas','❓'],
+    ['resumenes','Resúmenes','📚']
+  ];
+  if(academicCanManageUsers())items.push(['usuarios','Nómina','👥']);
+  if(academicSession?.role==='administrador_general')items.push(['cursos','Curso','▦']);
+  return `<nav class="academic-text-nav academic-text-nav-premium olive-gold-nav v277-nav v279-nav v2128-nav academic-nav-grid-v2130" aria-label="Secciones académicas">
+    ${items.map(([key,label,icon])=>`<button class="${academicTab===key?'active':''}" onclick="setAcademicTab('${key}')"><span>${icon}</span><b>${label}</b></button>`).join('')}
+  </nav>`;
+};
+academicSubnav=function academicSubnavV2130(){return academicTextNav()};
+
+function academicShareOverviewV2130(){
+  if(academicSession?.role!=='administrador_general')return '';
+  return `<section class="academic-share-overview-v2130">
+    <div><span class="share-overview-icon-v2130">⇄</span><span><b>Publicación por paralelos</b><small>Rol de exámenes y Resúmenes pueden enviarse a un paralelo o a ambos.</small></span></div>
+    <div class="share-overview-chips-v2130"><span>A</span><span>B</span><strong>A + B</strong></div>
+  </section>`;
+}
+const _academicDashboardBaseV2130=academicDashboard;
+academicDashboard=function academicDashboardV2130(){
+  const html=_academicDashboardBaseV2130();
+  if(academicSession?.role!=='administrador_general')return html;
+  return html.replace(/<\/nav>/,`</nav>${academicShareOverviewV2130()}`);
+};
+
+academicAudienceSelectorV2129=function academicAudienceSelectorV2130(type){
+  const current=academicSession?.course_code||academicCourseCodeByParallelV2129('A');
+  if(!academicAudienceCanShareV2129(type)){
+    return `<div class="academic-scope-note-v2129"><b>📌 ${esc(academicCourseShortV2129(current))}</b><span>${['formaciones','tareas'].includes(type)?'Este módulo se mantiene exclusivo del paralelo activo.':'Publicación para el curso activo.'}</span></div>`;
+  }
+  const a=academicCourseCodeByParallelV2129('A'),b=academicCourseCodeByParallelV2129('B');
+  const def=type==='examenes'?'both':'current';
+  const choices=[
+    ['current',`Solo ${academicCourseShortV2129(current)}`,'Curso actual'],
+    ['A','Paralelo A','A'],
+    ['B','Paralelo B','B'],
+    ['both','Paralelos A + B','A+B']
+  ];
+  return `<section class="academic-audience-v2129 academic-audience-v2130">
+    <div class="audience-title-v2130"><span class="eyebrow">Destino de publicación</span><b>¿Quién recibirá este contenido?</b></div>
+    <div class="academic-audience-options-v2130">${choices.map(([value,label,badge])=>`<label class="audience-option-v2130"><input type="radio" name="academic_audience_v2129" value="${value}" ${def===value?'checked':''}><span><i>${badge}</i><b>${esc(label)}</b></span></label>`).join('')}</div>
+    <small>${type==='examenes'?'El Rol de exámenes queda propuesto para A+B. Puede cambiarlo antes de publicar.':'Elija A, B o A+B. El archivo se carga una sola vez aunque lo vean ambos paralelos.'}</small>
+    <input type="hidden" name="academic_audience_code_a_v2129" value="${esc(a)}">
+    <input type="hidden" name="academic_audience_code_b_v2129" value="${esc(b)}">
+  </section>`;
+};
+
+function academicBankThemeToggleV2130(){
+  const dark=academicThemeV2124()==='dark';
+  return `<button class="bank-theme-toggle-v2130" type="button" onclick="academicBankToggleThemeV2130(this)" aria-pressed="${dark?'true':'false'}"><span>${dark?'🌙':'☀️'}</span><b>${dark?'Oscuro':'Claro'}</b></button>`;
+}
+function academicBankToggleThemeV2130(button){
+  const next=academicThemeV2124()==='dark'?'light':'dark';
+  academicApplyThemeV2124(next,false);
+  if(button){button.innerHTML=`<span>${next==='dark'?'🌙':'☀️'}</span><b>${next==='dark'?'Oscuro':'Claro'}</b>`;button.setAttribute('aria-pressed',next==='dark'?'true':'false')}
+}
+const _academicBankViewBaseV2130=academicBankViewV279;
+academicBankViewV279=function academicBankViewV2130(){
+  return `<div class="bank-top-tools-v2130"><span><b>Banco de preguntas</b><small>Selección múltiple · Verdadero/Falso · Relacionar</small></span>${academicBankThemeToggleV2130()}</div>${_academicBankViewBaseV2130()}`;
+};
+
+function renderAcademicBankAttemptV2130(){
+  const attempt=academicBankActiveAttemptV279;if(!attempt)return;
+  const questions=attempt.questions||[],q=questions[academicBankAttemptIndexV279];if(!q)return;
+  q.type=q.type||'multiple_choice';
+  const answered=academicBankAttemptAnswersV279.get(String(q.id)),progress=Math.round(((academicBankAttemptIndexV279+1)/questions.length)*100);
+  const body=academicBankQuestionBodyV210(q,answered),feedback=academicBankFeedbackV210(q,answered,attempt),reported=academicReportedQuestionsV2121.has(String(q.id));
+  const autoBadge=attempt.auto_generated?'<span class="bank-auto-badge-v211">⚡ Mixto automático</span>':'';
+  const helper=q.type==='matching'?'Complete todas las relaciones para continuar.':'Seleccione una respuesta para continuar.';
+  showModal(`<div class="bank-attempt-shell-v2130">
+    <header class="bank-attempt-topbar-v2130"><button class="bank-exit-v2130" type="button" onclick="closeModal()">✕ <span>Salir</span></button><div><span class="eyebrow">${esc(attempt.subject)} · ${attempt.attempt_mode==='estudio'?'Modo estudio':'Simulacro'}</span><h2>${esc(attempt.title)}</h2>${autoBadge}</div>${academicBankThemeToggleV2130()}</header>
+    <div class="bank-attempt-progress-row-v2130"><span>Pregunta <b>${academicBankAttemptIndexV279+1}</b> de ${questions.length}</span><strong>${progress}%</strong></div>
+    <div class="bank-progress-v279"><i style="width:${progress}%"></i></div>
+    <main class="bank-question-stage-v2130"><section class="bank-question-v279 bank-question-v210"><div class="bank-question-kicker-v210"><span>Pregunta ${academicBankAttemptIndexV279+1}</span>${academicBankAttemptTypeHeaderV210(q)}</div><h3>${esc(q.question)}</h3>${body}${feedback}<div class="bank-report-inline-v2121"><button class="text-btn bank-report-btn-v2121" type="button" ${reported?'disabled':''} onclick="openAcademicBankReportV2121('${esc(q.id)}')">${reported?'✓ Pregunta reportada':'🚩 Reportar pregunta'}</button></div></section></main>
+    <footer class="bank-attempt-actions-v279 bank-attempt-actions-v2130">${answered?`<button class="btn academic-main-btn bank-next-v2130" onclick="academicBankNextV279()">${academicBankAttemptIndexV279===questions.length-1?'Finalizar':'Siguiente'} <span>→</span></button>`:`<small>${helper}</small>`}</footer>
+  </div>`);
+  requestAnimationFrame(()=>{
+    document.querySelector('#modalRoot .modal')?.classList.add('bank-attempt-modal-v2130');
+    document.querySelector('#modalRoot .modal-bg')?.classList.add('bank-attempt-bg-v2130');
+  });
+}
+renderAcademicBankAttemptV2121=renderAcademicBankAttemptV2130;
+renderAcademicBankAttemptV211=renderAcademicBankAttemptV2130;
+renderAcademicBankAttemptV210=renderAcademicBankAttemptV2130;
+renderAcademicBankAttemptV279=renderAcademicBankAttemptV2130;
+
+/* --- Dispositivos v2.13.0: telemetría técnica discreta, sin ubicación --- */
+async function academicDeviceInfoV2130(){
+  const ua=String(navigator.userAgent||''),connection=navigator.connection||navigator.mozConnection||navigator.webkitConnection||null;
+  let model='',platformVersion='';
+  try{
+    if(navigator.userAgentData?.getHighEntropyValues){
+      const hi=await navigator.userAgentData.getHighEntropyValues(['model','platformVersion']);
+      model=String(hi?.model||'').slice(0,80);platformVersion=String(hi?.platformVersion||'').slice(0,40);
+    }
+  }catch{}
+  let storageUsageMb=null,storageQuotaMb=null;
+  try{const s=await navigator.storage?.estimate?.();if(s){storageUsageMb=Math.round((Number(s.usage||0)/1048576)*10)/10;storageQuotaMb=Math.round((Number(s.quota||0)/1048576)*10)/10}}catch{}
+  const displayMode=window.matchMedia?.('(display-mode: standalone)')?.matches||navigator.standalone===true?'PWA instalada':'Navegador';
+  return {
+    app_version:typeof APP_VERSION!=='undefined'?APP_VERSION:'',
+    model,
+    platform_version:platformVersion,
+    display_mode:displayMode,
+    screen:`${screen?.width||0}×${screen?.height||0}`,
+    viewport:`${window.innerWidth||0}×${window.innerHeight||0}`,
+    pixel_ratio:Math.round((window.devicePixelRatio||1)*100)/100,
+    touch_points:Number(navigator.maxTouchPoints||0),
+    cpu_threads:Number(navigator.hardwareConcurrency||0)||null,
+    memory_gb:Number(navigator.deviceMemory||0)||null,
+    language:String(navigator.language||'').slice(0,24),
+    timezone:String(Intl.DateTimeFormat().resolvedOptions().timeZone||'').slice(0,60),
+    connection_type:String(connection?.effectiveType||connection?.type||'').slice(0,30),
+    downlink_mbps:Number.isFinite(Number(connection?.downlink))?Number(connection.downlink):null,
+    rtt_ms:Number.isFinite(Number(connection?.rtt))?Number(connection.rtt):null,
+    save_data:Boolean(connection?.saveData),
+    storage_usage_mb:storageUsageMb,
+    storage_quota_mb:storageQuotaMb,
+    online:Boolean(navigator.onLine),
+    standalone:displayMode==='PWA instalada',
+    captured_at:new Date().toISOString()
+  };
+}
+async function academicTouchDeviceV2130(force=false){
+  if(!academicDeviceFeatureAvailableV2121||!academicSession||!onlineConfigured()||!navigator.onLine)return null;
+  if(String(academicSession.session_token||'').startsWith('local:'))return null;
+  const now=Date.now();if(!force&&now-academicDeviceLastTouchV2121<ACADEMIC_DEVICE_TOUCH_MS_V2121)return null;
+  academicDeviceLastTouchV2121=now;
+  const meta=academicDeviceMetaV2121(),info=await academicDeviceInfoV2130();
+  try{
+    let row;
+    try{row=await academicRPC('academic_device_touch_v2130',{p_token:academicSession.session_token,p_device_id:academicDeviceIdV2121(),p_platform:meta.platform,p_browser:meta.browser,p_info:info})}
+    catch(error){
+      if(!academicIsMissingRpcV2121(error,'academic_device_touch_v2130'))throw error;
+      row=await academicRPC('academic_device_touch_v2121',{p_token:academicSession.session_token,p_device_id:academicDeviceIdV2121(),p_platform:meta.platform,p_browser:meta.browser});
+    }
+    row=Array.isArray(row)?row[0]:row;return row||null;
+  }catch(error){
+    if(academicIsMissingRpcV2121(error,'academic_device_touch_v2121')){academicDeviceFeatureAvailableV2121=false;return null}
+    if(!academicIsNetworkError(error))console.warn('Registro de actividad:',error);return null;
+  }
+}
+academicTouchDeviceV2121=academicTouchDeviceV2130;
+
+function academicDeviceInfoValueV2130(info,key,fallback='—'){const v=info?.[key];return v===null||v===undefined||v===''?fallback:String(v)}
+function academicDeviceModelLabelV2130(row){const info=row?.device_info||{};return academicDeviceInfoValueV2130(info,'model',row?.platform||'Dispositivo')}
+function academicDeviceTechGridV2130(row){
+  const i=row?.device_info||{};
+  const memory=i.memory_gb?`${i.memory_gb} GB aprox.`:'No informado';
+  const storage=i.storage_usage_mb!=null?`${i.storage_usage_mb} MB usados${i.storage_quota_mb!=null?` / ${i.storage_quota_mb} MB cuota`:''}`:'No informado';
+  const net=i.connection_type?`${String(i.connection_type).toUpperCase()}${i.downlink_mbps!=null?` · ${i.downlink_mbps} Mbps`:''}${i.rtt_ms!=null?` · ${i.rtt_ms} ms`:''}`:'No informado';
+  return `<div class="device-tech-grid-v2130"><span><b>App</b><small>v${esc(academicDeviceInfoValueV2130(i,'app_version','—'))}</small></span><span><b>Uso</b><small>${esc(academicDeviceInfoValueV2130(i,'display_mode','—'))}</small></span><span><b>Pantalla</b><small>${esc(academicDeviceInfoValueV2130(i,'screen','—'))}</small></span><span><b>CPU</b><small>${esc(i.cpu_threads?`${i.cpu_threads} hilos`:'No informado')}</small></span><span><b>RAM</b><small>${esc(memory)}</small></span><span><b>Red</b><small>${esc(net)}</small></span><span class="device-tech-wide-v2130"><b>Almacenamiento web</b><small>${esc(storage)}</small></span></div>`;
+}
+
+loadAcademicUsers=async function loadAcademicUsersV2130(){
+  const list=$('#academicUsersList');if(!list||!academicCanManageUsers())return;
+  if(!onlineConfigured())return _loadAcademicUsersBaseV2121();
+  try{
+    let rows;
+    try{rows=await academicRPC('academic_get_users_v2130',{p_token:academicSession.session_token})}
+    catch(error){if(!academicIsMissingRpcV2121(error,'academic_get_users_v2130'))throw error;try{rows=await academicRPC('academic_get_users_v2121',{p_token:academicSession.session_token})}catch(inner){if(!academicIsMissingRpcV2121(inner,'academic_get_users_v2121'))throw inner;return _loadAcademicUsersBaseV2121()}}
+    academicUsersCache=Array.isArray(rows)?rows:[];renderAcademicUsers(academicUsersCache);
+  }catch(error){console.error(error);list.innerHTML='<div class="card warn-card"><p>No fue posible cargar la nómina.</p></div>'}
+};
+
+renderAcademicUsers=function renderAcademicUsersV2130(users){
+  const list=$('#academicUsersList'),summary=$('#academicUsersSummary');if(!list||!summary)return;
+  const total=users.length,ready=users.filter(u=>u.access_ready!==undefined?u.access_ready:(u.ci&&u.phone)).length,used=users.filter(u=>(u.has_logged_in||Number(u.login_count||0)>0)&&(u.access_ready!==false)).length,pending=users.filter(u=>!(u.access_ready!==undefined?u.access_ready:(u.ci&&u.phone))).length,unused=Math.max(ready-used,0),multiple=users.filter(u=>Number(u.recent_device_count||0)>=2).length,deviceTotal=users.reduce((sum,u)=>sum+Number(u.device_count||0),0),usagePct=total?Math.round((used/total)*100):0;
+  summary.innerHTML=`<div><b>${total}</b><span>Integrantes</span></div><div><b>${used} · ${usagePct}%</b><span>Ya ingresaron</span></div><div><b>${deviceTotal}</b><span>Dispositivos</span></div><div><b>${multiple}</b><span>Uso simultáneo</span></div>${unused?`<div><b>${unused}</b><span>Sin ingreso</span></div>`:''}${pending?`<div><b>${pending}</b><span>Datos incompletos</span></div>`:''}`;
+  list.innerHTML=users.length?`<div class="academic-user-list">${users.map(user=>{const usage=academicUsageStateV280(user),device=academicDeviceSummaryV2121(user),issue=user.data_status==='revisar'?' · Verificar dato':'',last=user.last_activity_at||user.last_login_at,search=normalize(`${user.full_name||''} ${user.department||''} ${user.ci||''} ${usage.label} ${device.label}`);return `<button class="academic-user-row academic-user-row-v2121" data-role="${esc(user.role)}" data-usage="${usage.key}" data-search="${esc(search)}" onclick="openAcademicUserForm('${esc(user.id)}')"><span class="user-number">${esc(user.roster_number||'—')}</span><span class="user-main"><b><span class="user-usage-dot ${usage.key}"></span>${esc(user.full_name)}</b><small>${esc(user.department||'Sin departamento')} · Última conexión: ${esc(academicLastActivityTextV2121(last))}${issue}</small><span class="device-inline-v2121 ${device.key}">📱 ${esc(device.label)}${device.key==='multi'?' · ⚠ '+esc(device.detail):''}</span></span><span class="user-role ${esc(user.role)}">${esc(academicRoleLabel(user.role))}</span><span class="user-state ${user.active?'on':'off'}">${user.active?'Activo':'Inactivo'}</span></button>`}).join('')}</div>`:'<div class="card small"><p>No hay integrantes cargados.</p></div>';
+};
+
+loadAcademicUserDevicesV2121=async function loadAcademicUserDevicesV2130(userId){
+  const box=$('#academicDeviceRowsV2121');if(!box)return;
+  try{
+    let rows;
+    try{rows=await academicRPC('academic_get_user_devices_v2130',{p_token:academicSession.session_token,p_user_id:userId})}
+    catch(error){if(!academicIsMissingRpcV2121(error,'academic_get_user_devices_v2130'))throw error;rows=await academicRPC('academic_get_user_devices_v2121',{p_token:academicSession.session_token,p_user_id:userId})}
+    rows=Array.isArray(rows)?rows:[];
+    if(!rows.length){box.innerHTML='<div class="device-empty-v2121">Todavía no hay dispositivos identificados. Se registrarán automáticamente cuando ese usuario vuelva a ingresar con la versión actualizada.</div>';return}
+    const currentDevice=academicDeviceIdV2121();
+    box.innerHTML=`<div class="device-count-head-v2130"><b>${rows.length} dispositivo${rows.length===1?'':'s'} registrado${rows.length===1?'':'s'}</b><small>Datos técnicos de la instalación · sin GPS</small></div><div class="device-list-v2121">${rows.map(row=>{const recent=Boolean(row.is_recent),current=String(userId)===String(academicSession.user_id)&&String(row.device_id)===String(currentDevice);return `<article class="device-card-v2121 device-card-v2130 ${recent?'recent':''}"><div class="device-main-v2130"><div class="device-title-v2130"><span>📱</span><div><b>${esc(academicDeviceModelLabelV2130(row))}</b><small>${esc(row.platform||'Dispositivo')} · ${esc(row.browser||'Navegador')}</small></div></div><small>${recent?'🟢 Activo recientemente':'⚪ Última actividad: '+esc(academicLastActivityTextV2121(row.last_seen_at))}</small><small>Primera vez: ${esc(academicAccessDateV280(row.first_seen_at))} · Sesiones abiertas: ${Number(row.active_session_count||0)}</small>${academicDeviceTechGridV2130(row)}</div><div class="device-actions-v2130">${current?'<span class="device-current-v2121">Este dispositivo</span>':Number(row.active_session_count||0)>0?`<button class="btn secondary compact-device-btn-v2121" type="button" onclick="academicCloseDeviceSessionsV2121('${esc(userId)}','${esc(row.device_id)}')">Cerrar sesión</button>`:''}</div></article>`}).join('')}</div>${String(userId)!==String(academicSession.user_id)?`<button class="text-btn danger-text-v2121" type="button" onclick="academicCloseAllUserSessionsV2121('${esc(userId)}')">Cerrar todas las sesiones de este usuario</button>`:''}`;
+  }catch(error){console.error(error);box.innerHTML=academicIsMissingRpcV2121(error,'academic_get_user_devices_v2121')?'<div class="device-empty-v2121">Falta ejecutar la migración Supabase v2.13.0 para activar el control de dispositivos.</div>':'<div class="device-empty-v2121">No se pudieron consultar los dispositivos.</div>'}
 };

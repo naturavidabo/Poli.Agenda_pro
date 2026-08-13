@@ -1,0 +1,47 @@
+AGENDA POLICIAL v2.13.0 — CUADRÍCULA, DISPOSITIVOS, BANCO MÓVIL Y WORD
+Build: 12/08/2026
+
+1. PANEL ONLINE
+- Se restaura la navegación en cuadrícula fija; ya no usa carrusel horizontal.
+- Iconos centrados arriba y etiquetas debajo.
+- Panel, Formaciones, Tareas, Rol de exámenes, Banco de preguntas, Resúmenes, Nómina y Curso aprovechan el ancho disponible.
+- Se mantiene la identidad verde olivo y dorado.
+
+2. PARALELOS A / B / A+B
+- El administrador general ve un recordatorio visible de publicación por paralelos en el panel.
+- En Rol de exámenes y Resúmenes, el destino se muestra como opciones grandes y visibles: curso actual, A, B o A+B.
+- Rol de exámenes propone A+B por defecto.
+- Formaciones y Tareas continúan exclusivas del paralelo activo.
+
+3. DISPOSITIVOS
+- Se activa inventario técnico discreto por instalación mediante la migración Supabase v2.13.0.
+- La nómina muestra cantidad total de dispositivos registrados.
+- Cada usuario muestra cuántos dispositivos tiene y si existe uso simultáneo reciente.
+- El detalle puede mostrar versión de Agenda, PWA/navegador, pantalla, CPU, RAM aproximada, red y almacenamiento web cuando el navegador entrega esos datos.
+- No usa GPS, ubicación, contactos, llamadas, mensajes, fotos, cámara, micrófono, IMEI ni número telefónico.
+
+4. MODO OSCURO
+- Contraste reforzado en rol Administrador general, etiquetas de roles, formularios, modales, tarjetas, selector A/B y dispositivos.
+- Se corrigen fondos claros heredados con texto gris dentro del modo oscuro.
+
+5. BANCO DE PREGUNTAS
+- Botón Estudiar en dorado y Simulacro en verde olivo.
+- Botón Claro/Oscuro visible en el propio Banco.
+- Intento de Estudio/Simulacro usa prácticamente toda la pantalla útil.
+- Pregunta y respuestas aumentan de tamaño.
+- El botón Siguiente/Finalizar queda en una barra inferior fija y visible.
+- Se conserva Reportar pregunta y las tres modalidades habilitadas: Selección múltiple, Verdadero/Falso y Relacionar.
+
+6. WORD / OFFICE
+- Nueva Vista móvil para DOCX, con texto refluido al ancho del celular.
+- Control de tamaño de letra A-/A+.
+- Vista móvil / vista documento con un toque.
+- Edición básica permanece disponible.
+- Guardar copia descarga un HTML editable conservando estructura básica; TXT sigue disponible.
+- El DOCX original no se sobrescribe para evitar daños de formato.
+
+PASO DE SERVIDOR OBLIGATORIO PARA DISPOSITIVOS
+Ejecutar una sola vez en Supabase SQL Editor:
+SUPABASE_v2130_DISPOSITIVOS.sql
+
+Las funciones A/B/A+B de v2.12.9 continúan usando la migración que ya fue aplicada anteriormente.

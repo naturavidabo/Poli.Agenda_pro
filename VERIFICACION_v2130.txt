@@ -1,0 +1,19 @@
+VERIFICACIÓN AGENDA POLICIAL v2.13.0
+
+- Base: Agenda Policial v2.12.9.
+- app.js: sintaxis JavaScript válida mediante node --check.
+- online.js: sintaxis JavaScript válida mediante node --check.
+- version.json: JSON válido.
+- online.css: llaves equilibradas.
+- styles.css: llaves equilibradas.
+- index.html referencia recursos v2.13.0.
+- Service Worker usa caché agenda-policial-v2.13.0.
+- Navegación final definida como academic-nav-grid-v2130.
+- Selector de paralelos final visible en tarjetas A / B / A+B.
+- Banco final usa renderAcademicBankAttemptV2130 a pantalla completa.
+- Dispositivos usan RPC v2.13.0 con fallback v2.12.1.
+- Word incorpora vista móvil, ajuste de letra, edición y guardado local de copia.
+- No se agregó geolocalización ni permisos sensibles.
+
+IMPORTANTE
+La comprobación local no puede confirmar registros reales de dispositivos hasta ejecutar SUPABASE_v2130_DISPOSITIVOS.sql en el proyecto productivo y volver a ingresar desde los dispositivos.

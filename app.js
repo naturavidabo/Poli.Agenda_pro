@@ -1,4 +1,4 @@
-const APP_VERSION='2.12.9';
+const APP_VERSION='2.13.0';
 const BUILD_DATE='2026-08-12';
 const ACTIVATION_CODE='271261';
 const SECONDARY_ACTIVATION_CODE='2026JINETES';
@@ -772,4 +772,35 @@ function officeFindWordV2129(){
   let count=0,first=null;const needle=term.toLocaleLowerCase('es');
   for(const node of nodes){const text=node.nodeValue||'',low=text.toLocaleLowerCase('es');if(!low.includes(needle))continue;const frag=document.createDocumentFragment();let pos=0,idx=low.indexOf(needle);while(idx>=0){if(idx>pos)frag.appendChild(document.createTextNode(text.slice(pos,idx)));const mark=document.createElement('mark');mark.className='office-word-mark-v2129';mark.textContent=text.slice(idx,idx+term.length);frag.appendChild(mark);if(!first)first=mark;count++;pos=idx+term.length;idx=low.indexOf(needle,pos)}if(pos<text.length)frag.appendChild(document.createTextNode(text.slice(pos)));node.replaceWith(frag)}
   if(first)first.scrollIntoView({behavior:'smooth',block:'center'});toast(count?`${count} coincidencia${count===1?'':'s'} encontrada${count===1?'':'s'}`:'No se encontró ese texto');
+}
+
+/* =========================================================
+   Agenda Policial v2.13.0 — Word móvil progresivo
+   - Vista móvil refluida para lectura cómoda.
+   - Vista documento / vista móvil con un toque.
+   - Edición básica visible.
+   - Guardado local de copia HTML o TXT; DOCX original intacto.
+   ========================================================= */
+let officeWordMobileV2130=true;
+let officeWordFontV2130=18;
+async function officeRenderDocxV2128(file,head){
+  await officeLoadScriptV2128(OFFICE_MAMMOTH_V2128,'mammoth');if(!window.mammoth)throw new Error('No se pudo iniciar el lector Word.');
+  const buffer=await file.arrayBuffer(),result=await window.mammoth.convertToHtml({arrayBuffer:buffer},{includeDefaultStyleMap:true}),html=officeSanitizeHtmlV2128(result.value||'');
+  officeWordMobileV2130=true;officeWordFontV2130=18;
+  officeSetBodyV2128(`${head}<div class="office-view-tools-v2128 office-word-tools-v2129 office-word-tools-v2130"><span>Word</span><div><button id="officeWordModeV2130" onclick="officeToggleWordMobileV2130()">📱 Vista móvil</button><button id="officeEditToggleV2128" onclick="officeToggleEditV2128()">✎ Editar</button><button onclick="officeSaveHtmlV2130()">↓ Guardar copia</button></div></div><div class="office-word-mobilebar-v2130"><button onclick="officeWordFontV2130Change(-1)">A−</button><span id="officeWordFontLabelV2130">18 px</span><button onclick="officeWordFontV2130Change(1)">A+</button><button onclick="officeCopyTextV2128()">⧉ Copiar</button><button onclick="officeSaveDraftV2128()">TXT</button></div><div class="office-word-search-v2129"><input id="officeWordSearchV2129" type="search" placeholder="Buscar dentro del Word…" onkeydown="if(event.key==='Enter')officeFindWordV2129()"><button type="button" onclick="officeFindWordV2129()">Buscar</button><button type="button" onclick="officeClearWordSearchV2129()">Limpiar</button></div><div class="office-word-note-v2128">Vista móvil optimizada para celular. Puede editar y guardar una copia local; el DOCX original no se sobrescribe.</div><article id="officeWordV2128" class="office-word-v2128 office-word-mobile-v2130" style="--office-word-font-v2130:18px" contenteditable="false">${html||'<p>Documento sin texto visible.</p>'}</article>`)
+}
+function officeToggleWordMobileV2130(){
+  const el=document.getElementById('officeWordV2128'),btn=document.getElementById('officeWordModeV2130');if(!el)return;
+  officeWordMobileV2130=!officeWordMobileV2130;el.classList.toggle('office-word-mobile-v2130',officeWordMobileV2130);el.classList.toggle('office-word-document-v2130',!officeWordMobileV2130);
+  if(btn)btn.textContent=officeWordMobileV2130?'📱 Vista móvil':'📄 Vista documento';
+  toast(officeWordMobileV2130?'Vista móvil activada':'Vista documento activada');
+}
+function officeWordFontV2130Change(delta){
+  officeWordFontV2130=Math.max(14,Math.min(26,officeWordFontV2130+Number(delta||0)*2));const el=document.getElementById('officeWordV2128'),label=document.getElementById('officeWordFontLabelV2130');if(el)el.style.setProperty('--office-word-font-v2130',`${officeWordFontV2130}px`);if(label)label.textContent=`${officeWordFontV2130} px`;
+}
+function officeSaveHtmlV2130(){
+  const el=document.getElementById('officeWordV2128');if(!el)return toast('Abra un Word primero');
+  const base=String(officeCurrentFileV2128?.name||'documento').replace(/\.docx$/i,'');
+  const html=`<!doctype html><html lang="es"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>${esc(base)}</title><style>body{font-family:Arial,sans-serif;max-width:850px;margin:32px auto;padding:0 22px;line-height:1.55;color:#172119}table{border-collapse:collapse;max-width:100%;overflow:auto}td,th{border:1px solid #bbb;padding:6px}img{max-width:100%;height:auto}</style></head><body>${el.innerHTML}</body></html>`;
+  const blob=new Blob([html],{type:'text/html;charset=utf-8'}),url=URL.createObjectURL(blob),a=document.createElement('a');a.href=url;a.download=`${base}-editado.html`;a.click();setTimeout(()=>URL.revokeObjectURL(url),1200);toast('Copia editable guardada');
 }

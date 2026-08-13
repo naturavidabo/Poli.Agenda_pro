@@ -1,8 +1,8 @@
 {
-  "version": "2.12.9",
+  "version": "2.13.0",
   "build": "2026-08-12",
-  "channel": "parallel-sharing-reader-direct",
-  "appVersion": "2.12.9",
+  "channel": "grid-devices-bank-mobile",
+  "appVersion": "2.13.0",
   "scheduleVersion": "2026-07-29-v274",
-  "databaseVersion": "agenda-db-8"
+  "databaseVersion": "agenda-db-9"
 }
