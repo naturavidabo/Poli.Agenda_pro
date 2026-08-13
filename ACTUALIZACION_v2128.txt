@@ -1,0 +1,39 @@
+AGENDA POLICIAL v2.12.8 — OLIVO / OFFICE / NOCHE ESTABLE
+Build: 2026-08-12
+
+MEJORAS PRINCIPALES
+1. Identidad visual online más sobria
+- Panel online en verde olivo sólido, sin degradado verde/dorado.
+- Tarjeta “Resumen académico” en verde olivo oscuro, con textos blancos y acentos dorados.
+- Botón flotante online en verde olivo.
+- Navegación renombrada: “Rol de exámenes”, “Banco de preguntas”, “Resúmenes” y “Curso”.
+
+2. Modo oscuro revisado
+- Fondo verde casi negro y tarjetas oscuras de alto contraste.
+- Textos secundarios aclarados para evitar letras plomas sobre fondo negro.
+- Inputs, selectores, modales, calendario, banco y panel online con contraste reforzado.
+- Se conserva el resaltado dorado del párrafo que está siendo leído.
+
+3. Lectores y visores más intuitivos
+- Botón “✕ Salir” visible en lector y visor de documentos.
+- El botón que antes podía verse vacío ahora dice “☰ Opciones”.
+- Controles de lectura plegables mantienen la pantalla libre.
+
+4. Office personal universal
+- Nuevo acceso “Office” en la cabecera; funciona desde modo offline y modo online.
+- Abre archivos locales: PDF, Word DOCX, Excel XLSX/XLSM, PowerPoint PPTX, CSV, TXT/MD e imágenes.
+- Word: vista interna + edición básica de texto y descarga de borrador TXT.
+- Excel: vista por hojas con tablas desplazables.
+- PowerPoint: vista interna del contenido textual por diapositiva.
+- PDF e imágenes: visor interno.
+- Los archivos se procesan localmente y no se publican automáticamente en el curso.
+- Los adjuntos XLSX/PPTX del material online pueden abrirse con “Office”.
+
+5. Estabilidad
+- APP_VERSION unificado a 2.12.8.
+- Caché Service Worker actualizado a agenda-policial-v2.12.8.
+- SheetJS añadido a los componentes opcionales de caché para Excel.
+- Se mantienen las tres modalidades del banco: selección múltiple, V/F y relacionar.
+
+NOTA
+La edición Word de esta versión es básica: permite modificar el texto visualizado y guardar un borrador TXT; todavía no reescribe el DOCX conservando toda su diagramación.

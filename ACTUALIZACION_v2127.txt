@@ -1,0 +1,30 @@
+AGENDA POLICIAL v2.12.7 — BANCO DE 3 MODALIDADES
+Fecha: 12/08/2026
+
+CAMBIO PRINCIPAL
+- Se retira la modalidad "Completar / respuesta escrita".
+- Quedan únicamente:
+  1) Selección múltiple.
+  2) Verdadero / Falso.
+  3) Relacionar conceptos / respuestas.
+
+MEZCLA AUTOMÁTICA
+- Ya no genera preguntas de respuesta escrita.
+- Distribución aproximada: 60% selección múltiple, 25% verdadero/falso y 15% relacionar.
+- Si una relación no puede construirse por falta de preguntas, vuelve a selección múltiple; nunca a Completar.
+
+BANCO E IMPORTACIÓN
+- "Completar" desaparece del formulario para crear preguntas.
+- La plantilla CSV contiene solamente las tres modalidades vigentes.
+- Las filas CSV identificadas como completar/complemento/fill_blank se omiten.
+- Las preguntas antiguas de completar se desactivan en Supabase; no se borran, para conservar historial.
+
+SUPABASE
+- Ejecutar una sola vez el archivo supabase-v2127-migration.sql en SQL Editor del proyecto Agenda Policial.
+- La migración también instala/repara el sistema "Reportar pregunta".
+- Es segura para volver a ejecutar.
+
+ARCHIVOS DE VERSIÓN
+- appVersion: 2.12.7
+- service worker: agenda-policial-v2.12.7
+- cache busting: ?v=2.12.7

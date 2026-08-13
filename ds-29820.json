@@ -1,0 +1,34 @@
+{
+  "metadatos": {
+    "id": "ds29820",
+    "titulo": "Decreto Supremo N.º 29820",
+    "subtitulo": "Modificación de las facultades del sumariante",
+    "abreviatura": "D.S. N.º 29820",
+    "categoria": "Normas modificatorias SAFCO",
+    "articulos_totales": 2,
+    "fuente": "Fuente institucional pública",
+    "fuente_url": "https://www.contraloria.gob.bo/wp-content/uploads/2022/06/20121217_316.pdf",
+    "pdf": "assets/ds-29820.pdf",
+    "fecha_integracion": "2026-07-09"
+  },
+  "articulos": [
+    {
+      "id": "ds29820-art-1",
+      "numero": "Artículo 1",
+      "titulo": "D.S. N.º 29820",
+      "texto": "del Decreto Supremo Nº 26237 de 29 de junio de 2001, modifica el Artículo\n21 del Decreto Supremo Nº 23318 - A, referido a las facultades del sumariante.\n\nQue con el fin de resguardar los intereses del Estado, es necesario complementar las normas\nque regulan la determinación de la Responsabilidad por la Función Pública, particularmente\nen lo referido a las facultades del sumariante.\n\nEN CONSEJO DE MINISTROS,\nDECRETA:",
+      "estructura": [],
+      "fuente_pdf": "assets/ds-29820.pdf"
+    },
+    {
+      "id": "ds29820-art-2",
+      "numero": "Artículo 2",
+      "titulo": "Modificación",
+      "texto": "Se modifican los incisos a) y b) del Artículo 21 del Decreto\nSupremo Nº 23318-A, modificado por el Decreto Supremo Nº 26237 de 29 de junio de 2001,\ncon el siguiente texto:\n\n“ARTÍCULO 21.- (SUMARIANTE). El sumariante es la autoridad legal competente.\nSus facultades son:\n\na) en conocimiento de la presunta falta o contravención del servidor público, de\noficio, por denuncia, en base a un dictamen o causa de un informe de auditoría\nespecial; disponer la iniciación del proceso o pronunciarse en contrario con la debida\nfundamentación;\nb) cuando así lo crea necesario, adoptar a título provisional las medidas precautorias\nde cambio temporal de funciones o la suspensión del cargo con goce de haberes por\nun período no mayor a noventa (90) días, tiempo en el que deberá finalizar el proceso\ninterno.\n\nEn casọ de que el sumariante adopte la medida precautoria de suspensión del cargo con goce\nde haberes, deberá comunicar inmediata y simultáneamente a la máxima autoridad ejecutiva\nde la entidad para que designe a un funcionario interino por el tiempo que dure la suspensión\n\ny a la Dirección Administrativa para que efectúe los traspasos necesarios a fin de generar los\nrecursos económicos en la partida 11940 para el pago de salarios al funcionario designado\ninterinamente.”\n\nLos señores Ministros de Estado, en sus respectivos Despachos, quedan encargados de la\nejecución y cumplimiento del presente Decreto Supremo.\nEs dado en el Palacio de Gobierno de la ciudad de La Paz, a los veintiséis días del mes de\nnoviembre del año dos mil ocho.\nFdo. ÁLVARO MARCELO GARCIA LINERA, Daṿid Choquehuanca Céspedes, Juan\nRamón Quintana Taborga, Alfredo Octavio Rada Vélez, Walker Sixto San Miguel Rodríguez,\nCelima Torrico Rojas, René Gonzalo Orellana Halkyer, Susana Rivero Guzmán MINISTRA\nDE PRODUCCIÓN Y MICROEMPRESA E INTERINA DE HACIENDA Y\nPLANIFICACION DEL DESARROLLO, Oscar Coca Antezana, Carlos Romero Bonifaz,\nSaúl Ávalos Cortez, Luís Alberto Echazú Alvarado, Walter J. Delgadillo Terceros, Roberto I.\nAguilar Gómez, Jorge Ramiro Tapia Sainz, Héctor E. Arcẹ Zaconeta.",
+      "estructura": [
+        "DECRETA:"
+      ],
+      "fuente_pdf": "assets/ds-29820.pdf"
+    }
+  ]
+}

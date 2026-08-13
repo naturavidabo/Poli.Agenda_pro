@@ -1,0 +1,60 @@
+AGENDA POLICIAL v2.12.9 — PARALELOS COMPARTIDOS + LECTOR DIRECTO
+Fecha: 12 de agosto de 2026
+
+OBJETIVO DE ESTA VERSIÓN
+Preparar la incorporación del Paralelo B durante la etapa de exámenes, evitando duplicar manualmente el contenido común y haciendo el lector más intuitivo.
+
+1. PARALELOS A / B
+- Se conserva el esquema multicurso existente: Paralelo A y Paralelo B siguen siendo espacios diferenciados.
+- Formaciones y Tareas NO se comparten entre paralelos.
+- Si un usuario del Paralelo B entra a Formaciones o Tareas y todavía no existe contenido propio, se muestra un aviso discreto de “Módulo del Paralelo B en preparación”.
+- No se habilita todavía un administrador propio del Paralelo B; eso se realizará cuando se defina y capacite al responsable.
+- La nómina real del Paralelo B NO está incorporada en este paquete: queda pendiente de la lista oficial que entregará el administrador.
+
+2. PUBLICACIÓN COMPARTIDA
+- El Administrador general puede elegir destinatario en Rol de exámenes y Resúmenes:
+  · Solo curso actual.
+  · Solo Paralelo A.
+  · Solo Paralelo B.
+  · Paralelos A + B.
+- En Rol de exámenes, “A + B” queda seleccionado por defecto porque el rol es común.
+- Una publicación A+B es una sola publicación con una sola carga de archivos; los dos paralelos la consultan desde su propio panel.
+- Formaciones y Tareas permanecen forzadas al paralelo activo para evitar mezclar información distinta.
+- Si falta la migración de Supabase v2.12.9, la aplicación NO simula una publicación compartida: avisa claramente y evita dejar una copia parcial.
+
+3. LECTOR MÁS INTUITIVO
+- Controles esenciales permanentemente visibles:
+  · Escuchar.
+  · Atrás.
+  · Adelante.
+  · Velocidad (0.75x, 1x, 1.25x, 1.5x, 1.75x y 2x).
+  · Claro/Oscuro.
+  · Más/Menos para opciones secundarias.
+- El cambio Claro/Oscuro dentro del lector ya no reconstruye la pantalla ni debería sacar al usuario del documento.
+- Se conserva el resaltado visual del contenido leído y la función de continuar lectura.
+- Las opciones poco frecuentes permanecen contraídas para no ocupar media pantalla.
+
+4. WORD / OFFICE
+- Word conserva visualización y edición rápida de texto.
+- Se agrega búsqueda dentro del documento con resaltado de coincidencias.
+- Accesos directos a Editar, Copiar y Guardar TXT.
+- El DOCX original no se sobrescribe: la edición continúa siendo una edición rápida segura, no un reemplazo completo de Microsoft Word.
+- Se mantienen PDF, Excel, PowerPoint, CSV/TXT e imágenes del Centro Office v2.12.8.
+
+5. SIN CAMBIOS EN “JINETES”
+- No se agregó nombre, logotipo ni elemento visual “Jinetes” al modo online en esta versión.
+- La activación temporal heredada se conserva sin cambios para compatibilidad.
+
+6. SUPABASE
+Esta versión incorpora dos archivos SQL:
+- supabase-v2129-migration.sql: únicamente la nueva función de publicaciones compartidas A/B.
+- SUPABASE_v2129_CONSOLIDADO.sql: incluye también la actualización v2.12.7 del banco de tres modalidades y reportes, seguida de v2.12.9.
+
+La migración v2.12.9 crea una tabla de audiencias por publicación y dos RPC:
+- academic_get_posts_v2129
+- academic_create_post_v2129
+
+No elimina publicaciones, archivos, usuarios, bancos ni historial existente.
+
+7. PENDIENTE INMEDIATO
+Cuando se reciba la lista oficial del Paralelo B se realizará la carga nominal con sus datos reales y membresía en Capitanes B. Los permisos administrativos del responsable B se habilitarán únicamente cuando el administrador general lo indique.

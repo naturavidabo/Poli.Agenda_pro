@@ -1,0 +1,29 @@
+VERIFICACIÓN ESTÁTICA — AGENDA POLICIAL v2.12.9
+Fecha: 12 de agosto de 2026
+
+APLICACIÓN
+- version.json: 2.12.9.
+- index.html: recursos versionados con ?v=2.12.9.
+- Service Worker: agenda-policial-v2.12.9.
+- app.js: comprobación de sintaxis con node --check: OK.
+- online.js: comprobación de sintaxis con node --check: OK.
+- styles.css: llaves equilibradas.
+- online.css: llaves equilibradas.
+
+FUNCIONALIDAD REVISADA EN CÓDIGO
+- Formaciones/Tareas no admiten compartir A+B.
+- Rol de exámenes admite A/B/A+B y propone A+B por defecto.
+- Resúmenes admite A/B/A+B.
+- El modo B vacío muestra aviso de preparación en Formaciones/Tareas.
+- El lector presenta controles directos y velocidad visible.
+- El modo nocturno del lector cambia tema sin rerender global.
+- Word incorpora búsqueda local con resaltado.
+
+SQL
+- Migración v2.12.9 sin DROP TABLE ni TRUNCATE.
+- Delimitadores $$ equilibrados.
+- La migración es incremental e idempotente en sus estructuras principales.
+
+LÍMITE DE LA VERIFICACIÓN
+- El conector Supabase no estuvo disponible en esta sesión, por lo que la migración no se ejecutó contra la base de producción.
+- No se afirma prueba física en Android/iPhone; la validación realizada es estática, de sintaxis y de integridad del paquete.

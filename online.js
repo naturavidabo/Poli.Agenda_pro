@@ -1,4 +1,4 @@
-/* Agenda Policial Online v2.12.2 — conexión real con Supabase */
+/* Agenda Policial Online v2.12.9 — conexión real con Supabase */
 const ONLINE_CFG = {
   url: 'https://lkwrulzrulmbfypwywmo.supabase.co',
   anonKey: 'sb_publishable_vtek6lVCGZkmyicgAPqDMw_8EOTFrRU',
@@ -6867,3 +6867,507 @@ async function academicBankSelectWithFeedbackV2126(button,questionId,selected){
     }
   }
 }
+
+
+/* =========================================================
+   AGENDA POLICIAL v2.12.7 — BANCO DE 3 MODALIDADES
+   - Retira "Completar / respuesta escrita" de creación e importación.
+   - Modalidades activas: Selección múltiple, Verdadero/Falso y Relacionar.
+   - El simulacro automático usa RPC v2.12.7; si el servidor aún no fue
+     migrado, cae de forma segura a modalidades ya soportadas sin evaluar
+     respuestas escritas.
+   ========================================================= */
+const ACADEMIC_BANK_TYPES_V2127=['multiple_choice','true_false','matching'];
+let academicBankSkippedFillV2127=0;
+function academicBankAllowedTypeV2127(type){return ACADEMIC_BANK_TYPES_V2127.includes(String(type||''))}
+
+academicBankQuestionTypeHelpV210=function academicBankQuestionTypeHelpV2127(type){
+  return ({
+    multiple_choice:'Una respuesta correcta entre cuatro opciones A, B, C y D.',
+    true_false:'Una afirmación que el estudiante debe identificar como Verdadera o Falsa.',
+    matching:'El estudiante relaciona cada concepto con su definición o correspondencia.'
+  })[type]||'';
+};
+
+function openAcademicBankQuestionFormV2127(bankId,questionId=''){
+  const list=academicBankAdminQuestionsV279.get(String(bankId))||[];
+  const q=list.find(item=>String(item.id)===String(questionId))||{};
+  const rawType=academicBankQuestionTypeV210(q);
+  if(q.id&&rawType==='fill_blank'){
+    return toast('Esta pregunta de completar quedó desactivada. Use una de las tres modalidades vigentes.');
+  }
+  const type=academicBankAllowedTypeV2127(rawType)?rawType:'multiple_choice',data=academicBankAnswerDataV210(q);
+  const pairs=Array.isArray(data.pairs)?data.pairs:[];
+  const pairRows=Array.from({length:8},(_,i)=>`<div class="bank-pair-row-v210"><span>${i+1}</span><input name="pair_left_${i}" placeholder="Concepto" value="${esc(pairs[i]?.left||'')}"><span class="bank-pair-arrow-v210">↔</span><input name="pair_right_${i}" placeholder="Definición / correspondencia" value="${esc(pairs[i]?.right||'')}"></div>`).join('');
+  showModal(`<button class="icon-btn close" onclick="closeModal()">×</button><span class="eyebrow">Banco de preguntas · 3 modalidades</span><h2>${q.id?'Editar pregunta':'Agregar pregunta'}</h2>
+    <form id="academicBankQuestionFormV2127" class="form bank-question-form-v279 bank-question-form-v210">
+      <label>Tipo de pregunta<select name="question_type" onchange="academicBankQuestionTypeChangeV210(this.value)">
+        <option value="multiple_choice" ${type==='multiple_choice'?'selected':''}>🔘 Selección múltiple</option>
+        <option value="true_false" ${type==='true_false'?'selected':''}>✓ Verdadero / Falso</option>
+        <option value="matching" ${type==='matching'?'selected':''}>🔗 Relacionar conceptos</option>
+      </select><small id="bankQuestionTypeHelpV210">${esc(academicBankQuestionTypeHelpV210(type))}</small></label>
+      <label>Pregunta o consigna<textarea name="question" rows="4" required placeholder="Escriba la pregunta o instrucción…">${esc(q.question_text||'')}</textarea></label>
+      <div data-bank-type-panel-v210="multiple_choice" ${type==='multiple_choice'?'':'hidden'} class="bank-type-panel-v210">
+        <label>Opción A<input name="A" value="${esc(type==='multiple_choice'?(q.option_a||''):'')}"></label><label>Opción B<input name="B" value="${esc(type==='multiple_choice'?(q.option_b||''):'')}"></label><label>Opción C<input name="C" value="${esc(type==='multiple_choice'?(q.option_c||''):'')}"></label><label>Opción D<input name="D" value="${esc(type==='multiple_choice'?(q.option_d||''):'')}"></label>
+        <label>Respuesta correcta<select name="correct"><option value="A" ${q.correct_option==='A'?'selected':''}>A</option><option value="B" ${q.correct_option==='B'?'selected':''}>B</option><option value="C" ${q.correct_option==='C'?'selected':''}>C</option><option value="D" ${q.correct_option==='D'?'selected':''}>D</option></select></label>
+      </div>
+      <div data-bank-type-panel-v210="true_false" ${type==='true_false'?'':'hidden'} class="bank-type-panel-v210 bank-tf-editor-v210">
+        <div class="bank-type-editor-note-v210">La afirmación anterior será mostrada con dos botones: <b>Verdadero</b> y <b>Falso</b>.</div>
+        <label>Respuesta correcta<select name="tf_correct"><option value="true" ${data.correct===true?'selected':''}>Verdadero</option><option value="false" ${data.correct===false?'selected':''}>Falso</option></select></label>
+      </div>
+      <div data-bank-type-panel-v210="matching" ${type==='matching'?'':'hidden'} class="bank-type-panel-v210">
+        <div class="bank-type-editor-note-v210">Complete al menos 2 pares. En el examen las correspondencias aparecerán mezcladas.</div>
+        <div class="bank-pairs-editor-v210">${pairRows}</div>
+      </div>
+      <label>Explicación opcional<textarea name="explanation" rows="3" placeholder="Se mostrará después de responder en Modo Estudio.">${esc(q.explanation||'')}</textarea></label>
+      <div class="form-actions"><button class="btn academic-main-btn" type="submit">Guardar pregunta</button><button class="btn secondary" type="button" onclick="closeModal();openAcademicBankManageV279('${bankId}')">Cancelar</button></div>
+    </form>`);
+  document.getElementById('academicBankQuestionFormV2127').onsubmit=event=>saveAcademicBankQuestionV2127(event,bankId,q.id||'');
+}
+
+async function saveAcademicBankQuestionV2127(event,bankId,questionId=''){
+  event.preventDefault();const form=event.currentTarget,button=event.submitter;if(button){button.disabled=true;button.textContent='Guardando…'}
+  try{
+    const values=Object.fromEntries(new FormData(form).entries());
+    const type=String(values.question_type||'multiple_choice');
+    if(!academicBankAllowedTypeV2127(type))throw new Error('La modalidad Completar ya no está habilitada');
+    const question=String(values.question||'').trim();if(!question)throw new Error('Escriba la pregunta o consigna');
+    let data={};
+    if(type==='multiple_choice'){
+      for(const key of ['A','B','C','D'])if(!String(values[key]||'').trim())throw new Error(`Complete la opción ${key}`);
+      if(!['A','B','C','D'].includes(String(values.correct||'')))throw new Error('Seleccione la respuesta correcta');
+    }else if(type==='true_false')data={correct:values.tf_correct==='true'};
+    else if(type==='matching'){
+      const pairs=[];
+      for(let i=0;i<8;i++){
+        const left=String(values[`pair_left_${i}`]||'').trim(),right=String(values[`pair_right_${i}`]||'').trim();
+        if(Boolean(left)!==Boolean(right))throw new Error(`Complete ambos lados del par ${i+1}`);
+        if(left&&right)pairs.push({left,right});
+      }
+      if(pairs.length<2)throw new Error('Registre al menos 2 pares para relacionar');
+      data={pairs};
+    }
+    await academicRPCWithRetryV275('academic_bank_save_question_v210',{
+      p_token:academicSession.session_token,p_bank_id:bankId,p_question_id:questionId||null,p_question_text:question,
+      p_question_type:type,p_option_a:values.A||'',p_option_b:values.B||'',p_option_c:values.C||'',p_option_d:values.D||'',
+      p_correct_option:values.correct||'',p_answer_data:data,p_explanation:values.explanation||''
+    },2);
+    closeModal();await loadAcademicBanksV279();toast('Pregunta guardada');setTimeout(()=>openAcademicBankManageV279(bankId),50);
+  }catch(error){console.error(error);toast(academicFriendlyError(error,'No se pudo guardar la pregunta'));if(button){button.disabled=false;button.textContent='Guardar pregunta'}}
+}
+
+function academicBankParseCsvV2127(text){
+  academicBankSkippedFillV2127=0;
+  const lines=String(text||'').replace(/\r/g,'').split('\n').filter(line=>line.trim());if(lines.length<2)return[];
+  const delimiter=(lines[0].match(/;/g)||[]).length>(lines[0].match(/,/g)||[]).length?';':',';
+  const headers=academicCsvLineV279(lines[0],delimiter).map(h=>academicBankNormalizeV279(h));
+  const idx=names=>headers.findIndex(h=>names.includes(h));
+  const map={type:idx(['tipo','type','modalidad pregunta']),question:idx(['pregunta','question']),A:idx(['a','opcion a','opcion_a']),B:idx(['b','opcion b','opcion_b']),C:idx(['c','opcion c','opcion_c']),D:idx(['d','opcion d','opcion_d']),correct:idx(['correcta','correct','respuesta','respuesta correcta']),explanation:idx(['explicacion','explanation']),content:idx(['contenido','datos','content','pares'])};
+  return lines.slice(1).map(line=>{
+    const c=academicCsvLineV279(line,delimiter),raw=map.type>=0?academicBankNormalizeV279(c[map.type]||''):'seleccion';
+    const t=String(raw||'').replace(/[\s-]+/g,'_');
+    let type='multiple_choice';
+    if(['verdadero_falso','verdaderofalso','vf','true_false','truefalse'].includes(t))type='true_false';
+    else if(['relacionar','relacion','relacionar_conceptos','matching','emparejar','vincular'].includes(t))type='matching';
+    else if(['completar','completar_concepto','fill_blank','fillblank','texto','complemento'].includes(t)){academicBankSkippedFillV2127++;return null}
+    const row={type,question:c[map.question]||'',A:map.A>=0?(c[map.A]||''):'',B:map.B>=0?(c[map.B]||''):'',C:map.C>=0?(c[map.C]||''):'',D:map.D>=0?(c[map.D]||''):'',correct:map.correct>=0?String(c[map.correct]||'').trim():'',explanation:map.explanation>=0?(c[map.explanation]||''):'',answer_data:{}};
+    const content=map.content>=0?(c[map.content]||''):'';
+    if(type==='true_false'){
+      const v=academicBankNormalizeV279(row.correct);if(['verdadero','v','true','1'].includes(v))row.answer_data={correct:true};else if(['falso','f','false','0'].includes(v))row.answer_data={correct:false};else row.invalid=true;
+    }else if(type==='matching'){
+      const pairs=academicBankParsePairsV210(content);row.answer_data={pairs};if(pairs.length<2)row.invalid=true;
+    }else{
+      row.correct=row.correct.toUpperCase();if(!(row.question&&row.A&&row.B&&row.C&&row.D&&['A','B','C','D'].includes(row.correct)))row.invalid=true;
+    }
+    if(!row.question)row.invalid=true;return row;
+  }).filter(r=>r&&!r.invalid);
+}
+
+function openAcademicBankImportV2127(bankId){
+  academicBankImportRowsV279=[];academicBankSkippedFillV2127=0;
+  showModal(`<button class="icon-btn close" onclick="closeModal()">×</button><span class="eyebrow">Carga rápida · 3 modalidades</span><h2>Importar preguntas</h2>
+    <p class="subtle">Los CSV A-B-C-D siguen funcionando. La plantilla actual admite Selección múltiple, Verdadero/Falso y Relacionar.</p>
+    <div class="bank-import-format-note-v210"><b>CSV recomendado</b><span>Selección múltiple · Verdadero/Falso · Relacionar</span></div>
+    <textarea id="academicBankImportTextV279" class="bank-import-text-v279" rows="10" placeholder="Puede pegar preguntas A-B-C-D en el formato tradicional…"></textarea>
+    <div class="bank-import-controls-v279"><label class="file-chip-v279">Archivo CSV/TXT<input id="academicBankImportFileV279" type="file" accept=".csv,.txt,text/csv,text/plain" onchange="academicBankReadImportFileV2127(this,'${bankId}')"></label><button class="text-btn" onclick="downloadAcademicBankTemplateV2127()">Plantilla CSV</button></div>
+    <div class="form-actions"><button class="btn academic-main-btn" onclick="academicBankAnalyzeImportV2127('${bankId}')">Analizar preguntas</button><button class="btn secondary" onclick="closeModal();openAcademicBankManageV279('${bankId}')">Cancelar</button></div>
+    <div id="academicBankImportPreviewV279"></div>`);
+}
+async function academicBankReadImportFileV2127(input,bankId){
+  const file=input?.files?.[0];if(!file)return;
+  try{const text=await file.text();const area=document.getElementById('academicBankImportTextV279');if(area)area.value=text;academicBankImportRowsV279=file.name.toLowerCase().endsWith('.csv')?academicBankParseCsvV2127(text):academicBankParseTextV210(text);academicRenderBankImportPreviewV2127(bankId)}catch(error){console.error(error);toast('No se pudo leer el archivo')}
+}
+function academicBankAnalyzeImportV2127(bankId){
+  const text=document.getElementById('academicBankImportTextV279')?.value||'';
+  const firstLine=String(text).replace(/^\uFEFF/,'').split(/\r?\n/)[0]||'';
+  const looksCsv=/[;,]/.test(firstLine)&&/(pregunta|question)/i.test(firstLine);
+  academicBankImportRowsV279=looksCsv?academicBankParseCsvV2127(text):academicBankParseTextV210(text);academicRenderBankImportPreviewV2127(bankId);
+}
+function academicRenderBankImportPreviewV2127(bankId){
+  const box=document.getElementById('academicBankImportPreviewV279');if(!box)return;const rows=academicBankImportRowsV279;
+  const skipped=academicBankSkippedFillV2127?`<div class="bank-legacy-warning-v2127"><b>${academicBankSkippedFillV2127} pregunta${academicBankSkippedFillV2127===1?'':'s'} de Completar omitida${academicBankSkippedFillV2127===1?'':'s'}</b><span>Esta modalidad fue retirada y no será importada.</span></div>`:'';
+  if(!rows.length){box.innerHTML=skipped+'<div class="bank-import-empty-v279">No se detectaron preguntas válidas de las tres modalidades habilitadas.</div>';return}
+  const counts={};rows.forEach(r=>counts[r.type]=(counts[r.type]||0)+1);
+  const chips=Object.entries(counts).map(([type,count])=>`<span class="bank-import-type-chip-v210 ${academicBankTypeClassV210(type)}"><b>${count}</b> ${esc(academicBankTypeLabelV210(type))}</span>`).join('');
+  box.innerHTML=skipped+`<div class="bank-import-summary-v279"><b>${rows.length} preguntas listas</b><small>Revise antes de guardar. Máximo 500 por importación.</small><div class="bank-import-types-v210">${chips}</div></div><div class="bank-import-preview-v279">${rows.slice(0,12).map((r,i)=>`<div><span>${i+1}</span><b>${esc(r.question)}</b><small>${esc(academicBankTypeLabelV210(r.type))}</small></div>`).join('')}${rows.length>12?`<p>+ ${rows.length-12} preguntas adicionales</p>`:''}</div><button class="btn academic-main-btn bank-import-save-v279" onclick="commitAcademicBankImportV210('${bankId}')">Importar ${Math.min(rows.length,500)} preguntas</button>`;
+}
+function downloadAcademicBankTemplateV2127(){
+  const csv='tipo;pregunta;A;B;C;D;correcta;explicacion;contenido\n'+
+  'seleccion;"¿Cuál es la opción correcta?";"Opción A";"Opción B";"Opción C";"Opción D";B;"Explicación opcional";\n'+
+  'verdadero_falso;"La auditoría es un examen sistemático.";;;;;VERDADERO;"Explicación opcional";\n'+
+  'relacionar;"Relacione cada concepto con su definición.";;;;;;"Explicación opcional";"Eficacia=>Logro de objetivos||Eficiencia=>Uso adecuado de recursos"\n';
+  const blob=new Blob(['\uFEFF'+csv],{type:'text/csv;charset=utf-8'}),url=URL.createObjectURL(blob),a=document.createElement('a');a.href=url;a.download='plantilla-banco-preguntas-3-modalidades-v2127.csv';a.click();setTimeout(()=>URL.revokeObjectURL(url),1000);
+}
+
+function renderAcademicBankManageV2127(bank){
+  const all=academicBankAdminQuestionsV279.get(String(bank.id))||[];
+  const legacyFill=all.filter(q=>academicBankQuestionTypeV210(q)==='fill_blank');
+  const questions=all.filter(q=>academicBankAllowedTypeV2127(academicBankQuestionTypeV210(q)));
+  const counts={multiple_choice:0,true_false:0,matching:0};
+  questions.forEach(q=>{const t=academicBankQuestionTypeV210(q);counts[t]=(counts[t]||0)+1});
+  const typeChips=Object.entries(counts).filter(([,count])=>count>0).map(([type,count])=>`<span class="bank-type-count-v210 ${academicBankTypeClassV210(type)}"><b>${count}</b>${esc(academicBankTypeLabelV210(type))}</span>`).join('');
+  const onlyMultiple=questions.length>=2&&counts.multiple_choice===questions.length;
+  const autoNote=onlyMultiple?`<div class="bank-auto-mix-note-v211"><span>⚡</span><div><b>Mezcla automática de 3 modalidades</b><p>Al iniciar Estudio o Simulacro se generarán temporalmente Selección múltiple, Verdadero/Falso y Relacionar. Ya no se generan respuestas escritas.</p></div></div>`:'';
+  const legacyNote=legacyFill.length?`<div class="bank-legacy-warning-v2127"><b>${legacyFill.length} pregunta${legacyFill.length===1?'':'s'} antigua${legacyFill.length===1?'':'s'} de Completar detectada${legacyFill.length===1?'':'s'}</b><span>No se utilizarán. La migración v2.12.7 las desactiva en Supabase.</span></div>`:'';
+  showModal(`<button class="icon-btn close" onclick="closeModal()">×</button>
+    <div class="bank-manage-head-v279"><div><span class="eyebrow">${esc(bank.subject)}</span><h2>${esc(bank.title||bank.topic)}</h2><p>${esc(bank.topic)} · ${questions.length} preguntas activas</p></div>${academicBankStatusV279(bank)}</div>
+    ${questions.length?`<div class="bank-type-counts-v210">${typeChips}</div>`:''}${autoNote}${legacyNote}
+    <div class="bank-manage-actions-v279"><button class="btn academic-main-btn" onclick="openAcademicBankQuestionFormV279('${bank.id}')">Agregar pregunta</button><button class="btn secondary" onclick="openAcademicBankImportV279('${bank.id}')">Importar preguntas</button><button class="text-btn" onclick="closeModal();openAcademicBankFormV279('${bank.id}')">Editar datos</button></div>
+    <div class="bank-publish-strip-v279"><span>${bank.published?'Visible para el curso':'Todavía no visible para estudiantes'}</span><button class="btn ${bank.published?'secondary':'academic-main-btn'}" onclick="toggleAcademicBankPublishV279('${bank.id}',${bank.published?'false':'true'})">${bank.published?'Ocultar banco':'Publicar banco'}</button></div>
+    <div class="bank-archive-strip-v212"><div><b>Banco obsoleto o incorrecto</b><small>Archivar lo retira del listado normal y de los estudiantes.</small></div><button class="btn bank-archive-btn-v212" onclick="archiveAcademicBankV212('${bank.id}')">🗃 Archivar banco</button></div>
+    <div class="bank-question-admin-list-v279 bank-question-admin-list-v210">${questions.length?questions.map(q=>`<article><div><div class="bank-question-meta-v210"><span>Pregunta ${q.question_order}</span>${academicBankTypeBadgeV210(academicBankQuestionTypeV210(q))}</div><b>${esc(q.question_text)}</b><small>${esc(academicBankQuestionSummaryV210(q))}${q.explanation?' · Con explicación':''}</small></div><div><button class="icon-btn" title="Editar" onclick="openAcademicBankQuestionFormV279('${bank.id}','${q.id}')">✎</button><button class="icon-btn danger" title="Eliminar" onclick="deleteAcademicBankQuestionV279('${bank.id}','${q.id}')">×</button></div></article>`).join(''):'<div class="bank-empty-questions-v279">Todavía no hay preguntas. Puede usar Selección múltiple, Verdadero/Falso o Relacionar.</div>'}</div>`);
+}
+
+async function startAcademicBankAttemptV2127(bankId,mode){
+  if(!navigator.onLine)return toast('Necesita conexión para iniciar el cuestionario');
+  if(academicBankSubmittingV279)return;academicBankSubmittingV279=true;academicReportedQuestionsV2121?.clear?.();
+  try{
+    let data;
+    try{
+      data=await academicRPCWithRetryV275('academic_bank_start_attempt_v2127',{p_token:academicSession.session_token,p_bank_id:bankId,p_mode:mode},2);
+    }catch(error){
+      if(!academicIsMissingRpcV2121?.(error,'academic_bank_start_attempt_v2127'))throw error;
+      console.warn('Servidor sin migración v2.12.7; usando modo seguro v2.10',error);
+      data=await academicRPCWithRetryV275('academic_bank_start_attempt_v210',{p_token:academicSession.session_token,p_bank_id:bankId,p_mode:mode},2);
+    }
+    data=Array.isArray(data)?data[0]:data;
+    if(!data?.attempt_id||!Array.isArray(data.questions)||!data.questions.length)throw new Error('El servidor no entregó las preguntas');
+    const unsupported=data.questions.filter(q=>!academicBankAllowedTypeV2127(q.type||'multiple_choice'));
+    if(unsupported.length)throw new Error('Este banco contiene preguntas de Completar. Ejecute la migración Supabase v2.12.7 antes de usarlo.');
+    academicBankActiveAttemptV279=data;academicBankAttemptIndexV279=0;academicBankAttemptAnswersV279=new Map();renderAcademicBankAttemptV279();
+  }catch(error){console.error(error);toast(academicFriendlyError(error,'No se pudo iniciar el cuestionario'))}finally{academicBankSubmittingV279=false}
+}
+
+// Sustituciones finales de la capa del Banco v2.12.7.
+openAcademicBankQuestionFormV210=openAcademicBankQuestionFormV2127;
+openAcademicBankQuestionFormV279=openAcademicBankQuestionFormV2127;
+saveAcademicBankQuestionV210=saveAcademicBankQuestionV2127;
+saveAcademicBankQuestionV279=saveAcademicBankQuestionV2127;
+academicBankParseCsvV210=academicBankParseCsvV2127;
+openAcademicBankImportV210=openAcademicBankImportV2127;
+openAcademicBankImportV279=openAcademicBankImportV2127;
+academicBankReadImportFileV210=academicBankReadImportFileV2127;
+academicBankReadImportFileV279=academicBankReadImportFileV2127;
+academicBankAnalyzeImportV210=academicBankAnalyzeImportV2127;
+academicBankAnalyzeImportV279=academicBankAnalyzeImportV2127;
+academicRenderBankImportPreviewV210=academicRenderBankImportPreviewV2127;
+academicRenderBankImportPreviewV279=academicRenderBankImportPreviewV2127;
+downloadAcademicBankTemplateV210=downloadAcademicBankTemplateV2127;
+downloadAcademicBankTemplateV279=downloadAcademicBankTemplateV2127;
+renderAcademicBankManageV212=renderAcademicBankManageV2127;
+renderAcademicBankManageV211=renderAcademicBankManageV2127;
+renderAcademicBankManageV210=renderAcademicBankManageV2127;
+renderAcademicBankManageV279=renderAcademicBankManageV2127;
+startAcademicBankAttemptV211=startAcademicBankAttemptV2127;
+startAcademicBankAttemptV210=startAcademicBankAttemptV2127;
+startAcademicBankAttemptV279=startAcademicBankAttemptV2127;
+
+/* =========================================================
+   AGENDA POLICIAL v2.12.8 — IDENTIDAD OLIVO + UX NOCTURNA
+   - Panel online sobrio en verde olivo.
+   - Etiquetas completas: Rol de exámenes, Banco de preguntas, Resúmenes.
+   - Cierres visibles en lector/visor y botón de opciones inequívoco.
+   - Office personal abre también XLSX/PPTX adjuntos.
+   ========================================================= */
+ACADEMIC_TYPES.examenes.label='Rol de exámenes';
+ACADEMIC_TYPES.resumenes.label='Resúmenes';
+
+academicTextNav=function academicTextNavV2128(){
+  const items=[
+    ['panel','Panel','⌂'],
+    ['formaciones','Formaciones','🛡️'],
+    ['tareas','Tareas','📘'],
+    ['examenes','Rol de exámenes','📝'],
+    ['banco','Banco de preguntas','❓'],
+    ['resumenes','Resúmenes','📚']
+  ];
+  if(academicCanManageUsers())items.push(['usuarios','Nómina','👥']);
+  if(academicSession?.role==='administrador_general')items.push(['cursos','Curso','▦']);
+  return `<nav class="academic-text-nav academic-text-nav-premium olive-gold-nav v277-nav v279-nav v2128-nav" aria-label="Secciones académicas">
+    ${items.map(([key,label,icon])=>`<button class="${academicTab===key?'active':''}" onclick="setAcademicTab('${key}')"><span>${icon}</span><b>${label}</b></button>`).join('')}
+  </nav>`;
+};
+academicSubnav=function academicSubnavV2128(){return academicTextNav()};
+
+const _academicDashboardBaseV2128=academicDashboard;
+academicDashboard=function academicDashboardV2128(){
+  return _academicDashboardBaseV2128()
+    .replace(/>Material</g,'>Resúmenes<')
+    .replace('v277-dashboard-hero','v277-dashboard-hero v2128-dashboard-hero');
+};
+const _loadAcademicDashboardBaseV2128=loadAcademicDashboard;
+loadAcademicDashboard=async function loadAcademicDashboardV2128(){
+  await _loadAcademicDashboardBaseV2128();
+  document.querySelectorAll('#academicSummaryGrid .academic-summary-card b').forEach(el=>{
+    if(/material nuevo/i.test(el.textContent||''))el.textContent='Resúmenes';
+  });
+};
+
+// Controles del lector: nunca dejar un botón sin significado visible.
+const _academicReaderControlsBaseV2128=academicReaderControlsV290;
+academicReaderControlsV290=function academicReaderControlsV2128(options={}){
+  return _academicReaderControlsBaseV2128(options)
+    .replace('>⚙️ Controles</button>','><span class="reader-settings-icon-v2128">☰</span><span>Opciones</span></button>');
+};
+academicReaderToggleControlsV2125=function academicReaderToggleControlsV2128(force){
+  const panel=document.getElementById('academicReaderAdvancedV2125');
+  const btn=document.getElementById('academicReaderControlsToggleV2125');
+  if(!panel)return;
+  const open=typeof force==='boolean'?force:panel.hidden;
+  panel.hidden=!open;academicReaderControlsOpenV2125=open;
+  if(btn){btn.setAttribute('aria-expanded',open?'true':'false');btn.innerHTML=open?'<span>▲</span><span>Ocultar</span>':'<span class="reader-settings-icon-v2128">☰</span><span>Opciones</span>'}
+};
+
+academicReaderOpenShellV290=function academicReaderOpenShellV2128(file,type){
+  const subject=academicCanonicalSubjectV2122(file?.subject)||file?.subject||'',entry=academicSubjectEntryV2122(subject);
+  showModal(`<div class="academic-reader-shell-v290 academic-reader-shell-v2122" ${academicSubjectStyleV2122(subject)}><div class="academic-reader-top-v290"><button class="academic-visible-close-v2128 academic-reader-close-v290" type="button" onclick="closeAcademicReaderV290()" aria-label="Salir del lector">✕ <span>Salir</span></button><div class="academic-reader-title-v290"><span>${academicReaderIconV290(type)}</span><div>${subject?`<small class="reader-subject-v2122"><i></i>${entry?`${esc(entry.code)} · `:''}${esc(subject)}</small>`:`<small>Lector académico · ${academicReaderTypeLabelV290(type)}</small>`}<h2>${esc(file.name||'Documento académico')}</h2></div></div></div><div id="academicReaderBodyV290" class="academic-reader-body-v290"><div class="academic-reader-loading-v290"><span class="academic-reader-spinner-v290"></span><b>${academicReaderFetchMessageV290()}</b><small>El archivo original no será modificado.</small></div></div></div>`);
+  requestAnimationFrame(()=>{document.querySelector('#modalRoot .modal-bg')?.classList.add('academic-reader-bg-v290');document.querySelector('#modalRoot .modal')?.classList.add('academic-reader-modal-v290')});
+};
+academicDocViewerShellV212=function academicDocViewerShellV2128(file,type){
+  const subject=academicCanonicalSubjectV2122(file?.subject)||file?.subject||'',entry=academicSubjectEntryV2122(subject);
+  showModal(`<div class="academic-docviewer-shell-v212 academic-docviewer-shell-v2122" ${academicSubjectStyleV2122(subject)}><div class="academic-docviewer-top-v212"><button class="academic-visible-close-v2128" type="button" onclick="closeModal()" aria-label="Salir del documento">✕ <span>Salir</span></button><div><span class="eyebrow">${subject?`${entry?esc(entry.code)+' · ':''}${esc(subject)}`:'Documento académico'}</span><h2>${esc(file.name||'Documento')}</h2><small>${type==='docx'?'Vista Word dentro de Agenda Policial':'Vista PDF dentro de Agenda Policial'}</small></div><button class="academic-download-btn-v212" type="button" onclick="academicDownloadFileV212ByFile('${academicReaderRegisterV290(file)}')">⬇ Descargar</button></div><div id="academicDocViewerBodyV212" class="academic-docviewer-body-v212"><div class="academic-reader-loading-v290"><span class="academic-reader-spinner-v290"></span><b>Preparando vista del documento…</b><small>No necesita salir de Agenda Policial.</small></div></div></div>`);
+  requestAnimationFrame(()=>{document.querySelector('#modalRoot .modal-bg')?.classList.add('academic-reader-bg-v290');document.querySelector('#modalRoot .modal')?.classList.add('academic-docviewer-modal-v212')});
+};
+
+function academicOfficeAttachmentTypeV2128(file){
+  const name=String(file?.name||'').toLowerCase();
+  if(/\.(xlsx|xlsm)$/i.test(name))return 'xlsx';
+  if(/\.pptx$/i.test(name))return 'pptx';
+  return academicReaderFileTypeV290(file);
+}
+function academicOfficeAttachmentIconV2128(type){return type==='xlsx'?'📗':type==='pptx'?'📙':academicReaderIconV290(type)}
+function academicOfficeAttachmentLabelV2128(type){return type==='xlsx'?'Excel XLSX':type==='pptx'?'PowerPoint PPTX':academicReaderTypeLabelV290(type)}
+async function academicOpenOfficeAttachmentV2128(key){
+  const file=academicReaderRegistryV290.get(key);if(!file)return toast('Archivo no disponible');
+  if(typeof openOfficeCenterV2128!=='function'||typeof officeOpenFileV2128!=='function')return toast('Office personal no está disponible');
+  try{
+    toast('Preparando archivo Office…');
+    const buffer=await academicReaderFetchV290(file),blob=new Blob([buffer],{type:file.type||'application/octet-stream'}),local=new File([blob],file.name||'documento',{type:file.type||blob.type,lastModified:Date.now()});
+    openOfficeCenterV2128();await officeOpenFileV2128(local);
+  }catch(error){console.error(error);toast(academicFriendlyError?.(error,'No se pudo abrir el archivo')||'No se pudo abrir el archivo')}
+}
+
+academicAttachmentLinks=function academicAttachmentLinksV2128(post){
+  const attachments=academicPostAttachments(post);if(!attachments.length)return '';
+  const rawSubject=post?.fields?.subject||'',subject=academicCanonicalSubjectV2122(rawSubject)||rawSubject,entry=academicSubjectEntryV2122(subject);
+  return `<div class="academic-attachments academic-attachments-v290 academic-attachments-v212 academic-attachments-v2122" ${academicSubjectStyleV2122(subject)}>${subject?`<div class="material-subject-bar-v2122"><i></i><span>${entry?`<small>${esc(entry.code)}</small>`:''}<b>${esc(subject)}</b></span></div>`:''}${attachments.map((file,index)=>{
+    const enriched={...file,subject,subject_code:entry?.code||'',teacher:entry?.teacher||post?.fields?.teacher||''},type=academicOfficeAttachmentTypeV2128(enriched),key=academicReaderRegisterV290(enriched),size=academicReaderSizeLabelV290(enriched.size),readable=['docx','pdf'].includes(type),office=['xlsx','pptx'].includes(type);
+    return `<div class="academic-file-card-v290 academic-file-card-v212 academic-file-card-v2122"><div class="academic-file-main-v290"><span class="academic-file-icon-v290">${academicOfficeAttachmentIconV2128(type)}</span><span class="file-copy"><b>${esc(enriched.name||`Archivo ${index+1}`)}</b><small>${esc(academicOfficeAttachmentLabelV2128(type))}${size?` · ${esc(size)}`:''}</small></span></div><div class="academic-file-actions-v290 academic-file-actions-v212">${readable?`<button class="academic-reader-btn-v290" type="button" onclick="openAcademicReaderV290('${key}')">🔊 Leer y escuchar</button><button class="academic-view-btn-v212" type="button" onclick="openAcademicDocumentViewerV212('${key}')">👁 Ver documento</button>`:''}${office?`<button class="academic-view-btn-v212 office-attachment-btn-v2128" type="button" onclick="academicOpenOfficeAttachmentV2128('${key}')">▦ Abrir en Office</button>`:''}<button class="academic-download-btn-v212" type="button" onclick="academicDownloadFileV212ByFile('${key}')">⬇ Descargar</button></div></div>`;
+  }).join('')}</div>`;
+};
+
+/* =========================================================
+   AGENDA POLICIAL v2.12.9 — PARALELOS COMPARTIDOS + LECTOR DIRECTO
+   - Publicación controlada A / B / A+B para Rol de exámenes y Resúmenes.
+   - Formaciones y Tareas continúan exclusivas del paralelo activo.
+   - El lector deja visibles Escuchar, Atrás, Adelante, Velocidad y Noche.
+   - Paralelo B muestra aviso de preparación solo cuando sus módulos propios están vacíos.
+   ========================================================= */
+function academicCourseByParallelV2129(parallel){
+  const wanted=String(parallel||'').trim().toUpperCase();
+  return (academicCoursesV277||[]).find(c=>String(c.parallel||'').trim().toUpperCase()===wanted)||null;
+}
+function academicCourseCodeByParallelV2129(parallel){
+  const found=academicCourseByParallelV2129(parallel);
+  if(found?.code)return found.code;
+  return String(parallel||'').toUpperCase()==='B'?'capitanes-b-2026-2':'capitanes-a-2026-2';
+}
+function academicCourseShortV2129(code){
+  const course=(academicCoursesV277||[]).find(c=>c.code===code);
+  const parallel=String(course?.parallel||'').trim().toUpperCase();
+  if(parallel)return `Paralelo ${parallel}`;
+  if(code===academicCourseCodeByParallelV2129('A'))return 'Paralelo A';
+  if(code===academicCourseCodeByParallelV2129('B'))return 'Paralelo B';
+  return course?.label||code||'Curso activo';
+}
+function academicAudienceCanShareV2129(type){
+  return academicSession?.role==='administrador_general'&&['examenes','resumenes'].includes(type);
+}
+function academicAudienceSelectorV2129(type){
+  const current=academicSession?.course_code||academicCourseCodeByParallelV2129('A');
+  if(!academicAudienceCanShareV2129(type)){
+    return `<div class="academic-scope-note-v2129"><b>📌 ${esc(academicCourseShortV2129(current))}</b><span>${['formaciones','tareas'].includes(type)?'Este módulo se mantiene exclusivo del paralelo activo.':'Publicación para el curso activo.'}</span></div>`;
+  }
+  const a=academicCourseCodeByParallelV2129('A'),b=academicCourseCodeByParallelV2129('B');
+  const defaultValue=type==='examenes'?'both':'current';
+  return `<section class="academic-audience-v2129">
+    <div><span class="eyebrow">Visibilidad</span><b>¿Quién recibirá esta publicación?</b></div>
+    <select name="academic_audience_v2129" aria-label="Seleccionar paralelos destinatarios">
+      <option value="current" ${defaultValue==='current'?'selected':''}>Solo ${esc(academicCourseShortV2129(current))}</option>
+      <option value="A">Solo Paralelo A</option>
+      <option value="B">Solo Paralelo B</option>
+      <option value="both" ${defaultValue==='both'?'selected':''}>Paralelos A + B</option>
+    </select>
+    <small>${type==='examenes'?'El Rol de exámenes se propone compartido A+B por defecto.':'Puede compartir este resumen/material con ambos paralelos sin duplicar el archivo.'}</small>
+    <input type="hidden" name="academic_audience_code_a_v2129" value="${esc(a)}">
+    <input type="hidden" name="academic_audience_code_b_v2129" value="${esc(b)}">
+  </section>`;
+}
+function academicAudienceTargetsV2129(form,type){
+  const current=academicSession?.course_code||academicCourseCodeByParallelV2129('A');
+  if(!academicAudienceCanShareV2129(type))return [current];
+  const mode=form?.elements?.namedItem('academic_audience_v2129')?.value||'current';
+  const a=form?.elements?.namedItem('academic_audience_code_a_v2129')?.value||academicCourseCodeByParallelV2129('A');
+  const b=form?.elements?.namedItem('academic_audience_code_b_v2129')?.value||academicCourseCodeByParallelV2129('B');
+  const targets=mode==='both'?[a,b]:mode==='A'?[a]:mode==='B'?[b]:[current];
+  return [...new Set(targets.filter(Boolean))];
+}
+function academicAudienceLabelV2129(targets){
+  const unique=[...new Set((targets||[]).filter(Boolean))];
+  if(unique.length>1)return 'Paralelos A + B';
+  return academicCourseShortV2129(unique[0]||academicSession?.course_code);
+}
+const _openAcademicPostFormBaseV2129=openAcademicPostForm;
+openAcademicPostForm=function openAcademicPostFormV2129(type,candidate=null){
+  const result=_openAcademicPostFormBaseV2129(type,candidate);
+  requestAnimationFrame(()=>{
+    const form=document.getElementById('academicPostForm');if(!form||form.querySelector('.academic-audience-v2129,.academic-scope-note-v2129'))return;
+    const anchor=form.querySelector('.structured-fields-title')||form.firstElementChild;
+    anchor?.insertAdjacentHTML('beforebegin',academicAudienceSelectorV2129(type));
+  });
+  return result;
+};
+
+const _saveAcademicPostBaseV2129=saveAcademicPost;
+saveAcademicPost=async function saveAcademicPostV2129(event,type){
+  const form=event.currentTarget;
+  const targets=academicAudienceTargetsV2129(form,type);
+  const current=academicSession?.course_code;
+  const needsSharedRpc=academicAudienceCanShareV2129(type)&&(targets.length>1||targets[0]!==current);
+  if(!needsSharedRpc)return _saveAcademicPostBaseV2129(event,type);
+
+  event.preventDefault();
+  if(form.dataset.submitting==='1')return;
+  if(!academicCanPublishType(type))return toast('Su rol no tiene permiso para publicar en este módulo');
+  if(!onlineConfigured()||!navigator.onLine)return toast('Necesita conexión para compartir entre paralelos');
+  const submit=event.submitter||form.querySelector('button[type="submit"]');
+  form.dataset.submitting='1';if(submit){submit.disabled=true;submit.dataset.originalText=submit.textContent;submit.textContent='Compartiendo…'}
+  try{
+    const formData=new FormData(form),values=Object.fromEntries(formData.entries());
+    let title=String(values.title||'').trim(),body=String(values.body||'').trim();
+    delete values.title;delete values.body;delete values.academic_audience_v2129;delete values.academic_audience_code_a_v2129;delete values.academic_audience_code_b_v2129;
+    if(type==='formaciones')title=`${values.formation_type||'Formación'} · ${values.date||'sin fecha'}`;
+    if(type==='resumenes')title=`${values.subject||'Resumen'} — ${values.topic||'Tema'}`;
+    const smartMeta=(()=>{try{return JSON.parse(form.dataset.smartMeta||'null')}catch{return null}})();
+    if(smartMeta)values.smart_analysis={parser_version:smartMeta.parser_version||ACADEMIC_SMART_PARSER_VERSION_V276,confidence:smartMeta.confidence||0,warnings:smartMeta.warnings||[],source_text:smartMeta.fields?.source_text||smartMeta.body||''};
+    values.shared_scope_v2129={courses:targets,label:academicAudienceLabelV2129(targets),shared:targets.length>1};
+
+    const files=academicValidateFiles(document.getElementById('academicFiles')?.files||[],type);
+    if(type==='resumenes'&&!body&&!files.length)throw new Error('Agregue una descripción o al menos un archivo académico');
+    let attachments=[];if(form.dataset.uploadedAttachments){try{attachments=JSON.parse(form.dataset.uploadedAttachments)}catch{}}
+    if(!attachments.length&&files.length){attachments=await uploadAcademicFiles(files,type);form.dataset.uploadedAttachments=JSON.stringify(attachments)}
+    const primary=attachments[0]||null;if(attachments.length)values.attachments=attachments;
+    const clientRequestId=form.dataset.clientRequestId||academicRequestIdV276();form.dataset.clientRequestId=clientRequestId;academicSaveDraftV276(type,form);
+
+    let created;
+    try{
+      created=await academicRPCWithRetryV275('academic_create_post_v2129',{
+        p_token:academicSession.session_token,p_type:type,p_title:title,p_body:body,p_fields:values,
+        p_file_url:primary?.url||null,p_file_name:primary?.name||null,p_file_mime:primary?.type||null,p_file_size:primary?.size||null,
+        p_client_request_id:clientRequestId,p_target_courses:targets
+      },2);
+    }catch(error){
+      const text=String(error?.message||error||'');
+      if(/academic_create_post_v2129|schema cache|function.*not found|PGRST202|404/i.test(text)){
+        throw new Error('Para compartir entre Paralelos A y B falta aplicar la actualización de Supabase v2.12.9. No se publicó una copia incompleta.');
+      }
+      throw error;
+    }
+    const confirmed=Array.isArray(created)?created[0]:created;
+    if(!confirmed?.id)throw new Error('El servidor no confirmó la publicación compartida');
+    await academicMergeDurablePostV275(type,confirmed);
+    academicLastSyncErrorV275=null;academicLastSyncAtV275=new Date().toISOString();academicClearDraftV276(type);closeModal();await loadAcademicPosts();
+    toast(`Publicado para ${academicAudienceLabelV2129(targets)}`);
+  }catch(error){console.error(error);academicSaveDraftV276(type,form);toast(academicFriendlyError(error,'No se pudo compartir la publicación'))}
+  finally{form.dataset.submitting='0';if(submit){submit.disabled=false;submit.textContent=submit.dataset.originalText||'Publicar'}}
+};
+
+const _academicFetchPostsBaseV2129=academicFetchPosts;
+academicFetchPosts=async function academicFetchPostsV2129(type=null){
+  if(!onlineConfigured()||!type)return _academicFetchPostsBaseV2129(type);
+  if(navigator.onLine){
+    try{
+      const rows=await academicRPCWithRetryV275('academic_get_posts_v2129',{p_token:academicSession.session_token,p_type:type},2);
+      const list=Array.isArray(rows)?rows:[];academicLastSyncErrorV275=null;academicLastSyncAtV275=new Date().toISOString();academicWriteDurableCacheV275(type,list).catch(console.warn);return list;
+    }catch(error){
+      const text=String(error?.message||error||'');
+      if(!/academic_get_posts_v2129|schema cache|function.*not found|PGRST202|404/i.test(text)){
+        academicLastSyncErrorV275=error;console.error('Sincronización v2.12.9:',error);
+        const cached=await academicReadDurableCacheV275(type);if(cached.length)return cached;throw error;
+      }
+    }
+  }
+  return _academicFetchPostsBaseV2129(type);
+};
+
+function academicIsParallelBV2129(){
+  const current=academicSession?.course_code||'';
+  const currentCourse=(academicCoursesV277||[]).find(c=>c.code===current)||null;
+  const p=String(academicSession?.course_parallel||currentCourse?.parallel||'').trim().toUpperCase();
+  return p==='B'||current===academicCourseCodeByParallelV2129('B');
+}
+const _loadAcademicPostsBaseV2129=loadAcademicPosts;
+loadAcademicPosts=async function loadAcademicPostsV2129(){
+  await _loadAcademicPostsBaseV2129();
+  if(!academicIsParallelBV2129()||!['formaciones','tareas'].includes(academicTab))return;
+  const empty=document.querySelector('#academicPosts .empty-online');
+  if(empty)empty.innerHTML=`<span class="parallel-prep-icon-v2129">🛡️</span><h3>Módulo del Paralelo B en preparación</h3><p>Las formaciones y tareas propias serán habilitadas cuando el responsable del paralelo sea capacitado. Por ahora este espacio permanece en consulta.</p>`;
+};
+
+// El cambio de tema dentro del lector no reconstruye toda la aplicación: mantiene abierto el documento y la posición de lectura.
+function academicReaderToggleThemeV2129(button){
+  const next=academicThemeV2124()==='dark'?'light':'dark';
+  academicApplyThemeV2124(next,false);
+  const dark=next==='dark';
+  if(button){
+    button.setAttribute('aria-pressed',dark?'true':'false');
+    button.title=dark?'Cambiar a modo claro':'Cambiar a modo oscuro';
+    const icon=button.querySelector('.theme-icon-v2124');if(icon)icon.textContent=dark?'🌙':'☀️';
+    const label=button.querySelector('span:not(.theme-icon-v2124)');if(label)label.textContent=dark?'Oscuro':'Claro';
+  }
+}
+// Lector directo: controles esenciales siempre visibles, sin convertirlo en un panel saturado.
+academicReaderControlsV290=function academicReaderControlsV2129({speech=true,scan=false}={}){
+  const rate=Number(academicReaderStateV290.rate||1),dark=academicThemeV2124()==='dark';
+  return `<div class="academic-reader-controls-v290 academic-reader-controls-v2125 academic-reader-controls-v2129">
+    <div class="academic-reader-direct-v2129">
+      <button id="academicReaderPlayV290" class="btn academic-reader-play-v290 reader-main-v2129" type="button" onclick="academicReaderToggleSpeechV290()" ${speech?'':'disabled'}><span>🔊</span><b>Escuchar</b></button>
+      <button class="reader-main-v2129" type="button" onclick="academicReaderPreviousV290()" ${speech?'':'disabled'}><span>⏮</span><b>Atrás</b></button>
+      <button class="reader-main-v2129" type="button" onclick="academicReaderNextV290()" ${speech?'':'disabled'}><span>⏭</span><b>Adelante</b></button>
+      <label class="reader-rate-v2129"><span>Velocidad</span><select onchange="academicReaderSetRateV290(this.value)" ${speech?'':'disabled'}>${[.75,1,1.25,1.5,1.75,2].map(v=>`<option value="${v}" ${Math.abs(rate-v)<.01?'selected':''}>${v}×</option>`).join('')}</select></label>
+      <button class="academic-theme-toggle-v2124 reader-theme-v2129" data-academic-theme-toggle-v2124 type="button" onclick="academicReaderToggleThemeV2129(this)" aria-pressed="${dark?'true':'false'}" title="${dark?'Cambiar a modo claro':'Cambiar a modo oscuro'}"><span class="theme-icon-v2124">${dark?'🌙':'☀️'}</span><span>${dark?'Oscuro':'Claro'}</span><i></i></button>
+      <button id="academicReaderControlsToggleV2125" class="reader-more-v2129" type="button" onclick="academicReaderToggleControlsV2125()" aria-expanded="false"><span>⋯</span><b>Más</b></button>
+    </div>
+    <div class="reader-status-row-v2129"><span id="academicReaderProgressV290" class="academic-reader-progress-text-v290">Listo para leer</span><div id="academicReaderResumeSlotV2125" class="academic-reader-resume-slot-v2125"></div></div>
+    <div id="academicReaderAdvancedV2125" class="academic-reader-advanced-v2125 reader-advanced-v2129" hidden>
+      <div class="academic-reader-nav-v2125"><button class="btn ghost" type="button" onclick="academicReaderStopV290()" ${speech?'':'disabled'}>■ Detener lectura</button><label class="reader-font-v2129">Tamaño<select onchange="academicReaderSetFontV290(this.value)"><option value=".95">Pequeño</option><option value="1.05" selected>Normal</option><option value="1.18">Grande</option><option value="1.32">Muy grande</option></select></label></div>
+      <div class="academic-reader-comfort-v2124"><span>🔆</span><div><b>Pantalla activa durante la lectura</b><small>Mientras la voz se reproduce se intenta mantener la pantalla activa.</small></div></div>
+      ${scan?'<div class="academic-reader-scan-note-v290">⚠️ Este PDF parece escaneado. Puede verlo dentro de la aplicación, pero no contiene suficiente texto seleccionable para lectura por voz.</div>':''}
+    </div>
+  </div>`;
+};
+academicReaderToggleControlsV2125=function academicReaderToggleControlsV2129(force){
+  const panel=document.getElementById('academicReaderAdvancedV2125'),btn=document.getElementById('academicReaderControlsToggleV2125');if(!panel)return;
+  const open=typeof force==='boolean'?force:panel.hidden;panel.hidden=!open;academicReaderControlsOpenV2125=open;
+  if(btn){btn.setAttribute('aria-expanded',open?'true':'false');btn.innerHTML=open?'<span>⌃</span><b>Menos</b>':'<span>⋯</span><b>Más</b>'}
+};

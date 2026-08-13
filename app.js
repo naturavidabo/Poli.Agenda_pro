@@ -1,5 +1,5 @@
-const APP_VERSION='2.12.2';
-const BUILD_DATE='2026-08-11';
+const APP_VERSION='2.12.9';
+const BUILD_DATE='2026-08-12';
 const ACTIVATION_CODE='271261';
 const SECONDARY_ACTIVATION_CODE='2026JINETES';
 const SECONDARY_ACTIVATION_EXPIRES='2026-08-30T23:59:59-04:00';
@@ -59,9 +59,9 @@ function ensureScheduleTemplate(){let changed=false;const migration='2026-07-28-
 async function selectScheduleProfile(id){const template=scheduleTemplateById(id);if(!template)return toast('Ese horario no está activo');if(String(state.selectedScheduleId)===String(template.id)&&state.scheduleTemplateVersion===(template.metadatos?.template_version||docs.horario?.catalog_version||''))return toast('Ese horario ya está seleccionado');applyCatalogSchedule(template,true,`Cambio de horario a ${template.etiqueta||template.id}`);await save();render();toast(`Horario seleccionado: ${template.etiqueta||'activo'}`)}
 async function restoreBaseSchedule(){const template=currentScheduleTemplate();if(!template)return toast('No hay horario activo');if(!confirm(`Se restaurará el horario oficial de ${template.etiqueta||'la opción seleccionada'}. El horario actual quedará en el historial local. ¿Continuar?`))return;applyCatalogSchedule(template,true,'Restauración manual del horario oficial');await save();render();toast('Horario oficial restaurado')}
 function bindSW(){window.addEventListener('beforeinstallprompt',e=>{e.preventDefault();deferredPrompt=e}); $('#updateNow')?.addEventListener('click',applyUpdate); if('serviceWorker' in navigator){navigator.serviceWorker.register('./sw.js',{updateViaCache:'none'}).then(reg=>{window._swReg=reg; reg.update().catch(()=>{}); if(reg.waiting) showUpdateBanner(); reg.addEventListener('updatefound',()=>{const nw=reg.installing; if(!nw)return; nw.addEventListener('statechange',()=>{if(nw.state==='installed'&&navigator.serviceWorker.controller) showUpdateBanner()})}); navigator.serviceWorker.addEventListener('controllerchange',()=>{if(!window._refreshing){window._refreshing=true; location.replace('./index.html?v='+APP_VERSION+'&r='+Date.now())}})}).catch(()=>{})}}
-function icon(name){const common='viewBox="0 0 24 24" aria-hidden="true" focusable="false"'; const paths={home:'<path d="M3 11.5 12 4l9 7.5"/><path d="M5.5 10.5V20h5v-5.5h3V20h5v-9.5"/>',shield:'<path d="M12 3 5.5 5.6v5.8c0 4.4 2.7 7.5 6.5 9.1 3.8-1.6 6.5-4.7 6.5-9.1V5.6L12 3Z"/><path d="M9 12.2 11 14l4-4.4"/>',tasks:'<path d="M8 6h12"/><path d="M8 12h12"/><path d="M8 18h12"/><path d="M4 6.1l1 1 2-2"/><path d="M4 12.1l1 1 2-2"/><path d="M4 18.1l1 1 2-2"/>',calendar:'<rect x="4" y="5" width="16" height="15" rx="3"/><path d="M8 3v4M16 3v4M4 10h16"/><path d="M8 14h3M13 14h3M8 17h3"/>',books:'<path d="M5 4h5v16H5zM10 4h4v16h-4zM15 5l4-1 3 15-4 1z"/><path d="M6.5 8h2M11 8h2M16.5 8.5l2-.4"/>',note:'<path d="M6 3h9l3 3v15H6z"/><path d="M15 3v4h4"/><path d="M8.5 11h7M8.5 15h7M8.5 18h4"/>',settings:'<path d="M12 8.2a3.8 3.8 0 1 0 0 7.6 3.8 3.8 0 0 0 0-7.6Z"/><path d="M19.4 15a8 8 0 0 0 .1-1l2-1.5-2-3.4-2.4 1a7.8 7.8 0 0 0-1.7-1L15 6.5h-6l-.4 2.6a7.8 7.8 0 0 0-1.7 1l-2.4-1-2 3.4 2 1.5a8 8 0 0 0 0 2l-2 1.5 2 3.4 2.4-1a7.8 7.8 0 0 0 1.7 1l.4 2.6h6l.4-2.6a7.8 7.8 0 0 0 1.7-1l2.4 1 2-3.4-2.1-1.5Z"/>',plus:'<path d="M12 5v14M5 12h14"/>'}; return `<svg class="ui-icon" ${common}>${paths[name]||paths.home}</svg>`}
+function icon(name){const common='viewBox="0 0 24 24" aria-hidden="true" focusable="false"'; const paths={home:'<path d="M3 11.5 12 4l9 7.5"/><path d="M5.5 10.5V20h5v-5.5h3V20h5v-9.5"/>',shield:'<path d="M12 3 5.5 5.6v5.8c0 4.4 2.7 7.5 6.5 9.1 3.8-1.6 6.5-4.7 6.5-9.1V5.6L12 3Z"/><path d="M9 12.2 11 14l4-4.4"/>',tasks:'<path d="M8 6h12"/><path d="M8 12h12"/><path d="M8 18h12"/><path d="M4 6.1l1 1 2-2"/><path d="M4 12.1l1 1 2-2"/><path d="M4 18.1l1 1 2-2"/>',calendar:'<rect x="4" y="5" width="16" height="15" rx="3"/><path d="M8 3v4M16 3v4M4 10h16"/><path d="M8 14h3M13 14h3M8 17h3"/>',books:'<path d="M5 4h5v16H5zM10 4h4v16h-4zM15 5l4-1 3 15-4 1z"/><path d="M6.5 8h2M11 8h2M16.5 8.5l2-.4"/>',note:'<path d="M6 3h9l3 3v15H6z"/><path d="M15 3v4h4"/><path d="M8.5 11h7M8.5 15h7M8.5 18h4"/>',settings:'<path d="M12 8.2a3.8 3.8 0 1 0 0 7.6 3.8 3.8 0 0 0 0-7.6Z"/><path d="M19.4 15a8 8 0 0 0 .1-1l2-1.5-2-3.4-2.4 1a7.8 7.8 0 0 0-1.7-1L15 6.5h-6l-.4 2.6a7.8 7.8 0 0 0-1.7 1l-2.4-1-2 3.4 2 1.5a8 8 0 0 0 0 2l-2 1.5 2 3.4 2.4-1a7.8 7.8 0 0 0 1.7 1l.4 2.6h6l.4-2.6a7.8 7.8 0 0 0 1.7-1l2.4 1 2-3.4-2.1-1.5Z"/>',office:'<rect x="4" y="4" width="6" height="6" rx="1"/><rect x="14" y="4" width="6" height="6" rx="1"/><rect x="4" y="14" width="6" height="6" rx="1"/><rect x="14" y="14" width="6" height="6" rx="1"/>',plus:'<path d="M12 5v14M5 12h14"/>'}; return `<svg class="ui-icon" ${common}>${paths[name]||paths.home}</svg>`}
 function academicHeaderAccess(){const session=typeof academicSession!=='undefined'?academicSession:null; const name=session?.full_name||''; return `<button class="academic-access ${session?'connected':''} ${state.view==='online'?'active':''}" onclick="go('online')" aria-label="Abrir área académica online"><span class="academic-access-icon">${icon('shield')}</span><span class="academic-access-copy"><b>${session?'Área académica conectada':'Acceso académico online'}</b><small>${session?esc(name||'Sesión activa'):'Ingresar con carnet y celular'}</small></span><span class="academic-access-state">${session?'Abrir':'Ingresar'}</span></button>`}
-function appShell(content){const onlinePublish=state.view==='online'&&typeof academicCanPublish==='function'&&academicCanPublish();const fab=state.view==='online'?(onlinePublish?`<button class="fab academic-fab" onclick="openAcademicPublishMenu()" title="Publicar contenido académico">${icon('plus')}</button>`:''):`<button class="fab" onclick="openQuick()" title="Agregar rápido">${icon('plus')}</button>`;return `<div class="app"><header class="top"><div class="top-row"><img src="./assets/escudo-policia.png" class="seal"><div class="title"><h1>Agenda Policial</h1><p>${state.mode==='profesional'?'Modo profesional':'Modo académico'} · v${APP_VERSION} <span class="version-dot">estable</span></p></div><div class="top-actions"><button class="icon-btn" onclick="openNotes()" title="Bloc de notas">${icon('note')}</button><button class="icon-btn" onclick="openSettings()" title="Configuración">${icon('settings')}</button></div></div>${academicHeaderAccess()}</header><main>${content}</main>${nav()}${fab}</div>`}
+function appShell(content){const onlinePublish=state.view==='online'&&typeof academicCanPublish==='function'&&academicCanPublish();const fab=state.view==='online'?(onlinePublish?`<button class="fab academic-fab" onclick="openAcademicPublishMenu()" title="Publicar contenido académico">${icon('plus')}</button>`:''):`<button class="fab" onclick="openQuick()" title="Agregar rápido">${icon('plus')}</button>`;return `<div class="app"><header class="top"><div class="top-row"><img src="./assets/escudo-policia.png" class="seal"><div class="title"><h1>Agenda Policial</h1><p>${state.mode==='profesional'?'Modo profesional':'Modo académico'} · v${APP_VERSION} <span class="version-dot">estable</span></p></div><div class="top-actions"><button class="icon-btn office-top-btn-v2128" onclick="openOfficeCenterV2128()" title="Office personal" aria-label="Abrir Office personal">${icon('office')}</button><button class="icon-btn" onclick="openNotes()" title="Bloc de notas">${icon('note')}</button><button class="icon-btn" onclick="openSettings()" title="Configuración">${icon('settings')}</button></div></div>${academicHeaderAccess()}</header><main>${content}</main>${nav()}${fab}</div>`}
 function nav(){const items=[['inicio','home','Inicio'],['formaciones','shield','Formación'],['tareas','tasks','Tareas'],['horario','calendar','Horario'],['biblioteca','books','Biblioteca']];return `<nav class="bottom-nav">${items.map(i=>`<button class="nav-btn ${state.view===i[0]?'active':''}" onclick="go('${i[0]}')"><span>${icon(i[1])}</span><span>${i[2]}</span></button>`).join('')}</nav>`}
 async function go(v){state.view=v; await save(); render()}
 function render(){if(!state.activated)return renderActivation(); if(!state.mode)return renderMode(); const map={inicio:renderInicio,online:renderOnline,formaciones:renderFormaciones,tareas:renderTareas,horario:renderHorario,biblioteca:renderBiblioteca}; $('#app').innerHTML=appShell((map[state.view]||renderInicio)()); wireView()}
@@ -636,3 +636,140 @@ openClassDetail=function openClassDetailV274(id){
   const non=isNonLectiveBlock(b);
   showModal(`<button class="icon-btn close" onclick="closeModal()">×</button><h2>${esc(b.materia||'Actividad')}</h2><p><b>${esc(dayLabel(normalize(b.dia||'')))}</b> · ${esc(b.inicio)} - ${esc(b.fin)}</p>${non?`<div class="non-lective-detail"><b>${esc(scheduleNonLectiveLabelV274(b))}</b>${b.codigo?`<span>${esc(b.codigo)}</span>`:''}<p>${esc(b.docente||'')}</p></div>`:`${b.tipo==='clase'?`<p><span class="lective-label">${esc(b.codigo||'')} · ${esc(scheduleLectiveLabelV274(b))}</span></p>`:''}${b.docente?`<p><b>Docente:</b> ${esc(b.docente)}</p>`:''}${b.lugar?`<p><b>Lugar:</b> ${esc(b.lugar)}</p>`:''}${b.observacion&&!/(hora|clase) lectiva/i.test(b.observacion)?`<p>${esc(b.observacion)}</p>`:''}`}<button class="btn secondary" onclick="closeModal()">Cerrar</button>`);
 };
+
+
+/* =========================================================
+   AGENDA POLICIAL v2.12.8 — OFFICE PERSONAL UNIVERSAL
+   - Acceso desde cualquier pantalla, online u offline.
+   - PDF, DOCX, XLSX/XLSM, PPTX, CSV/TXT e imágenes.
+   - Procesamiento local; no sube el archivo al servidor.
+   - Word incorpora borrador editable de texto (no reemplaza el DOCX original).
+   ========================================================= */
+const OFFICE_MAMMOTH_V2128='https://cdnjs.cloudflare.com/ajax/libs/mammoth/1.8.0/mammoth.browser.min.js';
+const OFFICE_JSZIP_V2128='https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js';
+const OFFICE_XLSX_V2128='https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js';
+let officeObjectUrlV2128=null;
+let officeCurrentFileV2128=null;
+let officeWorkbookV2128=null;
+
+function officeLoadScriptV2128(src,globalName){
+  if(globalName&&window[globalName])return Promise.resolve(window[globalName]);
+  return new Promise((resolve,reject)=>{
+    const existing=[...document.scripts].find(el=>el.src===src);
+    if(existing){
+      if(globalName&&window[globalName])return resolve(window[globalName]);
+      existing.addEventListener('load',()=>resolve(globalName?window[globalName]:true),{once:true});
+      existing.addEventListener('error',()=>reject(new Error('Componente Office no disponible')),{once:true});
+      return;
+    }
+    const script=document.createElement('script');script.src=src;script.async=true;script.crossOrigin='anonymous';
+    script.onload=()=>resolve(globalName?window[globalName]:true);
+    script.onerror=()=>reject(new Error('Componente Office no disponible'));
+    document.head.appendChild(script);
+  });
+}
+function officeTypeV2128(file){
+  const name=String(file?.name||'').toLowerCase(),type=String(file?.type||'').toLowerCase();
+  if(name.endsWith('.pdf')||type==='application/pdf')return 'pdf';
+  if(name.endsWith('.docx')||type.includes('wordprocessingml'))return 'docx';
+  if(name.endsWith('.xlsx')||name.endsWith('.xlsm')||type.includes('spreadsheetml'))return 'xlsx';
+  if(name.endsWith('.pptx')||type.includes('presentationml'))return 'pptx';
+  if(name.endsWith('.csv')||type.includes('csv'))return 'csv';
+  if(name.endsWith('.txt')||name.endsWith('.md')||type.startsWith('text/'))return 'text';
+  if(type.startsWith('image/')||/\.(png|jpe?g|webp|gif|bmp)$/i.test(name))return 'image';
+  if(/\.(doc|xls|ppt)$/i.test(name))return 'legacy';
+  return 'unknown';
+}
+function officeTypeLabelV2128(type){return ({pdf:'PDF',docx:'Word DOCX',xlsx:'Excel XLSX',pptx:'PowerPoint PPTX',csv:'CSV',text:'Texto',image:'Imagen',legacy:'Office antiguo'})[type]||'Archivo'}
+function officeSizeV2128(bytes){const n=Number(bytes||0);return n<1024?`${n} B`:n<1048576?`${(n/1024).toFixed(0)} KB`:`${(n/1048576).toFixed(1)} MB`}
+function officeSanitizeHtmlV2128(html){
+  const doc=new DOMParser().parseFromString(`<div id="officeSafe">${html||''}</div>`,'text/html'),root=doc.getElementById('officeSafe');
+  root?.querySelectorAll('script,style,iframe,object,embed,form').forEach(el=>el.remove());
+  root?.querySelectorAll('*').forEach(el=>{
+    [...el.attributes].forEach(attr=>{
+      const n=attr.name.toLowerCase(),v=String(attr.value||'').trim();
+      if(n.startsWith('on'))el.removeAttribute(attr.name);
+      if((n==='href'||n==='src')&&/^javascript:/i.test(v))el.removeAttribute(attr.name);
+    });
+  });
+  return root?.innerHTML||'';
+}
+function officeSetBodyV2128(html){const box=document.getElementById('officeBodyV2128');if(box)box.innerHTML=html}
+function officeRevokeV2128(){if(officeObjectUrlV2128){try{URL.revokeObjectURL(officeObjectUrlV2128)}catch{}officeObjectUrlV2128=null}}
+
+function openOfficeCenterV2128(){
+  officeRevokeV2128();officeCurrentFileV2128=null;officeWorkbookV2128=null;
+  showModal(`<div class="office-shell-v2128">
+    <div class="office-head-v2128"><div><span class="eyebrow">Herramienta personal</span><h2>Office en Agenda Policial</h2><p>Abra documentos directamente desde el celular sin salir de la aplicación.</p></div><button class="office-close-v2128" type="button" onclick="closeModal()">✕ <span>Salir</span></button></div>
+    <div class="office-format-grid-v2128"><span>📕 PDF</span><span>📘 Word</span><span>📗 Excel</span><span>📙 PowerPoint</span></div>
+    <label class="office-picker-v2128"><input id="officeFileV2128" type="file" accept=".pdf,.docx,.xlsx,.xlsm,.pptx,.csv,.txt,.md,image/*" onchange="officePickV2128(this)"><b>＋ Abrir documento</b><small>PDF · Word · Excel · PowerPoint · CSV · texto · imágenes</small></label>
+    <div class="office-local-note-v2128"><b>🔒 Archivo local</b><span>El documento se procesa en este dispositivo. Abrirlo aquí no lo publica ni lo sube al curso.</span></div>
+    <div id="officeBodyV2128" class="office-body-v2128"><div class="office-empty-v2128"><span>▦</span><b>Seleccione un archivo</b><small>El centro Office está disponible tanto en el modo offline como en el área online.</small></div></div>
+  </div>`);
+  requestAnimationFrame(()=>document.querySelector('#modalRoot .modal')?.classList.add('office-modal-v2128'));
+}
+async function officePickV2128(input){const file=input?.files?.[0];if(!file)return;await officeOpenFileV2128(file)}
+async function officeOpenFileV2128(file){
+  officeCurrentFileV2128=file;officeWorkbookV2128=null;officeRevokeV2128();
+  const type=officeTypeV2128(file),head=`<div class="office-filebar-v2128"><div><b>${esc(file.name||'Documento')}</b><small>${officeTypeLabelV2128(type)} · ${officeSizeV2128(file.size)}</small></div><button type="button" onclick="document.getElementById('officeFileV2128')?.click()">Cambiar</button></div>`;
+  officeSetBodyV2128(`${head}<div class="office-loading-v2128"><span></span><b>Preparando documento…</b></div>`);
+  try{
+    if(type==='pdf')return officeRenderPdfV2128(file,head);
+    if(type==='image')return officeRenderImageV2128(file,head);
+    if(type==='text'||type==='csv')return await officeRenderTextV2128(file,head,type);
+    if(type==='docx')return await officeRenderDocxV2128(file,head);
+    if(type==='xlsx')return await officeRenderExcelV2128(file,head);
+    if(type==='pptx')return await officeRenderPptxV2128(file,head);
+    if(type==='legacy')throw new Error('Este archivo usa el formato antiguo .DOC/.XLS/.PPT. Guárdelo como DOCX, XLSX o PPTX para verlo dentro de Agenda Policial.');
+    throw new Error('Formato todavía no compatible con el visor interno.');
+  }catch(error){console.error('Office v2.12.8:',error);officeSetBodyV2128(`${head}<div class="office-error-v2128"><b>No se pudo abrir este archivo</b><p>${esc(error?.message||'Formato no compatible')}</p><small>Si está sin internet y es la primera vez que usa Word, Excel o PowerPoint, conecte una vez para completar los componentes del visor.</small></div>`)}
+}
+function officeRenderPdfV2128(file,head){officeObjectUrlV2128=URL.createObjectURL(file);officeSetBodyV2128(`${head}<div class="office-view-tools-v2128"><span>Vista PDF</span><a href="${officeObjectUrlV2128}" target="_blank" rel="noopener">Abrir a pantalla completa</a></div><iframe class="office-pdf-v2128" src="${officeObjectUrlV2128}" title="${esc(file.name||'PDF')}"></iframe>`)}
+function officeRenderImageV2128(file,head){officeObjectUrlV2128=URL.createObjectURL(file);officeSetBodyV2128(`${head}<div class="office-view-tools-v2128"><span>Vista de imagen</span><a href="${officeObjectUrlV2128}" target="_blank" rel="noopener">Abrir completa</a></div><img class="office-image-v2128" src="${officeObjectUrlV2128}" alt="${esc(file.name||'Imagen')}">`)}
+async function officeRenderTextV2128(file,head,type){const text=await file.text();if(type==='csv'){const rows=text.split(/\r?\n/).filter(Boolean).slice(0,300).map(line=>line.split(/[,;\t]/));const table=`<div class="office-table-scroll-v2128"><table>${rows.map((r,i)=>`<tr>${r.slice(0,40).map(c=>`<${i===0?'th':'td'}>${esc(c)}</${i===0?'th':'td'}>`).join('')}</tr>`).join('')}</table></div>`;officeSetBodyV2128(`${head}<div class="office-view-tools-v2128"><span>Vista CSV</span><button onclick="officeCopyTextV2128()">Copiar texto</button></div>${table}<pre id="officeRawTextV2128" class="hidden">${esc(text)}</pre>`)}else officeSetBodyV2128(`${head}<div class="office-view-tools-v2128"><span>Documento de texto</span><button onclick="officeCopyTextV2128()">Copiar</button></div><pre id="officeRawTextV2128" class="office-text-v2128">${esc(text)}</pre>`)}
+async function officeRenderDocxV2128(file,head){
+  await officeLoadScriptV2128(OFFICE_MAMMOTH_V2128,'mammoth');if(!window.mammoth)throw new Error('No se pudo iniciar el lector Word.');
+  const buffer=await file.arrayBuffer(),result=await window.mammoth.convertToHtml({arrayBuffer:buffer},{includeDefaultStyleMap:true}),html=officeSanitizeHtmlV2128(result.value||'');
+  officeSetBodyV2128(`${head}<div class="office-view-tools-v2128"><span>Vista Word</span><div><button id="officeEditToggleV2128" onclick="officeToggleEditV2128()">✎ Editar texto</button><button onclick="officeSaveDraftV2128()">Guardar borrador TXT</button></div></div><div class="office-word-note-v2128">La vista editable es para correcciones rápidas. El archivo DOCX original no se modifica.</div><article id="officeWordV2128" class="office-word-v2128" contenteditable="false">${html||'<p>Documento sin texto visible.</p>'}</article>`)
+}
+function officeToggleEditV2128(){const el=document.getElementById('officeWordV2128'),btn=document.getElementById('officeEditToggleV2128');if(!el)return;const editing=el.getAttribute('contenteditable')==='true';el.setAttribute('contenteditable',editing?'false':'true');el.classList.toggle('editing',!editing);if(btn)btn.textContent=editing?'✎ Editar texto':'✓ Terminar edición';if(!editing){el.focus();toast('Edición básica activada')}}
+function officeSaveDraftV2128(){const el=document.getElementById('officeWordV2128');if(!el)return toast('Abra un Word primero');const base=String(officeCurrentFileV2128?.name||'documento').replace(/\.docx$/i,''),blob=new Blob([el.innerText||''],{type:'text/plain;charset=utf-8'}),url=URL.createObjectURL(blob),a=document.createElement('a');a.href=url;a.download=`${base}-borrador.txt`;a.click();setTimeout(()=>URL.revokeObjectURL(url),1200);toast('Borrador guardado')}
+async function officeRenderExcelV2128(file,head){
+  await officeLoadScriptV2128(OFFICE_XLSX_V2128,'XLSX');if(!window.XLSX)throw new Error('No se pudo iniciar el lector Excel.');
+  officeWorkbookV2128=window.XLSX.read(await file.arrayBuffer(),{type:'array',cellDates:true});const names=officeWorkbookV2128.SheetNames||[];if(!names.length)throw new Error('El libro no contiene hojas visibles.');
+  officeSetBodyV2128(`${head}<div class="office-view-tools-v2128"><span>Vista Excel</span><small>${names.length} hoja${names.length===1?'':'s'}</small></div><div class="office-sheet-tabs-v2128">${names.map((n,i)=>`<button class="${i===0?'active':''}" onclick="officeRenderSheetIndexV2128(${i},this)">${esc(n)}</button>`).join('')}</div><div id="officeSheetV2128"></div>`);officeRenderSheetIndexV2128(0,document.querySelector('.office-sheet-tabs-v2128 button'))
+}
+function officeRenderSheetIndexV2128(index,button){const names=officeWorkbookV2128?.SheetNames||[];const name=names[Number(index)||0];if(name)officeRenderSheetV2128(name,button)}
+function officeRenderSheetV2128(name,button){if(!officeWorkbookV2128||!window.XLSX)return;document.querySelectorAll('.office-sheet-tabs-v2128 button').forEach(b=>b.classList.remove('active'));button?.classList.add('active');const ws=officeWorkbookV2128.Sheets[name],box=document.getElementById('officeSheetV2128');if(!ws||!box)return;let html=window.XLSX.utils.sheet_to_html(ws,{id:'officeExcelTableV2128',editable:false});box.innerHTML=`<div class="office-table-scroll-v2128 office-excel-v2128">${officeSanitizeHtmlV2128(html)}</div>`}
+async function officeRenderPptxV2128(file,head){
+  await officeLoadScriptV2128(OFFICE_JSZIP_V2128,'JSZip');if(!window.JSZip)throw new Error('No se pudo iniciar el lector PowerPoint.');
+  const zip=await window.JSZip.loadAsync(await file.arrayBuffer()),slides=Object.keys(zip.files).filter(n=>/^ppt\/slides\/slide\d+\.xml$/i.test(n)).sort((a,b)=>(Number(a.match(/slide(\d+)/i)?.[1])||0)-(Number(b.match(/slide(\d+)/i)?.[1])||0));
+  if(!slides.length)throw new Error('No se encontraron diapositivas legibles.');
+  const cards=[];for(let i=0;i<slides.length;i++){const xml=await zip.file(slides[i]).async('text'),doc=new DOMParser().parseFromString(xml,'application/xml'),texts=[...doc.getElementsByTagName('*')].filter(n=>n.localName==='t').map(n=>n.textContent?.trim()).filter(Boolean);cards.push(`<section class="office-slide-v2128"><header><span>${i+1}</span><b>Diapositiva ${i+1}</b></header>${texts.length?texts.map((t,j)=>j===0?`<h3>${esc(t)}</h3>`:`<p>${esc(t)}</p>`).join(''):'<p class="subtle">Sin texto extraíble en esta diapositiva.</p>'}</section>`)}
+  officeSetBodyV2128(`${head}<div class="office-view-tools-v2128"><span>Vista PowerPoint</span><small>${slides.length} diapositiva${slides.length===1?'':'s'} · vista de contenido</small></div><div class="office-slides-v2128">${cards.join('')}</div>`)
+}
+async function officeCopyTextV2128(){const text=document.getElementById('officeRawTextV2128')?.textContent||document.getElementById('officeWordV2128')?.innerText||'';if(!text)return toast('No hay texto para copiar');try{await navigator.clipboard.writeText(text);toast('Texto copiado')}catch{toast('No se pudo copiar automáticamente')}}
+
+const closeModalBeforeOfficeV2128=closeModal;
+closeModal=function closeModalOfficeV2128(){officeRevokeV2128();return closeModalBeforeOfficeV2128()};
+
+/* Agenda Policial v2.12.9 — pulido Word personal */
+let officeWordSearchTermV2129='';
+async function officeRenderDocxV2128(file,head){
+  await officeLoadScriptV2128(OFFICE_MAMMOTH_V2128,'mammoth');if(!window.mammoth)throw new Error('No se pudo iniciar el lector Word.');
+  const buffer=await file.arrayBuffer(),result=await window.mammoth.convertToHtml({arrayBuffer:buffer},{includeDefaultStyleMap:true}),html=officeSanitizeHtmlV2128(result.value||'');
+  officeSetBodyV2128(`${head}<div class="office-view-tools-v2128 office-word-tools-v2129"><span>Vista Word</span><div><button id="officeEditToggleV2128" onclick="officeToggleEditV2128()">✎ Editar</button><button onclick="officeCopyTextV2128()">⧉ Copiar</button><button onclick="officeSaveDraftV2128()">↓ Guardar TXT</button></div></div><div class="office-word-search-v2129"><input id="officeWordSearchV2129" type="search" placeholder="Buscar dentro del Word…" onkeydown="if(event.key==='Enter')officeFindWordV2129()"><button type="button" onclick="officeFindWordV2129()">Buscar</button><button type="button" onclick="officeClearWordSearchV2129()">Limpiar</button></div><div class="office-word-note-v2128">Edición rápida y búsqueda local. El DOCX original permanece intacto.</div><article id="officeWordV2128" class="office-word-v2128" contenteditable="false">${html||'<p>Documento sin texto visible.</p>'}</article>`)
+}
+function officeClearWordMarksV2129(){
+  const root=document.getElementById('officeWordV2128');if(!root)return;
+  root.querySelectorAll('mark.office-word-mark-v2129').forEach(mark=>mark.replaceWith(document.createTextNode(mark.textContent||'')));root.normalize();
+}
+function officeClearWordSearchV2129(){officeWordSearchTermV2129='';officeClearWordMarksV2129();const input=document.getElementById('officeWordSearchV2129');if(input)input.value=''}
+function officeFindWordV2129(){
+  const root=document.getElementById('officeWordV2128'),input=document.getElementById('officeWordSearchV2129');if(!root||!input)return;
+  const term=String(input.value||'').trim();officeClearWordMarksV2129();if(!term)return toast('Escriba una palabra para buscar');officeWordSearchTermV2129=term;
+  const walker=document.createTreeWalker(root,NodeFilter.SHOW_TEXT,{acceptNode:n=>n.parentElement?.closest('mark')?NodeFilter.FILTER_REJECT:NodeFilter.FILTER_ACCEPT});const nodes=[];while(walker.nextNode())nodes.push(walker.currentNode);
+  let count=0,first=null;const needle=term.toLocaleLowerCase('es');
+  for(const node of nodes){const text=node.nodeValue||'',low=text.toLocaleLowerCase('es');if(!low.includes(needle))continue;const frag=document.createDocumentFragment();let pos=0,idx=low.indexOf(needle);while(idx>=0){if(idx>pos)frag.appendChild(document.createTextNode(text.slice(pos,idx)));const mark=document.createElement('mark');mark.className='office-word-mark-v2129';mark.textContent=text.slice(idx,idx+term.length);frag.appendChild(mark);if(!first)first=mark;count++;pos=idx+term.length;idx=low.indexOf(needle,pos)}if(pos<text.length)frag.appendChild(document.createTextNode(text.slice(pos)));node.replaceWith(frag)}
+  if(first)first.scrollIntoView({behavior:'smooth',block:'center'});toast(count?`${count} coincidencia${count===1?'':'s'} encontrada${count===1?'':'s'}`:'No se encontró ese texto');
+}
