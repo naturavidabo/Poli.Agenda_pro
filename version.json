@@ -1,8 +1,8 @@
 {
-  "version": "2.13.5",
+  "version": "2.13.9",
   "build": "2026-08-16",
-  "channel": "office-top-access-notes-fixed",
-  "appVersion": "2.13.5",
+  "channel": "reader-persistence-mini-player-scanner-perspective",
+  "appVersion": "2.13.9",
   "scheduleVersion": "2026-07-29-v274",
   "databaseVersion": "agenda-db-10"
 }

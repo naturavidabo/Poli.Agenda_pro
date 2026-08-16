@@ -208,3 +208,71 @@ body.academic-dark-v2124 .office-format-grid-v2131 button{background:#111c15!imp
 .note-actions-v2135{display:flex;gap:6px;flex-wrap:wrap;padding:0 12px 12px}
 .note-actions-v2135 button{border:1px solid var(--line);border-radius:9px;padding:7px 10px;background:var(--panel);color:inherit;font-weight:700}
 .note-actions-v2135 button.danger{border-color:#b94a48;color:#b94a48}
+
+
+/* v2.13.6 · Word estable, dictado y lectura */
+.office-word-stable-v2136{font-family:Arial,Helvetica,sans-serif!important;line-height:1.48!important;letter-spacing:normal!important;word-spacing:normal!important;overflow-wrap:break-word!important;word-break:normal!important}
+.office-word-stable-v2136 p,.office-word-stable-v2136 li,.office-word-stable-v2136 div{line-height:1.48!important;min-height:auto!important}
+.office-word-stable-v2136 img,.office-doc-image-v2136{display:block;max-width:100%!important;height:auto!important;object-fit:contain;margin:8px auto}
+.office-word-stable-v2136 table,.office-doc-table-v2136{max-width:100%!important;border-collapse:collapse}
+.office-word-stable-v2136 td,.office-word-stable-v2136 th{vertical-align:top;overflow-wrap:anywhere}
+.office-word-note-v2136{border-left:4px solid #a98d2f}
+.office-original-warning-v2136{position:sticky;top:0;z-index:7;background:#fff3c9;color:#473c16;border:1px solid #d9c26e;border-radius:9px;padding:7px 9px;margin-bottom:7px;font-size:.72rem}
+.office-reader-v2136,.office-dictation-v2136{display:flex;align-items:center;gap:6px;flex-wrap:wrap;padding:7px;border:1px solid #cbd5bf;border-radius:10px;background:#f7f9f3;margin-bottom:8px}
+.office-reader-v2136 button,.office-dictation-v2136 button{min-height:36px;border:1px solid #aab69b;border-radius:8px;background:white;color:#344326;padding:6px 9px;font-weight:800}
+.office-reader-v2136 label{display:flex;align-items:center;gap:5px;font-size:.72rem;font-weight:800}
+.office-reader-v2136 select{min-height:34px;border:1px solid #aab69b;border-radius:7px;background:white}
+.office-reader-v2136 span,.office-dictation-v2136 span{font-size:.7rem;color:#66715e}
+.office-dictation-v2136 button{border-color:#9c4f4f;color:#7c2929}
+body.academic-dark-v2124 .office-reader-v2136,body.academic-dark-v2124 .office-dictation-v2136{background:#101a14;border-color:#3b4d3d}
+body.academic-dark-v2124 .office-reader-v2136 button,body.academic-dark-v2124 .office-dictation-v2136 button,body.academic-dark-v2124 .office-reader-v2136 select{background:#16231a;color:#eef4ee;border-color:#50634d}
+body.academic-dark-v2124 .office-reader-v2136 span,body.academic-dark-v2124 .office-dictation-v2136 span{color:#bdc9bd}
+@media(max-width:520px){.office-word-toolbar-v2136 .office-word-mode-tabs-v2131{grid-template-columns:1fr 1fr 1fr}.office-reader-v2136 button{flex:1}.office-reader-v2136 label{width:100%;justify-content:space-between}}
+
+
+/* v2.13.7 · Word funcional profundo */
+.office-editor-pro-v2137{display:grid;gap:6px;position:sticky;top:0;z-index:12;background:color-mix(in srgb,var(--panel) 96%,transparent);padding:7px;border:1px solid var(--line);border-radius:12px;backdrop-filter:blur(8px)}
+.office-editor-row-v2137{display:flex;gap:5px;flex-wrap:wrap;align-items:center}
+.office-editor-row-v2137 button{min-height:38px;border:1px solid var(--line);border-radius:8px;padding:6px 9px;background:var(--panel);color:inherit;font-weight:800}
+.office-editor-row-v2137 label{display:flex;align-items:center;gap:4px;font-size:.72rem;font-weight:800}
+.office-editor-row-v2137 select{min-height:36px;border:1px solid var(--line);border-radius:8px;background:var(--panel);color:inherit;padding:4px}
+.office-page-panel-v2137{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:7px;padding:9px;border:1px solid var(--line);border-radius:12px;background:color-mix(in srgb,var(--panel) 92%,transparent)}
+.office-page-panel-v2137 label,.office-doc-name-v2137{display:grid;gap:4px;font-size:.72rem;font-weight:800}
+.office-page-panel-v2137 input,.office-page-panel-v2137 select,.office-doc-name-v2137 input{min-height:38px;border:1px solid var(--line);border-radius:8px;padding:6px;background:var(--panel);color:inherit}
+.office-editor-page-v2137{box-sizing:border-box;background:#fff!important;color:#111!important;font-family:Arial,sans-serif;font-size:12pt;line-height:1.15;outline:none}
+.office-editor-page-v2137{width:210mm;min-height:297mm;padding:20mm}
+.office-editor-page-v2137.oficio{width:216mm;min-height:330mm}
+.office-editor-page-v2137.landscape{width:297mm;min-height:210mm}
+.office-editor-page-v2137.oficio.landscape{width:330mm;min-height:216mm}
+.office-editor-page-v2137 img{max-width:100%;height:auto}
+.office-image-block-v2137{max-width:100%;margin:10px auto;text-align:center}
+.office-image-block-v2137 img{display:block;max-width:100%;height:auto;margin:auto;border-radius:3px}
+.office-image-block-v2137 figcaption{min-height:1em;margin-top:4px;font-size:9pt;color:#555}
+.office-page-break-v2137{height:22px;margin:14px 0;border-top:2px dashed #999;border-bottom:2px dashed #999;display:grid;place-items:center;color:#777;font-size:9px;background:#f3f3f3;user-select:none}
+.office-editor-actions-v2137{display:flex;justify-content:flex-end;gap:7px;flex-wrap:wrap}
+.office-editor-actions-v2137 button{min-height:42px;border:1px solid var(--line);border-radius:10px;padding:9px 12px;background:var(--panel);color:inherit;font-weight:850}
+.office-editor-actions-v2137 button.primary{background:var(--accent);color:var(--accent-text);border-color:var(--accent)}
+.office-import-edit-v2137{display:grid;gap:9px}
+@media(max-width:680px){
+  .office-page-panel-v2137{grid-template-columns:1fr 1fr}
+  .office-editor-row-v2137{display:grid;grid-template-columns:repeat(4,minmax(0,1fr))}
+  .office-editor-row-v2137 label{grid-column:span 2;display:grid}
+  .office-editor-row-v2137 button{padding:5px 4px}
+  .office-editor-actions-v2137 button{flex:1}
+}
+
+/* v2.13.8 · tablas, firma y escáner */
+.office-table-edit-v2138{width:100%;border-collapse:collapse;margin:8px 0}.office-table-edit-v2138 td,.office-table-edit-v2138 th{border:1px solid #777;min-width:40px;padding:5px}
+.office-signature-line-v2138{width:70%;margin:28px auto 8px;text-align:center}.office-signature-line-v2138 div{border-top:1px solid #222}.office-signature-line-v2138 span{font-size:9pt}
+.office-scanner-entry-v2138{margin:10px 0}.office-scanner-entry-v2138 button{width:100%;padding:14px;border:1px solid var(--line);border-radius:14px;background:var(--panel);color:inherit;font-size:1rem}.office-scanner-entry-v2138 small{display:block;opacity:.7;margin-top:4px}
+.office-scanner-v2138{display:grid;gap:12px}.office-scan-actions-v2138{display:grid;grid-template-columns:repeat(3,1fr);gap:7px}.office-scan-actions-v2138 button{min-height:46px;border:1px solid var(--line);border-radius:11px;background:var(--panel);color:inherit;font-weight:800}.office-scan-filters-v2138 label{display:grid;gap:4px;font-size:.75rem;font-weight:800}.office-scan-filters-v2138 select{min-height:40px;border:1px solid var(--line);border-radius:9px;background:var(--panel);color:inherit;padding:6px}.office-scan-pages-v2138{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px}.office-scan-page-v2138{position:relative;padding:8px;border:1px solid var(--line);border-radius:12px;background:var(--panel);overflow:hidden}.office-scan-page-v2138 img{display:block;width:100%;height:220px;object-fit:contain;background:#ddd}.office-scan-page-v2138>div:last-child{display:flex;gap:5px;margin-top:7px}.office-scan-page-v2138 button{flex:1;border:1px solid var(--line);border-radius:8px;padding:6px;background:var(--panel);color:inherit}.office-scan-num-v2138{position:absolute;top:13px;left:13px;z-index:2;background:#111;color:#fff;border-radius:50%;width:25px;height:25px;display:grid;place-items:center;font-size:.7rem;font-weight:900}@media(max-width:520px){.office-scan-actions-v2138{grid-template-columns:1fr 1fr}.office-scan-actions-v2138 button:last-child{grid-column:1/-1}}
+
+
+/* v2.13.9 · continuidad de lectura + escáner perspectiva */
+.office-mini-player-v2139{position:fixed;left:50%;bottom:74px;transform:translateX(-50%);z-index:999;width:min(720px,calc(100% - 18px));display:flex;align-items:center;gap:7px;padding:8px;border:1px solid rgba(197,164,89,.55);border-radius:16px;background:rgba(18,31,24,.97);color:#f5f7f4;box-shadow:0 12px 30px #0006;backdrop-filter:blur(12px)}
+.office-mini-main-v2139{flex:1;min-width:0;display:flex;gap:8px;align-items:center;text-align:left;border:0;background:transparent;color:inherit}.office-mini-main-v2139>span:last-child{min-width:0}.office-mini-main-v2139 b,.office-mini-main-v2139 small{display:block;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.office-mini-main-v2139 b{font-size:.76rem}.office-mini-main-v2139 small{font-size:.62rem;color:#c7d0c9}.office-mini-controls-v2139{display:flex;gap:4px}.office-mini-controls-v2139 button{width:34px;height:34px;border-radius:9px;border:1px solid #50614f;background:#213126;color:#fff}
+.office-resume-reading-v2139{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin:10px 0;padding:10px;border:1px solid #c8b46a;border-radius:12px;background:#fff8dc;color:#423918}.office-resume-reading-v2139>div{flex:1;display:flex;gap:8px;align-items:center;min-width:190px}.office-resume-reading-v2139 b,.office-resume-reading-v2139 small{display:block}.office-resume-reading-v2139 small{opacity:.75}.office-resume-reading-v2139 button{border:1px solid #a38b38;border-radius:8px;padding:7px 9px;background:white;color:#423918;font-weight:800}
+.office-reading-current-v2139{background:#fff1a8!important;outline:2px solid #d4b33f!important;border-radius:4px}
+.office-scan-draft-actions-v2139{display:flex;gap:6px;flex-wrap:wrap}.office-scan-draft-actions-v2139 button{flex:1;min-height:38px;border:1px solid var(--line);border-radius:9px;background:var(--panel);color:inherit;font-weight:750}.office-scan-page-tools-v2139{display:grid!important;grid-template-columns:repeat(5,1fr);gap:4px!important}.office-scan-page-tools-v2139 button{padding:5px 3px!important;font-size:.68rem}.office-scan-page-tools-v2139 button:disabled{opacity:.35}
+.office-corner-editor-v2139{display:grid;gap:10px}.office-corner-stage-v2139{position:relative;max-width:100%;overflow:hidden;margin:auto;background:#111;touch-action:none}.office-corner-stage-v2139 img{display:block;width:100%;height:100%;object-fit:fill}.office-corner-stage-v2139 svg{position:absolute;inset:0;pointer-events:none}.office-corner-stage-v2139 polygon{fill:rgba(255,215,70,.16);stroke:#ffd84d;stroke-width:3;vector-effect:non-scaling-stroke}.office-corner-handle-v2139{position:absolute;width:26px;height:26px;border-radius:50%;border:3px solid #fff;background:#d8aa24;transform:translate(-50%,-50%);box-shadow:0 2px 8px #0008;touch-action:none}
+@media(max-width:520px){.office-mini-player-v2139{bottom:68px}.office-mini-controls-v2139 button{width:31px;height:31px}.office-scan-page-tools-v2139{grid-template-columns:repeat(3,1fr)}}

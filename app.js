@@ -1,4 +1,4 @@
-const APP_VERSION='2.13.5';
+const APP_VERSION='2.13.9';
 const BUILD_DATE='2026-08-12';
 const ACTIVATION_CODE='271261';
 const SECONDARY_ACTIVATION_CODE='2026JINETES';
@@ -1066,3 +1066,851 @@ openNoteForm=function openNoteFormV2135(id=null){
   const ta=$('#noteForm textarea[name="text"]');if(ta)ta.classList.add('note-textarea');
   $('#noteForm').onsubmit=async e=>{e.preventDefault();const data=formData(e.target);if(id){Object.assign(n,data,{updated:new Date().toISOString()})}else{state.notes.push({...data,id:uid(),created:new Date().toISOString(),updated:new Date().toISOString(),archived:false})}await save();closeModal();openNotes();toast(id?'Nota actualizada':'Nota creada')};
 };
+
+
+/* =========================================================
+   Agenda Policial v2.13.6 — Word estable + Dictado + Lectura por voz
+   ========================================================= */
+let officeReaderV2136={chunks:[],index:0,playing:false,paused:false,rate:1};
+let officeDictationV2136=null;
+let officeDictationTargetV2136=null;
+
+function officeWordToolbarV2131(){
+  return `<div class="office-word-toolbar-v2131 office-word-toolbar-v2136">
+    <div class="office-word-mode-tabs-v2131">
+      <button id="officeWordMobileBtnV2131" class="active" type="button" onclick="officeSetWordModeV2131('mobile')">✓ Vista estable</button>
+      <button id="officeWordDirectBtnV2131" type="button" onclick="officeSetWordModeV2131('document')">📄 Original</button>
+      <button id="officeWordEditBtnV2131" type="button" onclick="officeSetWordModeV2131('edit')">✎ Editar</button>
+    </div>
+    <div class="office-word-actions-v2131">
+      <button type="button" onclick="officeReaderStartV2136()">🔊 Escuchar</button>
+      <button type="button" onclick="officeCopyWordV2131()">⧉ Copiar</button>
+      <button type="button" onclick="officeSaveWordCopyV2131()">↓ Guardar copia</button>
+    </div>
+  </div>`;
+}
+
+officeRenderDocxV2128=async function officeRenderDocxV2136(file,head){
+  let buffer=officeCurrentBytesV2131;
+  if(!buffer){buffer=await officeReadBytesV2131(file);officeCurrentBytesV2131=officeArrayBufferCopyV2131(buffer)}
+  officeWordModeV2131='mobile';officeWordFontV2130=18;officeCurrentDocxHtmlV2131='';
+  officeSetBodyV2128(`${head}${officeWordToolbarV2131()}
+    <div class="office-word-note-v2128 office-word-note-v2131 office-word-note-v2136">
+      <b>Vista estable</b> · Prioriza lectura correcta, imágenes y tablas adaptadas al celular. Si necesita comprobar el diseño exacto del Word, use “Original”.
+    </div>
+    <div id="officeWordStageV2131" class="office-word-stage-v2131">
+      <div class="office-loading-v2128"><span></span><b>Estabilizando Word…</b></div>
+    </div>`);
+  await officeSetWordModeV2131('mobile');
+};
+
+const officeSetWordModeBaseV2136=officeSetWordModeV2131;
+officeSetWordModeV2131=async function officeSetWordModeStableV2136(mode){
+  officeReaderStopV2136(false);
+  await officeSetWordModeBaseV2136(mode);
+  const article=document.getElementById('officeWordV2128');
+  if(article){
+    article.classList.add('office-word-stable-v2136');
+    article.querySelectorAll('img').forEach(img=>{img.loading='lazy';img.classList.add('office-doc-image-v2136')});
+    article.querySelectorAll('table').forEach(table=>table.classList.add('office-doc-table-v2136'));
+  }
+  if(mode==='mobile'){
+    officeInjectReaderV2136();
+  }
+  if(mode==='edit'){
+    officeInjectDictationV2136('officeWordV2128');
+  }
+  if(mode==='document'){
+    const stage=document.getElementById('officeWordStageV2131');
+    if(stage&&!stage.querySelector('.office-original-warning-v2136')){
+      stage.insertAdjacentHTML('afterbegin','<div class="office-original-warning-v2136">Si observa letras montadas o saltos extraños, vuelva a <b>Vista estable</b>.</div>');
+    }
+  }
+};
+
+function officeInjectReaderV2136(){
+  const stage=document.getElementById('officeWordStageV2131');
+  const article=document.getElementById('officeWordV2128');
+  if(!stage||!article||stage.querySelector('.office-reader-v2136'))return;
+  const bar=document.createElement('div');
+  bar.className='office-reader-v2136';
+  bar.innerHTML=`<button type="button" onclick="officeReaderStartV2136()">▶ Leer</button>
+    <button type="button" onclick="officeReaderPauseV2136()">⏯ Pausa</button>
+    <button type="button" onclick="officeReaderStopV2136()">■ Detener</button>
+    <label>Velocidad <select id="officeReaderRateV2136" onchange="officeReaderRateV2136(this.value)">
+      <option value=".8">0.8×</option><option value="1" selected>1×</option><option value="1.15">1.15×</option><option value="1.3">1.3×</option><option value="1.5">1.5×</option>
+    </select></label>
+    <span id="officeReaderStatusV2136">Listo</span>`;
+  article.before(bar);
+}
+function officeReaderTextV2136(){
+  const live=document.getElementById('officeWordV2128');
+  if(live)return (live.innerText||live.textContent||'').replace(/\s+/g,' ').trim();
+  return '';
+}
+function officeReaderChunksV2136(text){
+  const sentences=(text.match(/[^.!?;:]+[.!?;:]?|[^.!?;:]+$/g)||[text]).map(x=>x.trim()).filter(Boolean);
+  const chunks=[];let current='';
+  for(const sentence of sentences){
+    if((current+' '+sentence).length>700&&current){chunks.push(current);current=sentence}
+    else current=(current+' '+sentence).trim();
+  }
+  if(current)chunks.push(current);return chunks;
+}
+function officeReaderRateV2136(value){
+  officeReaderV2136.rate=Math.max(.6,Math.min(2,Number(value)||1));
+  if(officeReaderV2136.playing){officeReaderStopV2136(false);officeReaderStartV2136()}
+}
+function officeReaderStatusV2136(text){
+  const el=document.getElementById('officeReaderStatusV2136');if(el)el.textContent=text;
+}
+function officeReaderSetupMediaV2136(){
+  if(!('mediaSession' in navigator))return;
+  try{
+    navigator.mediaSession.metadata=new MediaMetadata({
+      title:officeCurrentFileV2128?.name||'Lectura de documento',
+      artist:'Agenda Policial · Office Offline',
+      album:'Lectura por voz'
+    });
+    navigator.mediaSession.setActionHandler('play',()=>officeReaderPauseV2136(true));
+    navigator.mediaSession.setActionHandler('pause',()=>officeReaderPauseV2136(false));
+    navigator.mediaSession.setActionHandler('stop',()=>officeReaderStopV2136());
+  }catch{}
+}
+function officeReaderStartV2136(){
+  if(!('speechSynthesis' in window)||!window.SpeechSynthesisUtterance)return toast('La lectura por voz no está disponible en este dispositivo');
+  if(officeReaderV2136.paused){speechSynthesis.resume();officeReaderV2136.paused=false;officeReaderV2136.playing=true;officeReaderStatusV2136('Reproduciendo');try{navigator.mediaSession.playbackState='playing'}catch{};return}
+  const text=officeReaderTextV2136();if(!text)return toast('No hay texto legible para reproducir');
+  speechSynthesis.cancel();
+  officeReaderV2136.chunks=officeReaderChunksV2136(text);officeReaderV2136.index=0;officeReaderV2136.playing=true;officeReaderV2136.paused=false;
+  officeReaderSetupMediaV2136();officeReaderSpeakNextV2136();
+}
+function officeReaderSpeakNextV2136(){
+  if(!officeReaderV2136.playing)return;
+  if(officeReaderV2136.index>=officeReaderV2136.chunks.length){officeReaderStopV2136(false);officeReaderStatusV2136('Finalizado');return}
+  const u=new SpeechSynthesisUtterance(officeReaderV2136.chunks[officeReaderV2136.index]);
+  u.lang='es-BO';u.rate=officeReaderV2136.rate;
+  u.onstart=()=>{officeReaderStatusV2136(`Leyendo ${officeReaderV2136.index+1}/${officeReaderV2136.chunks.length}`);try{navigator.mediaSession.playbackState='playing'}catch{}};
+  u.onend=()=>{if(officeReaderV2136.playing){officeReaderV2136.index++;officeReaderSpeakNextV2136()}};
+  u.onerror=()=>{if(officeReaderV2136.playing){officeReaderV2136.index++;officeReaderSpeakNextV2136()}};
+  speechSynthesis.speak(u);
+}
+function officeReaderPauseV2136(forcePlay=null){
+  if(!('speechSynthesis' in window))return;
+  if(forcePlay===true){speechSynthesis.resume();officeReaderV2136.paused=false;officeReaderV2136.playing=true;officeReaderStatusV2136('Reproduciendo');try{navigator.mediaSession.playbackState='playing'}catch{};return}
+  if(forcePlay===false||!officeReaderV2136.paused){speechSynthesis.pause();officeReaderV2136.paused=true;officeReaderStatusV2136('En pausa');try{navigator.mediaSession.playbackState='paused'}catch{}}
+  else{speechSynthesis.resume();officeReaderV2136.paused=false;officeReaderStatusV2136('Reproduciendo');try{navigator.mediaSession.playbackState='playing'}catch{}}
+}
+function officeReaderStopV2136(show=true){
+  try{speechSynthesis.cancel()}catch{}
+  officeReaderV2136.playing=false;officeReaderV2136.paused=false;officeReaderV2136.index=0;
+  if(show)officeReaderStatusV2136('Detenido');
+  try{navigator.mediaSession.playbackState='none'}catch{}
+}
+
+function officeInsertDictationTextV2136(target,text){
+  target.focus();
+  const sel=window.getSelection();
+  if(!sel||!sel.rangeCount||!target.contains(sel.anchorNode)){
+    const range=document.createRange();range.selectNodeContents(target);range.collapse(false);sel?.removeAllRanges();sel?.addRange(range);
+  }
+  try{document.execCommand('insertText',false,text+' ')}
+  catch{target.append(document.createTextNode(text+' '))}
+}
+function officeInjectDictationV2136(targetId){
+  const target=document.getElementById(targetId);if(!target)return;
+  const holder=target.parentElement;
+  if(holder?.querySelector('.office-dictation-v2136'))return;
+  const bar=document.createElement('div');bar.className='office-dictation-v2136';
+  bar.innerHTML=`<button id="officeDictateBtnV2136" type="button" onclick="officeDictationToggleV2136('${targetId}')">🎙 Dictar</button><span id="officeDictationStatusV2136">Dictado en español · Bolivia</span>`;
+  target.before(bar);
+}
+async function officeDictationToggleV2136(targetId){
+  const SR=window.SpeechRecognition||window.webkitSpeechRecognition;
+  if(!SR)return toast('Este navegador no admite dictado directo. Puede usar el micrófono del teclado del celular.');
+  if(officeDictationV2136){try{officeDictationV2136.stop()}catch{};officeDictationV2136=null;return}
+  const target=document.getElementById(targetId);if(!target)return;
+  officeDictationTargetV2136=target;
+  const rec=new SR();officeDictationV2136=rec;rec.lang='es-BO';rec.continuous=true;rec.interimResults=false;rec.maxAlternatives=1;
+  const status=document.getElementById('officeDictationStatusV2136'),btn=document.getElementById('officeDictateBtnV2136');
+  rec.onstart=()=>{if(status)status.textContent='Escuchando…';if(btn)btn.textContent='⏹ Detener dictado'};
+  rec.onresult=e=>{let text='';for(let i=e.resultIndex;i<e.results.length;i++)if(e.results[i].isFinal)text+=e.results[i][0].transcript;if(text)officeInsertDictationTextV2136(target,text.trim())};
+  rec.onerror=e=>{if(status)status.textContent=e.error==='not-allowed'?'Permiso de micrófono denegado':`Dictado: ${e.error}`};
+  rec.onend=()=>{officeDictationV2136=null;if(status)status.textContent='Dictado detenido';if(btn)btn.textContent='🎙 Dictar'};
+  // Prefer on-device dictation when current Chromium exposes the API and pack is available.
+  try{
+    if('processLocally' in rec && typeof SR.available==='function'){
+      const opts={langs:['es-BO'],processLocally:true,quality:'dictation'};
+      const availability=await SR.available(opts);
+      if(availability==='available'){rec.processLocally=true}
+      else if((availability==='downloadable'||availability==='downloading')&&typeof SR.install==='function'){
+        if(status)status.textContent='Preparando dictado offline…';
+        const ok=await SR.install(opts);if(ok)rec.processLocally=true;
+      }
+    }
+  }catch{}
+  try{rec.start()}catch(error){officeDictationV2136=null;toast('No se pudo iniciar el dictado')}
+}
+
+const officeCreateDocumentBaseV2136=officeCreateDocumentV2134;
+officeCreateDocumentV2134=function officeCreateDocumentWithDictationV2136(){
+  officeCreateDocumentBaseV2136();
+  setTimeout(()=>{
+    const toolbar=document.querySelector('.office-editor-toolbar-v2134');
+    if(toolbar&&!toolbar.querySelector('.office-create-dictate-v2136')){
+      const b=document.createElement('button');b.type='button';b.className='office-create-dictate-v2136';b.textContent='🎙 Dictar';
+      b.onclick=()=>officeDictationToggleV2136('officeEditorV2134');toolbar.appendChild(b);
+    }
+    officeInjectDictationV2136('officeEditorV2134');
+  },50);
+};
+
+const closeModalBaseV2136=closeModal;
+closeModal=function closeModalV2136(){
+  officeReaderStopV2136(false);
+  if(officeDictationV2136){try{officeDictationV2136.stop()}catch{};officeDictationV2136=null}
+  return closeModalBaseV2136();
+};
+
+
+/* =========================================================
+   Agenda Policial v2.13.7 — Office Word funcional profundo
+   - Editor común para documento nuevo y DOCX importado
+   - Formato esencial, imágenes, márgenes y saltos
+   - Exportación DOCX y PDF sin marca de agua
+   ========================================================= */
+let officePageV2137={size:'A4',orientation:'portrait',marginTop:20,marginRight:20,marginBottom:20,marginLeft:20};
+let officeEditorNameV2137='Documento';
+let officeImageInputV2137=null;
+
+function officeEditorToolbarV2137(targetId){
+  return `<div class="office-editor-pro-v2137">
+    <div class="office-editor-row-v2137">
+      <button type="button" title="Deshacer" onclick="officeCmdV2137('${targetId}','undo')">↶</button>
+      <button type="button" title="Rehacer" onclick="officeCmdV2137('${targetId}','redo')">↷</button>
+      <button type="button" onclick="officeCmdV2137('${targetId}','bold')"><b>B</b></button>
+      <button type="button" onclick="officeCmdV2137('${targetId}','italic')"><i>I</i></button>
+      <button type="button" onclick="officeCmdV2137('${targetId}','underline')"><u>U</u></button>
+      <button type="button" title="Alinear izquierda" onclick="officeCmdV2137('${targetId}','justifyLeft')">≡←</button>
+      <button type="button" title="Centrar" onclick="officeCmdV2137('${targetId}','justifyCenter')">≡</button>
+      <button type="button" title="Justificar" onclick="officeCmdV2137('${targetId}','justifyFull')">☰</button>
+      <button type="button" title="Alinear derecha" onclick="officeCmdV2137('${targetId}','justifyRight')">→≡</button>
+      <button type="button" onclick="officeCmdV2137('${targetId}','insertUnorderedList')">• Lista</button>
+      <button type="button" onclick="officeCmdV2137('${targetId}','insertOrderedList')">1. Lista</button>
+    </div>
+    <div class="office-editor-row-v2137">
+      <label>Estilo<select onchange="officeFormatBlockV2137('${targetId}',this.value)">
+        <option value="p">Texto</option><option value="h1">Título 1</option><option value="h2">Título 2</option><option value="h3">Título 3</option>
+      </select></label>
+      <label>Tamaño<select onchange="officeFontSizeV2137('${targetId}',this.value)">
+        <option value="10">10</option><option value="11">11</option><option value="12" selected>12</option><option value="14">14</option><option value="16">16</option><option value="18">18</option><option value="20">20</option><option value="24">24</option>
+      </select></label>
+      <label>Interlineado<select onchange="officeLineHeightV2137('${targetId}',this.value)">
+        <option value="1">1.0</option><option value="1.15" selected>1.15</option><option value="1.5">1.5</option><option value="2">2.0</option>
+      </select></label>
+      <button type="button" onclick="officeInsertImageV2137('${targetId}')">🖼 Imagen</button>
+      <button type="button" onclick="officeInsertPageBreakV2137('${targetId}')">↵ Salto pág.</button>
+      <button type="button" onclick="officeDictationToggleV2136('${targetId}')">🎙 Dictar</button>
+    </div>
+  </div>`;
+}
+function officeCmdV2137(targetId,cmd){
+  const target=document.getElementById(targetId);if(!target)return;target.focus();
+  try{document.execCommand(cmd,false,null)}catch{}
+}
+function officeFormatBlockV2137(targetId,tag){
+  const target=document.getElementById(targetId);if(!target)return;target.focus();
+  try{document.execCommand('formatBlock',false,tag||'p')}catch{}
+}
+function officeFontSizeV2137(targetId,px){
+  const target=document.getElementById(targetId);if(!target)return;target.focus();
+  try{
+    document.execCommand('fontSize',false,'7');
+    target.querySelectorAll('font[size="7"]').forEach(el=>{el.removeAttribute('size');el.style.fontSize=`${Number(px)||12}pt`});
+  }catch{}
+}
+function officeLineHeightV2137(targetId,value){
+  const target=document.getElementById(targetId);if(!target)return;
+  const sel=window.getSelection();let node=sel?.anchorNode;
+  if(node&&node.nodeType===3)node=node.parentElement;
+  const block=node?.closest?.('p,div,li,h1,h2,h3,td')||target;
+  if(target.contains(block))block.style.lineHeight=String(value||1.15);
+}
+function officeInsertPageBreakV2137(targetId){
+  const target=document.getElementById(targetId);if(!target)return;target.focus();
+  const html='<div class="office-page-break-v2137" contenteditable="false"><span>Salto de página</span></div><p><br></p>';
+  try{document.execCommand('insertHTML',false,html)}catch{target.insertAdjacentHTML('beforeend',html)}
+}
+function officeInsertImageV2137(targetId){
+  const old=document.getElementById('officeImageInputV2137');if(old)old.remove();
+  const input=document.createElement('input');input.type='file';input.accept='image/*';input.id='officeImageInputV2137';input.hidden=true;
+  input.onchange=()=>{const file=input.files?.[0];if(!file)return;const rd=new FileReader();rd.onload=()=>officePlaceImageV2137(targetId,rd.result,file.name);rd.readAsDataURL(file)};
+  document.body.appendChild(input);input.click();
+}
+function officePlaceImageV2137(targetId,dataUrl,name='imagen'){
+  const target=document.getElementById(targetId);if(!target)return;target.focus();
+  const html=`<figure class="office-image-block-v2137"><img src="${dataUrl}" alt="${esc(name)}" style="max-width:100%;height:auto"><figcaption contenteditable="true"></figcaption></figure><p><br></p>`;
+  try{document.execCommand('insertHTML',false,html)}catch{target.insertAdjacentHTML('beforeend',html)}
+}
+function officePagePanelV2137(){
+  return `<div class="office-page-panel-v2137">
+    <label>Hoja<select id="officePageSizeV2137" onchange="officeApplyPageV2137()"><option value="A4">A4 · 210×297 mm</option><option value="OFICIO">Oficio · 216×330 mm</option></select></label>
+    <label>Orientación<select id="officePageOrientationV2137" onchange="officeApplyPageV2137()"><option value="portrait">Vertical</option><option value="landscape">Horizontal</option></select></label>
+    <label>Margen sup.<input id="officeMarginTopV2137" type="number" min="5" max="40" value="20" onchange="officeApplyPageV2137()"></label>
+    <label>Margen der.<input id="officeMarginRightV2137" type="number" min="5" max="40" value="20" onchange="officeApplyPageV2137()"></label>
+    <label>Margen inf.<input id="officeMarginBottomV2137" type="number" min="5" max="40" value="20" onchange="officeApplyPageV2137()"></label>
+    <label>Margen izq.<input id="officeMarginLeftV2137" type="number" min="5" max="40" value="20" onchange="officeApplyPageV2137()"></label>
+  </div>`;
+}
+function officeApplyPageV2137(){
+  officePageV2137={
+    size:document.getElementById('officePageSizeV2137')?.value||officePageV2137.size||'A4',
+    orientation:document.getElementById('officePageOrientationV2137')?.value||officePageV2137.orientation||'portrait',
+    marginTop:Number(document.getElementById('officeMarginTopV2137')?.value||20),
+    marginRight:Number(document.getElementById('officeMarginRightV2137')?.value||20),
+    marginBottom:Number(document.getElementById('officeMarginBottomV2137')?.value||20),
+    marginLeft:Number(document.getElementById('officeMarginLeftV2137')?.value||20)
+  };
+  document.querySelectorAll('.office-editor-page-v2137').forEach(page=>{
+    page.classList.toggle('oficio',officePageV2137.size==='OFICIO');
+    page.classList.toggle('landscape',officePageV2137.orientation==='landscape');
+    page.style.padding=`${officePageV2137.marginTop}mm ${officePageV2137.marginRight}mm ${officePageV2137.marginBottom}mm ${officePageV2137.marginLeft}mm`;
+  });
+}
+function officeEditorActionsV2137(targetId,nameGetter){
+  return `<div class="office-editor-actions-v2137">
+    <button type="button" onclick="officeSaveHtmlEditorV2137('${targetId}','${nameGetter}')">💾 Copia HTML</button>
+    <button type="button" onclick="officeExportDocxV2137('${targetId}','${nameGetter}')">📘 Guardar DOCX</button>
+    <button class="primary" type="button" onclick="officeExportPdfV2137('${targetId}','${nameGetter}')">📄 Exportar PDF</button>
+  </div>`;
+}
+function officeDocNameV2137(inputId='officeDocNameV2137'){
+  return (document.getElementById(inputId)?.value||officeCurrentFileV2128?.name?.replace(/\.docx$/i,'')||'Documento').trim()||'Documento';
+}
+function officeCleanFileNameV2137(name){return String(name||'Documento').replace(/[\\/:*?"<>|]+/g,'-').replace(/\s+/g,' ').trim()||'Documento'}
+function officeSaveHtmlEditorV2137(targetId,nameInputId){
+  const ed=document.getElementById(targetId);if(!ed)return;
+  const name=officeCleanFileNameV2137(officeDocNameV2137(nameInputId));
+  const html=`<!doctype html><html><head><meta charset="utf-8"><title>${esc(name)}</title></head><body>${ed.innerHTML}</body></html>`;
+  const blob=new Blob([html],{type:'text/html;charset=utf-8'}),url=URL.createObjectURL(blob),a=document.createElement('a');a.href=url;a.download=`${name}.html`;a.click();setTimeout(()=>URL.revokeObjectURL(url),1500);toast('Copia HTML guardada');
+}
+
+function officeEscapeXmlV2137(text){return String(text??'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;').replace(/'/g,'&apos;')}
+function officeTwipsV2137(mm){return Math.round(Number(mm||0)*56.692913)}
+function officeDocxParagraphXmlV2137(node){
+  const tag=(node.tagName||'P').toLowerCase(),style=tag==='h1'?'Title':tag==='h2'?'Heading1':tag==='h3'?'Heading2':'Normal';
+  const align=(node.style?.textAlign||'').toLowerCase();let jc='';if(['center','right','justify'].includes(align))jc=`<w:jc w:val="${align==='justify'?'both':align}"/>`;
+  const spacing=node.style?.lineHeight?`<w:spacing w:line="${Math.round(parseFloat(node.style.lineHeight)*240)}" w:lineRule="auto"/>`:'';
+  const runs=[];
+  function walk(n,fmt={}){
+    if(n.nodeType===3){const text=n.nodeValue||'';if(text)runs.push({text,fmt});return}
+    if(n.nodeType!==1)return;
+    const t=n.tagName.toLowerCase();
+    const next={...fmt};
+    if(t==='b'||t==='strong')next.bold=true;if(t==='i'||t==='em')next.italic=true;if(t==='u')next.underline=true;
+    if(n.style?.fontSize)next.size=Math.max(8,Math.min(72,Math.round(parseFloat(n.style.fontSize)*2)));
+    if(t==='br'){runs.push({text:'\n',fmt:next});return}
+    [...n.childNodes].forEach(ch=>walk(ch,next));
+  }
+  walk(node,{});
+  const runXml=runs.map(r=>{
+    if(r.text==='\n')return '<w:r><w:br/></w:r>';
+    const props=`${r.fmt.bold?'<w:b/>':''}${r.fmt.italic?'<w:i/>':''}${r.fmt.underline?'<w:u w:val="single"/>':''}${r.fmt.size?`<w:sz w:val="${r.fmt.size}"/><w:szCs w:val="${r.fmt.size}"/>`:''}`;
+    return `<w:r>${props?`<w:rPr>${props}</w:rPr>`:''}<w:t xml:space="preserve">${officeEscapeXmlV2137(r.text)}</w:t></w:r>`;
+  }).join('');
+  return `<w:p><w:pPr><w:pStyle w:val="${style}"/>${jc}${spacing}</w:pPr>${runXml||'<w:r><w:t></w:t></w:r>'}</w:p>`;
+}
+async function officeExportDocxV2137(targetId,nameInputId){
+  const ed=document.getElementById(targetId);if(!ed)return;
+  try{
+    await officeLoadScriptV2128(OFFICE_JSZIP_V2128,'JSZip');if(!window.JSZip)throw new Error('Componente DOCX no disponible');
+    const zip=new JSZip(),name=officeCleanFileNameV2137(officeDocNameV2137(nameInputId));
+    const bodyNodes=[...ed.childNodes].filter(n=>n.nodeType===1||String(n.textContent||'').trim());
+    let body='';
+    for(const node of bodyNodes){
+      if(node.nodeType===1&&node.classList?.contains('office-page-break-v2137')){body+='<w:p><w:r><w:br w:type="page"/></w:r></w:p>';continue}
+      if(node.nodeType===1&&node.tagName.toLowerCase()==='figure'){
+        // Image export is deliberately retained visually in HTML/PDF. In DOCX v2.13.7 add a placeholder line to avoid corrupting the file.
+        const caption=node.querySelector('figcaption')?.textContent?.trim()||'Imagen adjunta';
+        body+=`<w:p><w:r><w:t>[${officeEscapeXmlV2137(caption||'Imagen')}]</w:t></w:r></w:p>`;continue
+      }
+      if(node.nodeType===1&&(node.tagName==='UL'||node.tagName==='OL')){
+        [...node.children].forEach(li=>{body+=officeDocxParagraphXmlV2137(li)});continue
+      }
+      body+=officeDocxParagraphXmlV2137(node.nodeType===1?node:Object.assign(document.createElement('p'),{textContent:node.textContent||''}));
+    }
+    const isLandscape=officePageV2137.orientation==='landscape',baseW=officePageV2137.size==='OFICIO'?12240:11906,baseH=officePageV2137.size==='OFICIO'?18709:16838;
+    const pgW=isLandscape?baseH:baseW,pgH=isLandscape?baseW:baseH;
+    const sect=`<w:sectPr><w:pgSz w:w="${pgW}" w:h="${pgH}"${isLandscape?' w:orient="landscape"':''}/><w:pgMar w:top="${officeTwipsV2137(officePageV2137.marginTop)}" w:right="${officeTwipsV2137(officePageV2137.marginRight)}" w:bottom="${officeTwipsV2137(officePageV2137.marginBottom)}" w:left="${officeTwipsV2137(officePageV2137.marginLeft)}" w:header="720" w:footer="720" w:gutter="0"/></w:sectPr>`;
+    zip.file('[Content_Types].xml',`<?xml version="1.0" encoding="UTF-8" standalone="yes"?><Types xmlns="http://schemas.openxmlformats.org/package/2006/content-types"><Default Extension="rels" ContentType="application/vnd.openxmlformats-package.relationships+xml"/><Default Extension="xml" ContentType="application/xml"/><Override PartName="/word/document.xml" ContentType="application/vnd.openxmlformats-officedocument.wordprocessingml.document.main+xml"/><Override PartName="/word/styles.xml" ContentType="application/vnd.openxmlformats-officedocument.wordprocessingml.styles+xml"/></Types>`);
+    zip.folder('_rels').file('.rels',`<?xml version="1.0" encoding="UTF-8" standalone="yes"?><Relationships xmlns="http://schemas.openxmlformats.org/package/2006/relationships"><Relationship Id="rId1" Type="http://schemas.openxmlformats.org/officeDocument/2006/relationships/officeDocument" Target="word/document.xml"/></Relationships>`);
+    zip.folder('word').file('document.xml',`<?xml version="1.0" encoding="UTF-8" standalone="yes"?><w:document xmlns:w="http://schemas.openxmlformats.org/wordprocessingml/2006/main"><w:body>${body}${sect}</w:body></w:document>`);
+    zip.folder('word').file('styles.xml',`<?xml version="1.0" encoding="UTF-8" standalone="yes"?><w:styles xmlns:w="http://schemas.openxmlformats.org/wordprocessingml/2006/main"><w:style w:type="paragraph" w:default="1" w:styleId="Normal"><w:name w:val="Normal"/><w:rPr><w:rFonts w:ascii="Arial" w:hAnsi="Arial"/><w:sz w:val="24"/></w:rPr></w:style><w:style w:type="paragraph" w:styleId="Title"><w:name w:val="Title"/><w:rPr><w:b/><w:sz w:val="36"/></w:rPr></w:style><w:style w:type="paragraph" w:styleId="Heading1"><w:name w:val="Heading 1"/><w:rPr><w:b/><w:sz w:val="30"/></w:rPr></w:style><w:style w:type="paragraph" w:styleId="Heading2"><w:name w:val="Heading 2"/><w:rPr><w:b/><w:sz w:val="26"/></w:rPr></w:style></w:styles>`);
+    zip.folder('word').folder('_rels').file('document.xml.rels',`<?xml version="1.0" encoding="UTF-8" standalone="yes"?><Relationships xmlns="http://schemas.openxmlformats.org/package/2006/relationships"></Relationships>`);
+    const blob=await zip.generateAsync({type:'blob',mimeType:'application/vnd.openxmlformats-officedocument.wordprocessingml.document'}),url=URL.createObjectURL(blob),a=document.createElement('a');a.href=url;a.download=`${name}.docx`;a.click();setTimeout(()=>URL.revokeObjectURL(url),1800);toast('DOCX generado');
+  }catch(error){console.error(error);toast(error?.message||'No se pudo generar DOCX')}
+}
+function officeExportPdfV2137(targetId,nameInputId){
+  const ed=document.getElementById(targetId);if(!ed)return;
+  const name=officeCleanFileNameV2137(officeDocNameV2137(nameInputId));
+  const base=officePageV2137.size==='OFICIO'?'216mm 330mm':'210mm 297mm';
+  const page=officePageV2137.orientation==='landscape'?base.split(' ').reverse().join(' '):base;
+  const w=window.open('','_blank');if(!w)return toast('Permita ventanas emergentes para exportar PDF');
+  w.document.write(`<!doctype html><html><head><meta charset="utf-8"><title>${esc(name)}</title><style>@page{size:${page};margin:${officePageV2137.marginTop}mm ${officePageV2137.marginRight}mm ${officePageV2137.marginBottom}mm ${officePageV2137.marginLeft}mm}html,body{margin:0;padding:0;font-family:Arial,sans-serif;font-size:12pt;line-height:1.35;color:#111}img{max-width:100%;height:auto}.office-page-break-v2137{break-before:page;page-break-before:always;height:0}.office-page-break-v2137 span{display:none}figure{margin:8px 0;text-align:center}figcaption{font-size:9pt;color:#555}table{border-collapse:collapse;max-width:100%}td,th{vertical-align:top}</style></head><body>${ed.innerHTML}<script>onload=()=>setTimeout(()=>print(),300)<\/script></body></html>`);
+  w.document.close();
+}
+
+officeCreateDocumentV2134=function officeCreateDocumentV2137(){
+  officePageV2137={size:'A4',orientation:'portrait',marginTop:20,marginRight:20,marginBottom:20,marginLeft:20};
+  officeSetBodyV2128(`<section class="office-create-shell-v2134 office-create-shell-v2137">
+    <div class="office-create-head-v2134"><div><span class="eyebrow">Nuevo documento</span><h3>Word offline</h3><p>Documento profesional · A4 u Oficio</p></div><button type="button" onclick="openOfficeCenterV2128()">← Volver</button></div>
+    <label class="office-doc-name-v2137">Nombre<input id="officeDocNameV2137" value="Documento"></label>
+    ${officePagePanelV2137()}
+    ${officeEditorToolbarV2137('officeEditorV2137')}
+    <div class="office-paper-wrap-v2134"><article id="officeEditorV2137" class="office-paper-v2134 office-editor-page-v2137 a4 portrait" contenteditable="true"><p><br></p></article></div>
+    ${officeEditorActionsV2137('officeEditorV2137','officeDocNameV2137')}
+    <p class="office-create-note-v2134">Puede insertar imágenes, dictar, usar saltos de página y exportar a DOCX o PDF. Todo el trabajo permanece en el dispositivo.</p>
+  </section>`);
+  setTimeout(()=>{officeApplyPageV2137();document.getElementById('officeEditorV2137')?.focus()},70);
+};
+
+const officeSetWordModeBaseV2137=officeSetWordModeV2131;
+officeSetWordModeV2131=async function officeSetWordModeV2137(mode){
+  await officeSetWordModeBaseV2137(mode);
+  if(mode!=='edit')return;
+  const stage=document.getElementById('officeWordStageV2131'),editor=document.getElementById('officeWordV2128');if(!stage||!editor)return;
+  editor.id='officeImportedEditorV2137';editor.classList.add('office-editor-page-v2137');
+  editor.contentEditable='true';
+  const name=(officeCurrentFileV2128?.name||'Documento.docx').replace(/\.docx$/i,'');
+  officePageV2137={size:'A4',orientation:'portrait',marginTop:20,marginRight:20,marginBottom:20,marginLeft:20};
+  stage.innerHTML=`<div class="office-import-edit-v2137">
+    <label class="office-doc-name-v2137">Nombre<input id="officeImportedNameV2137" value="${esc(name)}"></label>
+    ${officePagePanelV2137()}
+    ${officeEditorToolbarV2137('officeImportedEditorV2137')}
+    <div class="office-paper-wrap-v2134"><article id="officeImportedEditorV2137" class="office-word-v2128 office-word-mobile-v2130 editing office-editor-page-v2137" contenteditable="true">${editor.innerHTML}</article></div>
+    ${officeEditorActionsV2137('officeImportedEditorV2137','officeImportedNameV2137')}
+    <p class="office-create-note-v2134">Se edita una copia del contenido. El archivo original no se sobrescribe.</p>
+  </div>`;
+  officeApplyPageV2137();
+  document.getElementById('officeImportedEditorV2137')?.focus();
+};
+
+
+
+/* =========================================================
+   Agenda Policial v2.13.8 — Office: imágenes DOCX + tablas + escáner base
+   ========================================================= */
+function officeDataUrlPartsV2138(src){
+  const m=String(src||'').match(/^data:(image\/(?:png|jpeg|jpg));base64,(.+)$/i);if(!m)return null;
+  const mime=m[1].toLowerCase().replace('image/jpg','image/jpeg'),ext=mime==='image/png'?'png':'jpg';
+  return {mime,ext,b64:m[2]};
+}
+async function officeImageSizeV2138(src){
+  return await new Promise(resolve=>{const im=new Image();im.onload=()=>resolve({w:im.naturalWidth||800,h:im.naturalHeight||600});im.onerror=()=>resolve({w:800,h:600});im.src=src});
+}
+function officeDocxImageXmlV2138(rId,cx,cy,id,name){
+  return `<w:p><w:r><w:drawing><wp:inline xmlns:wp="http://schemas.openxmlformats.org/drawingml/2006/wordprocessingDrawing" distT="0" distB="0" distL="0" distR="0"><wp:extent cx="${cx}" cy="${cy}"/><wp:docPr id="${id}" name="${officeEscapeXmlV2137(name)}"/><a:graphic xmlns:a="http://schemas.openxmlformats.org/drawingml/2006/main"><a:graphicData uri="http://schemas.openxmlformats.org/drawingml/2006/picture"><pic:pic xmlns:pic="http://schemas.openxmlformats.org/drawingml/2006/picture"><pic:nvPicPr><pic:cNvPr id="0" name="${officeEscapeXmlV2137(name)}"/><pic:cNvPicPr/></pic:nvPicPr><pic:blipFill><a:blip xmlns:r="http://schemas.openxmlformats.org/officeDocument/2006/relationships" r:embed="${rId}"/><a:stretch><a:fillRect/></a:stretch></pic:blipFill><pic:spPr><a:xfrm><a:off x="0" y="0"/><a:ext cx="${cx}" cy="${cy}"/></a:xfrm><a:prstGeom prst="rect"><a:avLst/></a:prstGeom></pic:spPr></pic:pic></a:graphicData></a:graphic></wp:inline></w:drawing></w:r></w:p>`;
+}
+function officeTableXmlV2138(table){
+  const rows=[...table.rows];if(!rows.length)return '';
+  return `<w:tbl><w:tblPr><w:tblBorders><w:top w:val="single" w:sz="4" w:color="888888"/><w:left w:val="single" w:sz="4" w:color="888888"/><w:bottom w:val="single" w:sz="4" w:color="888888"/><w:right w:val="single" w:sz="4" w:color="888888"/><w:insideH w:val="single" w:sz="4" w:color="AAAAAA"/><w:insideV w:val="single" w:sz="4" w:color="AAAAAA"/></w:tblBorders></w:tblPr>${rows.map(row=>`<w:tr>${[...row.cells].map(cell=>`<w:tc><w:tcPr/><w:p><w:r><w:t xml:space="preserve">${officeEscapeXmlV2137(cell.innerText||cell.textContent||'')}</w:t></w:r></w:p></w:tc>`).join('')}</w:tr>`).join('')}</w:tbl>`;
+}
+function officeInsertTableV2138(targetId){
+  const target=document.getElementById(targetId);if(!target)return;
+  const rows=Math.max(1,Math.min(10,Number(prompt('Número de filas','3'))||3)),cols=Math.max(1,Math.min(8,Number(prompt('Número de columnas','2'))||2));
+  let html='<table class="office-table-edit-v2138"><tbody>';for(let r=0;r<rows;r++){html+='<tr>';for(let c=0;c<cols;c++)html+='<td><br></td>';html+='</tr>'}html+='</tbody></table><p><br></p>';
+  target.focus();try{document.execCommand('insertHTML',false,html)}catch{target.insertAdjacentHTML('beforeend',html)}
+}
+function officeInsertSignatureLineV2138(targetId){
+  const target=document.getElementById(targetId);if(!target)return;target.focus();
+  const html='<div class="office-signature-line-v2138"><div></div><span>Firma y sello</span></div><p><br></p>';
+  try{document.execCommand('insertHTML',false,html)}catch{target.insertAdjacentHTML('beforeend',html)}
+}
+const officeEditorToolbarBaseV2138=officeEditorToolbarV2137;
+officeEditorToolbarV2137=function officeEditorToolbarV2138(targetId){
+  const html=officeEditorToolbarBaseV2138(targetId);
+  return html.replace('</div>\n  </div>',`<button type="button" onclick="officeInsertTableV2138('${targetId}')">▦ Tabla</button><button type="button" onclick="officeInsertSignatureLineV2138('${targetId}')">✍ Firma</button></div>\n  </div>`);
+}
+
+/* DOCX v2.13.8: imágenes embebidas + tablas simples */
+officeExportDocxV2137=async function officeExportDocxV2138(targetId,nameInputId){
+  const ed=document.getElementById(targetId);if(!ed)return;
+  try{
+    await officeLoadScriptV2128(OFFICE_JSZIP_V2128,'JSZip');if(!window.JSZip)throw new Error('Componente DOCX no disponible');
+    const zip=new JSZip(),name=officeCleanFileNameV2137(officeDocNameV2137(nameInputId)),rels=[],media=[],contentDefaults=new Set(),nodes=[...ed.childNodes];
+    let body='',imageId=1;
+    for(const node of nodes){
+      if(node.nodeType!==1){if(String(node.textContent||'').trim()){const p=document.createElement('p');p.textContent=node.textContent;body+=officeDocxParagraphXmlV2137(p)}continue}
+      if(node.classList?.contains('office-page-break-v2137')){body+='<w:p><w:r><w:br w:type="page"/></w:r></w:p>';continue}
+      if(node.tagName==='TABLE'){body+=officeTableXmlV2138(node);continue}
+      if(node.classList?.contains('office-signature-line-v2138')){body+='<w:p><w:pPr><w:jc w:val="center"/></w:pPr><w:r><w:t>______________________________</w:t></w:r></w:p><w:p><w:pPr><w:jc w:val="center"/></w:pPr><w:r><w:t>Firma y sello</w:t></w:r></w:p>';continue}
+      const img=node.tagName==='FIGURE'?node.querySelector('img'):(node.tagName==='IMG'?node:null);
+      if(img){
+        const parts=officeDataUrlPartsV2138(img.src);
+        if(parts){
+          const rid=`rIdImg${imageId}`,fname=`image${imageId}.${parts.ext}`,size=await officeImageSizeV2138(img.src),maxW=5486400,ratio=size.h/size.w,cx=maxW,cy=Math.round(maxW*ratio);
+          media.push({fname,b64:parts.b64});rels.push({rid,fname});contentDefaults.add(parts.ext);
+          body+=officeDocxImageXmlV2138(rid,cx,cy,imageId,fname);imageId++;continue;
+        }
+      }
+      if(node.tagName==='UL'||node.tagName==='OL'){[...node.children].forEach(li=>body+=officeDocxParagraphXmlV2137(li));continue}
+      body+=officeDocxParagraphXmlV2137(node);
+    }
+    const land=officePageV2137.orientation==='landscape',bw=officePageV2137.size==='OFICIO'?12240:11906,bh=officePageV2137.size==='OFICIO'?18709:16838,pgW=land?bh:bw,pgH=land?bw:bh;
+    const sect=`<w:sectPr><w:pgSz w:w="${pgW}" w:h="${pgH}"${land?' w:orient="landscape"':''}/><w:pgMar w:top="${officeTwipsV2137(officePageV2137.marginTop)}" w:right="${officeTwipsV2137(officePageV2137.marginRight)}" w:bottom="${officeTwipsV2137(officePageV2137.marginBottom)}" w:left="${officeTwipsV2137(officePageV2137.marginLeft)}" w:header="720" w:footer="720" w:gutter="0"/></w:sectPr>`;
+    const defaults=[...contentDefaults].map(ext=>`<Default Extension="${ext}" ContentType="${ext==='png'?'image/png':'image/jpeg'}"/>`).join('');
+    zip.file('[Content_Types].xml',`<?xml version="1.0" encoding="UTF-8" standalone="yes"?><Types xmlns="http://schemas.openxmlformats.org/package/2006/content-types"><Default Extension="rels" ContentType="application/vnd.openxmlformats-package.relationships+xml"/><Default Extension="xml" ContentType="application/xml"/>${defaults}<Override PartName="/word/document.xml" ContentType="application/vnd.openxmlformats-officedocument.wordprocessingml.document.main+xml"/><Override PartName="/word/styles.xml" ContentType="application/vnd.openxmlformats-officedocument.wordprocessingml.styles+xml"/></Types>`);
+    zip.folder('_rels').file('.rels',`<?xml version="1.0" encoding="UTF-8" standalone="yes"?><Relationships xmlns="http://schemas.openxmlformats.org/package/2006/relationships"><Relationship Id="rId1" Type="http://schemas.openxmlformats.org/officeDocument/2006/relationships/officeDocument" Target="word/document.xml"/></Relationships>`);
+    const word=zip.folder('word');word.file('document.xml',`<?xml version="1.0" encoding="UTF-8" standalone="yes"?><w:document xmlns:w="http://schemas.openxmlformats.org/wordprocessingml/2006/main"><w:body>${body}${sect}</w:body></w:document>`);
+    word.file('styles.xml',`<?xml version="1.0" encoding="UTF-8" standalone="yes"?><w:styles xmlns:w="http://schemas.openxmlformats.org/wordprocessingml/2006/main"><w:style w:type="paragraph" w:default="1" w:styleId="Normal"><w:name w:val="Normal"/><w:rPr><w:rFonts w:ascii="Arial" w:hAnsi="Arial"/><w:sz w:val="24"/></w:rPr></w:style><w:style w:type="paragraph" w:styleId="Title"><w:name w:val="Title"/><w:rPr><w:b/><w:sz w:val="36"/></w:rPr></w:style><w:style w:type="paragraph" w:styleId="Heading1"><w:name w:val="Heading 1"/><w:rPr><w:b/><w:sz w:val="30"/></w:rPr></w:style><w:style w:type="paragraph" w:styleId="Heading2"><w:name w:val="Heading 2"/><w:rPr><w:b/><w:sz w:val="26"/></w:rPr></w:style></w:styles>`);
+    word.folder('_rels').file('document.xml.rels',`<?xml version="1.0" encoding="UTF-8" standalone="yes"?><Relationships xmlns="http://schemas.openxmlformats.org/package/2006/relationships">${rels.map(r=>`<Relationship Id="${r.rid}" Type="http://schemas.openxmlformats.org/officeDocument/2006/relationships/image" Target="media/${r.fname}"/>`).join('')}</Relationships>`);
+    const mediaFolder=word.folder('media');media.forEach(m=>mediaFolder.file(m.fname,m.b64,{base64:true}));
+    const blob=await zip.generateAsync({type:'blob',mimeType:'application/vnd.openxmlformats-officedocument.wordprocessingml.document'}),url=URL.createObjectURL(blob),a=document.createElement('a');a.href=url;a.download=`${name}.docx`;a.click();setTimeout(()=>URL.revokeObjectURL(url),1800);toast(`DOCX generado${media.length?` · ${media.length} imagen(es)`:''}`);
+  }catch(error){console.error(error);toast(error?.message||'No se pudo generar DOCX')}
+}
+
+/* Escáner documental base: cámara/galería, recorte manual por CSS y filtros */
+let officeScanV2138={pages:[]};
+function officeScannerOpenV2138(){
+  officeScanV2138={pages:[]};
+  officeSetBodyV2128(`<section class="office-scanner-v2138"><div class="office-create-head-v2134"><div><span class="eyebrow">Office offline</span><h3>Escáner documental</h3><p>Cámara · contraste · varias páginas · PDF</p></div><button type="button" onclick="openOfficeCenterV2128()">← Volver</button></div>
+  <div class="office-scan-actions-v2138"><button type="button" onclick="officeScanCaptureV2138(true)">📷 Cámara</button><button type="button" onclick="officeScanCaptureV2138(false)">🖼 Galería</button><button type="button" onclick="officeScanPdfV2138()">📄 Generar PDF</button></div>
+  <div class="office-scan-filters-v2138"><label>Mejora<select id="officeScanFilterV2138"><option value="normal">Original</option><option value="contrast">Mejorar contraste</option><option value="gray">Escala de grises</option><option value="bw">Blanco y negro</option></select></label></div>
+  <div id="officeScanPagesV2138" class="office-scan-pages-v2138"><div class="card small">Añada una o más páginas.</div></div></section>`);
+}
+function officeScanCaptureV2138(camera){
+  const input=document.createElement('input');input.type='file';input.accept='image/*';if(camera)input.capture='environment';input.multiple=!camera;
+  input.onchange=()=>[...(input.files||[])].forEach(file=>{const r=new FileReader();r.onload=()=>{officeScanV2138.pages.push({src:r.result,rotation:0});officeScanRenderV2138()};r.readAsDataURL(file)});input.click();
+}
+function officeScanRenderV2138(){
+  const box=document.getElementById('officeScanPagesV2138');if(!box)return;
+  box.innerHTML=officeScanV2138.pages.map((p,i)=>`<article class="office-scan-page-v2138"><div class="office-scan-num-v2138">${i+1}</div><img src="${p.src}" style="transform:rotate(${p.rotation||0}deg)" alt="Página ${i+1}"><div><button onclick="officeScanRotateV2138(${i})">↻ Girar</button><button onclick="officeScanRemoveV2138(${i})">Eliminar</button></div></article>`).join('')||'<div class="card small">Añada una o más páginas.</div>';
+}
+function officeScanRotateV2138(i){if(!officeScanV2138.pages[i])return;officeScanV2138.pages[i].rotation=((officeScanV2138.pages[i].rotation||0)+90)%360;officeScanRenderV2138()}
+function officeScanRemoveV2138(i){officeScanV2138.pages.splice(i,1);officeScanRenderV2138()}
+function officeScanFilterCssV2138(){
+  const v=document.getElementById('officeScanFilterV2138')?.value||'normal';
+  return v==='contrast'?'contrast(1.35) brightness(1.05)':v==='gray'?'grayscale(1) contrast(1.15)':v==='bw'?'grayscale(1) contrast(2.2) brightness(1.1)':'none';
+}
+function officeScanPdfV2138(){
+  if(!officeScanV2138.pages.length)return toast('Primero escanee o agregue páginas');
+  const filter=officeScanFilterCssV2138(),w=window.open('','_blank');if(!w)return toast('Permita ventanas emergentes para generar PDF');
+  w.document.write(`<!doctype html><html><head><meta charset="utf-8"><title>Documento escaneado</title><style>@page{size:A4;margin:0}html,body{margin:0}.p{width:210mm;height:297mm;display:flex;align-items:center;justify-content:center;page-break-after:always;overflow:hidden;background:white}.p:last-child{page-break-after:auto}.p img{max-width:100%;max-height:100%;object-fit:contain;filter:${filter}}</style></head><body>${officeScanV2138.pages.map(p=>`<div class="p"><img src="${p.src}" style="transform:rotate(${p.rotation||0}deg)"></div>`).join('')}<script>onload=()=>setTimeout(()=>print(),500)<\/script></body></html>`);w.document.close();
+}
+const openOfficeCenterBaseV2138=openOfficeCenterV2128;
+openOfficeCenterV2128=function openOfficeCenterV2138(){
+  openOfficeCenterBaseV2138();
+  setTimeout(()=>{
+    const create=document.querySelector('.office-create-v2134');
+    if(create&&!document.querySelector('.office-scanner-entry-v2138')){
+      const b=document.createElement('div');b.className='office-scanner-entry-v2138';b.innerHTML='<button type="button" onclick="officeScannerOpenV2138()">📷 <b>Escáner documental</b><small>Cámara · multipágina · PDF</small></button>';create.after(b);
+    }
+  },30);
+};
+
+
+/* =========================================================
+   Agenda Policial v2.13.9
+   - Continuidad real de lectura + mini reproductor persistente
+   - Escáner: reordenar, borrador y ajuste manual de 4 esquinas
+   ========================================================= */
+const OFFICE_READER_KEY_V2139='agenda_office_reader_v2139';
+const OFFICE_SCAN_KEY_V2139='agenda_office_scan_draft_v2139';
+let officeReaderSavedV2139=null;
+let officeScannerCornerStateV2139=null;
+
+function officeReaderLoadSavedV2139(){
+  try{
+    const raw=localStorage.getItem(OFFICE_READER_KEY_V2139);
+    officeReaderSavedV2139=raw?JSON.parse(raw):null;
+    if(officeReaderSavedV2139 && !Array.isArray(officeReaderSavedV2139.chunks)) officeReaderSavedV2139=null;
+  }catch{officeReaderSavedV2139=null}
+  return officeReaderSavedV2139;
+}
+function officeReaderSaveV2139(){
+  try{
+    const payload={
+      title:officeCurrentFileV2128?.name||officeReaderSavedV2139?.title||'Documento',
+      chunks:officeReaderV2136.chunks||[],
+      index:Number(officeReaderV2136.index||0),
+      rate:Number(officeReaderV2136.rate||1),
+      updatedAt:new Date().toISOString()
+    };
+    if(payload.chunks.length){
+      localStorage.setItem(OFFICE_READER_KEY_V2139,JSON.stringify(payload));
+      officeReaderSavedV2139=payload;
+    }
+  }catch{}
+  officeMiniPlayerRefreshV2139();
+}
+function officeReaderClearSavedV2139(){
+  try{localStorage.removeItem(OFFICE_READER_KEY_V2139)}catch{}
+  officeReaderSavedV2139=null;officeMiniPlayerRefreshV2139();
+}
+function officeReaderResumeSavedV2139(){
+  const saved=officeReaderLoadSavedV2139();
+  if(!saved?.chunks?.length)return toast('No existe una lectura pendiente');
+  try{speechSynthesis.cancel()}catch{}
+  officeReaderV2136.chunks=saved.chunks;
+  officeReaderV2136.index=Math.max(0,Math.min(saved.chunks.length-1,Number(saved.index||0)));
+  officeReaderV2136.rate=Number(saved.rate||1);
+  officeReaderV2136.playing=true;officeReaderV2136.paused=false;
+  officeReaderSavedV2139=saved;
+  officeReaderSetupMediaV2136();
+  officeReaderSpeakNextV2136();
+  officeMiniPlayerRefreshV2139();
+}
+function officeReaderBackV2139(){
+  const saved=officeReaderLoadSavedV2139();
+  const chunks=officeReaderV2136.chunks?.length?officeReaderV2136.chunks:saved?.chunks||[];
+  if(!chunks.length)return;
+  try{speechSynthesis.cancel()}catch{}
+  officeReaderV2136.chunks=chunks;
+  officeReaderV2136.index=Math.max(0,(officeReaderV2136.index||saved?.index||0)-1);
+  officeReaderV2136.playing=true;officeReaderV2136.paused=false;
+  officeReaderSaveV2139();officeReaderSpeakNextV2136();
+}
+function officeReaderForwardV2139(){
+  const saved=officeReaderLoadSavedV2139();
+  const chunks=officeReaderV2136.chunks?.length?officeReaderV2136.chunks:saved?.chunks||[];
+  if(!chunks.length)return;
+  try{speechSynthesis.cancel()}catch{}
+  officeReaderV2136.chunks=chunks;
+  officeReaderV2136.index=Math.min(chunks.length-1,(officeReaderV2136.index||saved?.index||0)+1);
+  officeReaderV2136.playing=true;officeReaderV2136.paused=false;
+  officeReaderSaveV2139();officeReaderSpeakNextV2136();
+}
+function officeReaderProgressV2139(){
+  const saved=officeReaderLoadSavedV2139();
+  const chunks=officeReaderV2136.chunks?.length?officeReaderV2136.chunks:saved?.chunks||[];
+  const idx=officeReaderV2136.playing||officeReaderV2136.paused?officeReaderV2136.index:(saved?.index||0);
+  return chunks.length?`${Math.min(idx+1,chunks.length)}/${chunks.length}`:'';
+}
+function officeMiniPlayerHtmlV2139(){
+  const saved=officeReaderLoadSavedV2139();
+  const has=saved?.chunks?.length || officeReaderV2136.playing || officeReaderV2136.paused;
+  if(!has)return '';
+  const title=officeCurrentFileV2128?.name||saved?.title||'Lectura de documento';
+  const paused=officeReaderV2136.paused;
+  return `<aside id="officeMiniPlayerV2139" class="office-mini-player-v2139">
+    <button class="office-mini-main-v2139" type="button" onclick="openOfficeCenterV2128()"><span>🔊</span><span><b>${esc(title)}</b><small>Continuar lectura · ${officeReaderProgressV2139()}</small></span></button>
+    <div class="office-mini-controls-v2139">
+      <button type="button" onclick="officeReaderBackV2139()" title="Anterior">⏮</button>
+      <button type="button" onclick="${paused?'officeReaderResumeSavedV2139()':'officeReaderPauseV2136()'}" title="Pausa / continuar">${paused?'▶':'⏯'}</button>
+      <button type="button" onclick="officeReaderForwardV2139()" title="Siguiente">⏭</button>
+      <button type="button" onclick="officeReaderStopV2139()" title="Cerrar">✕</button>
+    </div>
+  </aside>`;
+}
+function officeMiniPlayerRefreshV2139(){
+  const old=document.getElementById('officeMiniPlayerV2139');
+  const html=officeMiniPlayerHtmlV2139();
+  if(old){if(html){old.outerHTML=html}else old.remove();return}
+  if(html)document.querySelector('.app')?.insertAdjacentHTML('beforeend',html);
+}
+const appShellBaseV2139=appShell;
+appShell=function appShellV2139(content){
+  const html=appShellBaseV2139(content);
+  const mini=officeMiniPlayerHtmlV2139();
+  return mini?html.replace('</div>',`</div>${mini}`,1):html;
+};
+
+const officeReaderStartBaseV2139=officeReaderStartV2136;
+officeReaderStartV2136=function officeReaderStartPersistV2139(){
+  officeReaderStartBaseV2139();
+  setTimeout(()=>officeReaderSaveV2139(),50);
+};
+const officeReaderSpeakNextBaseV2139=officeReaderSpeakNextV2136;
+officeReaderSpeakNextV2136=function officeReaderSpeakNextPersistV2139(){
+  if(!officeReaderV2136.playing)return;
+  if(officeReaderV2136.index>=officeReaderV2136.chunks.length){
+    officeReaderSavedV2139={...(officeReaderSavedV2139||{}),chunks:officeReaderV2136.chunks,index:Math.max(0,officeReaderV2136.chunks.length-1),rate:officeReaderV2136.rate,title:officeCurrentFileV2128?.name||officeReaderSavedV2139?.title||'Documento'};
+    officeReaderSaveV2139();
+    officeReaderV2136.playing=false;officeReaderV2136.paused=false;
+    officeReaderStatusV2136('Finalizado');officeMiniPlayerRefreshV2139();return;
+  }
+  officeReaderSaveV2139();
+  const u=new SpeechSynthesisUtterance(officeReaderV2136.chunks[officeReaderV2136.index]);
+  u.lang='es-BO';u.rate=officeReaderV2136.rate;
+  u.onstart=()=>{officeReaderStatusV2136(`Leyendo ${officeReaderV2136.index+1}/${officeReaderV2136.chunks.length}`);officeReaderSaveV2139();try{navigator.mediaSession.playbackState='playing'}catch{}};
+  u.onend=()=>{if(officeReaderV2136.playing){officeReaderV2136.index++;officeReaderSaveV2139();officeReaderSpeakNextV2136()}};
+  u.onerror=()=>{if(officeReaderV2136.playing){officeReaderV2136.index++;officeReaderSaveV2139();officeReaderSpeakNextV2136()}};
+  speechSynthesis.speak(u);
+};
+const officeReaderPauseBaseV2139=officeReaderPauseV2136;
+officeReaderPauseV2136=function officeReaderPausePersistV2139(forcePlay=null){
+  officeReaderPauseBaseV2139(forcePlay);officeReaderSaveV2139();
+};
+function officeReaderStopV2139(){
+  try{speechSynthesis.cancel()}catch{}
+  officeReaderV2136.playing=false;officeReaderV2136.paused=false;
+  officeReaderSaveV2139();
+  officeMiniPlayerRefreshV2139();
+}
+const officeReaderStopBaseV2139=officeReaderStopV2136;
+officeReaderStopV2136=function officeReaderStopPersistV2139(show=true){
+  // Closing a document no longer erases the saved reading position.
+  try{speechSynthesis.cancel()}catch{}
+  officeReaderV2136.playing=false;officeReaderV2136.paused=false;
+  if(show)officeReaderStatusV2136('Detenido');
+  try{navigator.mediaSession.playbackState='none'}catch{}
+  officeReaderSaveV2139();
+};
+
+const openOfficeCenterBaseV2139=openOfficeCenterV2128;
+openOfficeCenterV2128=function openOfficeCenterV2139(){
+  openOfficeCenterBaseV2139();
+  setTimeout(()=>{
+    const saved=officeReaderLoadSavedV2139();
+    if(saved?.chunks?.length && !document.querySelector('.office-resume-reading-v2139')){
+      const body=document.getElementById('officeBodyV2128');
+      body?.insertAdjacentHTML('beforebegin',`<div class="office-resume-reading-v2139">
+        <div><span>🔊</span><span><b>Continuar donde quedaste</b><small>${esc(saved.title||'Documento')} · ${Math.min((saved.index||0)+1,saved.chunks.length)}/${saved.chunks.length}</small></span></div>
+        <button type="button" onclick="officeReaderResumeSavedV2139()">▶ Continuar</button>
+        <button type="button" onclick="officeReaderClearSavedV2139()">Olvidar</button>
+      </div>`);
+    }
+  },40);
+};
+
+/* Resaltar el párrafo aproximado de lectura cuando el documento está abierto */
+function officeReaderHighlightV2139(){
+  const root=document.getElementById('officeWordV2128');
+  if(!root)return;
+  root.querySelectorAll('.office-reading-current-v2139').forEach(x=>x.classList.remove('office-reading-current-v2139'));
+  const blocks=[...root.querySelectorAll('p,li,h1,h2,h3,div')].filter(x=>(x.innerText||'').trim().length>8);
+  if(!blocks.length)return;
+  const chunks=officeReaderV2136.chunks||[],idx=officeReaderV2136.index||0,target=(chunks[idx]||'').slice(0,45).trim();
+  if(!target)return;
+  const found=blocks.find(x=>(x.innerText||'').replace(/\s+/g,' ').includes(target.slice(0,25)));
+  if(found){found.classList.add('office-reading-current-v2139');found.scrollIntoView({block:'center',behavior:'smooth'})}
+}
+setInterval(()=>{if(officeReaderV2136.playing)officeReaderHighlightV2139()},1200);
+
+/* ===================== ESCÁNER 2.0 ===================== */
+function officeScanMoveV2139(i,delta){
+  const j=i+delta;if(i<0||j<0||j>=officeScanV2138.pages.length)return;
+  const [row]=officeScanV2138.pages.splice(i,1);officeScanV2138.pages.splice(j,0,row);officeScanRenderV2138();officeScanDraftSaveV2139(false);
+}
+function officeScanDraftSaveV2139(show=true){
+  try{
+    localStorage.setItem(OFFICE_SCAN_KEY_V2139,JSON.stringify({pages:officeScanV2138.pages,filter:document.getElementById('officeScanFilterV2138')?.value||'normal',updatedAt:new Date().toISOString()}));
+    if(show)toast('Borrador de escáner guardado');
+  }catch{
+    if(show)toast('El borrador es demasiado grande para guardarse localmente');
+  }
+}
+function officeScanDraftLoadV2139(){
+  try{
+    const raw=localStorage.getItem(OFFICE_SCAN_KEY_V2139);if(!raw)return toast('No hay borrador guardado');
+    const draft=JSON.parse(raw);officeScanV2138.pages=Array.isArray(draft.pages)?draft.pages:[];
+    officeScanRenderV2138();const sel=document.getElementById('officeScanFilterV2138');if(sel&&draft.filter)sel.value=draft.filter;toast('Borrador recuperado');
+  }catch{toast('No se pudo recuperar el borrador')}
+}
+function officeScanDraftClearV2139(){
+  try{localStorage.removeItem(OFFICE_SCAN_KEY_V2139)}catch{};toast('Borrador eliminado');
+}
+const officeScanRenderBaseV2139=officeScanRenderV2138;
+officeScanRenderV2138=function officeScanRenderV2139(){
+  const box=document.getElementById('officeScanPagesV2138');if(!box)return;
+  box.innerHTML=officeScanV2138.pages.map((p,i)=>`<article class="office-scan-page-v2138">
+    <div class="office-scan-num-v2138">${i+1}</div>
+    <img src="${p.src}" style="transform:rotate(${p.rotation||0}deg)" alt="Página ${i+1}">
+    <div class="office-scan-page-tools-v2139">
+      <button onclick="officeScanMoveV2139(${i},-1)" ${i===0?'disabled':''}>←</button>
+      <button onclick="officeScanMoveV2139(${i},1)" ${i===officeScanV2138.pages.length-1?'disabled':''}>→</button>
+      <button onclick="officeScanCornersV2139(${i})">◰ Esquinas</button>
+      <button onclick="officeScanRotateV2138(${i})">↻</button>
+      <button onclick="officeScanRemoveV2138(${i})">Eliminar</button>
+    </div>
+  </article>`).join('')||'<div class="card small">Añada una o más páginas.</div>';
+};
+const officeScannerOpenBaseV2139=officeScannerOpenV2138;
+officeScannerOpenV2138=function officeScannerOpenV2139(){
+  officeScannerOpenBaseV2139();
+  setTimeout(()=>{
+    const actions=document.querySelector('.office-scan-actions-v2138');
+    if(actions&&!document.querySelector('.office-scan-draft-actions-v2139')){
+      actions.insertAdjacentHTML('afterend',`<div class="office-scan-draft-actions-v2139">
+        <button type="button" onclick="officeScanDraftSaveV2139()">💾 Guardar borrador</button>
+        <button type="button" onclick="officeScanDraftLoadV2139()">↺ Recuperar</button>
+        <button type="button" onclick="officeScanDraftClearV2139()">Limpiar borrador</button>
+      </div>`);
+    }
+  },40);
+};
+
+function officeScanCornersV2139(index){
+  const page=officeScanV2138.pages[index];if(!page)return;
+  const im=new Image();
+  im.onload=()=>{
+    const maxW=Math.min(820,window.innerWidth-40),scale=Math.min(1,maxW/im.naturalWidth),w=Math.round(im.naturalWidth*scale),h=Math.round(im.naturalHeight*scale);
+    officeScannerCornerStateV2139={index,w,h,scale,corners:[{x:10,y:10},{x:w-10,y:10},{x:w-10,y:h-10},{x:10,y:h-10}]};
+    showModal(`<section class="office-corner-editor-v2139"><h2>Ajustar 4 esquinas</h2><p class="subtle">Mueva cada punto hasta la esquina real de la hoja y aplique la corrección.</p>
+      <div id="officeCornerStageV2139" class="office-corner-stage-v2139" style="width:${w}px;height:${h}px">
+        <img src="${page.src}" width="${w}" height="${h}">
+        <svg id="officeCornerSvgV2139" viewBox="0 0 ${w} ${h}" width="${w}" height="${h}"><polygon id="officeCornerPolyV2139" points="10,10 ${w-10},10 ${w-10},${h-10} 10,${h-10}"/></svg>
+        ${[0,1,2,3].map(i=>`<button class="office-corner-handle-v2139" data-i="${i}" style="left:${officeScannerCornerStateV2139.corners[i].x}px;top:${officeScannerCornerStateV2139.corners[i].y}px" aria-label="Esquina ${i+1}"></button>`).join('')}
+      </div>
+      <div class="row wrap"><button class="btn" onclick="officeScanApplyPerspectiveV2139()">Aplicar perspectiva</button><button class="btn secondary" onclick="closeModal()">Cancelar</button></div>
+    </section>`);
+    officeCornerWireV2139();
+  };im.src=page.src;
+}
+function officeCornerWireV2139(){
+  document.querySelectorAll('.office-corner-handle-v2139').forEach(handle=>{
+    const i=Number(handle.dataset.i);
+    const move=e=>{
+      const stage=document.getElementById('officeCornerStageV2139');if(!stage)return;
+      const r=stage.getBoundingClientRect(),pt=e.touches?.[0]||e;
+      const x=Math.max(0,Math.min(r.width,pt.clientX-r.left)),y=Math.max(0,Math.min(r.height,pt.clientY-r.top));
+      officeScannerCornerStateV2139.corners[i]={x,y};handle.style.left=`${x}px`;handle.style.top=`${y}px`;officeCornerPolyV2139();
+    };
+    const up=()=>{window.removeEventListener('pointermove',move);window.removeEventListener('pointerup',up)};
+    handle.addEventListener('pointerdown',e=>{e.preventDefault();handle.setPointerCapture?.(e.pointerId);window.addEventListener('pointermove',move);window.addEventListener('pointerup',up)});
+    handle.addEventListener('touchmove',e=>{e.preventDefault();move(e)},{passive:false});
+  });
+}
+function officeCornerPolyV2139(){
+  const poly=document.getElementById('officeCornerPolyV2139');if(!poly)return;
+  poly.setAttribute('points',officeScannerCornerStateV2139.corners.map(p=>`${p.x},${p.y}`).join(' '));
+}
+function officeSolveLinearV2139(A,b){
+  const n=b.length,M=A.map((r,i)=>[...r,b[i]]);
+  for(let i=0;i<n;i++){
+    let max=i;for(let k=i+1;k<n;k++)if(Math.abs(M[k][i])>Math.abs(M[max][i]))max=k;
+    [M[i],M[max]]=[M[max],M[i]];const piv=M[i][i]||1e-12;for(let j=i;j<=n;j++)M[i][j]/=piv;
+    for(let k=0;k<n;k++){if(k===i)continue;const f=M[k][i];for(let j=i;j<=n;j++)M[k][j]-=f*M[i][j]}
+  }
+  return M.map(r=>r[n]);
+}
+function officeHomographyV2139(dst,src){
+  const A=[],b=[];
+  for(let i=0;i<4;i++){
+    const u=dst[i].x,v=dst[i].y,x=src[i].x,y=src[i].y;
+    A.push([u,v,1,0,0,0,-u*x,-v*x]);b.push(x);
+    A.push([0,0,0,u,v,1,-u*y,-v*y]);b.push(y);
+  }
+  const h=officeSolveLinearV2139(A,b);return [...h,1];
+}
+async function officeScanApplyPerspectiveV2139(){
+  const st=officeScannerCornerStateV2139;if(!st)return;
+  const page=officeScanV2138.pages[st.index],im=new Image();
+  im.onload=()=>{
+    const src=st.corners.map(p=>({x:p.x/st.scale,y:p.y/st.scale}));
+    const top=Math.hypot(src[1].x-src[0].x,src[1].y-src[0].y),bottom=Math.hypot(src[2].x-src[3].x,src[2].y-src[3].y);
+    const left=Math.hypot(src[3].x-src[0].x,src[3].y-src[0].y),right=Math.hypot(src[2].x-src[1].x,src[2].y-src[1].y);
+    let W=Math.max(200,Math.round((top+bottom)/2)),H=Math.max(200,Math.round((left+right)/2));
+    const cap=1500,scale=Math.min(1,cap/Math.max(W,H));W=Math.round(W*scale);H=Math.round(H*scale);
+    const cvs=document.createElement('canvas');cvs.width=W;cvs.height=H;const ctx=cvs.getContext('2d',{willReadFrequently:true});
+    const srcCanvas=document.createElement('canvas');srcCanvas.width=im.naturalWidth;srcCanvas.height=im.naturalHeight;const sctx=srcCanvas.getContext('2d',{willReadFrequently:true});sctx.drawImage(im,0,0);
+    const srcData=sctx.getImageData(0,0,im.naturalWidth,im.naturalHeight),out=ctx.createImageData(W,H);
+    const Hm=officeHomographyV2139([{x:0,y:0},{x:W-1,y:0},{x:W-1,y:H-1},{x:0,y:H-1}],src);
+    const sd=srcData.data,od=out.data,sw=im.naturalWidth,sh=im.naturalHeight;
+    for(let y=0;y<H;y++)for(let x=0;x<W;x++){
+      const den=Hm[6]*x+Hm[7]*y+1,sx=(Hm[0]*x+Hm[1]*y+Hm[2])/den,sy=(Hm[3]*x+Hm[4]*y+Hm[5])/den,ix=Math.round(sx),iy=Math.round(sy),o=(y*W+x)*4;
+      if(ix>=0&&iy>=0&&ix<sw&&iy<sh){const q=(iy*sw+ix)*4;od[o]=sd[q];od[o+1]=sd[q+1];od[o+2]=sd[q+2];od[o+3]=255}else{od[o]=od[o+1]=od[o+2]=255;od[o+3]=255}
+    }
+    ctx.putImageData(out,0,0);page.src=cvs.toDataURL('image/jpeg',.9);page.rotation=0;closeModal();officeScanRenderV2138();officeScanDraftSaveV2139(false);toast('Perspectiva corregida');
+  };im.src=page.src;
+}
