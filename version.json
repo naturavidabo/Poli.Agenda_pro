@@ -1,8 +1,8 @@
 {
-  "version": "2.13.2",
+  "version": "2.13.3",
   "build": "2026-08-16",
-  "channel": "share-material-bank-office-universal",
-  "appVersion": "2.13.2",
+  "channel": "office-offline-stage-1",
+  "appVersion": "2.13.3",
   "scheduleVersion": "2026-07-29-v274",
   "databaseVersion": "agenda-db-10"
 }

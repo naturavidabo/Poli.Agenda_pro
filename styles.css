@@ -173,3 +173,22 @@ body.academic-dark-v2124 .office-word-toolbar-v2131{background:rgba(15,25,18,.97
 
 .office-format-grid-v2131 button{display:grid;grid-template-columns:auto 1fr;grid-template-rows:auto auto;column-gap:7px;align-items:center;text-align:left;min-height:58px;padding:9px 12px;border:1px solid #cbd5bf;border-radius:14px;background:#fff;color:#3a482b;font:inherit;cursor:pointer}.office-format-grid-v2131 button>b{font-size:12px}.office-format-grid-v2131 button>small{grid-column:2;font-size:9px;color:#748064}.office-format-grid-v2131 button:hover,.office-format-grid-v2131 button:focus-visible{border-color:#889961;background:#f3f6ec;outline:none}.office-shell-v2131 .office-local-note-v2128{font-size:10px}
 body.academic-dark-v2124 .office-format-grid-v2131 button{background:#111c15!important;color:#edf3ee!important;border-color:#34483a!important}body.academic-dark-v2124 .office-format-grid-v2131 button>small{color:#b8c5bb!important}body.academic-dark-v2124 .office-format-grid-v2131 button:hover,body.academic-dark-v2124 .office-format-grid-v2131 button:focus-visible{background:#1b2a20!important;border-color:#586c4a!important}
+
+
+/* =========================================================
+   Agenda Policial v2.13.3 · Office exclusivamente offline
+   ========================================================= */
+.offline-office-card-v2133{
+  width:100%;display:flex;align-items:center;gap:12px;text-align:left;
+  border:1px solid rgba(197,164,89,.45);background:linear-gradient(135deg,rgba(25,43,34,.98),rgba(15,27,22,.98));
+  color:#f4f7f4;border-radius:18px;padding:15px 14px;margin:12px 0 18px;box-shadow:0 10px 24px rgba(0,0,0,.14);cursor:pointer
+}
+.offline-office-card-v2133:active{transform:translateY(1px)}
+.offline-office-icon-v2133{width:48px;height:48px;border-radius:14px;display:grid;place-items:center;background:rgba(197,164,89,.14);color:#e5cb82;flex:0 0 48px}
+.offline-office-icon-v2133 .ui-icon{width:26px;height:26px}
+.offline-office-copy-v2133{display:flex;flex-direction:column;min-width:0;flex:1}
+.offline-office-copy-v2133 small{font-size:10px;letter-spacing:.08em;font-weight:900;color:#d7bd74}
+.offline-office-copy-v2133 b{font-size:17px;margin-top:2px;color:#fff}
+.offline-office-copy-v2133 em{font-size:12px;font-style:normal;color:#c8d2ca;margin-top:2px;white-space:normal}
+.offline-office-open-v2133{font-size:12px;font-weight:900;color:#e5cb82;white-space:nowrap}
+@media(max-width:390px){.offline-office-card-v2133{padding:13px 11px;gap:9px}.offline-office-open-v2133{display:none}.offline-office-copy-v2133 b{font-size:16px}}

@@ -1,0 +1,7 @@
+AGENDA POLICIAL v2.13.3 — OFFICE OFFLINE ETAPA 1
+
+- Office deja de mostrarse como acceso global del encabezado.
+- Office se integra como tarjeta visible en el panel de inicio offline.
+- El área online deja de ofrecer “Abrir en Office” para adjuntos Excel/PowerPoint; conserva descarga.
+- El módulo Office se rotula explícitamente como herramienta offline/local.
+- Esta etapa prepara la siguiente: creación de documentos, Word→PDF y escáner multipágina.
