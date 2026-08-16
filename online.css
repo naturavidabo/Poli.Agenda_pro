@@ -736,3 +736,13 @@ body.academic-dark-v2124 .bank-attempt-modal-v2130 .bank-matching-note-v210{back
 .bank-share-btn-v2132{font-weight:800;border:1px solid currentColor;border-radius:10px;padding:.55rem .7rem;background:transparent}
 .share-simple-v2132 .academic-audience-options-v2130{grid-template-columns:repeat(2,minmax(0,1fr))}
 @media(max-width:620px){.share-simple-v2132 .academic-audience-options-v2130{grid-template-columns:1fr}}
+
+
+/* v2.14.0 · Lector online: continuar donde quedaste */
+.academic-reader-resume-v2140{display:inline-flex!important;align-items:center;gap:4px;background:#6c7c37!important;color:#fff!important;border-color:#8e9c52!important;font-weight:900!important;box-shadow:0 4px 12px rgba(67,79,31,.18)}
+.academic-reader-resume-v2140 small{font-size:.67em;opacity:.85}
+.resume-target-v2140{animation:readerResumeFlashV2140 1.6s ease}
+@keyframes readerResumeFlashV2140{0%,100%{outline:0 solid transparent;background:inherit}35%{outline:3px solid rgba(190,154,54,.75);background:rgba(255,229,139,.45)}}
+.reader-status-row-v2140{align-items:center;gap:8px;flex-wrap:wrap}
+.reader-status-row-v2140 .academic-reader-resume-slot-v2125{min-height:34px}
+@media(max-width:540px){.academic-reader-resume-v2140{width:100%;justify-content:center}.reader-status-row-v2140{display:grid!important;grid-template-columns:1fr}}

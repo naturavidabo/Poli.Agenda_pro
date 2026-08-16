@@ -7618,3 +7618,225 @@ async function academicBankShareV2132(bankId){
 }
 const _academicBankCardBaseV2132=academicBankCardV279;
 academicBankCardV279=function academicBankCardV2132(bank){let html=_academicBankCardBaseV2132(bank);if(academicSession?.role!=='administrador_general')return html;const other=academicBankOtherCourseV2132(),share=`<button class="text-btn bank-share-btn-v2132" type="button" onclick="academicBankShareV2132('${bank.id}')">↗ Compartir con Paralelo ${other.label}</button>`;return html.replace('</div>\n  </article>',`${share}</div>\n  </article>`)};
+
+
+/* =========================================================
+   AGENDA POLICIAL v2.14.0 — LECTOR ONLINE: CONTINUAR DE VERDAD
+   Solo área académica online.
+   - Guarda bloque, fragmento hablado, velocidad y posición visual.
+   - Recupera el mismo punto con varios intentos tras renderizar.
+   - Botón Continuar siempre visible cuando hay progreso.
+   - Velocidades 1.10×, 1.15× y 1.25×.
+   ========================================================= */
+function academicReaderProgressKeyV2140(file){
+  const identity=[
+    String(file?.url||''),
+    String(file?.path||''),
+    String(file?.name||'documento'),
+    String(file?.subject||'')
+  ].join('|').toLowerCase();
+  let hash=2166136261;
+  for(let i=0;i<identity.length;i++){hash^=identity.charCodeAt(i);hash=Math.imul(hash,16777619)}
+  return `agenda-reader-online-v2140-${(hash>>>0).toString(36)}`;
+}
+function academicReaderLegacyKeysV2140(file){
+  const keys=[];
+  try{keys.push(academicReaderProgressKeyV212(file))}catch{}
+  return keys.filter(Boolean);
+}
+function academicReaderReadProgressV2140(file){
+  if(!file)return null;
+  try{
+    let raw=localStorage.getItem(academicReaderProgressKeyV2140(file));
+    if(raw)return JSON.parse(raw);
+    for(const key of academicReaderLegacyKeysV2140(file)){
+      raw=localStorage.getItem(key);
+      if(raw){
+        const old=JSON.parse(raw);
+        if(old&&Number.isFinite(Number(old.block)))return {block:Number(old.block),speechIndex:null,rate:1,scrollTop:null,at:old.at||Date.now()};
+      }
+    }
+  }catch{}
+  return null;
+}
+function academicReaderCurrentBlockV2140(){
+  const state=academicReaderStateV290;
+  const chunk=state?.speechChunks?.[Math.max(0,Number(state?.speechIndex||0))];
+  if(chunk&&Number.isFinite(Number(chunk.blockIndex)))return Number(chunk.blockIndex);
+  if(Number.isFinite(Number(state?.lastBlockV212)))return Number(state.lastBlockV212);
+  const body=document.getElementById('academicReaderBodyV290');
+  const nodes=[...document.querySelectorAll('#academicReaderTextV290 [data-reader-block]')];
+  if(body&&nodes.length){
+    const top=body.getBoundingClientRect().top+Math.min(180,body.clientHeight*.22);
+    let best=nodes[0],dist=Infinity;
+    for(const node of nodes){const d=Math.abs(node.getBoundingClientRect().top-top);if(d<dist){dist=d;best=node}}
+    return Number(best.dataset.readerBlock||0);
+  }
+  return 0;
+}
+function academicReaderSaveProgressV2140(reason='activity'){
+  const state=academicReaderStateV290,file=state?.file;if(!file)return;
+  const body=document.getElementById('academicReaderBodyV290');
+  const block=Math.max(0,academicReaderCurrentBlockV2140());
+  state.lastBlockV212=block;
+  const payload={
+    block,
+    speechIndex:Math.max(0,Number(state.speechIndex||0)),
+    rate:Number(state.rate||1),
+    scrollTop:body?Math.max(0,Number(body.scrollTop||0)):null,
+    scrollHeight:body?Number(body.scrollHeight||0):null,
+    reason,
+    at:Date.now()
+  };
+  try{
+    localStorage.setItem(academicReaderProgressKeyV2140(file),JSON.stringify(payload));
+    // Mantener además la clave histórica para no perder compatibilidad.
+    localStorage.setItem(academicReaderProgressKeyV212(file),JSON.stringify({block,at:payload.at}));
+  }catch{}
+  academicReaderRefreshResumeV2140();
+}
+academicReaderSavePositionV212=function academicReaderSavePositionV2140(blockIndex){
+  const state=academicReaderStateV290,file=state?.file;if(!file)return;
+  state.lastBlockV212=Math.max(0,Number(blockIndex)||0);
+  academicReaderSaveProgressV2140('position');
+};
+
+function academicReaderResumeButtonV2140(){
+  const state=academicReaderStateV290,file=state?.file;if(!file)return '';
+  const saved=academicReaderReadProgressV2140(file);
+  if(!saved||!Number.isFinite(Number(saved.block))||Number(saved.block)<0)return '';
+  const at=Number(saved.block)+1;
+  return `<button id="academicReaderResumeSavedV2125" class="btn academic-reader-resume-v2125 academic-reader-resume-v2140" type="button" onclick="academicReaderGoSavedV2140(true)">↪ Continuar donde quedaste <small>· punto ${at}</small></button>`;
+}
+academicReaderSavedButtonV2125=function academicReaderSavedButtonV2140(){return academicReaderResumeButtonV2140()};
+
+function academicReaderRefreshResumeV2140(){
+  const slot=document.getElementById('academicReaderResumeSlotV2125');if(slot)slot.innerHTML=academicReaderResumeButtonV2140();
+}
+function academicReaderRestorePositionV2140(){
+  const state=academicReaderStateV290,file=state?.file;if(!file)return;
+  const saved=academicReaderReadProgressV2140(file);
+  if(!saved)return;
+  const block=Math.max(0,Number(saved.block)||0);
+  state.lastBlockV212=block;
+  if(Number.isFinite(Number(saved.rate)))state.rate=Math.max(.6,Math.min(2,Number(saved.rate)));
+  let chunkIndex=Number(saved.speechIndex);
+  if(!Number.isFinite(chunkIndex)||chunkIndex<0||chunkIndex>=state.speechChunks.length){
+    chunkIndex=(state.speechChunks||[]).findIndex(item=>Number(item.blockIndex)===block);
+  }
+  if(chunkIndex>=0)state.speechIndex=chunkIndex;
+  const reposition=()=>{
+    const el=document.getElementById(`readerBlockV290_${block}`);
+    if(el){
+      el.scrollIntoView({block:'center',behavior:'auto'});
+      el.classList.add('resume-target-v2125','resume-target-v2140');
+      setTimeout(()=>el.classList.remove('resume-target-v2125','resume-target-v2140'),1600);
+    }else{
+      const body=document.getElementById('academicReaderBodyV290');
+      if(body&&Number.isFinite(Number(saved.scrollTop)))body.scrollTop=Number(saved.scrollTop);
+    }
+  };
+  [60,220,600].forEach(ms=>setTimeout(reposition,ms));
+  setTimeout(()=>{
+    const p=document.getElementById('academicReaderProgressV290');
+    if(p)p.textContent=`Guardado: punto ${block+1} · pulse Continuar`;
+    academicReaderRefreshResumeV2140();
+    const select=document.querySelector('.reader-rate-v2129 select');
+    if(select)select.value=String(state.rate);
+  },120);
+}
+academicReaderRestorePositionV212=academicReaderRestorePositionV2140;
+
+function academicReaderGoSavedV2140(startSpeech=true){
+  const state=academicReaderStateV290,file=state?.file;if(!file)return;
+  const saved=academicReaderReadProgressV2140(file);if(!saved)return toast('No existe una posición guardada para este documento');
+  const block=Math.max(0,Number(saved.block)||0);
+  state.lastBlockV212=block;
+  if(Number.isFinite(Number(saved.rate)))state.rate=Number(saved.rate);
+  let chunkIndex=Number(saved.speechIndex);
+  if(!Number.isFinite(chunkIndex)||chunkIndex<0||chunkIndex>=state.speechChunks.length)chunkIndex=state.speechChunks.findIndex(item=>Number(item.blockIndex)===block);
+  if(chunkIndex>=0)state.speechIndex=chunkIndex;
+  const el=document.getElementById(`readerBlockV290_${block}`);
+  el?.scrollIntoView({behavior:'smooth',block:'center'});
+  el?.classList.add('resume-target-v2125','resume-target-v2140');
+  setTimeout(()=>el?.classList.remove('resume-target-v2125','resume-target-v2140'),1800);
+  if(startSpeech&&chunkIndex>=0){
+    academicReaderSpeechRunV2125++;
+    try{window.speechSynthesis?.cancel?.()}catch{}
+    clearTimeout(academicReaderResumeTimerV2125);
+    state.stopped=false;state.paused=false;
+    academicReaderResumeTimerV2125=setTimeout(()=>academicReaderSpeakCurrentV2125(),160);
+    academicAcquireWakeLockV2124?.();
+  }
+  academicReaderUpdateSpeechUiV290();
+  academicReaderSaveProgressV2140('resume');
+}
+academicReaderGoSavedV2125=function academicReaderGoSavedV2125V2140(startSpeech=false){return academicReaderGoSavedV2140(startSpeech)};
+
+const academicReaderAttachProgressBaseV2140=academicReaderAttachProgressV212;
+academicReaderAttachProgressV212=function academicReaderAttachProgressV2140(){
+  academicReaderAttachProgressBaseV2140();
+  const body=document.getElementById('academicReaderBodyV290');
+  if(body&&!body.dataset.readerV2140){
+    body.dataset.readerV2140='1';
+    body.addEventListener('scroll',()=>{
+      clearTimeout(body._readerSaveV2140);
+      body._readerSaveV2140=setTimeout(()=>academicReaderSaveProgressV2140('scroll'),180);
+    },{passive:true});
+  }
+  academicReaderRestorePositionV2140();
+  setTimeout(()=>academicReaderRefreshResumeV2140(),250);
+};
+
+const academicReaderSpeakBaseV2140=academicReaderSpeakCurrentV2125;
+academicReaderSpeakCurrentV2125=function academicReaderSpeakCurrentV2140(){
+  academicReaderSaveProgressV2140('speech');
+  return academicReaderSpeakBaseV2140();
+};
+academicReaderSpeakCurrentV290=academicReaderSpeakCurrentV2125;
+
+const academicReaderStartBlockBaseV2140=academicReaderStartAtBlockV290;
+academicReaderStartAtBlockV290=function academicReaderStartAtBlockV2140(blockIndex){
+  academicReaderStartBlockBaseV2140(blockIndex);academicReaderSaveProgressV2140('tap');
+};
+const academicReaderPrevBaseV2140=academicReaderPreviousV290;
+academicReaderPreviousV290=function academicReaderPreviousV2140(){academicReaderPrevBaseV2140();academicReaderSaveProgressV2140('previous')};
+const academicReaderNextBaseV2140=academicReaderNextV290;
+academicReaderNextV290=function academicReaderNextV2140(){academicReaderNextBaseV2140();academicReaderSaveProgressV2140('next')};
+
+academicReaderSetRateV290=function academicReaderSetRateV2140(value){
+  const state=academicReaderStateV290;state.rate=Math.max(.6,Math.min(2,Number(value)||1));
+  academicReaderSaveProgressV2140('rate');
+  if(!state.stopped&&!state.paused){academicReaderSpeechRunV2125++;try{window.speechSynthesis?.cancel?.()}catch{};clearTimeout(academicReaderResumeTimerV2125);academicReaderResumeTimerV2125=setTimeout(()=>academicReaderSpeakCurrentV2125(),140)}
+};
+
+academicReaderControlsV290=function academicReaderControlsV2140({speech=true,scan=false}={}){
+  const rate=Number(academicReaderStateV290.rate||1),dark=academicThemeV2124()==='dark';
+  const rates=[.75,1,1.10,1.15,1.25,1.5,1.75,2];
+  return `<div class="academic-reader-controls-v290 academic-reader-controls-v2125 academic-reader-controls-v2129 academic-reader-controls-v2140">
+    <div class="academic-reader-direct-v2129">
+      <button id="academicReaderPlayV290" class="btn academic-reader-play-v290 reader-main-v2129" type="button" onclick="academicReaderToggleSpeechV290()" ${speech?'':'disabled'}><span>🔊</span><b>Escuchar</b></button>
+      <button class="reader-main-v2129" type="button" onclick="academicReaderPreviousV290()" ${speech?'':'disabled'}><span>⏮</span><b>Atrás</b></button>
+      <button class="reader-main-v2129" type="button" onclick="academicReaderNextV290()" ${speech?'':'disabled'}><span>⏭</span><b>Adelante</b></button>
+      <label class="reader-rate-v2129"><span>Velocidad</span><select onchange="academicReaderSetRateV290(this.value)" ${speech?'':'disabled'}>${rates.map(v=>`<option value="${v}" ${Math.abs(rate-v)<.006?'selected':''}>${Number(v).toFixed(v===1?0:2).replace(/0$/,'')}×</option>`).join('')}</select></label>
+      <button class="academic-theme-toggle-v2124 reader-theme-v2129" data-academic-theme-toggle-v2124 type="button" onclick="academicReaderToggleThemeV2129(this)" aria-pressed="${dark?'true':'false'}" title="${dark?'Cambiar a modo claro':'Cambiar a modo oscuro'}"><span class="theme-icon-v2124">${dark?'🌙':'☀️'}</span><span>${dark?'Oscuro':'Claro'}</span><i></i></button>
+      <button id="academicReaderControlsToggleV2125" class="reader-more-v2129" type="button" onclick="academicReaderToggleControlsV2125()" aria-expanded="false"><span>⋯</span><b>Más</b></button>
+    </div>
+    <div class="reader-status-row-v2129 reader-status-row-v2140"><span id="academicReaderProgressV290" class="academic-reader-progress-text-v290">Listo para leer</span><div id="academicReaderResumeSlotV2125" class="academic-reader-resume-slot-v2125">${academicReaderResumeButtonV2140()}</div></div>
+    <div id="academicReaderAdvancedV2125" class="academic-reader-advanced-v2125 reader-advanced-v2129" hidden>
+      <div class="academic-reader-nav-v2125"><button class="btn ghost" type="button" onclick="academicReaderSaveProgressV2140('manual');academicReaderStopV290()" ${speech?'':'disabled'}>■ Detener lectura</button><label class="reader-font-v2129">Tamaño<select onchange="academicReaderSetFontV290(this.value)"><option value=".95">Pequeño</option><option value="1.05" selected>Normal</option><option value="1.18">Grande</option><option value="1.32">Muy grande</option></select></label></div>
+      <div class="academic-reader-comfort-v2124"><span>🔆</span><div><b>Pantalla activa durante la lectura</b><small>Mientras la voz se reproduce se intenta mantener la pantalla activa.</small></div></div>
+      ${scan?'<div class="academic-reader-scan-note-v290">⚠️ Este PDF parece escaneado. Puede verlo dentro de la aplicación, pero no contiene suficiente texto seleccionable para lectura por voz.</div>':''}
+    </div>
+  </div>`;
+};
+
+/* Guardar ANTES de cerrar el lector online. No tocar Office offline. */
+const closeAcademicReaderBaseV2140=closeAcademicReaderV290;
+closeAcademicReaderV290=function closeAcademicReaderV2140(){
+  academicReaderSaveProgressV2140('close');
+  return closeAcademicReaderBaseV2140();
+};
+window.addEventListener('pagehide',()=>{if(academicReaderStateV290?.session)academicReaderSaveProgressV2140('pagehide')});
+document.addEventListener('visibilitychange',()=>{if(document.hidden&&academicReaderStateV290?.session)academicReaderSaveProgressV2140('hidden')});
+
