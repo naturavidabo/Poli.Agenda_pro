@@ -1,4 +1,4 @@
-const APP_VERSION='2.13.3';
+const APP_VERSION='2.13.5';
 const BUILD_DATE='2026-08-12';
 const ACTIVATION_CODE='271261';
 const SECONDARY_ACTIVATION_CODE='2026JINETES';
@@ -61,7 +61,7 @@ async function restoreBaseSchedule(){const template=currentScheduleTemplate();if
 function bindSW(){window.addEventListener('beforeinstallprompt',e=>{e.preventDefault();deferredPrompt=e}); $('#updateNow')?.addEventListener('click',applyUpdate); if('serviceWorker' in navigator){navigator.serviceWorker.register('./sw.js',{updateViaCache:'none'}).then(reg=>{window._swReg=reg; reg.update().catch(()=>{}); if(reg.waiting) showUpdateBanner(); reg.addEventListener('updatefound',()=>{const nw=reg.installing; if(!nw)return; nw.addEventListener('statechange',()=>{if(nw.state==='installed'&&navigator.serviceWorker.controller) showUpdateBanner()})}); navigator.serviceWorker.addEventListener('controllerchange',()=>{if(!window._refreshing){window._refreshing=true; location.replace('./index.html?v='+APP_VERSION+'&r='+Date.now())}})}).catch(()=>{})}}
 function icon(name){const common='viewBox="0 0 24 24" aria-hidden="true" focusable="false"'; const paths={home:'<path d="M3 11.5 12 4l9 7.5"/><path d="M5.5 10.5V20h5v-5.5h3V20h5v-9.5"/>',shield:'<path d="M12 3 5.5 5.6v5.8c0 4.4 2.7 7.5 6.5 9.1 3.8-1.6 6.5-4.7 6.5-9.1V5.6L12 3Z"/><path d="M9 12.2 11 14l4-4.4"/>',tasks:'<path d="M8 6h12"/><path d="M8 12h12"/><path d="M8 18h12"/><path d="M4 6.1l1 1 2-2"/><path d="M4 12.1l1 1 2-2"/><path d="M4 18.1l1 1 2-2"/>',calendar:'<rect x="4" y="5" width="16" height="15" rx="3"/><path d="M8 3v4M16 3v4M4 10h16"/><path d="M8 14h3M13 14h3M8 17h3"/>',books:'<path d="M5 4h5v16H5zM10 4h4v16h-4zM15 5l4-1 3 15-4 1z"/><path d="M6.5 8h2M11 8h2M16.5 8.5l2-.4"/>',note:'<path d="M6 3h9l3 3v15H6z"/><path d="M15 3v4h4"/><path d="M8.5 11h7M8.5 15h7M8.5 18h4"/>',settings:'<path d="M12 8.2a3.8 3.8 0 1 0 0 7.6 3.8 3.8 0 0 0 0-7.6Z"/><path d="M19.4 15a8 8 0 0 0 .1-1l2-1.5-2-3.4-2.4 1a7.8 7.8 0 0 0-1.7-1L15 6.5h-6l-.4 2.6a7.8 7.8 0 0 0-1.7 1l-2.4-1-2 3.4 2 1.5a8 8 0 0 0 0 2l-2 1.5 2 3.4 2.4-1a7.8 7.8 0 0 0 1.7 1l.4 2.6h6l.4-2.6a7.8 7.8 0 0 0 1.7-1l2.4 1 2-3.4-2.1-1.5Z"/>',office:'<rect x="4" y="4" width="6" height="6" rx="1"/><rect x="14" y="4" width="6" height="6" rx="1"/><rect x="4" y="14" width="6" height="6" rx="1"/><rect x="14" y="14" width="6" height="6" rx="1"/>',plus:'<path d="M12 5v14M5 12h14"/>'}; return `<svg class="ui-icon" ${common}>${paths[name]||paths.home}</svg>`}
 function academicHeaderAccess(){const session=typeof academicSession!=='undefined'?academicSession:null; const name=session?.full_name||''; return `<button class="academic-access ${session?'connected':''} ${state.view==='online'?'active':''}" onclick="go('online')" aria-label="Abrir área académica online"><span class="academic-access-icon">${icon('shield')}</span><span class="academic-access-copy"><b>${session?'Área académica conectada':'Acceso académico online'}</b><small>${session?esc(name||'Sesión activa'):'Ingresar con carnet y celular'}</small></span><span class="academic-access-state">${session?'Abrir':'Ingresar'}</span></button>`}
-function appShell(content){const onlinePublish=state.view==='online'&&typeof academicCanPublish==='function'&&academicCanPublish();const fab=state.view==='online'?(onlinePublish?`<button class="fab academic-fab" onclick="openAcademicPublishMenu()" title="Publicar contenido académico">${icon('plus')}</button>`:''):`<button class="fab" onclick="openQuick()" title="Agregar rápido">${icon('plus')}</button>`;return `<div class="app"><header class="top"><div class="top-row"><img src="./assets/escudo-policia.png" class="seal"><div class="title"><h1>Agenda Policial</h1><p>${state.mode==='profesional'?'Modo profesional':'Modo académico'} · v${APP_VERSION} <span class="version-dot">estable</span></p></div><div class="top-actions"><button class="icon-btn" onclick="openNotes()" title="Bloc de notas">${icon('note')}</button><button class="icon-btn" onclick="openSettings()" title="Configuración">${icon('settings')}</button></div></div>${academicHeaderAccess()}</header><main>${content}</main>${nav()}${fab}</div>`}
+function appShell(content){const onlinePublish=state.view==='online'&&typeof academicCanPublish==='function'&&academicCanPublish();const fab=state.view==='online'?(onlinePublish?`<button class="fab academic-fab" onclick="openAcademicPublishMenu()" title="Publicar contenido académico">${icon('plus')}</button>`:''):`<button class="fab" onclick="openQuick()" title="Agregar rápido">${icon('plus')}</button>`;return `<div class="app"><header class="top"><div class="top-row"><img src="./assets/escudo-policia.png" class="seal"><div class="title"><h1>Agenda Policial</h1><p>${state.mode==='profesional'?'Modo profesional':'Modo académico'} · v${APP_VERSION} <span class="version-dot">estable</span></p></div><div class="top-actions">${state.view!=='online'?`<button class="icon-btn office-top-btn-v2135" onclick="openOfficeCenterV2128()" title="Office · Documentos" aria-label="Abrir Office offline"><span class="office-top-mark-v2135">${icon('office')}</span></button>`:''}<button class="icon-btn" onclick="openSettings()" title="Configuración">${icon('settings')}</button></div></div>${academicHeaderAccess()}</header><main>${content}</main>${nav()}${fab}</div>`}
 function nav(){const items=[['inicio','home','Inicio'],['formaciones','shield','Formación'],['tareas','tasks','Tareas'],['horario','calendar','Horario'],['biblioteca','books','Biblioteca']];return `<nav class="bottom-nav">${items.map(i=>`<button class="nav-btn ${state.view===i[0]?'active':''}" onclick="go('${i[0]}')"><span>${icon(i[1])}</span><span>${i[2]}</span></button>`).join('')}</nav>`}
 async function go(v){state.view=v; await save(); render()}
 function render(){if(!state.activated)return renderActivation(); if(!state.mode)return renderMode(); const map={inicio:renderInicio,online:renderOnline,formaciones:renderFormaciones,tareas:renderTareas,horario:renderHorario,biblioteca:renderBiblioteca}; $('#app').innerHTML=appShell((map[state.view]||renderInicio)()); wireView()}
@@ -965,7 +965,7 @@ function openOfficeCenterV2128(){
   officeRevokeV2128();officeCurrentFileV2128=null;officeWorkbookV2128=null;officeCurrentBytesV2131=null;officeCurrentDocxHtmlV2131='';
   showModal(`<div class="office-shell-v2128 office-shell-v2131">
     <div class="office-head-v2128"><div><span class="eyebrow">Herramienta offline</span><h2>Office · Documentos</h2><p>Gestione documentos directamente en el celular. Este módulo pertenece al modo offline.</p></div><button class="office-close-v2128" type="button" onclick="closeModal()">✕ <span>Salir</span></button></div>
-    <div class="office-format-grid-v2128 office-format-grid-v2131"><button type="button" onclick="officeChooseFormatV2131('pdf')">📕 <b>PDF</b><small>Abrir PDF</small></button><button type="button" onclick="officeChooseFormatV2131('docx')">📘 <b>Word</b><small>Vista directa</small></button><button type="button" onclick="officeChooseFormatV2131('xlsx')">📗 <b>Excel</b><small>Hojas y tablas</small></button><button type="button" onclick="officeChooseFormatV2131('pptx')">📙 <b>PowerPoint</b><small>Diapositivas</small></button></div>
+    <div class="office-create-v2134"><button type="button" onclick="officeCreateDocumentV2134()">＋ <b>Crear documento</b><small>A4 u Oficio · guardado local</small></button></div><div class="office-format-grid-v2128 office-format-grid-v2131"><button type="button" onclick="officeChooseFormatV2131('pdf')">📕 <b>PDF</b><small>Abrir PDF</small></button><button type="button" onclick="officeChooseFormatV2131('docx')">📘 <b>Word</b><small>Vista directa</small></button><button type="button" onclick="officeChooseFormatV2131('xlsx')">📗 <b>Excel</b><small>Hojas y tablas</small></button><button type="button" onclick="officeChooseFormatV2131('pptx')">📙 <b>PowerPoint</b><small>Diapositivas</small></button></div>
     <label class="office-picker-v2128"><input id="officeFileV2128" type="file" accept=".pdf,.docx,.xlsx,.xlsm,.pptx,.csv,.txt,.md,image/*" onchange="officePickV2128(this)"><b>＋ Abrir cualquier documento</b><small>PDF · Word · Excel · PowerPoint · CSV · texto · imágenes</small></label>
     <div class="office-local-note-v2128"><b>🔒 Archivo local</b><span>Se crea una copia temporal en memoria para evitar que Android pierda el permiso del archivo. No se publica ni se sube al curso.</span></div>
     <div id="officeBodyV2128" class="office-body-v2128"><div class="office-empty-v2128"><span>▦</span><b>Seleccione un archivo</b><small>Word abre primero como documento real y también dispone de lectura móvil y edición básica.</small></div></div>
@@ -975,3 +975,94 @@ function openOfficeCenterV2128(){
 
 const closeModalBeforeOfficeV2131=closeModal;
 closeModal=function closeModalOfficeV2131(){officeCurrentBytesV2131=null;officeCurrentDocxHtmlV2131='';return closeModalBeforeOfficeV2131()};
+
+
+/* =========================================================
+   Agenda Policial v2.13.4 — Office Offline Etapa 2 inicial
+   Crear documento + A4/Oficio + formato + imprimir/exportar PDF
+   ========================================================= */
+let officeDraftV2134={size:'A4',orientation:'portrait',title:'Documento'};
+function officeCreateDocumentV2134(){
+  officeDraftV2134={size:'A4',orientation:'portrait',title:'Documento'};
+  officeSetBodyV2128(`<section class="office-create-shell-v2134">
+    <div class="office-create-head-v2134"><div><span class="eyebrow">Nuevo documento</span><h3>Editor offline</h3></div><button type="button" onclick="openOfficeCenterV2128()">← Volver</button></div>
+    <div class="office-page-controls-v2134">
+      <label>Hoja<select id="officePageSizeV2134" onchange="officePageSetupV2134()"><option value="A4">A4 · 210 × 297 mm</option><option value="OFICIO">Oficio · 216 × 330 mm</option></select></label>
+      <label>Orientación<select id="officeOrientationV2134" onchange="officePageSetupV2134()"><option value="portrait">Vertical</option><option value="landscape">Horizontal</option></select></label>
+      <label>Nombre<input id="officeDocNameV2134" value="Documento" oninput="officeDraftV2134.title=this.value||'Documento'"></label>
+    </div>
+    <div class="office-editor-toolbar-v2134">
+      <button type="button" onclick="officeFormatV2134('bold')"><b>B</b></button><button type="button" onclick="officeFormatV2134('italic')"><i>I</i></button><button type="button" onclick="officeFormatV2134('underline')"><u>U</u></button>
+      <button type="button" onclick="officeFormatV2134('justifyLeft')">☰←</button><button type="button" onclick="officeFormatV2134('justifyCenter')">☰</button><button type="button" onclick="officeFormatV2134('justifyRight')">→☰</button>
+      <button type="button" onclick="officeFormatV2134('insertUnorderedList')">• Lista</button><button type="button" onclick="officeFormatV2134('insertOrderedList')">1. Lista</button>
+      <select onchange="officeBlockV2134(this.value);this.value='p'"><option value="p">Texto</option><option value="h1">Título</option><option value="h2">Subtítulo</option></select>
+    </div>
+    <div class="office-paper-wrap-v2134"><article id="officeEditorV2134" class="office-paper-v2134 a4 portrait" contenteditable="true"><p><br></p></article></div>
+    <div class="office-create-actions-v2134"><button type="button" onclick="officeSaveHtmlV2134()">💾 Guardar copia</button><button class="primary" type="button" onclick="officePrintPdfV2134()">📄 Exportar / imprimir PDF</button></div>
+    <p class="office-create-note-v2134">Todo se edita localmente. “Exportar / imprimir PDF” abre el diálogo del teléfono para guardar como PDF sin marca de agua.</p>
+  </section>`);
+  setTimeout(()=>document.getElementById('officeEditorV2134')?.focus(),80);
+}
+function officePageSetupV2134(){
+  const size=document.getElementById('officePageSizeV2134')?.value||'A4',orientation=document.getElementById('officeOrientationV2134')?.value||'portrait',paper=document.getElementById('officeEditorV2134');
+  officeDraftV2134.size=size;officeDraftV2134.orientation=orientation;if(paper)paper.className=`office-paper-v2134 ${size==='OFICIO'?'oficio':'a4'} ${orientation}`;
+}
+function officeFormatV2134(cmd){document.getElementById('officeEditorV2134')?.focus();try{document.execCommand(cmd,false,null)}catch{} }
+function officeBlockV2134(tag){document.getElementById('officeEditorV2134')?.focus();try{document.execCommand('formatBlock',false,tag)}catch{} }
+function officeSaveHtmlV2134(){
+ const ed=document.getElementById('officeEditorV2134');if(!ed)return;const name=(document.getElementById('officeDocNameV2134')?.value||'Documento').replace(/[\\/:*?"<>|]+/g,'-');
+ const html=`<!doctype html><html><head><meta charset="utf-8"><title>${esc(name)}</title></head><body>${ed.innerHTML}</body></html>`,blob=new Blob([html],{type:'text/html;charset=utf-8'}),url=URL.createObjectURL(blob),a=document.createElement('a');a.href=url;a.download=`${name}.html`;a.click();setTimeout(()=>URL.revokeObjectURL(url),1500);toast('Copia guardada en el dispositivo');
+}
+function officePrintPdfV2134(){
+ const ed=document.getElementById('officeEditorV2134');if(!ed)return;const name=(document.getElementById('officeDocNameV2134')?.value||'Documento'),size=officeDraftV2134.size==='OFICIO'?'216mm 330mm':'210mm 297mm',land=officeDraftV2134.orientation==='landscape';
+ const page=land?size.split(' ').reverse().join(' '):size,w=window.open('','_blank');if(!w)return toast('Permita ventanas emergentes para exportar el PDF');
+ w.document.write(`<!doctype html><html><head><meta charset="utf-8"><title>${esc(name)}</title><style>@page{size:${page};margin:20mm}html,body{margin:0;padding:0;font-family:Arial,sans-serif;font-size:12pt;line-height:1.35;color:#111}img{max-width:100%}p{margin:.3em 0}</style></head><body>${ed.innerHTML}<script>onload=()=>setTimeout(()=>print(),250)<\/script></body></html>`);w.document.close();
+}
+
+
+/* =========================================================
+   Agenda Policial v2.13.5 — Office visible + Bloc de notas reparado
+   ========================================================= */
+function deleteNoteV2135(id){
+  const n=state.notes.find(x=>x.id===id);if(!n)return toast('Nota no encontrada');
+  if(!confirm(`¿Eliminar definitivamente "${n.title||'esta nota'}"?`))return;
+  state.notes=state.notes.filter(x=>x.id!==id);
+  save().then(()=>{closeModal();openNotes();toast('Nota eliminada')});
+}
+function archiveNoteV2135(id){
+  const n=state.notes.find(x=>x.id===id);if(!n)return toast('Nota no encontrada');
+  n.archived=true;n.updated=new Date().toISOString();
+  save().then(()=>{closeModal();openNotes();toast('Nota archivada')});
+}
+function restoreNoteV2135(id){
+  const n=state.notes.find(x=>x.id===id);if(!n)return toast('Nota no encontrada');
+  n.archived=false;n.updated=new Date().toISOString();
+  save().then(()=>{closeModal();showArchivedNotes();toast('Nota restaurada')});
+}
+renderNotes=function renderNotesV2135(){
+  const notes=(state.notes||[]).filter(n=>!n.archived);
+  return `<section>
+    <div class="row between wrap"><div><span class="eyebrow">Herramienta offline</span><h2 class="section-title">Bloc de notas</h2></div><button class="btn" onclick="openNoteForm()">＋ Nueva nota</button></div>
+    <div class="tabs"><button class="active">Activas</button><button onclick="showArchivedNotes()">Archivadas</button></div>
+    <div class="note-grid">${notes.map(n=>`<article class="note-card note-card-v2135">
+      <button class="note-main-v2135" type="button" onclick="openNoteForm('${n.id}')"><h3>${esc(n.title||'Sin título')}</h3><p>${esc((n.text||'').slice(0,150))}${(n.text||'').length>150?'...':''}</p><div class="muted">${new Date(n.updated||n.created).toLocaleString('es-BO')}</div></button>
+      <div class="note-actions-v2135"><button type="button" onclick="openNoteForm('${n.id}')">✎ Editar</button><button type="button" onclick="archiveNoteV2135('${n.id}')">Archivar</button><button class="danger" type="button" onclick="deleteNoteV2135('${n.id}')">Eliminar</button></div>
+    </article>`).join('')||'<div class="card small"><p>No hay notas guardadas.</p></div>'}</div>
+  </section>`;
+};
+showArchivedNotes=function showArchivedNotesV2135(){
+  const notes=(state.notes||[]).filter(n=>n.archived);
+  $('#app').innerHTML=appShell(`<section>
+    <div class="row between wrap"><h2 class="section-title">Notas archivadas</h2><button class="btn secondary" onclick="openNotes()">Volver</button></div>
+    <div class="note-grid">${notes.map(n=>`<article class="note-card note-card-v2135"><button class="note-main-v2135" type="button" onclick="openNoteForm('${n.id}')"><h3>${esc(n.title||'Sin título')}</h3><p>${esc((n.text||'').slice(0,150))}</p></button><div class="note-actions-v2135"><button type="button" onclick="restoreNoteV2135('${n.id}')">Restaurar</button><button type="button" onclick="openNoteForm('${n.id}')">✎ Editar</button><button class="danger" type="button" onclick="deleteNoteV2135('${n.id}')">Eliminar</button></div></article>`).join('')||'<div class="card small"><p>No hay notas archivadas.</p></div>'}</div>
+  </section>`);
+};
+openNoteForm=function openNoteFormV2135(id=null){
+  const n=id?(state.notes||[]).find(x=>x.id===id):{title:'',text:'',category:'',archived:false};
+  if(!n)return toast('Nota no encontrada');
+  showModal(`<button class="icon-btn close" onclick="closeModal()">×</button><h2>${id?'Editar nota':'Nueva nota'}</h2>
+    <form id="noteForm" class="note-editor-form">${buildForm([{name:'title',label:'Título'},{name:'category',label:'Carpeta / categoría'},{name:'text',label:'Texto',type:'textarea'}],n)}
+    <div class="form-actions note-actions"><button class="btn" type="submit">💾 Guardar</button>${id&&!n.archived?`<button class="btn secondary" type="button" onclick="archiveNoteV2135('${id}')">Archivar</button>`:''}${id&&n.archived?`<button class="btn secondary" type="button" onclick="restoreNoteV2135('${id}')">Restaurar</button>`:''}${id?`<button class="btn danger" type="button" onclick="deleteNoteV2135('${id}')">Eliminar</button>`:''}<button class="btn ghost" type="button" onclick="closeModal()">Cancelar</button></div></form>`);
+  const ta=$('#noteForm textarea[name="text"]');if(ta)ta.classList.add('note-textarea');
+  $('#noteForm').onsubmit=async e=>{e.preventDefault();const data=formData(e.target);if(id){Object.assign(n,data,{updated:new Date().toISOString()})}else{state.notes.push({...data,id:uid(),created:new Date().toISOString(),updated:new Date().toISOString(),archived:false})}await save();closeModal();openNotes();toast(id?'Nota actualizada':'Nota creada')};
+};

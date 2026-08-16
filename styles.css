@@ -192,3 +192,19 @@ body.academic-dark-v2124 .office-format-grid-v2131 button{background:#111c15!imp
 .offline-office-copy-v2133 em{font-size:12px;font-style:normal;color:#c8d2ca;margin-top:2px;white-space:normal}
 .offline-office-open-v2133{font-size:12px;font-weight:900;color:#e5cb82;white-space:nowrap}
 @media(max-width:390px){.offline-office-card-v2133{padding:13px 11px;gap:9px}.offline-office-open-v2133{display:none}.offline-office-copy-v2133 b{font-size:16px}}
+
+
+/* v2.13.4 · Office Offline Etapa 2 */
+.office-create-v2134{margin:12px 0}.office-create-v2134 button{width:100%;display:flex;gap:6px;align-items:center;justify-content:center;flex-wrap:wrap;padding:14px;border-radius:14px;border:1px solid var(--line);background:var(--panel);font-size:1rem}.office-create-v2134 small{width:100%;opacity:.7}.office-create-shell-v2134{display:grid;gap:12px}.office-create-head-v2134{display:flex;justify-content:space-between;align-items:center}.office-page-controls-v2134{display:grid;grid-template-columns:1fr 1fr 1.4fr;gap:8px}.office-page-controls-v2134 label{display:grid;gap:4px;font-size:.78rem;font-weight:800}.office-page-controls-v2134 select,.office-page-controls-v2134 input,.office-editor-toolbar-v2134 select{min-height:40px;border:1px solid var(--line);border-radius:9px;padding:6px;background:var(--panel);color:inherit}.office-editor-toolbar-v2134{display:flex;gap:5px;flex-wrap:wrap;position:sticky;top:0;z-index:2;background:var(--bg);padding:6px 0}.office-editor-toolbar-v2134 button{min-width:40px;min-height:38px;border:1px solid var(--line);border-radius:8px;background:var(--panel);color:inherit}.office-paper-wrap-v2134{overflow:auto;background:rgba(127,127,127,.12);padding:12px;border-radius:12px}.office-paper-v2134{box-sizing:border-box;background:#fff;color:#111;margin:auto;padding:20mm;box-shadow:0 2px 14px #0003;outline:none;overflow:auto}.office-paper-v2134.a4.portrait{width:210mm;min-height:297mm}.office-paper-v2134.oficio.portrait{width:216mm;min-height:330mm}.office-paper-v2134.a4.landscape{width:297mm;min-height:210mm}.office-paper-v2134.oficio.landscape{width:330mm;min-height:216mm}.office-create-actions-v2134{display:flex;gap:8px;justify-content:flex-end;flex-wrap:wrap}.office-create-actions-v2134 button{padding:11px 14px;border-radius:10px;border:1px solid var(--line);font-weight:800}.office-create-note-v2134{font-size:.78rem;opacity:.72;margin:0}@media(max-width:720px){.office-page-controls-v2134{grid-template-columns:1fr 1fr}.office-page-controls-v2134 label:last-child{grid-column:1/-1}.office-paper-v2134{transform-origin:top left}.office-paper-wrap-v2134{max-height:62vh}}
+
+/* v2.13.5 · Office superior + notas funcionales */
+.office-top-btn-v2135{position:relative;border-color:color-mix(in srgb,var(--accent) 58%,var(--line));background:color-mix(in srgb,var(--accent) 14%,var(--panel));}
+.office-top-mark-v2135{display:grid;place-items:center}
+.office-top-btn-v2135 .ui-icon{stroke-width:2.2}
+.office-top-btn-v2135::after{content:"OFFICE";position:absolute;left:50%;bottom:-7px;transform:translateX(-50%);font-size:.48rem;font-weight:900;letter-spacing:.04em;background:var(--panel);padding:0 3px;border-radius:4px;white-space:nowrap}
+.note-card-v2135{padding:0;overflow:hidden}
+.note-main-v2135{display:block;width:100%;text-align:left;border:0;background:transparent;color:inherit;padding:14px;cursor:pointer}
+.note-main-v2135 h3,.note-main-v2135 p{margin-top:0}
+.note-actions-v2135{display:flex;gap:6px;flex-wrap:wrap;padding:0 12px 12px}
+.note-actions-v2135 button{border:1px solid var(--line);border-radius:9px;padding:7px 10px;background:var(--panel);color:inherit;font-weight:700}
+.note-actions-v2135 button.danger{border-color:#b94a48;color:#b94a48}
