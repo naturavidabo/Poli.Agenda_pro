@@ -1,4 +1,4 @@
-const APP_VERSION='2.13.0';
+const APP_VERSION='2.13.2';
 const BUILD_DATE='2026-08-12';
 const ACTIVATION_CODE='271261';
 const SECONDARY_ACTIVATION_CODE='2026JINETES';
@@ -711,7 +711,7 @@ function openOfficeCenterV2128(){
 async function officePickV2128(input){const file=input?.files?.[0];if(!file)return;await officeOpenFileV2128(file)}
 async function officeOpenFileV2128(file){
   officeCurrentFileV2128=file;officeWorkbookV2128=null;officeRevokeV2128();
-  const type=officeTypeV2128(file),head=`<div class="office-filebar-v2128"><div><b>${esc(file.name||'Documento')}</b><small>${officeTypeLabelV2128(type)} · ${officeSizeV2128(file.size)}</small></div><button type="button" onclick="document.getElementById('officeFileV2128')?.click()">Cambiar</button></div>`;
+  const type=officeTypeV2128(file),head=`<div class="office-filebar-v2128"><div><b>${esc(file.name||'Documento')}</b><small>${officeTypeLabelV2128(type)} · ${officeSizeV2128(file.size)}</small></div><button type="button" onclick="officeRepickV2131()">Cambiar</button></div>`;
   officeSetBodyV2128(`${head}<div class="office-loading-v2128"><span></span><b>Preparando documento…</b></div>`);
   try{
     if(type==='pdf')return officeRenderPdfV2128(file,head);
@@ -775,7 +775,7 @@ function officeFindWordV2129(){
 }
 
 /* =========================================================
-   Agenda Policial v2.13.0 — Word móvil progresivo
+   Agenda Policial v2.13.1 — Word móvil progresivo
    - Vista móvil refluida para lectura cómoda.
    - Vista documento / vista móvil con un toque.
    - Edición básica visible.
@@ -804,3 +804,174 @@ function officeSaveHtmlV2130(){
   const html=`<!doctype html><html lang="es"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>${esc(base)}</title><style>body{font-family:Arial,sans-serif;max-width:850px;margin:32px auto;padding:0 22px;line-height:1.55;color:#172119}table{border-collapse:collapse;max-width:100%;overflow:auto}td,th{border:1px solid #bbb;padding:6px}img{max-width:100%;height:auto}</style></head><body>${el.innerHTML}</body></html>`;
   const blob=new Blob([html],{type:'text/html;charset=utf-8'}),url=URL.createObjectURL(blob),a=document.createElement('a');a.href=url;a.download=`${base}-editado.html`;a.click();setTimeout(()=>URL.revokeObjectURL(url),1200);toast('Copia editable guardada');
 }
+
+
+/* =========================================================
+   Agenda Policial v2.13.1 — Word directo + estabilización Android
+   - Captura los bytes del archivo inmediatamente al seleccionarlo para evitar
+     referencias temporales que Android puede invalidar mientras cargan dependencias.
+   - Word abre por defecto como documento real (docx-preview), no como texto plano.
+   - Vista documento, lectura móvil y edición básica en un solo flujo.
+   ========================================================= */
+const OFFICE_DOCX_PREVIEW_V2131='https://cdn.jsdelivr.net/npm/docx-preview@0.4.0/dist/docx-preview.min.js';
+let officeCurrentBytesV2131=null;
+let officeCurrentDocxHtmlV2131='';
+let officeWordModeV2131='document';
+
+function officeArrayBufferCopyV2131(buffer){
+  if(!buffer)return null;
+  try{return buffer.slice(0)}catch{return buffer}
+}
+async function officeReadBytesV2131(file){
+  let lastError=null;
+  const attempts=[
+    async()=>file.arrayBuffer(),
+    async()=>new Response(file).arrayBuffer(),
+    async()=>{
+      if(!file.stream)throw new Error('stream no disponible');
+      const reader=file.stream().getReader(),chunks=[];let total=0;
+      while(true){const {done,value}=await reader.read();if(done)break;if(value){chunks.push(value);total+=value.byteLength}}
+      const out=new Uint8Array(total);let offset=0;for(const chunk of chunks){out.set(chunk,offset);offset+=chunk.byteLength}return out.buffer;
+    },
+    ()=>new Promise((resolve,reject)=>{const reader=new FileReader();reader.onload=()=>resolve(reader.result);reader.onerror=()=>reject(reader.error||new Error('No se pudo leer el archivo'));reader.readAsArrayBuffer(file)})
+  ];
+  for(const attempt of attempts){try{const data=await attempt();if(data&&data.byteLength>=0)return data}catch(error){lastError=error}}
+  throw lastError||new Error('Android no permitió leer este archivo. Vuelva a seleccionarlo desde Descargas o Documentos.');
+}
+function officeStableFileV2131(file,bytes){
+  try{return new File([bytes],file?.name||'documento',{type:file?.type||'application/octet-stream',lastModified:file?.lastModified||Date.now()})}
+  catch{const blob=new Blob([bytes],{type:file?.type||'application/octet-stream'});try{Object.defineProperty(blob,'name',{value:file?.name||'documento'})}catch{}return blob}
+}
+async function officeSnapshotFileV2131(file,type){
+  if(!['docx','xlsx','pptx','csv','text'].includes(type)){officeCurrentBytesV2131=null;return file}
+  const bytes=await officeReadBytesV2131(file);
+  officeCurrentBytesV2131=officeArrayBufferCopyV2131(bytes);
+  return officeStableFileV2131(file,bytes);
+}
+
+async function officeOpenFileV2128(file){
+  officeWorkbookV2128=null;officeRevokeV2128();officeCurrentDocxHtmlV2131='';officeWordModeV2131='document';
+  const type=officeTypeV2128(file),originalName=file?.name||'Documento';
+  const head=`<div class="office-filebar-v2128"><div><b>${esc(originalName)}</b><small>${officeTypeLabelV2128(type)} · ${officeSizeV2128(file?.size)}</small></div><button type="button" onclick="officeRepickV2131()">Cambiar</button></div>`;
+  officeSetBodyV2128(`${head}<div class="office-loading-v2128"><span></span><b>Tomando una copia segura del archivo…</b><small>Esto evita que Android pierda el permiso temporal mientras se prepara el visor.</small></div>`);
+  try{
+    const stable=await officeSnapshotFileV2131(file,type);officeCurrentFileV2128=stable;
+    if(type==='pdf')return officeRenderPdfV2128(stable,head);
+    if(type==='image')return officeRenderImageV2128(stable,head);
+    if(type==='text'||type==='csv')return await officeRenderTextV2128(stable,head,type);
+    if(type==='docx')return await officeRenderDocxV2128(stable,head);
+    if(type==='xlsx')return await officeRenderExcelV2128(stable,head);
+    if(type==='pptx')return await officeRenderPptxV2128(stable,head);
+    if(type==='legacy')throw new Error('Este archivo usa .DOC/.XLS/.PPT antiguo. Guárdelo como DOCX, XLSX o PPTX para abrirlo dentro de Agenda Policial.');
+    throw new Error('Formato todavía no compatible con el visor interno.');
+  }catch(error){
+    console.error('Office v2.13.1:',error);
+    const permission=/requested file could not be read|permission|notreadable|could not be read/i.test(String(error?.message||error));
+    officeSetBodyV2128(`${head}<div class="office-error-v2128 office-error-v2131"><b>No se pudo abrir este archivo</b><p>${permission?'Android entregó un permiso temporal que no permitió copiar el archivo.':esc(error?.message||'Formato no compatible')}</p><small>${permission?'Toque “Volver a seleccionar” y elija el archivo desde Descargas o Documentos. Agenda Policial intentará copiarlo a memoria inmediatamente.':'Si es la primera vez que usa Word, Excel o PowerPoint, mantenga internet una vez para descargar el componente del visor.'}</small><button type="button" onclick="officeRepickV2131()">↻ Volver a seleccionar</button></div>`)
+  }
+}
+
+async function officeDocxDepsV2131(){
+  await officeLoadScriptV2128(OFFICE_JSZIP_V2128,'JSZip');
+  await officeLoadScriptV2128(OFFICE_DOCX_PREVIEW_V2131,'docx');
+  if(!window.docx?.renderAsync)throw new Error('No se pudo iniciar la vista Word directa.');
+}
+function officeWordToolbarV2131(){
+  return `<div class="office-word-toolbar-v2131"><div class="office-word-mode-tabs-v2131"><button id="officeWordDirectBtnV2131" class="active" type="button" onclick="officeSetWordModeV2131('document')">📄 Word</button><button id="officeWordMobileBtnV2131" type="button" onclick="officeSetWordModeV2131('mobile')">📱 Lectura móvil</button><button id="officeWordEditBtnV2131" type="button" onclick="officeSetWordModeV2131('edit')">✎ Editar</button></div><div class="office-word-actions-v2131"><button type="button" onclick="officeCopyWordV2131()">⧉ Copiar</button><button type="button" onclick="officeSaveWordCopyV2131()">↓ Guardar copia</button></div></div>`;
+}
+async function officeRenderDocxV2128(file,head){
+  let buffer=officeCurrentBytesV2131;
+  if(!buffer){buffer=await officeReadBytesV2131(file);officeCurrentBytesV2131=officeArrayBufferCopyV2131(buffer)}
+  officeWordModeV2131='document';officeWordFontV2130=18;officeCurrentDocxHtmlV2131='';
+  officeSetBodyV2128(`${head}${officeWordToolbarV2131()}<div class="office-word-note-v2128 office-word-note-v2131"><b>Vista Word directa</b> · El documento se representa por páginas, conservando tablas, imágenes, saltos y estilos compatibles. Use “Lectura móvil” cuando prefiera el texto refluido al ancho del celular.</div><div id="officeWordStageV2131" class="office-word-stage-v2131"><div class="office-loading-v2128"><span></span><b>Abriendo Word…</b></div></div>`);
+  await officeRenderWordDirectV2131();
+}
+async function officeRenderWordDirectV2131(){
+  const stage=document.getElementById('officeWordStageV2131');if(!stage||!officeCurrentBytesV2131)return;
+  stage.innerHTML='<div class="office-loading-v2128"><span></span><b>Construyendo páginas de Word…</b></div>';
+  try{
+    await officeDocxDepsV2131();
+    stage.innerHTML='<div id="officeWordStylesV2131"></div><div id="officeWordCanvasV2131" class="office-word-canvas-v2131"></div>';
+    const canvas=document.getElementById('officeWordCanvasV2131'),styles=document.getElementById('officeWordStylesV2131');
+    await window.docx.renderAsync(new Uint8Array(officeArrayBufferCopyV2131(officeCurrentBytesV2131)),canvas,styles,{className:'agenda-office-word-v2131',inWrapper:true,ignoreWidth:false,ignoreHeight:false,ignoreFonts:false,breakPages:true,ignoreLastRenderedPageBreak:false,renderHeaders:true,renderFooters:true,renderFootnotes:true,renderEndnotes:true,useBase64URL:true,debug:false});
+    requestAnimationFrame(()=>officeFitWordDirectV2131());
+  }catch(error){console.error(error);stage.innerHTML=`<div class="office-error-v2128"><b>No se pudo dibujar la vista Word</b><p>${esc(error?.message||'Visualizador no disponible')}</p><button type="button" onclick="officeSetWordModeV2131('mobile')">Abrir en lectura móvil</button></div>`}
+}
+function officeFitWordDirectV2131(){
+  const stage=document.getElementById('officeWordStageV2131'),canvas=document.getElementById('officeWordCanvasV2131'),page=canvas?.querySelector('section');if(!stage||!canvas||!page)return;
+  canvas.style.zoom='1';const natural=page.getBoundingClientRect().width,available=Math.max(250,stage.clientWidth-18);const fit=natural>available?Math.max(.42,Math.min(1,available/natural)):1;canvas.style.zoom=String(fit);
+}
+async function officeEnsureWordHtmlV2131(){
+  if(officeCurrentDocxHtmlV2131)return officeCurrentDocxHtmlV2131;
+  if(!officeCurrentBytesV2131)throw new Error('No hay una copia legible del Word.');
+  await officeLoadScriptV2128(OFFICE_MAMMOTH_V2128,'mammoth');if(!window.mammoth)throw new Error('No se pudo iniciar la lectura móvil.');
+  const result=await window.mammoth.convertToHtml({arrayBuffer:officeArrayBufferCopyV2131(officeCurrentBytesV2131)},{includeDefaultStyleMap:true});
+  officeCurrentDocxHtmlV2131=officeSanitizeHtmlV2128(result?.value||'')||'<p>Documento sin texto visible.</p>';return officeCurrentDocxHtmlV2131;
+}
+async function officeSetWordModeV2131(mode){
+  if(!['document','mobile','edit'].includes(mode))mode='document';officeWordModeV2131=mode;
+  document.querySelectorAll('.office-word-mode-tabs-v2131 button').forEach(btn=>btn.classList.remove('active'));
+  document.getElementById(mode==='document'?'officeWordDirectBtnV2131':mode==='mobile'?'officeWordMobileBtnV2131':'officeWordEditBtnV2131')?.classList.add('active');
+  const stage=document.getElementById('officeWordStageV2131');if(!stage)return;
+  if(mode==='document')return officeRenderWordDirectV2131();
+  stage.innerHTML='<div class="office-loading-v2128"><span></span><b>Preparando texto adaptable…</b></div>';
+  try{
+    const html=await officeEnsureWordHtmlV2131(),editable=mode==='edit';
+    stage.innerHTML=`<div class="office-word-mobilebar-v2130 office-word-mobilebar-v2131"><button onclick="officeWordFontV2130Change(-1)">A−</button><span id="officeWordFontLabelV2130">${officeWordFontV2130} px</span><button onclick="officeWordFontV2130Change(1)">A+</button><button onclick="officeFindWordV2129()">⌕ Buscar</button><button onclick="officeSaveDraftV2128()">TXT</button></div><div class="office-word-search-v2129"><input id="officeWordSearchV2129" type="search" placeholder="Buscar dentro del Word…" onkeydown="if(event.key==='Enter')officeFindWordV2129()"><button type="button" onclick="officeFindWordV2129()">Buscar</button><button type="button" onclick="officeClearWordSearchV2129()">Limpiar</button></div><article id="officeWordV2128" class="office-word-v2128 office-word-mobile-v2130${editable?' editing':''}" style="--office-word-font-v2130:${officeWordFontV2130}px" contenteditable="${editable?'true':'false'}">${html}</article>`;
+    if(editable){document.getElementById('officeWordV2128')?.focus();toast('Edición básica activada. Guardar copia crea un HTML; el DOCX original queda intacto.')}
+  }catch(error){stage.innerHTML=`<div class="office-error-v2128"><b>No se pudo abrir esta vista</b><p>${esc(error?.message||'Componente no disponible')}</p></div>`}
+}
+
+async function officeRenderExcelV2128(file,head){
+  await officeLoadScriptV2128(OFFICE_XLSX_V2128,'XLSX');if(!window.XLSX)throw new Error('No se pudo iniciar el lector Excel.');
+  const buffer=officeCurrentBytesV2131||await officeReadBytesV2131(file);officeCurrentBytesV2131=officeArrayBufferCopyV2131(buffer);
+  officeWorkbookV2128=window.XLSX.read(officeArrayBufferCopyV2131(buffer),{type:'array',cellDates:true});const names=officeWorkbookV2128.SheetNames||[];if(!names.length)throw new Error('El libro no contiene hojas visibles.');
+  officeSetBodyV2128(`${head}<div class="office-view-tools-v2128"><span>Vista Excel</span><small>${names.length} hoja${names.length===1?'':'s'}</small></div><div class="office-sheet-tabs-v2128">${names.map((n,i)=>`<button class="${i===0?'active':''}" onclick="officeRenderSheetIndexV2128(${i},this)">${esc(n)}</button>`).join('')}</div><div id="officeSheetV2128"></div>`);officeRenderSheetIndexV2128(0,document.querySelector('.office-sheet-tabs-v2128 button'))
+}
+async function officeRenderPptxV2128(file,head){
+  await officeLoadScriptV2128(OFFICE_JSZIP_V2128,'JSZip');if(!window.JSZip)throw new Error('No se pudo iniciar el lector PowerPoint.');
+  const buffer=officeCurrentBytesV2131||await officeReadBytesV2131(file);officeCurrentBytesV2131=officeArrayBufferCopyV2131(buffer);
+  const zip=await window.JSZip.loadAsync(officeArrayBufferCopyV2131(buffer)),slides=Object.keys(zip.files).filter(n=>/^ppt\/slides\/slide\d+\.xml$/i.test(n)).sort((a,b)=>(Number(a.match(/slide(\d+)/i)?.[1])||0)-(Number(b.match(/slide(\d+)/i)?.[1])||0));
+  if(!slides.length)throw new Error('No se encontraron diapositivas legibles.');
+  const cards=[];for(let i=0;i<slides.length;i++){const xml=await zip.file(slides[i]).async('text'),doc=new DOMParser().parseFromString(xml,'application/xml'),texts=[...doc.getElementsByTagName('*')].filter(n=>n.localName==='t').map(n=>n.textContent?.trim()).filter(Boolean);cards.push(`<section class="office-slide-v2128"><header><span>${i+1}</span><b>Diapositiva ${i+1}</b></header>${texts.length?texts.map((t,j)=>j===0?`<h3>${esc(t)}</h3>`:`<p>${esc(t)}</p>`).join(''):'<p class="subtle">Sin texto extraíble en esta diapositiva.</p>'}</section>`)}
+  officeSetBodyV2128(`${head}<div class="office-view-tools-v2128"><span>Vista PowerPoint</span><small>${slides.length} diapositiva${slides.length===1?'':'s'} · vista de contenido</small></div><div class="office-slides-v2128">${cards.join('')}</div>`)
+}
+
+
+async function officeCopyWordV2131(){
+  const editable=document.getElementById('officeWordV2128');
+  if(editable){try{await navigator.clipboard.writeText(editable.innerText||'');toast('Texto copiado');return}catch{}}
+  try{
+    const html=await officeEnsureWordHtmlV2131(),doc=new DOMParser().parseFromString(html,'text/html'),text=(doc.body?.innerText||doc.body?.textContent||'').trim();
+    if(!text)return toast('No hay texto para copiar');await navigator.clipboard.writeText(text);toast('Texto copiado');
+  }catch(error){console.error(error);toast('No se pudo copiar el texto')}
+}
+async function officeSaveWordCopyV2131(){
+  const editable=document.getElementById('officeWordV2128');if(editable)return officeSaveHtmlV2130();
+  try{
+    const body=await officeEnsureWordHtmlV2131(),base=String(officeCurrentFileV2128?.name||'documento').replace(/\.docx$/i,''),html=`<!doctype html><html lang="es"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>${esc(base)}</title><style>body{font-family:Arial,sans-serif;max-width:850px;margin:32px auto;padding:0 22px;line-height:1.55;color:#172119}table{border-collapse:collapse;max-width:100%}td,th{border:1px solid #bbb;padding:6px}img{max-width:100%;height:auto}</style></head><body>${body}</body></html>`,blob=new Blob([html],{type:'text/html;charset=utf-8'}),url=URL.createObjectURL(blob),a=document.createElement('a');a.href=url;a.download=`${base}-copia.html`;a.click();setTimeout(()=>URL.revokeObjectURL(url),1200);toast('Copia guardada');
+  }catch(error){console.error(error);toast('No se pudo guardar la copia')}
+}
+
+
+function officeRepickV2131(accept=''){
+  const input=document.getElementById('officeFileV2128');if(!input)return;
+  input.value='';input.accept=accept||'.pdf,.docx,.xlsx,.xlsm,.pptx,.csv,.txt,.md,image/*';input.click();
+}
+function officeChooseFormatV2131(type){
+  const accepts={pdf:'.pdf',docx:'.docx',xlsx:'.xlsx,.xlsm',pptx:'.pptx'};officeRepickV2131(accepts[type]||'');
+}
+function openOfficeCenterV2128(){
+  officeRevokeV2128();officeCurrentFileV2128=null;officeWorkbookV2128=null;officeCurrentBytesV2131=null;officeCurrentDocxHtmlV2131='';
+  showModal(`<div class="office-shell-v2128 office-shell-v2131">
+    <div class="office-head-v2128"><div><span class="eyebrow">Herramienta personal</span><h2>Office en Agenda Policial</h2><p>Abra documentos directamente desde el celular sin salir de la aplicación.</p></div><button class="office-close-v2128" type="button" onclick="closeModal()">✕ <span>Salir</span></button></div>
+    <div class="office-format-grid-v2128 office-format-grid-v2131"><button type="button" onclick="officeChooseFormatV2131('pdf')">📕 <b>PDF</b><small>Abrir PDF</small></button><button type="button" onclick="officeChooseFormatV2131('docx')">📘 <b>Word</b><small>Vista directa</small></button><button type="button" onclick="officeChooseFormatV2131('xlsx')">📗 <b>Excel</b><small>Hojas y tablas</small></button><button type="button" onclick="officeChooseFormatV2131('pptx')">📙 <b>PowerPoint</b><small>Diapositivas</small></button></div>
+    <label class="office-picker-v2128"><input id="officeFileV2128" type="file" accept=".pdf,.docx,.xlsx,.xlsm,.pptx,.csv,.txt,.md,image/*" onchange="officePickV2128(this)"><b>＋ Abrir cualquier documento</b><small>PDF · Word · Excel · PowerPoint · CSV · texto · imágenes</small></label>
+    <div class="office-local-note-v2128"><b>🔒 Archivo local</b><span>Se crea una copia temporal en memoria para evitar que Android pierda el permiso del archivo. No se publica ni se sube al curso.</span></div>
+    <div id="officeBodyV2128" class="office-body-v2128"><div class="office-empty-v2128"><span>▦</span><b>Seleccione un archivo</b><small>Word abre primero como documento real y también dispone de lectura móvil y edición básica.</small></div></div>
+  </div>`);
+  requestAnimationFrame(()=>document.querySelector('#modalRoot .modal')?.classList.add('office-modal-v2128','office-modal-v2131'));
+}
+
+const closeModalBeforeOfficeV2131=closeModal;
+closeModal=function closeModalOfficeV2131(){officeCurrentBytesV2131=null;officeCurrentDocxHtmlV2131='';return closeModalBeforeOfficeV2131()};

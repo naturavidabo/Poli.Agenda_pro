@@ -1,0 +1,1 @@
+-- v2.13.2: academic_bank_share_v2132 ya aplicada en Supabase.

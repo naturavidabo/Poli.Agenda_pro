@@ -1,0 +1,33 @@
+VERIFICACIÓN Agenda Policial v2.13.1
+
+BASE
+- Construida sobre v2.13.0 sin reconstruir la aplicación.
+- databaseVersion permanece agenda-db-9.
+- No requiere nueva migración Supabase.
+
+CÓDIGO
+- app.js: sintaxis JavaScript válida mediante node --check.
+- online.js: sintaxis JavaScript válida mediante node --check.
+- version.json: JSON válido.
+- styles.css y online.css: llaves equilibradas.
+
+VERSIÓN / CACHÉ
+- APP_VERSION: 2.13.1.
+- index.html: referencias CSS/JS/manifest con ?v=2.13.1.
+- Service Worker: agenda-policial-v2.13.1.
+- reset.html: corregido para abrir v2.13.1.
+
+OFFICE
+- Captura temprana de bytes implementada para DOCX/XLSX/PPTX/texto.
+- Word directo con docx-preview implementado.
+- Modos Word / Lectura móvil / Editar implementados.
+- Re-selección del mismo archivo habilitada.
+
+BANCO
+- Controles A− / A+ implementados con persistencia local.
+- Tres niveles de legibilidad.
+- Contraste de Relacionar en modo oscuro reforzado.
+- Pregunta, opciones, relaciones y explicación con tipografía ampliada.
+
+LÍMITE DE LA VERIFICACIÓN
+- La validación es estática y de sintaxis. La corrección del permiso temporal de Android y el render DOCX deben comprobarse en un teléfono físico con un archivo real, porque dependen del proveedor de archivos y del navegador del dispositivo.

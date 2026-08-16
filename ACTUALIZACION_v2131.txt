@@ -1,0 +1,26 @@
+AGENDA POLICIAL v2.13.1 — WORD DIRECTO + BANCO MÁS LEGIBLE
+Fecha: 12/08/2026
+
+1. OFFICE / WORD
+- Se corrige el fallo de Android que podía perder el permiso temporal del archivo mientras se cargaba el visor.
+- Al seleccionar DOCX/XLSX/PPTX/texto, la app intenta copiar inmediatamente el archivo a memoria antes de cargar componentes externos.
+- Word abre por defecto en Vista Word directa, con páginas, tablas, imágenes, saltos y estilos compatibles mediante docx-preview.
+- Word tiene tres modos visibles: Word, Lectura móvil y Editar.
+- Lectura móvil refluye el contenido al ancho del celular y conserva A− / A+.
+- Edición básica permite corregir texto y guardar una copia HTML o TXT; el DOCX original no se sobrescribe todavía.
+- Los mosaicos PDF, Word, Excel y PowerPoint ahora son botones reales que abren directamente el selector correspondiente.
+- “Cambiar” y “Volver a seleccionar” limpian el selector para permitir escoger nuevamente el mismo archivo.
+
+2. BANCO DE PREGUNTAS
+- Aumenta el tamaño y peso de las preguntas y respuestas.
+- Relacionar recibe una corrección específica de contraste en modo oscuro.
+- Los conceptos y desplegables de Relacionar pasan a texto claramente visible.
+- Explicaciones y retroalimentación tienen tipografía mayor.
+- Se agregan controles A− / A+ visibles dentro del intento y se recuerda la preferencia en el dispositivo.
+- Se conserva el botón Claro/Oscuro dentro del intento.
+- Se agrandan moderadamente títulos y botones de las tarjetas del Banco.
+
+3. ESTABILIDAD
+- reset.html fue actualizado a v2.13.1; había quedado apuntando a una versión antigua.
+- No cambia Supabase ni la estructura de la base de datos.
+- Se conserva v2.13.0: cuadrícula online, dispositivos, A/B/A+B, tres modalidades del banco y mejoras de modo oscuro.

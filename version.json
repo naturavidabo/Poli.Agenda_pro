@@ -1,8 +1,8 @@
 {
-  "version": "2.13.0",
-  "build": "2026-08-12",
-  "channel": "grid-devices-bank-mobile",
-  "appVersion": "2.13.0",
+  "version": "2.13.2",
+  "build": "2026-08-16",
+  "channel": "share-material-bank-office-universal",
+  "appVersion": "2.13.2",
   "scheduleVersion": "2026-07-29-v274",
-  "databaseVersion": "agenda-db-9"
+  "databaseVersion": "agenda-db-10"
 }

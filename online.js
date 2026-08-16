@@ -7571,3 +7571,50 @@ loadAcademicUserDevicesV2121=async function loadAcademicUserDevicesV2130(userId)
     box.innerHTML=`<div class="device-count-head-v2130"><b>${rows.length} dispositivo${rows.length===1?'':'s'} registrado${rows.length===1?'':'s'}</b><small>Datos técnicos de la instalación · sin GPS</small></div><div class="device-list-v2121">${rows.map(row=>{const recent=Boolean(row.is_recent),current=String(userId)===String(academicSession.user_id)&&String(row.device_id)===String(currentDevice);return `<article class="device-card-v2121 device-card-v2130 ${recent?'recent':''}"><div class="device-main-v2130"><div class="device-title-v2130"><span>📱</span><div><b>${esc(academicDeviceModelLabelV2130(row))}</b><small>${esc(row.platform||'Dispositivo')} · ${esc(row.browser||'Navegador')}</small></div></div><small>${recent?'🟢 Activo recientemente':'⚪ Última actividad: '+esc(academicLastActivityTextV2121(row.last_seen_at))}</small><small>Primera vez: ${esc(academicAccessDateV280(row.first_seen_at))} · Sesiones abiertas: ${Number(row.active_session_count||0)}</small>${academicDeviceTechGridV2130(row)}</div><div class="device-actions-v2130">${current?'<span class="device-current-v2121">Este dispositivo</span>':Number(row.active_session_count||0)>0?`<button class="btn secondary compact-device-btn-v2121" type="button" onclick="academicCloseDeviceSessionsV2121('${esc(userId)}','${esc(row.device_id)}')">Cerrar sesión</button>`:''}</div></article>`}).join('')}</div>${String(userId)!==String(academicSession.user_id)?`<button class="text-btn danger-text-v2121" type="button" onclick="academicCloseAllUserSessionsV2121('${esc(userId)}')">Cerrar todas las sesiones de este usuario</button>`:''}`;
   }catch(error){console.error(error);box.innerHTML=academicIsMissingRpcV2121(error,'academic_get_user_devices_v2121')?'<div class="device-empty-v2121">Falta ejecutar la migración Supabase v2.13.0 para activar el control de dispositivos.</div>':'<div class="device-empty-v2121">No se pudieron consultar los dispositivos.</div>'}
 };
+
+
+/* =========================================================
+   Agenda Policial v2.13.1 — Banco: legibilidad reforzada
+   - Fuente más grande y de mayor contraste en todas las modalidades.
+   - Especial corrección para Relacionar en modo oscuro.
+   - A− / A+ visibles y persistentes dentro del intento.
+   ========================================================= */
+let academicBankFontLevelV2131=1;try{academicBankFontLevelV2131=Math.max(0,Math.min(2,Number(localStorage.getItem('agenda_bank_font_v2131')||1)))}catch{}
+function academicBankFontToolsV2131(){return `<div class="bank-font-tools-v2131"><button type="button" onclick="academicBankFontChangeV2131(-1)" aria-label="Reducir tamaño de letra">A−</button><button type="button" onclick="academicBankFontChangeV2131(1)" aria-label="Aumentar tamaño de letra">A+</button></div>`}
+function academicBankApplyFontV2131(){const modal=document.querySelector('#modalRoot .bank-attempt-modal-v2130');if(!modal)return;modal.classList.remove('bank-font-v2131-0','bank-font-v2131-1','bank-font-v2131-2');modal.classList.add(`bank-font-v2131-${academicBankFontLevelV2131}`)}
+function academicBankFontChangeV2131(delta){academicBankFontLevelV2131=Math.max(0,Math.min(2,academicBankFontLevelV2131+Number(delta||0)));try{localStorage.setItem('agenda_bank_font_v2131',String(academicBankFontLevelV2131))}catch{}academicBankApplyFontV2131();toast(academicBankFontLevelV2131===0?'Texto normal':academicBankFontLevelV2131===1?'Texto cómodo':'Texto grande')}
+const _renderAcademicBankAttemptBaseV2131=renderAcademicBankAttemptV2130;
+function renderAcademicBankAttemptV2131(){
+  _renderAcademicBankAttemptBaseV2131();
+  requestAnimationFrame(()=>{
+    const top=document.querySelector('#modalRoot .bank-attempt-topbar-v2130');if(!top)return;
+    const theme=top.querySelector('.bank-theme-toggle-v2130');const tools=document.createElement('div');tools.className='bank-reading-tools-v2131';tools.innerHTML=academicBankFontToolsV2131();if(theme)tools.appendChild(theme);top.appendChild(tools);academicBankApplyFontV2131();
+  });
+}
+renderAcademicBankAttemptV2121=renderAcademicBankAttemptV2131;
+renderAcademicBankAttemptV211=renderAcademicBankAttemptV2131;
+renderAcademicBankAttemptV210=renderAcademicBankAttemptV2131;
+renderAcademicBankAttemptV279=renderAcademicBankAttemptV2131;
+
+
+/* =========================================================
+   Agenda Policial v2.13.2 — Compartir solo Material + Banco
+   ========================================================= */
+academicAudienceCanShareV2129=function academicAudienceCanShareV2132(type){
+  return academicSession?.role==='administrador_general' && type==='resumenes';
+};
+academicAudienceSelectorV2129=function academicAudienceSelectorV2132(type){
+  const current=academicSession?.course_code||academicCourseCodeByParallelV2129('A');
+  if(!academicAudienceCanShareV2129(type))return `<div class="academic-scope-note-v2129"><b>📌 ${esc(academicCourseShortV2129(current))}</b><span>Esta publicación pertenece únicamente al paralelo activo.</span></div>`;
+  const a=academicCourseCodeByParallelV2129('A'),b=academicCourseCodeByParallelV2129('B'),cp=current===b?'B':'A',other=cp==='A'?'B':'A';
+  return `<section class="academic-audience-v2129 academic-audience-v2130 share-simple-v2132"><div class="audience-title-v2130"><span class="eyebrow">Compartir material</span><b>¿Quién podrá visualizar este documento?</b></div><div class="academic-audience-options-v2130"><label class="audience-option-v2130"><input type="radio" name="academic_audience_v2129" value="current" checked><span><i>${cp}</i><b>Solo Paralelo ${cp}</b></span></label><label class="audience-option-v2130"><input type="radio" name="academic_audience_v2129" value="both"><span><i>A+B</i><b>Compartir también con Paralelo ${other}</b></span></label></div><small>El archivo se sube una sola vez y puede visualizarse desde ambos paralelos.</small><input type="hidden" name="academic_audience_code_a_v2129" value="${esc(a)}"><input type="hidden" name="academic_audience_code_b_v2129" value="${esc(b)}"></section>`;
+};
+function academicBankOtherCourseV2132(){const a=academicCourseCodeByParallelV2129('A'),b=academicCourseCodeByParallelV2129('B'),current=academicSession?.course_code;return current===b?{code:a,label:'A'}:{code:b,label:'B'}}
+async function academicBankShareV2132(bankId){
+  if(academicSession?.role!=='administrador_general')return toast('Solo el administrador general puede compartir bancos entre paralelos');
+  if(!navigator.onLine)return toast('Necesita conexión para compartir el banco');
+  const other=academicBankOtherCourseV2132();if(!confirm(`¿Compartir este banco de preguntas también con el Paralelo ${other.label}?`))return;
+  try{const result=await academicRPCWithRetryV275('academic_bank_share_v2132',{p_token:academicSession.session_token,p_bank_id:bankId,p_target_course:other.code},2),row=Array.isArray(result)?result[0]:result;toast(row?.already_shared?`Este banco ya está disponible en el Paralelo ${other.label}`:`Banco compartido con el Paralelo ${other.label} · ${Number(row?.question_count||0)} preguntas`);await loadAcademicBanksV279()}catch(error){console.error(error);toast(academicFriendlyError(error,'No se pudo compartir el banco'))}
+}
+const _academicBankCardBaseV2132=academicBankCardV279;
+academicBankCardV279=function academicBankCardV2132(bank){let html=_academicBankCardBaseV2132(bank);if(academicSession?.role!=='administrador_general')return html;const other=academicBankOtherCourseV2132(),share=`<button class="text-btn bank-share-btn-v2132" type="button" onclick="academicBankShareV2132('${bank.id}')">↗ Compartir con Paralelo ${other.label}</button>`;return html.replace('</div>\n  </article>',`${share}</div>\n  </article>`)};
