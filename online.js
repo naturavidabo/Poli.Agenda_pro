@@ -7840,3 +7840,221 @@ closeAcademicReaderV290=function closeAcademicReaderV2140(){
 window.addEventListener('pagehide',()=>{if(academicReaderStateV290?.session)academicReaderSaveProgressV2140('pagehide')});
 document.addEventListener('visibilitychange',()=>{if(document.hidden&&academicReaderStateV290?.session)academicReaderSaveProgressV2140('hidden')});
 
+
+
+/* =========================================================
+   AGENDA POLICIAL v2.14.1 — CÁPSULA REAL DE LECTURA ONLINE
+   La cápsula vive FUERA del modal del lector.
+   Al cerrar Word/PDF conserva archivo + punto + velocidad.
+   ========================================================= */
+const ACADEMIC_READER_LAST_V2141='agenda-reader-last-online-v2141';
+let academicReaderPendingResumeV2141=false;
+
+function academicReaderFileSnapshotV2141(file){
+  if(!file)return null;
+  return {
+    url:String(file.url||''),
+    path:String(file.path||''),
+    name:String(file.name||'Documento'),
+    type:String(file.type||file.mime||''),
+    mime:String(file.mime||file.type||''),
+    size:Number(file.size||0),
+    subject:String(file.subject||''),
+    subject_code:String(file.subject_code||''),
+    teacher:String(file.teacher||'')
+  };
+}
+function academicReaderLastReadV2141(){
+  try{
+    const raw=localStorage.getItem(ACADEMIC_READER_LAST_V2141);
+    const row=raw?JSON.parse(raw):null;
+    if(!row?.file?.url&&!row?.file?.path)return null;
+    return row;
+  }catch{return null}
+}
+function academicReaderLastWriteV2141(reason='progress'){
+  const state=academicReaderStateV290,file=state?.file;
+  if(!file)return;
+  const progress=academicReaderReadProgressV2140(file)||{};
+  const chunk=state?.speechChunks?.[Math.max(0,Number(state?.speechIndex||0))];
+  const block=Number.isFinite(Number(chunk?.blockIndex))?Number(chunk.blockIndex):Math.max(0,Number(state?.lastBlockV212||progress.block||0));
+  const payload={
+    file:academicReaderFileSnapshotV2141(file),
+    block,
+    speechIndex:Math.max(0,Number(state?.speechIndex||progress.speechIndex||0)),
+    rate:Number(state?.rate||progress.rate||1),
+    started:Boolean(
+      reason==='speech'||reason==='tap'||reason==='next'||reason==='previous'||
+      reason==='pause'||reason==='close'||reason==='hidden'||reason==='pagehide'||
+      state?.stopped===false||Number(progress.at||0)>0
+    ),
+    at:Date.now()
+  };
+  try{localStorage.setItem(ACADEMIC_READER_LAST_V2141,JSON.stringify(payload))}catch{}
+  academicReaderCapsuleRenderV2141();
+}
+function academicReaderLastClearV2141(){
+  try{localStorage.removeItem(ACADEMIC_READER_LAST_V2141)}catch{}
+  academicReaderCapsuleRenderV2141();
+}
+function academicReaderIsOnlineViewV2141(){
+  try{return typeof state!=='undefined'&&state?.view==='online'&&Boolean(academicSession)}catch{return false}
+}
+function academicReaderCapsuleHtmlV2141(){
+  const last=academicReaderLastReadV2141();
+  if(!last?.started||!last?.file||!academicReaderIsOnlineViewV2141())return '';
+  const block=Math.max(0,Number(last.block||0));
+  const title=last.file.name||'Documento académico';
+  return `<div id="academicReaderCapsuleV2141" class="academic-reader-capsule-v2141">
+    <button class="academic-reader-capsule-main-v2141" type="button" onclick="academicReaderResumeLastV2141()">
+      <span class="academic-reader-capsule-icon-v2141">🔊</span>
+      <span class="academic-reader-capsule-copy-v2141">
+        <small>CONTINUAR LECTURA</small>
+        <b>${esc(title)}</b>
+        <em>Punto ${block+1} · ${Number(last.rate||1).toFixed(2).replace(/0$/,'').replace(/\.0$/,'')}×</em>
+      </span>
+      <strong>Continuar ›</strong>
+    </button>
+    <button class="academic-reader-capsule-close-v2141" type="button" onclick="event.stopPropagation();academicReaderLastClearV2141()" aria-label="Quitar lectura guardada">×</button>
+  </div>`;
+}
+function academicReaderCapsuleRenderV2141(){
+  const old=document.getElementById('academicReaderCapsuleV2141');
+  const html=academicReaderCapsuleHtmlV2141();
+  if(old){if(html)old.outerHTML=html;else old.remove();return}
+  if(!html)return;
+  document.body.insertAdjacentHTML('beforeend',html);
+}
+async function academicReaderResumeLastV2141(){
+  const last=academicReaderLastReadV2141();
+  if(!last?.file)return toast('No existe una lectura guardada');
+  const file={...last.file};
+  const key=academicReaderRegisterV290(file);
+  academicReaderPendingResumeV2141=true;
+  try{
+    await openAcademicReaderV290(key);
+    const state=academicReaderStateV290;
+    state.rate=Math.max(.6,Math.min(2,Number(last.rate||1)));
+    state.lastBlockV212=Math.max(0,Number(last.block||0));
+    if(Number.isFinite(Number(last.speechIndex)))state.speechIndex=Math.max(0,Number(last.speechIndex));
+    // Sobrescribe/asegura el progreso del archivo recién reabierto.
+    try{
+      localStorage.setItem(academicReaderProgressKeyV2140(file),JSON.stringify({
+        block:state.lastBlockV212,
+        speechIndex:state.speechIndex,
+        rate:state.rate,
+        at:Date.now(),
+        reason:'capsule'
+      }));
+    }catch{}
+    [80,260,650].forEach(ms=>setTimeout(()=>academicReaderGoSavedV2140(false),ms));
+    setTimeout(()=>{
+      const select=document.querySelector('.reader-rate-v2129 select');
+      if(select)select.value=String(state.rate);
+      const p=document.getElementById('academicReaderProgressV290');
+      if(p)p.textContent=`Recuperado: punto ${state.lastBlockV212+1}`;
+      academicReaderRefreshResumeV2140();
+    },300);
+  }finally{
+    academicReaderPendingResumeV2141=false;
+    academicReaderCapsuleRenderV2141();
+  }
+}
+
+/* Registrar el último punto cada vez que el lector realmente avanza. */
+const academicReaderSaveProgressBaseV2141=academicReaderSaveProgressV2140;
+academicReaderSaveProgressV2140=function academicReaderSaveProgressV2141(reason='activity'){
+  academicReaderSaveProgressBaseV2141(reason);
+  if(['speech','tap','previous','next','rate','resume','close','hidden','pagehide','manual'].includes(reason)){
+    academicReaderLastWriteV2141(reason);
+  }
+};
+
+const academicReaderToggleSpeechBaseV2141=academicReaderToggleSpeechV290;
+academicReaderToggleSpeechV290=function academicReaderToggleSpeechV2141(){
+  academicReaderToggleSpeechBaseV2141();
+  setTimeout(()=>{
+    academicReaderSaveProgressV2140(academicReaderStateV290?.paused?'pause':'speech');
+    academicReaderCapsuleRenderV2141();
+  },60);
+};
+
+const academicReaderSpeakBaseV2141=academicReaderSpeakCurrentV2125;
+academicReaderSpeakCurrentV2125=function academicReaderSpeakCurrentV2141(){
+  academicReaderLastWriteV2141('speech');
+  return academicReaderSpeakBaseV2141();
+};
+academicReaderSpeakCurrentV290=academicReaderSpeakCurrentV2125;
+
+/* Cerrar: guardar ANTES de destruir la sesión y mostrar cápsula después. */
+const closeAcademicReaderBaseV2141=closeAcademicReaderV290;
+closeAcademicReaderV290=function closeAcademicReaderV2141(){
+  if(academicReaderStateV290?.file){
+    academicReaderSaveProgressV2140('close');
+    academicReaderLastWriteV2141('close');
+  }
+  const result=closeAcademicReaderBaseV2141();
+  setTimeout(()=>academicReaderCapsuleRenderV2141(),80);
+  return result;
+};
+
+/* Si se cierra el modal tocando fuera o por otra ruta, conservar igualmente. */
+const closeModalBaseV2141=closeModal;
+closeModal=function closeModalV2141(){
+  if(academicReaderStateV290?.session&&academicReaderStateV290?.file){
+    academicReaderSaveProgressV2140('close');
+    academicReaderLastWriteV2141('close');
+  }
+  const result=closeModalBaseV2141();
+  setTimeout(()=>academicReaderCapsuleRenderV2141(),80);
+  return result;
+};
+
+/* Cada render/navegación online vuelve a colocar la cápsula si corresponde. */
+const renderOnlineBaseV2141=renderOnline;
+renderOnline=function renderOnlineV2141(){
+  const result=renderOnlineBaseV2141();
+  setTimeout(()=>academicReaderCapsuleRenderV2141(),80);
+  return result;
+};
+const setAcademicTabBaseV2141=setAcademicTab;
+setAcademicTab=function setAcademicTabV2141(tab){
+  const result=setAcademicTabBaseV2141(tab);
+  setTimeout(()=>academicReaderCapsuleRenderV2141(),120);
+  return result;
+};
+window.addEventListener('pageshow',()=>setTimeout(()=>academicReaderCapsuleRenderV2141(),120));
+document.addEventListener('visibilitychange',()=>{
+  if(document.hidden&&academicReaderStateV290?.file){
+    academicReaderSaveProgressV2140('hidden');
+    academicReaderLastWriteV2141('hidden');
+  }else if(!document.hidden){
+    setTimeout(()=>academicReaderCapsuleRenderV2141(),100);
+  }
+});
+
+/* Velocidades online: conserva las actuales y añade escalones suaves. */
+academicReaderControlsV290=function academicReaderControlsV2141({speech=true,scan=false}={}){
+  const rate=Number(academicReaderStateV290.rate||1),dark=academicThemeV2124()==='dark';
+  const rates=[.75,1,1.10,1.15,1.20,1.25,1.5,1.75,2];
+  const label=v=>v===1?'1×':`${Number(v).toFixed(2).replace(/0$/,'')}×`;
+  return `<div class="academic-reader-controls-v290 academic-reader-controls-v2125 academic-reader-controls-v2129 academic-reader-controls-v2140">
+    <div class="academic-reader-direct-v2129">
+      <button id="academicReaderPlayV290" class="btn academic-reader-play-v290 reader-main-v2129" type="button" onclick="academicReaderToggleSpeechV290()" ${speech?'':'disabled'}><span>🔊</span><b>Escuchar</b></button>
+      <button class="reader-main-v2129" type="button" onclick="academicReaderPreviousV290()" ${speech?'':'disabled'}><span>⏮</span><b>Atrás</b></button>
+      <button class="reader-main-v2129" type="button" onclick="academicReaderNextV290()" ${speech?'':'disabled'}><span>⏭</span><b>Adelante</b></button>
+      <label class="reader-rate-v2129"><span>Velocidad</span><select onchange="academicReaderSetRateV290(this.value)" ${speech?'':'disabled'}>${rates.map(v=>`<option value="${v}" ${Math.abs(rate-v)<.006?'selected':''}>${label(v)}</option>`).join('')}</select></label>
+      <button class="academic-theme-toggle-v2124 reader-theme-v2129" data-academic-theme-toggle-v2124 type="button" onclick="academicReaderToggleThemeV2129(this)" aria-pressed="${dark?'true':'false'}" title="${dark?'Cambiar a modo claro':'Cambiar a modo oscuro'}"><span class="theme-icon-v2124">${dark?'🌙':'☀️'}</span><span>${dark?'Oscuro':'Claro'}</span><i></i></button>
+      <button id="academicReaderControlsToggleV2125" class="reader-more-v2129" type="button" onclick="academicReaderToggleControlsV2125()" aria-expanded="false"><span>⋯</span><b>Más</b></button>
+    </div>
+    <div class="reader-status-row-v2129 reader-status-row-v2140"><span id="academicReaderProgressV290" class="academic-reader-progress-text-v290">Listo para leer</span><div id="academicReaderResumeSlotV2125" class="academic-reader-resume-slot-v2125">${academicReaderResumeButtonV2140()}</div></div>
+    <div id="academicReaderAdvancedV2125" class="academic-reader-advanced-v2125 reader-advanced-v2129" hidden>
+      <div class="academic-reader-nav-v2125"><button class="btn ghost" type="button" onclick="academicReaderSaveProgressV2140('manual');academicReaderStopV290()" ${speech?'':'disabled'}>■ Detener lectura</button><label class="reader-font-v2129">Tamaño<select onchange="academicReaderSetFontV290(this.value)"><option value=".95">Pequeño</option><option value="1.05" selected>Normal</option><option value="1.18">Grande</option><option value="1.32">Muy grande</option></select></label></div>
+      <div class="academic-reader-comfort-v2124"><span>🔆</span><div><b>Pantalla activa durante la lectura</b><small>Mientras la voz se reproduce se intenta mantener la pantalla activa.</small></div></div>
+      ${scan?'<div class="academic-reader-scan-note-v290">⚠️ Este PDF parece escaneado. Puede verlo dentro de la aplicación, pero no contiene suficiente texto seleccionable para lectura por voz.</div>':''}
+    </div>
+  </div>`;
+};
+
+/* Colocar cápsula al iniciar el script si existe lectura previa. */
+setTimeout(()=>academicReaderCapsuleRenderV2141(),350);

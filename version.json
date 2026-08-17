@@ -1,8 +1,8 @@
 {
-  "version": "2.14.0",
+  "version": "2.14.1",
   "build": "2026-08-16",
-  "channel": "online-reader-resume-restored",
-  "appVersion": "2.14.0",
+  "channel": "online-reader-persistent-capsule",
+  "appVersion": "2.14.1",
   "scheduleVersion": "2026-07-29-v274",
   "databaseVersion": "agenda-db-10"
 }

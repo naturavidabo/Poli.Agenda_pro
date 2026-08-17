@@ -746,3 +746,44 @@ body.academic-dark-v2124 .bank-attempt-modal-v2130 .bank-matching-note-v210{back
 .reader-status-row-v2140{align-items:center;gap:8px;flex-wrap:wrap}
 .reader-status-row-v2140 .academic-reader-resume-slot-v2125{min-height:34px}
 @media(max-width:540px){.academic-reader-resume-v2140{width:100%;justify-content:center}.reader-status-row-v2140{display:grid!important;grid-template-columns:1fr}}
+
+
+/* v2.14.1 · Cápsula persistente del lector ONLINE */
+.academic-reader-capsule-v2141{
+  position:fixed;left:50%;transform:translateX(-50%);bottom:78px;z-index:10020;
+  width:min(620px,calc(100% - 22px));display:flex;align-items:stretch;
+  border:1px solid rgba(190,158,70,.75);border-radius:18px;
+  background:linear-gradient(135deg,rgba(27,42,33,.98),rgba(15,26,20,.98));
+  color:#f5f7f5;box-shadow:0 12px 30px rgba(0,0,0,.34);overflow:hidden;
+  backdrop-filter:blur(14px);
+}
+.academic-reader-capsule-main-v2141{
+  flex:1;min-width:0;display:grid;grid-template-columns:auto minmax(0,1fr) auto;
+  gap:9px;align-items:center;text-align:left;border:0;background:transparent;color:inherit;padding:10px 8px 10px 11px;
+}
+.academic-reader-capsule-icon-v2141{
+  width:38px;height:38px;display:grid;place-items:center;border-radius:11px;
+  background:rgba(200,168,78,.17);font-size:1.1rem;
+}
+.academic-reader-capsule-copy-v2141{min-width:0;display:block}
+.academic-reader-capsule-copy-v2141 small{
+  display:block;font-size:.55rem;font-weight:900;letter-spacing:.08em;color:#d7c27a;margin-bottom:1px
+}
+.academic-reader-capsule-copy-v2141 b{
+  display:block;font-size:.76rem;white-space:nowrap;overflow:hidden;text-overflow:ellipsis
+}
+.academic-reader-capsule-copy-v2141 em{
+  display:block;font-size:.61rem;font-style:normal;color:#bfcac2;margin-top:2px
+}
+.academic-reader-capsule-main-v2141 strong{
+  font-size:.68rem;color:#f2dda0;white-space:nowrap
+}
+.academic-reader-capsule-close-v2141{
+  width:40px;border:0;border-left:1px solid rgba(255,255,255,.09);background:rgba(255,255,255,.035);
+  color:#d8dfda;font-size:1.15rem
+}
+@media(max-width:520px){
+  .academic-reader-capsule-v2141{bottom:70px}
+  .academic-reader-capsule-main-v2141{grid-template-columns:auto minmax(0,1fr)}
+  .academic-reader-capsule-main-v2141 strong{display:none}
+}
