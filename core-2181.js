@@ -1,7 +1,7 @@
 (()=>{
 'use strict';
-const VERSION='2.18.2';
-const VERSION_RE=/\bv?2\.(?:14\.1|16\.\d+|17\.\d+|18\.[01])\b/g;
+const VERSION='2.18.3';
+const VERSION_RE=/\bv?2\.(?:14\.1|16\.\d+|17\.\d+|18\.[0-2])\b/g;
 function patchVersions(root=document.body){
   if(!root)return;
   const walker=document.createTreeWalker(root,NodeFilter.SHOW_TEXT);
