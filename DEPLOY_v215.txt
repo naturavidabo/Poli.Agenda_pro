@@ -1,0 +1,4 @@
+Agenda Policial v2.15.0
+Publicación forzada de GitHub Pages.
+Fecha: 2026-08-26
+Objetivo: disparar nuevamente el proceso pages build and deployment desde main.
