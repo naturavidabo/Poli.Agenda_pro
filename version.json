@@ -1,8 +1,8 @@
 {
-  "version": "2.18.0",
+  "version": "2.18.1",
   "build": "2026-08-26",
-  "channel": "live-stable-mobile",
-  "appVersion": "2.18.0",
+  "channel": "live-stable-mobile-core-fix",
+  "appVersion": "2.18.1",
   "scheduleVersion": "2026-07-29-v274",
   "databaseVersion": "agenda-db-10",
   "serviceGroupsDataVersion": "2026-08-26"
