@@ -1,0 +1,42 @@
+name: Sync app version
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/sync-app-version.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+      - name: Sync visible/runtime version
+        shell: bash
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          p = Path('app.js')
+          s = p.read_text(encoding='utf-8')
+          s = s.replace("const APP_VERSION='2.14.1';", "const APP_VERSION='2.17.1';", 1)
+          s = s.replace("const BUILD_DATE='2026-08-12';", "const BUILD_DATE='2026-08-26';", 1)
+          p.write_text(s, encoding='utf-8')
+          PY
+      - name: Commit correction
+        shell: bash
+        run: |
+          if git diff --quiet; then
+            echo 'Version already synchronized'
+            exit 0
+          fi
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add app.js
+          git commit -m 'Hotfix v2.17.1: sincronizar versión runtime'
+          git push origin main
