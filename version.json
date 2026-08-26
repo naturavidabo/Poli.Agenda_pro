@@ -1,8 +1,8 @@
 {
-  "version": "2.18.2",
+  "version": "2.18.3",
   "build": "2026-08-26",
-  "channel": "live-service-groups-screen",
-  "appVersion": "2.18.2",
+  "channel": "live-service-groups-full-scroll",
+  "appVersion": "2.18.3",
   "scheduleVersion": "2026-07-29-v274",
   "databaseVersion": "agenda-db-10",
   "serviceGroupsDataVersion": "2026-08-26"
