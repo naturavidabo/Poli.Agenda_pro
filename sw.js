@@ -1,5 +1,5 @@
-const CACHE='agenda-policial-v2.14.1';
-const CORE_REQUIRED=['./','./index.html','./styles.css','./online.css','./app.js','./online.js','./manifest.webmanifest','./version.json','./icons/icon-192.png','./icons/icon-512.png','./icons/icon-maskable-512.png','./assets/escudo-policia.png'];
+const CACHE='agenda-policial-v2.15.0';
+const CORE_REQUIRED=['./','./index.html','./styles.css','./online.css','./service-groups.css','./app.js','./online.js','./service-groups.js','./manifest.webmanifest','./version.json','./icons/icon-192.png','./icons/icon-512.png','./icons/icon-maskable-512.png','./assets/escudo-policia.png','./data/grupos/alfa-capitanes.json','./data/grupos/alfa-suboficiales-segundos.json','./data/grupos/alfa-sargentos-segundos.json','./data/grupos/bravo-capitanes.json','./data/grupos/bravo-suboficiales-segundos.json','./data/grupos/bravo-sargentos-segundos.json'];
 const CORE_OPTIONAL=['./assets/horario-segundo-semestre-2026.png','./assets/rol-examenes-primer-parcial-2026.jpg','./assets/horario-suboficial-segundo-f-2026.jpg','./assets/horario-sargento-segundo-a-2026.jpg','./assets/horario-capitanes-b-2026.jpg','./assets/reglamento-comision-sumaria-unipol.pdf','./data/reglamento-uniformes.json','./data/reglamento-sumario-unipol.json','./data/horario-base.json','./data/biblioteca-catalogo.json','./data/academic-users.json','./data/ley-777.json','./data/ley-101.json','./data/ley-organica-policia.json','./data/ley-004.json','./data/ley-348.json','https://cdnjs.cloudflare.com/ajax/libs/mammoth/1.8.0/mammoth.browser.min.js','https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js','https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js','https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js','https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js','https://cdn.jsdelivr.net/npm/docx-preview@0.4.0/dist/docx-preview.min.js'];
 
 self.addEventListener('install',event=>{
@@ -56,7 +56,7 @@ self.addEventListener('fetch',event=>{
   const sameOrigin=url.origin===self.location.origin;
   if(!sameOrigin){event.respondWith(cacheFirst(event.request,false));return;}
   const path=url.pathname;
-  const isCore=path.endsWith('/')||path.endsWith('/index.html')||path.endsWith('/app.js')||path.endsWith('/online.js')||path.endsWith('/styles.css')||path.endsWith('/online.css')||path.endsWith('/manifest.webmanifest')||path.endsWith('/version.json')||path.endsWith('/sw.js');
+  const isCore=path.endsWith('/')||path.endsWith('/index.html')||path.endsWith('/app.js')||path.endsWith('/online.js')||path.endsWith('/service-groups.js')||path.endsWith('/styles.css')||path.endsWith('/online.css')||path.endsWith('/service-groups.css')||path.endsWith('/manifest.webmanifest')||path.endsWith('/version.json')||path.endsWith('/sw.js');
   if(event.request.mode==='navigate'||isCore){event.respondWith(networkFirst(event.request));return;}
   event.respondWith(cacheFirst(event.request,true));
 });
