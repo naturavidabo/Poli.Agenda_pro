@@ -1,8 +1,9 @@
 {
-  "version": "2.15.0",
+  "version": "2.16.0",
   "build": "2026-08-26",
-  "channel": "live-grupos-servicio",
-  "appVersion": "2.15.0",
+  "channel": "service-groups-stability",
+  "appVersion": "2.16.0",
   "scheduleVersion": "2026-07-29-v274",
-  "databaseVersion": "agenda-db-10"
+  "databaseVersion": "agenda-db-10",
+  "serviceGroupsDataVersion": "2026-08-26"
 }
