@@ -1,8 +1,8 @@
 {
-  "version": "2.17.1",
+  "version": "2.17.2",
   "build": "2026-08-26",
   "channel": "live-stability-smart-schedule",
-  "appVersion": "2.17.1",
+  "appVersion": "2.17.2",
   "scheduleVersion": "2026-07-29-v274",
   "databaseVersion": "agenda-db-10",
   "serviceGroupsDataVersion": "2026-08-26"
