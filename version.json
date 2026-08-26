@@ -1,8 +1,8 @@
 {
-  "version": "2.16.0",
+  "version": "2.16.1",
   "build": "2026-08-26",
-  "channel": "service-groups-stability",
-  "appVersion": "2.16.0",
+  "channel": "service-groups-hotfix",
+  "appVersion": "2.16.1",
   "scheduleVersion": "2026-07-29-v274",
   "databaseVersion": "agenda-db-10",
   "serviceGroupsDataVersion": "2026-08-26"
