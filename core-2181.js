@@ -1,45 +1,17 @@
 (()=>{
 'use strict';
-const VERSION='2.19.2';
-const VERSION_RE=/\bv?2\.(?:14\.1|16\.\d+|17\.\d+|18\.\d+|19\.[01])\b/g;
-function patchVersions(root=document.body){
-  if(!root)return;
-  const walker=document.createTreeWalker(root,NodeFilter.SHOW_TEXT);
-  let n;const list=[];
-  while((n=walker.nextNode())){VERSION_RE.lastIndex=0;if(VERSION_RE.test(n.nodeValue||''))list.push(n)}
-  list.forEach(node=>{VERSION_RE.lastIndex=0;node.nodeValue=(node.nodeValue||'').replace(VERSION_RE,m=>m.startsWith('v')?'v'+VERSION:VERSION)});
-  const kicker=document.querySelector('.sg-kicker');if(kicker)kicker.textContent='GRUPOS DE SERVICIO · OFFLINE · v'+VERSION;
-  try{if(window.AgendaServiceGroups)window.AgendaServiceGroups.version=VERSION}catch{}
-}
+const VERSION='2.20.0';
+const VERSION_RE=/\bv?2\.(?:14\.1|16\.\d+|17\.\d+|18\.\d+|19\.\d+)\b/g;
+function patchVersions(root=document.body){if(!root)return;const walker=document.createTreeWalker(root,NodeFilter.SHOW_TEXT);let n;const list=[];while((n=walker.nextNode())){VERSION_RE.lastIndex=0;if(VERSION_RE.test(n.nodeValue||''))list.push(n)}list.forEach(node=>{VERSION_RE.lastIndex=0;node.nodeValue=(node.nodeValue||'').replace(VERSION_RE,m=>m.startsWith('v')?'v'+VERSION:VERSION)});const kicker=document.querySelector('.sg-kicker');if(kicker)kicker.textContent='GRUPOS DE SERVICIO · OFFLINE · v'+VERSION;try{if(window.AgendaServiceGroups)window.AgendaServiceGroups.version=VERSION}catch{}}
 function activeNavLabel(){return (document.querySelector('.bottom-nav .nav-btn.active')?.textContent||'').trim().toLowerCase()}
 function isHorario(){return activeNavLabel().includes('horario')||/Horario/i.test(document.querySelector('main h2,.section-title')?.textContent||'')}
 function ensureSentinel(){let s=document.getElementById('serviceGroupsTile');if(s&&!s.dataset.sgSentinel){s.remove();s=null}if(!s){s=document.createElement('span');s.id='serviceGroupsTile';s.dataset.sgSentinel='1';s.hidden=true;document.body.appendChild(s)}}
 function removeLegacyAccess(){document.getElementById('serviceGroupsQuick')?.remove();document.querySelectorAll('.sg-quick,#serviceGroupsHomeAccess').forEach(x=>x.remove())}
 function hideHorarioFab(){if(!isHorario())return;document.querySelectorAll('button').forEach(b=>{const t=(b.textContent||'').trim(),cs=getComputedStyle(b),r=b.getBoundingClientRect(),floating=cs.position==='fixed'||cs.position==='absolute';if(floating&&(t==='+'||/agregar|nuevo/i.test((b.getAttribute('aria-label')||'')+' '+(b.title||'')))&&r.width>=45&&r.height>=45)b.style.setProperty('display','none','important')})}
-function findHorarioAnchor(main){
-  return main.querySelector('.smart-profile')||
-    [...main.querySelectorAll('select')].find(x=>/capitanes|turno|horario/i.test((x.value||'')+' '+(x.options?.[x.selectedIndex]?.textContent||'')))||
-    main.querySelector('.smart-schedule-top')||
-    [...main.querySelectorAll('h2')].find(x=>/^horario$/i.test((x.textContent||'').trim()));
-}
-function installHorarioGroupAccess(){
-  const old=document.getElementById('serviceGroupsHorarioAccess');
-  if(!isHorario()){old?.remove();return}
-  if(typeof window.AgendaServiceGroups?.open!=='function')return;
-  const main=document.querySelector('.app>main,main');if(!main)return;
-  const anchor=findHorarioAnchor(main);if(!anchor)return;
-  if(old&&old.isConnected){
-    if(old.previousElementSibling!==anchor)anchor.insertAdjacentElement('afterend',old);
-    return;
-  }
-  const card=document.createElement('button');card.id='serviceGroupsHorarioAccess';card.type='button';card.className='service-groups-horario-access';
-  card.innerHTML='<span class="sgha-icon" aria-hidden="true">👥</span><span class="sgha-copy"><b>Mi grupo de servicio</b><small>Alfa y Bravo · nómina completa · offline</small></span><span class="sgha-arrow" aria-hidden="true">›</span>';
-  card.onclick=()=>window.AgendaServiceGroups.open();
-  anchor.insertAdjacentElement('afterend',card);
-}
+function findHorarioAnchor(main){return main.querySelector('.smart-profile')||[...main.querySelectorAll('select')].find(x=>/capitanes|turno|horario/i.test((x.value||'')+' '+(x.options?.[x.selectedIndex]?.textContent||'')))||main.querySelector('.smart-schedule-top')||[...main.querySelectorAll('h2')].find(x=>/^horario$/i.test((x.textContent||'').trim()))}
+function installHorarioGroupAccess(){const old=document.getElementById('serviceGroupsHorarioAccess');if(!isHorario()){old?.remove();return}if(typeof window.AgendaServiceGroups?.open!=='function')return;const main=document.querySelector('.app>main,main');if(!main)return;const anchor=findHorarioAnchor(main);if(!anchor)return;if(old&&old.isConnected){if(old.previousElementSibling!==anchor)anchor.insertAdjacentElement('afterend',old);return}const card=document.createElement('button');card.id='serviceGroupsHorarioAccess';card.type='button';card.className='service-groups-horario-access';card.innerHTML='<span class="sgha-icon" aria-hidden="true">👥</span><span class="sgha-copy"><b>Mi grupo de servicio</b><small>Alfa y Bravo · nómina completa · offline</small></span><span class="sgha-arrow" aria-hidden="true">›</span>';card.onclick=()=>window.AgendaServiceGroups.open();anchor.insertAdjacentElement('afterend',card)}
 function styleGroupPage(){const modal=document.getElementById('serviceGroupsModal');document.body.classList.toggle('sg-page-open',!!modal);if(!modal)return;const close=modal.querySelector('.sg-close');if(close){close.textContent='←';close.setAttribute('aria-label','Volver')}const panel=modal.querySelector('.sg-panel');if(panel)panel.classList.add('sg-page-panel')}
 function maintain(){patchVersions();ensureSentinel();removeLegacyAccess();hideHorarioFab();installHorarioGroupAccess();styleGroupPage();document.body.classList.toggle('core-horario-2181',isHorario())}
 async function checkVersion(){try{const r=await fetch('./version.json?t='+Date.now(),{cache:'no-store'});if(!r.ok)return;const j=await r.json(),remote=j.appVersion||j.version;if(remote&&remote!==VERSION){const key='agenda-reload-'+remote;if(!sessionStorage.getItem(key)){sessionStorage.setItem(key,'1');location.replace('./index.html?v='+encodeURIComponent(remote)+'&t='+Date.now())}}}catch{}}
-window.addEventListener('DOMContentLoaded',()=>{maintain();checkVersion();let queued=false;new MutationObserver(()=>{if(queued)return;queued=true;requestAnimationFrame(()=>{queued=false;maintain()})}).observe(document.body,{childList:true,subtree:true,characterData:true});window.addEventListener('online',checkVersion);setInterval(checkVersion,5*60*1000)});
-window.AgendaCore2181={version:VERSION,refresh:maintain,checkVersion};
+window.addEventListener('DOMContentLoaded',()=>{maintain();checkVersion();let queued=false;new MutationObserver(()=>{if(queued)return;queued=true;requestAnimationFrame(()=>{queued=false;maintain()})}).observe(document.body,{childList:true,subtree:true,characterData:true});window.addEventListener('online',checkVersion);setInterval(checkVersion,5*60*1000)});window.AgendaCore2181={version:VERSION,refresh:maintain,checkVersion};
 })();
