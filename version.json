@@ -1,8 +1,8 @@
 {
-  "version": "2.19.1",
+  "version": "2.19.2",
   "build": "2026-08-27",
-  "channel": "live-service-groups-near-schedule",
-  "appVersion": "2.19.1",
+  "channel": "live-service-groups-in-schedule",
+  "appVersion": "2.19.2",
   "scheduleVersion": "2026-07-29-v274",
   "databaseVersion": "agenda-db-10",
   "serviceGroupsDataVersion": "2026-08-26"
