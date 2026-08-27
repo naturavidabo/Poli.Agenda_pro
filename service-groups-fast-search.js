@@ -1,0 +1,5 @@
+(()=>{'use strict';
+const norm=s=>String(s||'').toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'').replace(/\s+/g,' ').trim();
+function fastFilter(input){const panel=input.closest('.sg-panel');if(!panel)return;const q=norm(input.value);let visible=0;panel.querySelectorAll('.sg-section').forEach(section=>{let count=0;section.querySelectorAll('.sg-row').forEach(row=>{if(!row.dataset.fastSearch)row.dataset.fastSearch=norm(row.textContent);const show=!q||row.dataset.fastSearch.includes(q);row.hidden=!show;if(show){count++;visible++}});section.hidden=count===0;const badge=section.querySelector('h3 span');if(badge)badge.textContent=count});const count=panel.querySelector('.sg-result-count span:first-child b');if(count)count.textContent=visible;let empty=panel.querySelector('.sg-fast-empty');if(!visible&&q){if(!empty){empty=document.createElement('div');empty.className='sg-empty sg-fast-empty';empty.textContent='No hay coincidencias.';panel.querySelector('.sg-content')?.appendChild(empty)}}else empty?.remove()}
+document.addEventListener('input',e=>{if(e.target?.id!=='sgSearch')return;e.stopImmediatePropagation();fastFilter(e.target)},true);
+})();
