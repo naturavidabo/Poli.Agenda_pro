@@ -1,11 +1,11 @@
 {
-  "version": "2.20.1",
-  "build": "2026-08-27",
-  "channel": "online-gps-service-control-phase-1",
-  "appVersion": "2.20.1",
-  "scheduleVersion": "2026-07-29-v274",
-  "databaseVersion": "agenda-db-11-gps",
-  "serviceGroupsDataVersion": "2026-08-26",
-  "partCalculatorVersion": "1.0",
-  "gpsServiceControlVersion": "1.0"
+  "version":"2.20.3",
+  "build":"2026-08-27",
+  "channel":"formation-gps-part-calculator-fast-roster-search",
+  "appVersion":"2.20.3",
+  "scheduleVersion":"2026-07-29-v274",
+  "databaseVersion":"agenda-db-11-gps",
+  "serviceGroupsDataVersion":"2026-08-26",
+  "partCalculatorVersion":"2.0",
+  "gpsServiceControlVersion":"1.1"
 }
