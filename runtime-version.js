@@ -1,18 +1,9 @@
 (()=>{
 'use strict';
-const FALLBACK='2.18.2';
+const FALLBACK='2.20.0';
 let version=FALLBACK;
-const OLD=/\bv?2\.(?:14\.1|16\.\d+|17\.\d+|18\.[01])\b/g;
-function patchText(root=document.body){
-  if(!root)return;
-  const walker=document.createTreeWalker(root,NodeFilter.SHOW_TEXT);
-  const nodes=[];let n;
-  while((n=walker.nextNode())){OLD.lastIndex=0;if(OLD.test(n.nodeValue||''))nodes.push(n)}
-  for(const node of nodes){OLD.lastIndex=0;node.nodeValue=(node.nodeValue||'').replace(OLD,m=>m.startsWith('v')?'v'+version:version)}
-}
-async function sync(){
-  try{const r=await fetch('./version.json?ts='+Date.now(),{cache:'no-store'});if(r.ok){const j=await r.json();version=j.appVersion||j.version||FALLBACK}}catch{}
-  window.AGENDA_RUNTIME_VERSION=version;patchText();
-}
+const OLD=/\bv?2\.(?:14\.1|16\.\d+|17\.\d+|18\.\d+|19\.\d+)\b/g;
+function patchText(root=document.body){if(!root)return;const walker=document.createTreeWalker(root,NodeFilter.SHOW_TEXT);const nodes=[];let n;while((n=walker.nextNode())){OLD.lastIndex=0;if(OLD.test(n.nodeValue||''))nodes.push(n)}for(const node of nodes){OLD.lastIndex=0;node.nodeValue=(node.nodeValue||'').replace(OLD,m=>m.startsWith('v')?'v'+version:version)}}
+async function sync(){try{const r=await fetch('./version.json?ts='+Date.now(),{cache:'no-store'});if(r.ok){const j=await r.json();version=j.appVersion||j.version||FALLBACK}}catch{}window.AGENDA_RUNTIME_VERSION=version;patchText()}
 window.addEventListener('DOMContentLoaded',()=>{sync();let pending=false;const obs=new MutationObserver(()=>{if(pending)return;pending=true;requestAnimationFrame(()=>{pending=false;patchText()})});obs.observe(document.body,{childList:true,subtree:true,characterData:true})});
 })();
