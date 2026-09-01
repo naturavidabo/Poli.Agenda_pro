@@ -1,12 +1,12 @@
 {
-  "version": "2.21.2",
+  "version": "2.21.3",
   "build": "2026-09-01",
-  "channel": "open-access-growth",
-  "appVersion": "2.21.2",
+  "channel": "new-install-identity-service-gate",
+  "appVersion": "2.21.3",
   "scheduleVersion": "2026-07-29-v274",
-  "databaseVersion": "agenda-db-12-open-access",
+  "databaseVersion": "agenda-db-13-identity",
   "serviceGroupsDataVersion": "2026-08-26",
   "partCalculatorVersion": "2.21.1",
   "gpsServiceControlVersion": "2.21.1",
-  "openAccessProfileVersion": "2.21.2"
+  "openAccessProfileVersion": "2.21.3"
 }
