@@ -1,12 +1,11 @@
 {
-  "version": "2.21.3",
+  "version": "2.21.4",
   "build": "2026-09-01",
-  "channel": "new-install-identity-service-gate",
-  "appVersion": "2.21.3",
+  "channel": "remove-global-part-calculator",
+  "appVersion": "2.21.4",
   "scheduleVersion": "2026-07-29-v274",
   "databaseVersion": "agenda-db-13-identity",
   "serviceGroupsDataVersion": "2026-08-26",
-  "partCalculatorVersion": "2.21.1",
   "gpsServiceControlVersion": "2.21.1",
   "openAccessProfileVersion": "2.21.3"
 }
