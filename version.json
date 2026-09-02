@@ -1,11 +1,12 @@
 {
-  "version": "2.21.5",
-  "build": "2026-09-01",
-  "channel": "formation-gps-map-picker",
-  "appVersion": "2.21.5",
+  "version": "2.21.6",
+  "build": "2026-09-02",
+  "channel": "academic-stability-gps-formations",
+  "appVersion": "2.21.6",
   "scheduleVersion": "2026-07-29-v274",
   "databaseVersion": "agenda-db-13-identity",
   "serviceGroupsDataVersion": "2026-08-26",
-  "gpsServiceControlVersion": "2.21.5",
-  "openAccessProfileVersion": "2.21.3"
+  "gpsServiceControlVersion": "2.21.6",
+  "openAccessProfileVersion": "2.21.3",
+  "stabilityLayerVersion": "2.21.6"
 }
