@@ -1,12 +1,12 @@
 {
-  "version": "2.21.6",
+  "version": "2.21.7",
   "build": "2026-09-02",
-  "channel": "academic-stability-gps-formations",
-  "appVersion": "2.21.6",
+  "channel": "gps-map-stacking-fix",
+  "appVersion": "2.21.7",
   "scheduleVersion": "2026-07-29-v274",
   "databaseVersion": "agenda-db-13-identity",
   "serviceGroupsDataVersion": "2026-08-26",
-  "gpsServiceControlVersion": "2.21.6",
+  "gpsServiceControlVersion": "2.21.7",
   "openAccessProfileVersion": "2.21.3",
-  "stabilityLayerVersion": "2.21.6"
+  "stabilityLayerVersion": "2.21.7"
 }
