@@ -1,0 +1,24 @@
+/* Agenda Policial v2.21.7 — contención estable de mapas GPS */
+.gps-control,.gps-event,.gps-event-map-wrap,.gps-create-map,.gps-location-picker{position:relative;min-width:0}
+.gps-event{isolation:isolate;overflow:hidden;contain:layout paint}
+.gps-event-map-wrap{z-index:0;isolation:isolate;overflow:hidden;contain:paint;transform:translateZ(0)}
+.gps-event-map{position:relative!important;z-index:0!important;display:block;width:100%!important;height:190px!important;overflow:hidden!important;background:#edf2ef}
+.gps-event-map .leaflet-pane{z-index:2!important}
+.gps-event-map .leaflet-tile-pane{z-index:1!important}
+.gps-event-map .leaflet-overlay-pane{z-index:3!important}
+.gps-event-map .leaflet-marker-pane{z-index:4!important}
+.gps-event-map .leaflet-shadow-pane{z-index:3!important}
+.gps-event-map .leaflet-tooltip-pane,.gps-event-map .leaflet-popup-pane{z-index:5!important}
+.gps-event-map .leaflet-control-container{position:relative;z-index:6!important}
+.gps-event-map .leaflet-top,.gps-event-map .leaflet-bottom{z-index:6!important}
+.gps-map-caption{position:relative;z-index:7;background:#f7faf8}
+.gps-actions,.gps-reader-help,.gps-facts,.gps-event-head,.gps-uniform-pill,.gps-event>p{position:relative;z-index:8;background:inherit}
+.gps-actions{clear:both}
+.gps-actions button,.gps-actions a{position:relative;z-index:9}
+.gps-sheet{isolation:isolate}
+.gps-sheet-card{position:relative;isolation:isolate}
+.gps-create-map{z-index:0!important;isolation:isolate;contain:paint;transform:translateZ(0)}
+.gps-create-map .leaflet-pane{z-index:2!important}.gps-create-map .leaflet-control-container{position:relative;z-index:6!important}
+.toast{z-index:20050!important}
+#updateBanner,.update-banner{z-index:20040!important}
+@media(max-width:600px){.gps-event-map{height:180px!important}.gps-event{overflow:hidden!important}.gps-event-map-wrap{max-width:100%;overflow:hidden!important}}
