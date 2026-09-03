@@ -1,8 +1,8 @@
 {
-  "version": "2.21.17",
+  "version": "2.21.18",
   "build": "2026-09-03",
-  "channel": "service-groups-launcher-recovery",
-  "appVersion": "2.21.17",
+  "channel": "service-groups-rebuilt-stable",
+  "appVersion": "2.21.18",
   "scheduleVersion": "2026-07-29-v274",
   "databaseVersion": "agenda-db-17-whatsapp-review-publish",
   "serviceGroupsDataVersion": "2026-09-03",
@@ -10,6 +10,7 @@
   "personnelDirectoryVersion": "2.21.12",
   "whatsappInboxVersion": "2.21.13",
   "openAccessProfileVersion": "2.21.14",
-  "serviceGroupsFabVersion": "2.21.17",
+  "serviceGroupsFabVersion": "2.21.18",
+  "serviceGroupsModuleVersion": "2.21.18",
   "stabilityLayerVersion": "2.21.10"
 }
