@@ -1,0 +1,39 @@
+AGENDA POLICIAL — ACTUALIZACIÓN v2.21.13
+Fecha: 03/09/2026
+
+1. PERSONAL II SEMESTRE
+- Base pública/operativa importada: 446 integrantes.
+- Paralelos: CAP A 59, CAP B 57, SOF A 45, SOF B 46, SOF C 45, SOF D 45, SOF E 45, SOF F 43, SGTO A 31, SGTO B 30.
+- 432 registros con teléfono y 432 con procedencia cargada.
+- Directorio general con buscador, filtros por paralelo y procedencia, unidad y función anterior.
+- Ficha pública con llamada y acceso directo a WhatsApp.
+- Integración de procedencia/contacto en listas de formación/servicio.
+
+2. PRIVACIDAD Y ADMINISTRACIÓN
+- Información pública separada de información administrativa sensible.
+- academic_personnel_private contiene actualmente 107 fichas privadas importadas; el resto no fue forzado mediante importación masiva por protección de datos.
+- Acceso directo anon/authenticated/PUBLIC a academic_personnel_private revocado. Consulta solo mediante RPC con rol autorizado.
+- Administrador general, administrador académico y encargado de curso pueden crear, editar y desactivar fichas mediante RPC con auditoría y control de paralelo.
+- Fechas de nacimiento manifiestamente imposibles detectadas en las fichas ya incorporadas fueron anuladas para revisión, sin inventar correcciones.
+
+3. GPS
+- Se mantiene la lógica estable: calibración previa, múltiples muestras y bloqueo si la precisión es peor a ±35 m.
+- Se añadió panel visual de sensor con precisión en metros, muestras, progreso e indicador de aptitud para marcar.
+
+4. WHATSAPP
+- Se creó academic_whatsapp_inbox con estados pendiente, revisado, publicado y descartado.
+- Se desplegó Edge Function agenda-whatsapp-webhook con verificación de webhook y firma HMAC para WhatsApp Cloud API.
+- El webhook clasifica mensajes y trata de detectar paralelo objetivo.
+- La conexión real con Meta queda inactiva hasta configurar WHATSAPP_VERIFY_TOKEN y WHATSAPP_APP_SECRET en el proyecto y registrar el webhook en la aplicación oficial de WhatsApp Business.
+- Centro WhatsApp en la app permite revisar, descartar y publicar mensajes autorizados como tareas.
+- La publicación valida rol y paralelo seleccionado y reutiliza el sistema académico existente de tareas; no publica automáticamente mensajes entrantes.
+- Acceso directo anon/authenticated/PUBLIC a academic_whatsapp_inbox revocado.
+
+5. PWA / VERSIÓN
+- index.html actualizado a v2.21.13.
+- Service Worker actualizado al caché agenda-policial-v2.21.13 e incluye los nuevos módulos.
+- version.json actualizado a v2.21.13.
+
+DEPENDENCIAS PENDIENTES EXTERNAS
+- Configurar credenciales oficiales de Meta WhatsApp Business Cloud API para activar recepción real de WhatsApp.
+- Completar, si se desea, las 339 fichas privadas restantes mediante un flujo autorizado de importación/edición de datos sensibles; la capa pública de 446 ya está completa.
