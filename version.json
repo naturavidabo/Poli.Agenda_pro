@@ -1,8 +1,8 @@
 {
-  "version": "2.21.14",
+  "version": "2.21.15",
   "build": "2026-09-03",
-  "channel": "service-contacts-offline-open-access",
-  "appVersion": "2.21.14",
+  "channel": "service-groups-visible-entry-fix",
+  "appVersion": "2.21.15",
   "scheduleVersion": "2026-07-29-v274",
   "databaseVersion": "agenda-db-17-whatsapp-review-publish",
   "serviceGroupsDataVersion": "2026-09-03",
