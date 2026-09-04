@@ -1,6 +1,6 @@
 (()=>{
 'use strict';
-const VERSION='2.20.0';
+const VERSION='2.21.22';
 const VERSION_RE=/\bv?2\.(?:14\.1|16\.\d+|17\.\d+|18\.\d+|19\.\d+)\b/g;
 function patchVersions(root=document.body){if(!root)return;const walker=document.createTreeWalker(root,NodeFilter.SHOW_TEXT);let n;const list=[];while((n=walker.nextNode())){VERSION_RE.lastIndex=0;if(VERSION_RE.test(n.nodeValue||''))list.push(n)}list.forEach(node=>{VERSION_RE.lastIndex=0;node.nodeValue=(node.nodeValue||'').replace(VERSION_RE,m=>m.startsWith('v')?'v'+VERSION:VERSION)});const kicker=document.querySelector('.sg-kicker');if(kicker)kicker.textContent='GRUPOS DE SERVICIO · OFFLINE · v'+VERSION;try{if(window.AgendaServiceGroups)window.AgendaServiceGroups.version=VERSION}catch{}}
 function activeNavLabel(){return (document.querySelector('.bottom-nav .nav-btn.active')?.textContent||'').trim().toLowerCase()}
