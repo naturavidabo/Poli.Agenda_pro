@@ -1,8 +1,8 @@
 {
-  "version": "2.21.25",
+  "version": "2.21.26",
   "build": "2026-09-04",
-  "channel": "service-groups-search-layout-fix",
-  "appVersion": "2.21.25",
+  "channel": "service-groups-departments-controls-fix",
+  "appVersion": "2.21.26",
   "scheduleVersion": "2026-07-29-v274",
   "databaseVersion": "agenda-db-20-course-select-user-id-fix",
   "serviceGroupsDataVersion": "2026-09-03",
@@ -12,6 +12,6 @@
   "whatsappInboxVersion": "2.21.13",
   "openAccessProfileVersion": "2.21.14",
   "serviceGroupsFabVersion": "2.21.18",
-  "serviceGroupsModuleVersion": "2.21.19",
+  "serviceGroupsModuleVersion": "2.21.20",
   "stabilityLayerVersion": "2.21.24"
 }
