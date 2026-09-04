@@ -1,6 +1,7 @@
 (()=>{
 'use strict';
-const VERSION='2.21.22';
+const VERSION='2.21.23';
+let lastGoodHtml='';
 function installStyle(){
   if(document.getElementById('birthdayCapsuleGuard22122'))return;
   const s=document.createElement('style');
@@ -16,12 +17,23 @@ function installStyle(){
 `;
   document.head.appendChild(s);
 }
+function hasHealthyContent(card){
+  return !!(card?.querySelector('.ico')&&card.querySelector('.copy')&&card.querySelector('.open')&&(card.querySelector('.copy')?.textContent||'').trim());
+}
 function repair(){
   installStyle();
   const card=document.getElementById('apBirthdayCard');
   if(!card)return;
   if(!card.classList.contains('ap-bday-card'))card.classList.add('ap-bday-card');
-  card.removeAttribute('style');
+  if(card.hasAttribute('style'))card.removeAttribute('style');
+  if(hasHealthyContent(card)){
+    lastGoodHtml=card.innerHTML;
+  }else if(lastGoodHtml){
+    card.innerHTML=lastGoodHtml;
+  }else{
+    card.remove();
+    return;
+  }
   const profile=document.querySelector('.online-profile');
   if(profile&&card.previousElementSibling!==profile)profile.insertAdjacentElement('afterend',card);
 }
@@ -36,8 +48,10 @@ function boot(){
   }).observe(document.body,{childList:true,subtree:true,attributes:true,attributeFilter:['class','style']});
   window.addEventListener('pageshow',repair);
   window.addEventListener('focus',repair);
+  document.addEventListener('visibilitychange',()=>{if(!document.hidden)repair()});
   setTimeout(repair,250);
-  setTimeout(repair,1200);
+  setTimeout(repair,900);
+  setTimeout(repair,1800);
 }
 if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',boot,{once:true});else boot();
 window.AgendaBirthdayCapsuleGuard={version:VERSION,repair};
