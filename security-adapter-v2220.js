@@ -1,33 +1,31 @@
 (()=>{
 'use strict';
-const VERSION='2.22.0';
+const VERSION='2.22.1';
 const session=()=>{try{return JSON.parse(localStorage.getItem('agenda-academic-session')||'null')}catch{return null}};
 const currentSession=session();
 
-// Sanea cachés heredados sin perder teléfono/departamento necesarios para el uso offline.
+// Limpieza única de cachés heredados: un perfil no administrativo nunca conserva la unidad específica.
 try{
   if(currentSession?.role!=='administrador_general'){
-    Object.keys(localStorage).filter(k=>k.startsWith('agenda-service-contacts-')).forEach(k=>{
+    Object.keys(localStorage).filter(k=>k.startsWith('agenda-service-contacts-')&&!k.endsWith('v2221')).forEach(k=>{
       try{
         const data=JSON.parse(localStorage.getItem(k)||'{}');
-        if(data&&typeof data==='object'){
-          Object.values(data).forEach(v=>{if(v&&typeof v==='object')v.unit=''});
-          localStorage.setItem(k,JSON.stringify(data));
-        }
+        if(data&&typeof data==='object')Object.values(data).forEach(v=>{if(v&&typeof v==='object')v.unit=''});
+        localStorage.setItem(k,JSON.stringify(data));
       }catch{localStorage.removeItem(k)}
     });
   }
-  if(!currentSession)localStorage.removeItem('agenda-birthdays-v22121');
+  if(!currentSession){
+    Object.keys(sessionStorage).filter(k=>k.startsWith('agenda-birthdays-')).forEach(k=>sessionStorage.removeItem(k));
+  }
 }catch{}
 
-// Mantiene compatibilidad del frontend, pero usa las RPC consolidadas cuando existe una versión segura.
+// Compatibilidad temporal: login antiguo -> login multi-curso y directorio privado del administrador.
 if(typeof window.academicRPC==='function'&&!window.__agendaSecureRpcWrapped){
   const baseRPC=window.academicRPC;
   window.academicRPC=async function(fn,body={}){
     const s=session();
-    if(fn==='academic_login'){
-      return baseRPC('academic_login_v2',body);
-    }
+    if(fn==='academic_login')return baseRPC('academic_login_v2',body);
     if(fn==='academic_personnel_directory'&&s?.role==='administrador_general'&&s?.session_token){
       return baseRPC('academic_personnel_directory_admin',{
         p_token:s.session_token,
@@ -41,30 +39,7 @@ if(typeof window.academicRPC==='function'&&!window.__agendaSecureRpcWrapped){
   window.__agendaSecureRpcWrapped=true;
 }
 
-if(!window.__agendaSecureFetchWrapped){
-  const baseFetch=window.fetch.bind(window);
-  window.__agendaBaseFetch=baseFetch;
-  window.fetch=async function(input,init){
-    let url=typeof input==='string'?input:(input?.url||'');
-    const opts=init?{...init}:{};
-    const method=String(opts.method||'GET').toUpperCase();
-    const s=session();
-
-    // Cumpleaños: el módulo antiguo queda conectado a la RPC autenticada sin romper compatibilidad.
-    if(method==='POST'&&/\/rest\/v1\/rpc\/academic_birthdays(?:\?|$)/.test(url)&&s?.session_token){
-      url=url.replace('/rest/v1/rpc/academic_birthdays','/rest/v1/rpc/academic_birthdays_v2');
-      let body={};
-      try{body=opts.body?JSON.parse(opts.body):{}}catch{}
-      body.p_token=s.session_token;
-      opts.body=JSON.stringify(body);
-      input=url;
-    }
-    return baseFetch(input,opts);
-  };
-  window.__agendaSecureFetchWrapped=true;
-}
-
-// Sustituye la subida antigua por una ruta ligada a la sesión. El servidor valida token y rol.
+// Sustituye únicamente la función antigua de subida. Ya no se intercepta window.fetch globalmente.
 try{
   window.uploadAcademicFile=async function(file){
     if(!file)return null;
@@ -74,19 +49,13 @@ try{
     if(!cfg?.url||!cfg?.anonKey||!cfg?.bucket)throw new Error('Almacenamiento académico no disponible');
     const safeName=`${Date.now()}-${String(file.name||'archivo').replace(/[^a-zA-Z0-9._-]/g,'_')}`;
     const objectName=`${s.session_token}/${safeName}`;
-    const fetcher=window.__agendaBaseFetch||window.fetch.bind(window);
-    const response=await fetcher(`${cfg.url}/storage/v1/object/${cfg.bucket}/${objectName}`,{
+    const response=await fetch(`${cfg.url}/storage/v1/object/${cfg.bucket}/${objectName}`,{
       method:'POST',
-      headers:{
-        apikey:cfg.anonKey,
-        Authorization:`Bearer ${cfg.anonKey}`,
-        'x-upsert':'false',
-        'Content-Type':file.type||'application/octet-stream'
-      },
+      headers:{apikey:cfg.anonKey,Authorization:`Bearer ${cfg.anonKey}`,'x-upsert':'false','Content-Type':file.type||'application/octet-stream'},
       body:file
     });
     if(!response.ok)throw new Error(await response.text());
-    return `${cfg.url}/storage/v1/object/public/${cfg.bucket}/${objectName}`;
+    return`${cfg.url}/storage/v1/object/public/${cfg.bucket}/${objectName}`;
   };
 }catch(e){console.warn('No se pudo instalar el cargador seguro de archivos',e)}
 
