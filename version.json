@@ -1,10 +1,10 @@
 {
-  "version": "2.23.0",
+  "version": "2.23.1",
   "build": "2026-09-05",
-  "channel": "discipline-operations-task-panel",
-  "appVersion": "2.23.0",
+  "channel": "discipline-quick-lists",
+  "appVersion": "2.23.1",
   "scheduleVersion": "2026-07-29-v274",
-  "databaseVersion": "agenda-db-32-discipline-operations-tasks",
+  "databaseVersion": "agenda-db-33-discipline-quick-lists",
   "serviceGroupsDataVersion": "2026-09-03",
   "gpsServiceControlVersion": "2.21.12",
   "personnelDirectoryVersion": "2.22.1",
@@ -16,6 +16,7 @@
   "serviceGroupsUiVersion": "2.21.27",
   "stabilityLayerVersion": "2.22.0",
   "securityAdapterVersion": "2.22.1",
-  "disciplineOperationsVersion": "2.23.0",
+  "disciplineOperationsVersion": "2.23.1",
+  "disciplineQuickListsVersion": "2.23.1",
   "taskPanelVersion": "2.23.0"
 }
