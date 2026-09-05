@@ -4,7 +4,7 @@
   "channel": "stability-security-consolidation",
   "appVersion": "2.22.0",
   "scheduleVersion": "2026-07-29-v274",
-  "databaseVersion": "agenda-db-23-privacy-storage-role-hardening",
+  "databaseVersion": "agenda-db-26-access-readiness-provisioning",
   "serviceGroupsDataVersion": "2026-09-03",
   "gpsServiceControlVersion": "2.21.12",
   "personnelDirectoryVersion": "2.21.19",
