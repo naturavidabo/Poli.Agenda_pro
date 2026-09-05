@@ -1,6 +1,6 @@
 (()=>{
 'use strict';
-const VERSION='2.21.19';
+const VERSION='2.22.1';
 let cache=null,pending=null;
 const norm=v=>String(v??'').normalize('NFD').replace(/[\u0300-\u036f]/g,'').replace(/\s+/g,' ').trim().toLocaleUpperCase('es');
 const digits=v=>String(v??'').replace(/\D/g,'');
@@ -9,10 +9,10 @@ async function directory(){
   if(cache)return cache;
   if(pending)return pending;
   pending=(async()=>{
-    if(typeof window.academicRPC!=='function'||!navigator.onLine)return [];
+    if(typeof window.academicRPC!=='function'||!navigator.onLine)return[];
     const rows=await window.academicRPC('academic_personnel_directory',{p_course_code:null,p_department:null,p_search:null})||[];
     cache=rows;return rows;
-  })().catch(e=>{console.warn('Directorio no disponible',e);return []}).finally(()=>{pending=null});
+  })().catch(e=>{console.warn('Directorio no disponible',e);return[]}).finally(()=>{pending=null});
   return pending;
 }
 function addContact(row,person){
@@ -26,7 +26,7 @@ function addContact(row,person){
   status.appendChild(box);
 }
 function stripDept(v){return String(v||'').replace(/^📍\s*/,'').trim()}
-function rowsOf(box){return [...box.querySelectorAll('.gps-roster-row')]}
+function rowsOf(box){return[...box.querySelectorAll('.gps-roster-row')]}
 function applyTools(box){
   const tool=box.querySelector('.ap-personnel-tools');if(!tool)return;
   const q=norm(tool.querySelector('.ap-personnel-search')?.value);
@@ -67,8 +67,9 @@ async function enhance(box){
   const map=new Map(people.map(p=>[norm(p.full_name),p]));
   box.querySelectorAll('.gps-roster-row').forEach(row=>{const name=norm(row.querySelector('.gps-roster-name b')?.textContent);addContact(row,map.get(name))});
 }
-function scan(){document.querySelectorAll('.gps-roster').forEach(enhance)}
+function scan(root=document){if(root?.matches?.('.gps-roster'))enhance(root);root?.querySelectorAll?.('.gps-roster').forEach(enhance)}
 function styles(){if(document.getElementById('apPersonnelEnhancementStyles'))return;const s=document.createElement('style');s.id='apPersonnelEnhancementStyles';s.textContent=`.ap-personnel-tools{padding:9px;background:#fbfcfa;border-bottom:1px solid #edf0eb;overflow:hidden}.ap-personnel-search{width:100%;max-width:100%;box-sizing:border-box;border:1px solid #cad6c7;border-radius:12px;padding:10px 12px;background:#fff;font-size:12px}.ap-personnel-depts{display:flex;gap:6px;overflow-x:auto;overflow-y:hidden;margin-top:8px;max-width:100%;scrollbar-width:none;-webkit-overflow-scrolling:touch}.ap-personnel-depts::-webkit-scrollbar{display:none}.ap-personnel-depts button{flex:0 0 auto;white-space:nowrap;border:1px solid #ccd7c8;background:#fff;color:#355441;border-radius:999px;padding:6px 9px;font-size:10px;font-weight:800;max-width:80vw;overflow:hidden;text-overflow:ellipsis}.ap-personnel-depts button.active{background:#173f2b;color:#fff;border-color:#173f2b}.ap-personnel-actions{display:flex;justify-content:flex-end;gap:5px;margin-top:6px}.ap-personnel-actions a{display:inline-flex;align-items:center;justify-content:center;min-width:30px;height:27px;border-radius:9px;text-decoration:none;font-size:10px;font-weight:900;border:1px solid #cbd7c8}.ap-personnel-call{background:#f6f8f5;color:#23472f}.ap-personnel-wa{background:#e7f5e8;color:#17602c}`;document.head.appendChild(s)}
+function boot(){styles();setTimeout(()=>scan(document),500);const target=document.getElementById('app')||document.body;new MutationObserver(mutations=>{for(const m of mutations){for(const n of m.addedNodes){if(n.nodeType===1)scan(n)}}}).observe(target,{childList:true,subtree:true})}
 window.AgendaPersonnelDirectory={version:VERSION,refresh:()=>{cache=null;return directory()}};
-window.addEventListener('DOMContentLoaded',()=>{styles();setTimeout(scan,700);let q=false;new MutationObserver(()=>{if(q)return;q=true;requestAnimationFrame(()=>{q=false;scan()})}).observe(document.getElementById('app')||document.body,{childList:true,subtree:true})});
+if(document.readyState==='loading')window.addEventListener('DOMContentLoaded',boot,{once:true});else boot();
 })();
