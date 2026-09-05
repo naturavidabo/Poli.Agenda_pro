@@ -1,14 +1,15 @@
 {
-  "version": "2.23.1",
+  "version": "2.23.2",
   "build": "2026-09-05",
-  "channel": "discipline-quick-lists",
-  "appVersion": "2.23.1",
+  "channel": "discipline-nav-birthday-capsule",
+  "appVersion": "2.23.2",
   "scheduleVersion": "2026-07-29-v274",
   "databaseVersion": "agenda-db-33-discipline-quick-lists",
   "serviceGroupsDataVersion": "2026-09-03",
   "gpsServiceControlVersion": "2.21.12",
   "personnelDirectoryVersion": "2.22.1",
   "birthdayModuleVersion": "2.22.1",
+  "birthdayCapsuleGuardVersion": "2.23.2",
   "whatsappInboxVersion": "2.21.13",
   "openAccessProfileVersion": "2.22.1",
   "serviceGroupsFabVersion": "2.21.18",
@@ -16,7 +17,8 @@
   "serviceGroupsUiVersion": "2.21.27",
   "stabilityLayerVersion": "2.22.0",
   "securityAdapterVersion": "2.22.1",
-  "disciplineOperationsVersion": "2.23.1",
+  "disciplineOperationsVersion": "2.23.2",
   "disciplineQuickListsVersion": "2.23.1",
+  "disciplineNavSlotVersion": "2.23.2",
   "taskPanelVersion": "2.23.0"
 }
