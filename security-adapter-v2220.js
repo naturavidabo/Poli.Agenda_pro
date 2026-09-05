@@ -3,11 +3,14 @@
 const VERSION='2.22.0';
 const session=()=>{try{return JSON.parse(localStorage.getItem('agenda-academic-session')||'null')}catch{return null}};
 
-// Enruta automáticamente el directorio privado solo para el administrador general.
+// Mantiene compatibilidad del frontend, pero usa las RPC consolidadas cuando existe una versión segura.
 if(typeof window.academicRPC==='function'&&!window.__agendaSecureRpcWrapped){
   const baseRPC=window.academicRPC;
   window.academicRPC=async function(fn,body={}){
     const s=session();
+    if(fn==='academic_login'){
+      return baseRPC('academic_login_v2',body);
+    }
     if(fn==='academic_personnel_directory'&&s?.role==='administrador_general'&&s?.session_token){
       return baseRPC('academic_personnel_directory_admin',{
         p_token:s.session_token,
