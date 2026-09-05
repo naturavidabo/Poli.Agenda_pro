@@ -2,6 +2,14 @@
 'use strict';
 const VERSION='2.22.0';
 const session=()=>{try{return JSON.parse(localStorage.getItem('agenda-academic-session')||'null')}catch{return null}};
+const currentSession=session();
+
+// Borra copias antiguas que podían conservar la unidad específica en dispositivos no administrativos.
+try{
+  if(currentSession?.role!=='administrador_general'){
+    Object.keys(localStorage).filter(k=>k.startsWith('agenda-service-contacts-')).forEach(k=>localStorage.removeItem(k));
+  }
+}catch{}
 
 // Mantiene compatibilidad del frontend, pero usa las RPC consolidadas cuando existe una versión segura.
 if(typeof window.academicRPC==='function'&&!window.__agendaSecureRpcWrapped){
