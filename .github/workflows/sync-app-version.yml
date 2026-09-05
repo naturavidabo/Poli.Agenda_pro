@@ -4,6 +4,7 @@ on:
   push:
     branches: [main]
     paths:
+      - 'version.json'
       - '.github/workflows/sync-app-version.yml'
   workflow_dispatch:
 
@@ -21,18 +22,22 @@ jobs:
         shell: bash
         run: |
           python - <<'PY'
+          import json, re
           from pathlib import Path
+          meta = json.loads(Path('version.json').read_text(encoding='utf-8'))
+          version = str(meta.get('appVersion') or meta.get('version')).strip()
+          build = str(meta.get('build') or '').strip()
+          if not version:
+              raise SystemExit('version.json no contiene appVersion/version')
           p = Path('app.js')
           s = p.read_text(encoding='utf-8')
-          replacements = [
-              ("const APP_VERSION='2.17.1';", "const APP_VERSION='2.22.0';"),
-              ("const APP_VERSION='2.22.0';", "const APP_VERSION='2.22.0';"),
-              ("const BUILD_DATE='2026-08-26';", "const BUILD_DATE='2026-09-05';"),
-              ("const BUILD_DATE='2026-09-05';", "const BUILD_DATE='2026-09-05';"),
-          ]
-          for old, new in replacements:
-              if old in s:
-                  s = s.replace(old, new, 1)
+          s, n1 = re.subn(r"const APP_VERSION='[^']+';", f"const APP_VERSION='{version}';", s, count=1)
+          if build:
+              s, n2 = re.subn(r"const BUILD_DATE='[^']+';", f"const BUILD_DATE='{build}';", s, count=1)
+          else:
+              n2 = 1
+          if n1 != 1 or n2 != 1:
+              raise SystemExit('No se encontraron las constantes de versión esperadas en app.js')
           p.write_text(s, encoding='utf-8')
           PY
       - name: Commit correction
@@ -42,8 +47,9 @@ jobs:
             echo 'Version already synchronized'
             exit 0
           fi
+          VERSION=$(python -c "import json;print(json.load(open('version.json'))['appVersion'])")
           git config user.name 'github-actions[bot]'
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
           git add app.js
-          git commit -m 'v2.22.0: sincronizar versión runtime principal'
+          git commit -m "v${VERSION}: sincronizar versión runtime principal"
           git push origin main
