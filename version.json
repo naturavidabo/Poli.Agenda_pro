@@ -1,10 +1,10 @@
 {
-  "version": "2.22.1",
+  "version": "2.23.0",
   "build": "2026-09-05",
-  "channel": "stability-security-module-consolidation",
-  "appVersion": "2.22.1",
+  "channel": "discipline-operations-task-panel",
+  "appVersion": "2.23.0",
   "scheduleVersion": "2026-07-29-v274",
-  "databaseVersion": "agenda-db-29-schedule-import-discipline-foundation",
+  "databaseVersion": "agenda-db-32-discipline-operations-tasks",
   "serviceGroupsDataVersion": "2026-09-03",
   "gpsServiceControlVersion": "2.21.12",
   "personnelDirectoryVersion": "2.22.1",
@@ -15,5 +15,7 @@
   "serviceGroupsModuleVersion": "2.22.1",
   "serviceGroupsUiVersion": "2.21.27",
   "stabilityLayerVersion": "2.22.0",
-  "securityAdapterVersion": "2.22.1"
+  "securityAdapterVersion": "2.22.1",
+  "disciplineOperationsVersion": "2.23.0",
+  "taskPanelVersion": "2.23.0"
 }
