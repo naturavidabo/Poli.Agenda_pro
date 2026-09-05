@@ -4,11 +4,20 @@ const VERSION='2.22.0';
 const session=()=>{try{return JSON.parse(localStorage.getItem('agenda-academic-session')||'null')}catch{return null}};
 const currentSession=session();
 
-// Borra copias antiguas que podían conservar la unidad específica en dispositivos no administrativos.
+// Sanea cachés heredados sin perder teléfono/departamento necesarios para el uso offline.
 try{
   if(currentSession?.role!=='administrador_general'){
-    Object.keys(localStorage).filter(k=>k.startsWith('agenda-service-contacts-')).forEach(k=>localStorage.removeItem(k));
+    Object.keys(localStorage).filter(k=>k.startsWith('agenda-service-contacts-')).forEach(k=>{
+      try{
+        const data=JSON.parse(localStorage.getItem(k)||'{}');
+        if(data&&typeof data==='object'){
+          Object.values(data).forEach(v=>{if(v&&typeof v==='object')v.unit=''});
+          localStorage.setItem(k,JSON.stringify(data));
+        }
+      }catch{localStorage.removeItem(k)}
+    });
   }
+  if(!currentSession)localStorage.removeItem('agenda-birthdays-v22121');
 }catch{}
 
 // Mantiene compatibilidad del frontend, pero usa las RPC consolidadas cuando existe una versión segura.
