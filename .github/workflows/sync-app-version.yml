@@ -24,8 +24,15 @@ jobs:
           from pathlib import Path
           p = Path('app.js')
           s = p.read_text(encoding='utf-8')
-          s = s.replace("const APP_VERSION='2.14.1';", "const APP_VERSION='2.17.1';", 1)
-          s = s.replace("const BUILD_DATE='2026-08-12';", "const BUILD_DATE='2026-08-26';", 1)
+          replacements = [
+              ("const APP_VERSION='2.17.1';", "const APP_VERSION='2.22.0';"),
+              ("const APP_VERSION='2.22.0';", "const APP_VERSION='2.22.0';"),
+              ("const BUILD_DATE='2026-08-26';", "const BUILD_DATE='2026-09-05';"),
+              ("const BUILD_DATE='2026-09-05';", "const BUILD_DATE='2026-09-05';"),
+          ]
+          for old, new in replacements:
+              if old in s:
+                  s = s.replace(old, new, 1)
           p.write_text(s, encoding='utf-8')
           PY
       - name: Commit correction
@@ -38,5 +45,5 @@ jobs:
           git config user.name 'github-actions[bot]'
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
           git add app.js
-          git commit -m 'Hotfix v2.17.1: sincronizar versión runtime'
+          git commit -m 'v2.22.0: sincronizar versión runtime principal'
           git push origin main
