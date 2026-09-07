@@ -1,6 +1,7 @@
 (()=>{
 'use strict';
-const VERSION='2.23.2';
+const VERSION='2.23.4';
+let refreshQueued=false;
 function installStyle(){
   document.getElementById('birthdayCapsuleGuard2221')?.remove();
   document.getElementById('birthdayCapsuleGuard22122')?.remove();
@@ -19,6 +20,16 @@ function installStyle(){
 `;
   document.head.appendChild(s);
 }
+function hydrateIfBlank(card){
+  if(card.querySelector('.copy'))return;
+  card.innerHTML='<span class="ico">🎂</span><span class="copy"><span class="eyebrow">Cumpleaños</span><b>Sincronizando fechas…</b><small>Actualizando el curso seleccionado</small></span><span class="open" aria-hidden="true">›</span>';
+  if(refreshQueued)return;
+  refreshQueued=true;
+  setTimeout(()=>{
+    refreshQueued=false;
+    try{window.AgendaBirthdays?.refresh?.()}catch(e){console.warn('Cumpleaños: no se pudo rehidratar la cápsula',e)}
+  },80);
+}
 function repair(){
   installStyle();
   const card=document.getElementById('apBirthdayCard');
@@ -27,11 +38,15 @@ function repair(){
   if(card.hasAttribute('style'))card.removeAttribute('style');
   const profile=document.querySelector('.online-profile');
   if(profile&&card.previousElementSibling!==profile)profile.insertAdjacentElement('afterend',card);
+  hydrateIfBlank(card);
 }
 function boot(){
   installStyle();repair();
   window.addEventListener('pageshow',repair);
   document.addEventListener('visibilitychange',()=>{if(!document.hidden)repair()});
+  const target=document.getElementById('app')||document.body;
+  let q=false;
+  new MutationObserver(()=>{if(q)return;q=true;requestAnimationFrame(()=>{q=false;repair()})}).observe(target,{childList:true,subtree:true});
   setTimeout(repair,180);setTimeout(repair,700);setTimeout(repair,1500);
 }
 if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',boot,{once:true});else boot();
