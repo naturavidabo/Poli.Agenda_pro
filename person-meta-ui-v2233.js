@@ -94,8 +94,7 @@ function enrichNode(root,nameSelector,hostSelector){
     const row=matchMeta(nameEl.textContent);if(!row)return;
     const html=chips(row);if(!html)return;
     const box=document.createElement('span');box.className='ap-person-meta';box.innerHTML=html;
-    const target=nameEl.parentElement?.classList.contains('gps-roster-name')||nameEl.parentElement?.classList.contains('sg18-name')||nameEl.parentElement?.classList.contains('ap-person-main')?nameEl.parentElement:nameEl.parentElement;
-    target?.appendChild(box);
+    nameEl.parentElement?.appendChild(box);
   })
 }
 function patchBirthdayHeader(){
@@ -122,7 +121,7 @@ function bindCourseRefresh(){
     setTimeout(queueEnrich,120);
   },true);
 }
-function boot(){installStyles();wrapRPC();bindCourseRefresh();loadMeta(false).then(enrichAll);const target=document.getElementById('app')||document.body;new MutationObserver(()=>{wrapRPC();queueEnrich();if(!metaRows.length)loadMeta(false).then(enrichAll)}).observe(target,{childList:true,subtree:true});new MutationObserver(queueEnrich).observe(document.body,{childList:true,subtree:false})}
+function boot(){installStyles();wrapRPC();bindCourseRefresh();loadMeta(false).then(enrichAll);new MutationObserver(()=>{wrapRPC();queueEnrich();if(!metaRows.length)loadMeta(false).then(enrichAll)}).observe(document.body,{childList:true,subtree:true})}
 if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',boot,{once:true});else boot();
 window.AgendaPersonMeta={version:VERSION,refresh,zodiac,selectedCourse};
 })();
