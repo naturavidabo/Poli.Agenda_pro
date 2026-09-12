@@ -1,12 +1,42 @@
 (()=>{
 'use strict';
-const VERSION='2.23.3';
+const VERSION='2.23.4';
 let metaRows=[];
 let metaPromise=null;
 let lastToken='';
 let rawRPC=null;
 const esc=v=>String(v??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const norm=v=>String(v??'').normalize('NFD').replace(/[\u0300-\u036f]/g,'').toUpperCase().replace(/[^A-Z0-9 ]/g,' ').replace(/\s+/g,' ').trim();
+const words=v=>norm(v).split(' ').filter(Boolean);
+function editDistanceOne(a,b){
+  a=String(a||'');b=String(b||'');
+  if(a===b)return true;
+  if(Math.abs(a.length-b.length)>1)return false;
+  let i=0,j=0,d=0;
+  while(i<a.length&&j<b.length){
+    if(a[i]===b[j]){i++;j++;continue}
+    if(++d>1)return false;
+    if(a.length>b.length)i++;else if(b.length>a.length)j++;else{i++;j++}
+  }
+  if(i<a.length||j<b.length)d++;
+  return d<=1;
+}
+function samePersonName(a,b){
+  const A=words(a),B=words(b);
+  if(!A.length||!B.length)return false;
+  const ka=A.join(' '),kb=B.join(' ');
+  if(ka===kb||ka.includes(kb)||kb.includes(ka))return true;
+  // En las listas institucionales los dos primeros términos son los apellidos.
+  // Se admite que falten segundos nombres y una variación tipográfica de una letra
+  // en los nombres de pila (p.ej. JHERNY/JERNY), sin relajar los apellidos.
+  if(A.length>=2&&B.length>=2&&A[0]===B[0]&&A[1]===B[1]){
+    if(A.length===2||B.length===2)return true;
+    const AN=A.slice(2),BN=B.slice(2);
+    return AN.some(x=>BN.some(y=>x===y||(x.length>=4&&y.length>=4&&editDistanceOne(x,y))));
+  }
+  const common=A.filter(x=>B.includes(x)).length;
+  return common/Math.max(A.length,B.length,1)>=.66;
+}
 function session(){try{return typeof academicSession!=='undefined'&&academicSession?academicSession:JSON.parse(localStorage.getItem('agenda-academic-session')||'null')}catch{return null}}
 function selectedCourse(){
   const candidates=[...document.querySelectorAll('select')];
@@ -77,9 +107,14 @@ function matchMeta(name){
   let best=null,bestLen=0;
   for(const r of metaRows){const n=norm(r.full_name);if(!n)continue;if(key===n||key.includes(n)||n.includes(key)){if(n.length>bestLen){best=r;bestLen=n.length}}}
   if(best)return best;
-  const words=key.split(' ').filter(x=>x.length>2);let score=0;
-  for(const r of metaRows){const rw=norm(r.full_name).split(' ').filter(x=>x.length>2);const common=words.filter(w=>rw.includes(w)).length;const s=common/Math.max(words.length,rw.length,1);if(s>score){score=s;best=r}}
-  return score>=.66?best:null;
+  const anchored=metaRows.filter(r=>samePersonName(key,r.full_name));
+  if(anchored.length===1)return anchored[0];
+  if(anchored.length>1){
+    const kw=words(key);let bestScore=-1;
+    for(const r of anchored){const rw=words(r.full_name);const common=kw.filter(w=>rw.includes(w)).length;const score=common/Math.max(kw.length,rw.length,1);if(score>bestScore){bestScore=score;best=r}}
+    return best;
+  }
+  return null;
 }
 function chips(row){
   if(!row)return'';const z=zodiac(row.birthday_md),parts=[];
@@ -123,5 +158,5 @@ function bindCourseRefresh(){
 }
 function boot(){installStyles();wrapRPC();bindCourseRefresh();loadMeta(false).then(enrichAll);new MutationObserver(()=>{wrapRPC();queueEnrich();if(!metaRows.length)loadMeta(false).then(enrichAll)}).observe(document.body,{childList:true,subtree:true})}
 if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',boot,{once:true});else boot();
-window.AgendaPersonMeta={version:VERSION,refresh,zodiac,selectedCourse};
+window.AgendaPersonMeta={version:VERSION,refresh,zodiac,selectedCourse,samePersonName};
 })();
