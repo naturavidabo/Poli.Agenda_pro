@@ -8098,3 +8098,28 @@ academicAttachmentLinks=function academicAttachmentLinksV22312(post){
     return `<div class="academic-file-card-v290 academic-file-card-v212 academic-file-card-v2122"><div class="academic-file-main-v290"><span class="academic-file-icon-v290">${academicOfficeAttachmentIconV2128(type)}</span><span class="file-copy"><b>${esc(enriched.name||`Archivo ${index+1}`)}</b><small>${esc(academicOfficeAttachmentLabelV2128(type))}${size?` · ${esc(size)}`:''}</small></span></div><div class="academic-file-actions-v290 academic-file-actions-v212"><button class="academic-download-btn-v212" type="button" onclick="academicDownloadFileV212ByFile('${key}')">⬇ Descargar</button>${readAction}${listenAction}</div></div>`;
   }).join('')}</div>`;
 };
+
+
+/* =========================================================
+   AGENDA POLICIAL v2.23.13 — COMPATIBILIDAD DE ADJUNTOS COMPARTIDOS
+   Corrige publicaciones A+B cuyos attachments quedaron guardados como URL.
+   ========================================================= */
+academicNormalizeAttachments=function academicNormalizeAttachmentsV22313(list){
+  if(!Array.isArray(list))return [];
+  return list.map(item=>{
+    if(typeof item==='string'){
+      const url=item.trim();if(!url)return null;
+      return {url,name:academicFileName(url),type:'',size:0};
+    }
+    if(!item||typeof item!=='object')return null;
+    const url=item.url||item.file_url||item.path||'';
+    if(!url)return null;
+    return {
+      ...item,
+      url,
+      name:item.name||item.file_name||academicFileName(url),
+      type:item.type||item.file_mime||item.mime||'',
+      size:item.size||item.file_size||0
+    };
+  }).filter(Boolean);
+};
