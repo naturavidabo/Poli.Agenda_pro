@@ -809,3 +809,19 @@ body.academic-dark-v2124 .bank-attempt-modal-v2130 .bank-matching-note-v210{back
 }
 
 .academic-reading-choice-v22315{display:grid;gap:12px;padding:20px}.academic-reading-choice-v22315 h2{margin:0;font-size:20px}.academic-reading-choice-v22315 p{margin:0 0 5px;color:#66736b;line-height:1.45}.academic-reading-mode-v22315{display:grid;grid-template-columns:42px 1fr;gap:11px;align-items:center;width:100%;padding:14px;border:1px solid #cfdbd2;border-radius:15px;background:#f8fbf8;color:#173d2a;text-align:left}.academic-reading-mode-v22315>span{font-size:25px}.academic-reading-mode-v22315 b,.academic-reading-mode-v22315 small{display:block}.academic-reading-mode-v22315 b{font-size:14px}.academic-reading-mode-v22315 small{margin-top:3px;color:#69766e;line-height:1.35}
+
+
+/* Agenda Policial v2.23.16 — materia reconocible de un vistazo */
+.academic-post.subject-coded{
+  border-left:6px solid var(--subject-accent)!important;
+  background:linear-gradient(90deg,var(--subject-soft) 0,rgba(255,255,255,.97) 24%,#fff 100%)!important;
+}
+.material-subject-bar-v2122{
+  background:var(--subject-soft)!important;
+  border:1px solid color-mix(in srgb,var(--subject-accent) 32%,transparent)!important;
+  border-left:5px solid var(--subject-accent)!important;
+}
+.material-subject-bar-v2122 i,.subject-color-dot{background:var(--subject-accent)!important}
+.material-subject-bar-v2122 b{color:color-mix(in srgb,var(--subject-accent) 82%,#172019)!important}
+.subject-legend-chip-v2122{border-color:color-mix(in srgb,var(--subject-accent) 38%,#d9dfda)!important;background:var(--subject-soft)!important}
+.subject-legend-chip-v2122 i{background:var(--subject-accent)!important}
