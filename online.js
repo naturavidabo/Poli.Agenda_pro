@@ -8193,3 +8193,26 @@ academicAttachmentLinks=function academicAttachmentLinksV22315(post){
     return `<div class="academic-file-card-v290 academic-file-card-v212 academic-file-card-v2122"><div class="academic-file-main-v290"><span class="academic-file-icon-v290">${academicOfficeAttachmentIconV2128(type)}</span><span class="file-copy"><b>${esc(enriched.name||`Archivo ${index+1}`)}</b><small>${esc(academicOfficeAttachmentLabelV2128(type))}${size?` · ${esc(size)}`:''}</small></span></div><div class="academic-file-actions-v290 academic-file-actions-v212"><button class="academic-download-btn-v212" type="button" onclick="academicDownloadFileV212ByFile('${key}')">⬇ Descargar</button>${readAction}${listenAction}</div></div>`;
   }).join('')}</div>`;
 };
+
+
+/* =========================================================
+   AGENDA POLICIAL v2.23.16 — CONTRASTE ACADÉMICO POR MATERIA
+   Paleta sobria de alto reconocimiento visual para Biblioteca/Material.
+   ========================================================= */
+const ACADEMIC_SUBJECT_VISUALS_V22316={
+  'planificacion estrategica':{accent:'#A85A24',soft:'#F7E8DA'},
+  'procedimientos especiales':{accent:'#B18416',soft:'#F7EDCC'},
+  'auditoria gubernamental':{accent:'#4F722F',soft:'#E5EEDB'},
+  'inteligencia estrategica':{accent:'#365E8D',soft:'#DFEAF5'},
+  'ciencia politica':{accent:'#8B4B3F',soft:'#F3E2DE'},
+  'administracion general':{accent:'#28736D',soft:'#DDEEEB'},
+  'metodologia de investigacion':{accent:'#59637E',soft:'#E5E8F0'},
+  'acondicionamiento fisico':{accent:'#7A5332',soft:'#EFE3D8'},
+  'tiro policial':{accent:'#9A751E',soft:'#F4EBCF'}
+};
+const _subjectVisualBaseV22316=subjectVisual;
+subjectVisual=function subjectVisualV22316(subject=''){
+  const canonical=academicCanonicalSubjectV2122(subject)||subject;
+  const key=academicSubjectNormV2122(canonical);
+  return ACADEMIC_SUBJECT_VISUALS_V22316[key]||_subjectVisualBaseV22316(canonical);
+};
