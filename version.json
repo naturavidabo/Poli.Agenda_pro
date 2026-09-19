@@ -1,8 +1,8 @@
 {
-  "version": "2.23.13",
+  "version": "2.23.14",
   "build": "2026-09-18",
-  "channel": "academic-shared-attachments-fix",
-  "appVersion": "2.23.13",
+  "channel": "mobile-reading-view",
+  "appVersion": "2.23.14",
   "scheduleVersion": "2026-07-29-v274",
   "databaseVersion": "agenda-db-40-private-personnel-meta",
   "serviceGroupsDataVersion": "2026-09-03",
@@ -25,5 +25,5 @@
   "disciplineQuickListsVersion": "2.23.5",
   "disciplineNavSlotVersion": "2.23.5",
   "taskPanelVersion": "2.23.0",
-  "academicMaterialActionsVersion": "2.23.13"
+  "academicMaterialActionsVersion": "2.23.14"
 }
