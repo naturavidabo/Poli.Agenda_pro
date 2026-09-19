@@ -8123,3 +8123,32 @@ academicNormalizeAttachments=function academicNormalizeAttachmentsV22313(list){
     };
   }).filter(Boolean);
 };
+
+
+/* =========================================================
+   AGENDA POLICIAL v2.23.14 — LECTURA WORD ADAPTADA A MÓVIL
+   "Leer" prioriza lectura refluida: tipografía cómoda, ancho de pantalla
+   y estructura del Word, evitando la hoja A4 reducida.
+   ========================================================= */
+async function openAcademicReadingViewV22314(key){
+  const file=academicReaderRegistryV290.get(key),type=academicReaderFileTypeV290(file);
+  if(!file)return toast('Archivo no disponible');
+  if(type==='docx')return openAcademicReaderV290(key);
+  if(type==='pdf')return openAcademicReaderV290(key);
+  return openAcademicDocumentViewerV212(key);
+}
+
+academicAttachmentLinks=function academicAttachmentLinksV22314(post){
+  const attachments=academicPostAttachments(post);if(!attachments.length)return '';
+  const rawSubject=post?.fields?.subject||'',subject=academicCanonicalSubjectV2122(rawSubject)||rawSubject,entry=academicSubjectEntryV2122(subject);
+  return `<div class="academic-attachments academic-attachments-v290 academic-attachments-v212 academic-attachments-v2122" ${academicSubjectStyleV2122(subject)}>${subject?`<div class="material-subject-bar-v2122"><i></i><span>${entry?`<small>${esc(entry.code)}</small>`:''}<b>${esc(subject)}</b></span></div>`:''}${attachments.map((file,index)=>{
+    const enriched={...file,subject,subject_code:entry?.code||'',teacher:entry?.teacher||post?.fields?.teacher||''};
+    const type=academicOfficeAttachmentTypeV2128(enriched),key=academicReaderRegisterV290(enriched),size=academicReaderSizeLabelV290(enriched.size);
+    const readable=['docx','pdf'].includes(type),office=['xlsx','pptx'].includes(type);
+    const readAction=readable
+      ?`<button class="academic-view-btn-v212" type="button" onclick="openAcademicReadingViewV22314('${key}')">📖 Leer</button>`
+      :office?`<button class="academic-view-btn-v212" type="button" onclick="academicOpenOfficeAttachmentV2128('${key}')">📖 Leer</button>`:'';
+    const listenAction=readable?`<button class="academic-reader-btn-v290" type="button" onclick="academicListenAttachmentV22312('${key}')">🔊 Escuchar</button>`:'';
+    return `<div class="academic-file-card-v290 academic-file-card-v212 academic-file-card-v2122"><div class="academic-file-main-v290"><span class="academic-file-icon-v290">${academicOfficeAttachmentIconV2128(type)}</span><span class="file-copy"><b>${esc(enriched.name||`Archivo ${index+1}`)}</b><small>${esc(academicOfficeAttachmentLabelV2128(type))}${size?` · ${esc(size)}`:''}</small></span></div><div class="academic-file-actions-v290 academic-file-actions-v212"><button class="academic-download-btn-v212" type="button" onclick="academicDownloadFileV212ByFile('${key}')">⬇ Descargar</button>${readAction}${listenAction}</div></div>`;
+  }).join('')}</div>`;
+};
