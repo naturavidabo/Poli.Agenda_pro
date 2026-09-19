@@ -787,3 +787,23 @@ body.academic-dark-v2124 .bank-attempt-modal-v2130 .bank-matching-note-v210{back
   .academic-reader-capsule-main-v2141{grid-template-columns:auto minmax(0,1fr)}
   .academic-reader-capsule-main-v2141 strong{display:none}
 }
+
+
+/* Agenda Policial v2.23.14 — lectura refluida y cómoda en celular */
+@media(max-width:760px){
+  .academic-reader-modal-v290{width:100%!important;max-width:none!important;margin:0!important;border-radius:0!important}
+  .academic-reader-body-v290{padding:10px 12px 28px!important}
+  .academic-reader-text-v290,.academic-reader-structured-v212{
+    width:100%!important;max-width:720px!important;margin:0 auto!important;
+    padding:14px 12px 32px!important;box-sizing:border-box!important;
+    font-size:17px!important;line-height:1.58!important;overflow-wrap:anywhere!important;
+  }
+  .academic-reader-structured-v212 h1{font-size:1.55em!important;line-height:1.18!important}
+  .academic-reader-structured-v212 h2{font-size:1.30em!important;line-height:1.24!important}
+  .academic-reader-structured-v212 h3{font-size:1.14em!important;line-height:1.28!important}
+  .academic-reader-structured-v212 p,.academic-reader-structured-v212 li{
+    font-size:1em!important;line-height:1.58!important;text-align:left!important;
+  }
+  .academic-reader-structured-v212 table{display:block!important;width:100%!important;overflow-x:auto!important}
+  .academic-reader-structured-v212 img{max-width:100%!important;height:auto!important}
+}
