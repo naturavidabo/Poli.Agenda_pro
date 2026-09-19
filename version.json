@@ -1,8 +1,8 @@
 {
-  "version": "2.23.11",
-  "build": "2026-09-12",
-  "channel": "service-groups-private-meta",
-  "appVersion": "2.23.11",
+  "version": "2.23.12",
+  "build": "2026-09-18",
+  "channel": "academic-material-actions",
+  "appVersion": "2.23.12",
   "scheduleVersion": "2026-07-29-v274",
   "databaseVersion": "agenda-db-40-private-personnel-meta",
   "serviceGroupsDataVersion": "2026-09-03",
@@ -24,5 +24,6 @@
   "disciplineOperationsVersion": "2.23.9",
   "disciplineQuickListsVersion": "2.23.5",
   "disciplineNavSlotVersion": "2.23.5",
-  "taskPanelVersion": "2.23.0"
+  "taskPanelVersion": "2.23.0",
+  "academicMaterialActionsVersion": "2.23.12"
 }
