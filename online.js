@@ -8268,3 +8268,147 @@ window.addEventListener('pagehide',()=>{
   }catch{}
 });
 try{window.speechSynthesis?.addEventListener?.('voiceschanged',()=>academicReaderPreferredVoiceV22318())}catch{}
+
+
+/* =========================================================
+   AGENDA POLICIAL v2.23.19 — REANUDACIÓN DETERMINISTA + SELECTOR DE VOZ
+   ========================================================= */
+const ACADEMIC_VOICE_KEY_V22319='agenda-academic-voice-v22319';
+let academicDashboardLoadingV22319=false;
+let academicDashboardLastLoadV22319=0;
+
+function academicSpanishVoicesV22319(){
+  return (window.speechSynthesis?.getVoices?.()||[])
+    .filter(v=>/^es(?:[-_]|$)/i.test(String(v.lang||'')))
+    .sort((a,b)=>String(a.lang||'').localeCompare(String(b.lang||''),'es')||String(a.name||'').localeCompare(String(b.name||''),'es'));
+}
+function academicReaderVoiceSavedV22319(){
+  try{return localStorage.getItem(ACADEMIC_VOICE_KEY_V22319)||''}catch{return ''}
+}
+function academicReaderSetVoiceV22319(value){
+  try{
+    if(value)localStorage.setItem(ACADEMIC_VOICE_KEY_V22319,value);
+    else localStorage.removeItem(ACADEMIC_VOICE_KEY_V22319);
+  }catch{}
+  const label=document.getElementById('academicReaderVoiceNameV22319');
+  const voice=academicReaderPreferredVoiceV22319();
+  if(label)label.textContent=voice?String(voice.name||voice.lang||'Voz española'):'Voz del sistema';
+  toast(voice?'Voz seleccionada: '+(voice.name||voice.lang):'Selección automática de voz');
+}
+function academicReaderPreferredVoiceV22319(){
+  const voices=academicSpanishVoicesV22319(),saved=academicReaderVoiceSavedV22319();
+  if(saved){
+    const exact=voices.find(v=>String(v.name||'')===saved);
+    if(exact)return exact;
+  }
+  if(!voices.length)return null;
+  const score=v=>{
+    const lang=String(v.lang||'').replace('_','-').toLowerCase();
+    const name=String(v.name||'').toLowerCase();
+    let s=0;
+    if(/neural|natural|premium|enhanced|studio/.test(name))s+=80;
+    if(/google|microsoft|samsung/.test(name))s+=35;
+    if(lang==='es-bo')s+=28;
+    else if(/^es-(419|mx|us|ar|cl|co|pe|es)$/.test(lang))s+=24;
+    else if(lang.startsWith('es-'))s+=20;
+    if(/female|mujer|paulina|helena|sabina|monica|luciana|elvira|alvaro|jorge/.test(name))s+=4;
+    return s;
+  };
+  return voices.map(v=>({v,s:score(v)})).sort((a,b)=>b.s-a.s)[0]?.v||voices[0];
+}
+academicReaderPreferredVoiceV290=academicReaderPreferredVoiceV22319;
+
+function academicReaderVoiceControlV22319(){
+  const voices=academicSpanishVoicesV22319(),saved=academicReaderVoiceSavedV22319(),current=academicReaderPreferredVoiceV22319();
+  const options=['<option value="">Automática</option>'].concat(voices.map(v=>'<option value="'+esc(v.name||'')+'" '+(saved===String(v.name||'')?'selected':'')+'>'+esc((v.name||'Voz')+' · '+(v.lang||'es'))+'</option>')).join('');
+  return '<label class="reader-voice-v22319"><span>Voz</span><select id="academicReaderVoiceSelectV22319" onchange="academicReaderSetVoiceV22319(this.value)">'+options+'</select><small id="academicReaderVoiceNameV22319">'+esc(current?String(current.name||current.lang||'Voz española'):'Voz del sistema')+'</small></label>';
+}
+const academicReaderControlsBaseV22319=academicReaderControlsV290;
+academicReaderControlsV290=function academicReaderControlsV22319(options={}){
+  let html=academicReaderControlsBaseV22319(options);
+  const voice=academicReaderVoiceControlV22319();
+  if(html.includes('<label class="reader-rate-v2129">'))html=html.replace('<label class="reader-rate-v2129">',voice+'<label class="reader-rate-v2129">');
+  else if(html.includes('<div class="academic-reader-secondary-v290">'))html=html.replace('<div class="academic-reader-secondary-v290">','<div class="academic-reader-secondary-v290">'+voice);
+  return html;
+};
+
+function academicReaderWaitReadyV22319(session,timeout=15000){
+  return new Promise(resolve=>{
+    const started=Date.now();
+    const check=()=>{
+      const state=academicReaderStateV290;
+      if(!state||state.session!==session)return resolve(false);
+      if(state.loading===false&&state.speechChunks?.length)return resolve(true);
+      if(Date.now()-started>=timeout)return resolve(Boolean(state.speechChunks?.length));
+      setTimeout(check,80);
+    };
+    check();
+  });
+}
+academicListenAttachmentV22312=async function academicListenAttachmentV22319(key){
+  const file=academicReaderRegistryV290.get(key);
+  const type=academicReaderFileTypeV290(file);
+  if(!file||!['docx','pdf'].includes(type))return toast('La lectura en voz alta está disponible para Word DOCX y PDF con texto');
+  await openAcademicReaderV290(key);
+  const session=academicReaderStateV290?.session;
+  if(!session)return;
+  const ready=await academicReaderWaitReadyV22319(session);
+  if(!ready||academicReaderStateV290?.session!==session)return toast('No se detectó texto disponible para escuchar');
+  // Restaurar de forma síncrona ANTES de iniciar la voz.
+  const saved=academicReaderReadProgressV2140(file);
+  if(saved){
+    const state=academicReaderStateV290;
+    const block=Math.max(0,Number(saved.block)||0);
+    let idx=Number(saved.speechIndex);
+    if(!Number.isFinite(idx)||idx<0||idx>=state.speechChunks.length){
+      idx=state.speechChunks.findIndex(item=>Number(item.blockIndex)===block);
+    }
+    if(idx>=0)state.speechIndex=idx;
+    state.lastBlockV212=block;
+    if(Number.isFinite(Number(saved.rate)))state.rate=Math.max(.6,Math.min(2,Number(saved.rate)));
+    academicReaderGoSavedV2140(false);
+  }
+  await new Promise(resolve=>setTimeout(resolve,140));
+  const state=academicReaderStateV290;
+  if(!state||state.session!==session)return;
+  state.stopped=false;state.paused=false;
+  academicReaderSaveProgressV2140('resume');
+  academicReaderSpeakCurrentV2125();
+};
+
+const loadAcademicDashboardBaseV22319=loadAcademicDashboard;
+loadAcademicDashboard=async function loadAcademicDashboardV22319(){
+  if(academicDashboardLoadingV22319)return;
+  const now=Date.now();
+  if(now-academicDashboardLastLoadV22319<350)return;
+  academicDashboardLoadingV22319=true;academicDashboardLastLoadV22319=now;
+  try{return await loadAcademicDashboardBaseV22319()}
+  finally{academicDashboardLoadingV22319=false}
+};
+
+window.addEventListener('pagehide',()=>{
+  try{
+    if(academicReaderStateV290?.file){
+      academicReaderSaveProgressV2140('pagehide');
+      academicReaderLastWriteV2141?.('pagehide');
+    }
+  }catch{}
+});
+document.addEventListener('visibilitychange',()=>{
+  if(!document.hidden)return;
+  try{
+    if(academicReaderStateV290?.file){
+      academicReaderSaveProgressV2140('hidden');
+      academicReaderLastWriteV2141?.('hidden');
+    }
+  }catch{}
+});
+try{
+  window.speechSynthesis?.addEventListener?.('voiceschanged',()=>{
+    const select=document.getElementById('academicReaderVoiceSelectV22319');
+    if(select){
+      const holder=select.closest('.reader-voice-v22319');
+      if(holder)holder.outerHTML=academicReaderVoiceControlV22319();
+    }
+  });
+}catch{}
