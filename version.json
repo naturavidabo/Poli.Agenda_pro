@@ -1,8 +1,8 @@
 {
-  "version": "2.23.17",
+  "version": "2.23.18",
   "build": "2026-09-22",
-  "channel": "tts-symbol-cleanup",
-  "appVersion": "2.23.17",
+  "channel": "reader-resume-natural-voice",
+  "appVersion": "2.23.18",
   "scheduleVersion": "2026-07-29-v274",
   "databaseVersion": "agenda-db-40-private-personnel-meta",
   "serviceGroupsDataVersion": "2026-09-03",
@@ -25,5 +25,5 @@
   "disciplineQuickListsVersion": "2.23.5",
   "disciplineNavSlotVersion": "2.23.5",
   "taskPanelVersion": "2.23.0",
-  "academicMaterialActionsVersion": "2.23.17"
+  "academicMaterialActionsVersion": "2.23.18"
 }
