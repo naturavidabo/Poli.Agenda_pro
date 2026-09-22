@@ -1,8 +1,8 @@
 {
-  "version": "2.23.19",
+  "version": "2.24.0",
   "build": "2026-09-22",
-  "channel": "reader-resume-panel-stability",
-  "appVersion": "2.23.19",
+  "channel": "reader-2.0-stable-online",
+  "appVersion": "2.24.0",
   "scheduleVersion": "2026-07-29-v274",
   "databaseVersion": "agenda-db-40-private-personnel-meta",
   "serviceGroupsDataVersion": "2026-09-03",
@@ -25,5 +25,7 @@
   "disciplineQuickListsVersion": "2.23.5",
   "disciplineNavSlotVersion": "2.23.5",
   "taskPanelVersion": "2.23.0",
-  "academicMaterialActionsVersion": "2.23.19"
+  "academicMaterialActionsVersion": "2.24.0",
+  "academicReaderVersion": "2.24.0",
+  "onlineStabilityVersion": "2.24.0"
 }
