@@ -5218,6 +5218,14 @@ function academicReaderNormalizeBlocksV290(text,page=null){
   }
   return blocks;
 }
+function academicTtsCleanV22317(text){
+  return String(text||'')
+    .replace(/(?:-{1,3}>|={1,3}>|<-{1,3}|<={1,3})/g,', ')
+    .replace(/[→➜➝➞➟➠➡⟶⟹⇒⇢↦←⬅⟵⇐⇠↤↑⬆⇧↓⬇⇩↕↔↗↘↙↖]/g,', ')
+    .replace(/\s*,\s*(?:,\s*)+/g,', ')
+    .replace(/\s{2,}/g,' ')
+    .trim();
+}
 function academicReaderSpeechChunksV290(blocks){
   const chunks=[];
   blocks.forEach((block,blockIndex)=>{
@@ -5391,7 +5399,7 @@ function academicReaderSpeakCurrentV290(){
   if(state.speechIndex>=state.speechChunks.length){academicReaderStopV290();toast('Lectura finalizada');return}
   const chunk=state.speechChunks[state.speechIndex];
   academicReaderHighlightV290(chunk.blockIndex);
-  const utterance=new SpeechSynthesisUtterance(chunk.text);
+  const utterance=new SpeechSynthesisUtterance(academicTtsCleanV22317(chunk.text));
   utterance.lang='es-BO';utterance.rate=Number(state.rate||1);
   const voice=academicReaderPreferredVoiceV290();if(voice)utterance.voice=voice;
   utterance.onend=()=>{if(state.stopped||state.paused)return;state.speechIndex+=1;academicReaderUpdateSpeechUiV290();academicReaderSpeakCurrentV290()};
@@ -6760,7 +6768,7 @@ function academicReaderSpeakCurrentV2125(){
   academicReaderHighlightV290(chunk.blockIndex);
   academicReaderSavePositionV212(chunk.blockIndex);
   const run=++academicReaderSpeechRunV2125;
-  const utterance=new SpeechSynthesisUtterance(chunk.text);
+  const utterance=new SpeechSynthesisUtterance(academicTtsCleanV22317(chunk.text));
   utterance.lang='es-BO';utterance.rate=Number(state.rate||1);
   const voice=academicReaderPreferredVoiceV290();if(voice)utterance.voice=voice;
   utterance.onend=()=>{
