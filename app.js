@@ -1,4 +1,4 @@
-const APP_VERSION='2.23.17';
+const APP_VERSION='2.23.18';
 const BUILD_DATE='2026-09-22';
 const ACTIVATION_CODE='271261';
 const SECONDARY_ACTIVATION_CODE='2026JINETES';
@@ -1922,3 +1922,84 @@ async function officeScanApplyPerspectiveV2139(){
     ctx.putImageData(out,0,0);page.src=cvs.toDataURL('image/jpeg',.9);page.rotation=0;closeModal();officeScanRenderV2138();officeScanDraftSaveV2139(false);toast('Perspectiva corregida');
   };im.src=page.src;
 }
+
+
+/* =========================================================
+   Agenda Policial v2.23.18 — continuidad de lectura + voz natural
+   - Reanuda el mismo documento desde el último fragmento guardado.
+   - Guarda al ocultar/cerrar la app.
+   - Prioriza voces españolas de mayor calidad disponibles en el dispositivo.
+   ========================================================= */
+function officePreferredVoiceV22318(){
+  const voices=window.speechSynthesis?.getVoices?.()||[];
+  if(!voices.length)return null;
+  const score=v=>{
+    const lang=String(v.lang||'').replace('_','-').toLowerCase();
+    const name=String(v.name||'').toLowerCase();
+    let s=0;
+    if(lang==='es-bo')s+=120;
+    else if(/^es-(419|mx|us|ar|cl|co|pe|es)$/.test(lang))s+=105;
+    else if(lang.startsWith('es-'))s+=90;
+    else if(lang==='es')s+=80;
+    else return -999;
+    if(/neural|natural|premium|enhanced|studio/.test(name))s+=35;
+    if(/google|microsoft|samsung/.test(name))s+=22;
+    if(v.localService===false)s+=8;
+    if(/español|spanish/.test(name))s+=5;
+    return s;
+  };
+  return voices.map(v=>({v,s:score(v)})).filter(x=>x.s>-900).sort((x,y)=>y.s-x.s)[0]?.v||null;
+}
+function officeReaderSameSavedDocumentV22318(saved,chunks){
+  if(!saved?.chunks?.length||!chunks?.length)return false;
+  const current=String(officeCurrentFileV2128?.name||'').trim().toLowerCase();
+  const previous=String(saved.title||'').trim().toLowerCase();
+  return Boolean(current&&previous&&current===previous&&saved.chunks.length===chunks.length);
+}
+officeReaderStartV2136=function officeReaderStartV22318(){
+  if(!('speechSynthesis' in window)||!window.SpeechSynthesisUtterance)return toast('La lectura por voz no está disponible en este dispositivo');
+  if(officeReaderV2136.paused){
+    speechSynthesis.resume();officeReaderV2136.paused=false;officeReaderV2136.playing=true;
+    officeReaderStatusV2136('Reproduciendo');officeReaderSaveV2139();
+    try{navigator.mediaSession.playbackState='playing'}catch{}
+    return;
+  }
+  const text=officeReaderTextV2136();if(!text)return toast('No hay texto legible para reproducir');
+  const chunks=officeReaderChunksV2136(text);
+  const saved=officeReaderLoadSavedV2139();
+  speechSynthesis.cancel();
+  officeReaderV2136.chunks=chunks;
+  officeReaderV2136.index=officeReaderSameSavedDocumentV22318(saved,chunks)
+    ?Math.max(0,Math.min(chunks.length-1,Number(saved.index||0)))
+    :0;
+  if(officeReaderSameSavedDocumentV22318(saved,chunks)&&Number.isFinite(Number(saved.rate)))officeReaderV2136.rate=Number(saved.rate);
+  officeReaderV2136.playing=true;officeReaderV2136.paused=false;
+  officeReaderSetupMediaV2136();officeReaderSaveV2139();officeReaderSpeakNextV2136();
+}
+officeReaderSpeakNextV2136=function officeReaderSpeakNextV22318(){
+  if(!officeReaderV2136.playing)return;
+  if(officeReaderV2136.index>=officeReaderV2136.chunks.length){
+    officeReaderV2136.index=Math.max(0,officeReaderV2136.chunks.length-1);
+    officeReaderV2136.playing=false;officeReaderV2136.paused=false;
+    officeReaderSaveV2139();officeReaderStatusV2136('Finalizado');officeMiniPlayerRefreshV2139();return;
+  }
+  officeReaderSaveV2139();
+  const u=new SpeechSynthesisUtterance(officeTtsCleanV22317(officeReaderV2136.chunks[officeReaderV2136.index]));
+  const voice=officePreferredVoiceV22318();
+  if(voice){u.voice=voice;u.lang=voice.lang||'es-BO'}else u.lang='es-BO';
+  u.rate=Number(officeReaderV2136.rate||1);u.pitch=1;u.volume=1;
+  u.onstart=()=>{
+    officeReaderStatusV2136(`Leyendo ${officeReaderV2136.index+1}/${officeReaderV2136.chunks.length}`);
+    officeReaderSaveV2139();
+    try{navigator.mediaSession.playbackState='playing'}catch{}
+  };
+  u.onend=()=>{if(officeReaderV2136.playing){officeReaderV2136.index++;officeReaderSaveV2139();officeReaderSpeakNextV2136()}};
+  u.onerror=e=>{
+    if(['canceled','interrupted'].includes(e?.error))return;
+    if(officeReaderV2136.playing){officeReaderSaveV2139();officeReaderV2136.index++;officeReaderSpeakNextV2136()}
+  };
+  speechSynthesis.speak(u);
+}
+window.addEventListener('pagehide',()=>{try{if(officeReaderV2136?.chunks?.length)officeReaderSaveV2139()}catch{}});
+document.addEventListener('visibilitychange',()=>{try{if(document.hidden&&officeReaderV2136?.chunks?.length)officeReaderSaveV2139()}catch{}});
+try{window.speechSynthesis?.addEventListener?.('voiceschanged',()=>officePreferredVoiceV22318())}catch{}
