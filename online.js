@@ -8224,3 +8224,47 @@ subjectVisual=function subjectVisualV22316(subject=''){
   const key=academicSubjectNormV2122(canonical);
   return ACADEMIC_SUBJECT_VISUALS_V22316[key]||_subjectVisualBaseV22316(canonical);
 };
+
+
+/* =========================================================
+   AGENDA POLICIAL v2.23.18 — REANUDACIÓN ROBUSTA + VOZ NATURAL
+   ========================================================= */
+function academicReaderPreferredVoiceV22318(){
+  const voices=window.speechSynthesis?.getVoices?.()||[];
+  if(!voices.length)return null;
+  const score=v=>{
+    const lang=String(v.lang||'').replace('_','-').toLowerCase();
+    const name=String(v.name||'').toLowerCase();
+    let s=0;
+    if(lang==='es-bo')s+=120;
+    else if(/^es-(419|mx|us|ar|cl|co|pe|es)$/.test(lang))s+=105;
+    else if(lang.startsWith('es-'))s+=90;
+    else if(lang==='es')s+=80;
+    else return -999;
+    if(/neural|natural|premium|enhanced|studio/.test(name))s+=35;
+    if(/google|microsoft|samsung/.test(name))s+=22;
+    if(v.localService===false)s+=8;
+    if(/español|spanish/.test(name))s+=5;
+    return s;
+  };
+  return voices.map(v=>({v,s:score(v)})).filter(x=>x.s>-900).sort((x,y)=>y.s-x.s)[0]?.v||null;
+}
+academicReaderPreferredVoiceV290=academicReaderPreferredVoiceV22318;
+
+const academicReaderSpeakNaturalBaseV22318=academicReaderSpeakCurrentV2125;
+academicReaderSpeakCurrentV2125=function academicReaderSpeakCurrentV22318(){
+  const state=academicReaderStateV290;
+  if(state?.file)academicReaderSaveProgressV2140('speech');
+  return academicReaderSpeakNaturalBaseV22318();
+};
+academicReaderSpeakCurrentV290=academicReaderSpeakCurrentV2125;
+
+window.addEventListener('pagehide',()=>{
+  try{
+    if(academicReaderStateV290?.file){
+      academicReaderSaveProgressV2140('pagehide');
+      academicReaderLastWriteV2141?.('pagehide');
+    }
+  }catch{}
+});
+try{window.speechSynthesis?.addEventListener?.('voiceschanged',()=>academicReaderPreferredVoiceV22318())}catch{}
