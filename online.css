@@ -825,3 +825,43 @@ body.academic-dark-v2124 .bank-attempt-modal-v2130 .bank-matching-note-v210{back
 .material-subject-bar-v2122 b{color:color-mix(in srgb,var(--subject-accent) 82%,#172019)!important}
 .subject-legend-chip-v2122{border-color:color-mix(in srgb,var(--subject-accent) 38%,#d9dfda)!important;background:var(--subject-soft)!important}
 .subject-legend-chip-v2122 i{background:var(--subject-accent)!important}
+
+
+/* v2.23.19 · estabilidad visual panel online (Android/PWA) */
+.academic-loading-line{
+  animation:none!important;
+  background:#eef3ef!important;
+}
+.academic-text-nav-premium,
+.academic-text-nav,
+.v277-nav{
+  backdrop-filter:none!important;
+  -webkit-backdrop-filter:none!important;
+  transform:translateZ(0);
+  contain:paint;
+}
+.academic-text-nav-premium button,
+.academic-text-nav button,
+.v277-nav button{
+  transition:none!important;
+  animation:none!important;
+}
+.online-page .academic-summary-card,
+.online-page .academic-shortcut-card,
+.online-page .academic-post,
+.online-page .bank-card-v279{
+  backface-visibility:hidden;
+  -webkit-backface-visibility:hidden;
+}
+.reader-voice-v22319{
+  display:grid;gap:3px;min-width:160px;max-width:260px;
+}
+.reader-voice-v22319>span{
+  font-size:9px;font-weight:900;color:#66756c;text-transform:uppercase;
+}
+.reader-voice-v22319 select{
+  width:100%;min-height:38px;border:1px solid #d7e2da;border-radius:10px;background:#fff;color:#203127;padding:6px 8px;
+}
+.reader-voice-v22319 small{
+  white-space:nowrap;overflow:hidden;text-overflow:ellipsis;color:#748178;font-size:8px;
+}
