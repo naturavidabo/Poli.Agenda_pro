@@ -1,4 +1,4 @@
-const APP_VERSION='2.23.16';
+const APP_VERSION='2.23.17';
 const BUILD_DATE='2026-09-18';
 const ACTIVATION_CODE='271261';
 const SECONDARY_ACTIVATION_CODE='2026JINETES';
@@ -1177,6 +1177,14 @@ function officeReaderSetupMediaV2136(){
     navigator.mediaSession.setActionHandler('stop',()=>officeReaderStopV2136());
   }catch{}
 }
+function officeTtsCleanV22317(text){
+  return String(text||'')
+    .replace(/(?:-{1,3}>|={1,3}>|<-{1,3}|<={1,3})/g,', ')
+    .replace(/[→➜➝➞➟➠➡⟶⟹⇒⇢↦←⬅⟵⇐⇠↤↑⬆⇧↓⬇⇩↕↔↗↘↙↖]/g,', ')
+    .replace(/\s*,\s*(?:,\s*)+/g,', ')
+    .replace(/\s{2,}/g,' ')
+    .trim();
+}
 function officeReaderStartV2136(){
   if(!('speechSynthesis' in window)||!window.SpeechSynthesisUtterance)return toast('La lectura por voz no está disponible en este dispositivo');
   if(officeReaderV2136.paused){speechSynthesis.resume();officeReaderV2136.paused=false;officeReaderV2136.playing=true;officeReaderStatusV2136('Reproduciendo');try{navigator.mediaSession.playbackState='playing'}catch{};return}
@@ -1188,7 +1196,7 @@ function officeReaderStartV2136(){
 function officeReaderSpeakNextV2136(){
   if(!officeReaderV2136.playing)return;
   if(officeReaderV2136.index>=officeReaderV2136.chunks.length){officeReaderStopV2136(false);officeReaderStatusV2136('Finalizado');return}
-  const u=new SpeechSynthesisUtterance(officeReaderV2136.chunks[officeReaderV2136.index]);
+  const u=new SpeechSynthesisUtterance(officeTtsCleanV22317(officeReaderV2136.chunks[officeReaderV2136.index]));
   u.lang='es-BO';u.rate=officeReaderV2136.rate;
   u.onstart=()=>{officeReaderStatusV2136(`Leyendo ${officeReaderV2136.index+1}/${officeReaderV2136.chunks.length}`);try{navigator.mediaSession.playbackState='playing'}catch{}};
   u.onend=()=>{if(officeReaderV2136.playing){officeReaderV2136.index++;officeReaderSpeakNextV2136()}};
@@ -1730,7 +1738,7 @@ officeReaderSpeakNextV2136=function officeReaderSpeakNextPersistV2139(){
     officeReaderStatusV2136('Finalizado');officeMiniPlayerRefreshV2139();return;
   }
   officeReaderSaveV2139();
-  const u=new SpeechSynthesisUtterance(officeReaderV2136.chunks[officeReaderV2136.index]);
+  const u=new SpeechSynthesisUtterance(officeTtsCleanV22317(officeReaderV2136.chunks[officeReaderV2136.index]));
   u.lang='es-BO';u.rate=officeReaderV2136.rate;
   u.onstart=()=>{officeReaderStatusV2136(`Leyendo ${officeReaderV2136.index+1}/${officeReaderV2136.chunks.length}`);officeReaderSaveV2139();try{navigator.mediaSession.playbackState='playing'}catch{}};
   u.onend=()=>{if(officeReaderV2136.playing){officeReaderV2136.index++;officeReaderSaveV2139();officeReaderSpeakNextV2136()}};
